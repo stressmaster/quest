@@ -1,1 +1,2 @@
 # CamelQuest
+Authors: John Lo, 
