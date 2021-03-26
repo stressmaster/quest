@@ -1,2 +1,2 @@
 # CamelQuest
-Authors: John Lo, Matthew Rosen, Xiaolong Gao
+Authors: Daniel Jann, John Lo, Matthew Rosen, Xiaolong Gao
