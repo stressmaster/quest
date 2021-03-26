@@ -1,1 +1,0 @@
-type player= int*int
