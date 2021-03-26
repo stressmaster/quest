@@ -1,5 +1,7 @@
 type player = {location: int*int}
 
+let init_player tup= {tup}
+
 let player_loc player= player.location
 
 let move player dir= 
