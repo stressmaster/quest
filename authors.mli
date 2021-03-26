@@ -1,6 +1,7 @@
 (** CS 3110 Spring 2021 Assignment A2 Adventure
 
-    @author Daniel Jann (dj293) *)
+    @author Daniel Jann (dj293), Xiolong Gao (xg54), Matthew Mosen (mhr79),
+    John Lo (jdl283)*)
 
 (************************************************************ 
 
