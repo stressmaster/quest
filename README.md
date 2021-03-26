@@ -1,2 +1,2 @@
 # CamelQuest
-Authors: John Lo, 
+Authors: John Lo, Daniel Jann
