@@ -1,0 +1,10 @@
+### Starting build.
+# Target: dungeon.mli.depends, tags: { extension:mli, file:dungeon.mli, ocaml, ocamldep, quiet }
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamldep.opt -modules dungeon.mli > dungeon.mli.depends
+# Target: dungeon.cmi, tags: { byte, compile, extension:mli, file:dungeon.mli, interf, ocaml, quiet }
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o dungeon.cmi dungeon.mli
+# Target: dungeon.ml.depends, tags: { extension:ml, file:dungeon.ml, ocaml, ocamldep, quiet }
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamldep.opt -modules dungeon.ml > dungeon.ml.depends
+# Target: dungeon.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:dungeon.cmo, file:dungeon.ml, implem, ocaml, quiet }
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o dungeon.cmo dungeon.ml
+# Compilation successful.
