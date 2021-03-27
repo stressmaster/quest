@@ -27,7 +27,7 @@ let instantiate_dungeon_cells x y dungeon_cells=
 
 let instantiate_dungeon x y : dungeon=
   let c = Hashtbl.create (x*y) in
-  instantiate_dungeon_cells x y d;
+  instantiate_dungeon_cells x y c;
   {cells = c; start = (1,1); dimensions = (x,y)}
 
 let print_dungeon dungeon = 
