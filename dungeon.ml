@@ -14,7 +14,7 @@ type dungeon = {
   dimensions : (int * int);
 }
 
-
+(* [instantiate_dungeon_cells x y dungeon_cells] associates (x', y') with a tile that has x-cord x' and y-cord y' for 0<=x'<=[x]-1 and 0<=y'<=[y]-1 in dungeon_cells *)
 let instantiate_dungeon_cells x y dungeon_cells= 
   for counter_y = 0 to y do
     for counter_x = 0 to x do
@@ -25,6 +25,7 @@ let instantiate_dungeon_cells x y dungeon_cells=
       done
     done
 
+(* [instantiate_dungeon x y] is a dugeon with [x] columns [y] rows *)
 let instantiate_dungeon x y : dungeon=
   let c = Hashtbl.create (x*y) in
   instantiate_dungeon_cells x y c;
