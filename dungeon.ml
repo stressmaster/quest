@@ -44,3 +44,5 @@ let print_dungeon dungeon =
     done
   done
 
+let is_wall dungeon (x, y) =
+  (Hashtbl.find dungeon.cells (x, y)).tile.is_wall
