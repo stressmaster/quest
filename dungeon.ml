@@ -26,9 +26,9 @@ let instantiate_dungeon_cells x y dungeon_cells=
     done
 
 let instantiate_dungeon x y : dungeon=
-  let d = Hashtbl.create (x*y) in
+  let c = Hashtbl.create (x*y) in
   instantiate_dungeon_cells x y d;
-  {cells = d; start = (0,0); dimensions = (x,y)}
+  {cells = c; start = (1,1); dimensions = (x,y)}
 
 let print_dungeon dungeon = 
   for y = 0 to dungeon.dimensions |> fst do
