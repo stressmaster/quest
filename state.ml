@@ -1,7 +1,7 @@
-type current = {location: int*int; room= Dungeon.t; visible= int*int list}
+type current = {location: int*int; room : Dungeon.t; visible: int*int list}
 
 let init_state dungeon= 
-  let current_loc = dungeon.start in
+  let current_loc = Dungeon.start in
   let x= fst current_loc in
   let y = snd current_loc in
   let sight= [(x-2, y+2); (x-1, y+2); (x, y+2); (x+1, y+2); (x+2, y+2);
