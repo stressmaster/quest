@@ -1,1 +1,2 @@
-PKG lablgl
+B _build
+PKG graphics
