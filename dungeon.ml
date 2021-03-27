@@ -14,6 +14,7 @@ type dungeon = {
   dimensions : (int * int);
 }
 
+
 let instantiate_dungeon_cells x y dungeon_cells= 
   for counter_y = 0 to y do
     for counter_x = 0 to x do
@@ -23,6 +24,11 @@ let instantiate_dungeon_cells x y dungeon_cells=
         Hashtbl.add dungeon_cells (counter_x,counter_y) {tile = {material = Sprite "path.jpg"; is_wall = false}; x=counter_x; y=counter_y}
       done
     done
+
+let instantiate_dungeon x y : dungeon=
+  let d = Hashtbl.create (x*y) in
+  instantiate_dungeon_cells x y d;
+  {cells = d; start = (0,0); dimensions = (x,y)}
 
 let print_dungeon dungeon = 
   for y = 0 to dungeon.dimensions |> fst do
