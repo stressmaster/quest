@@ -1,27 +1,34 @@
 type tile_sprite = string
 type tile = {sprite : tile_sprite; is_wall : bool}
-type dungeon = {tiles : tile list list; start : tile; exit : tile} 
-let create_4x4_room = 
-  let wall = {sprite = "wall.jpg"; is_wall = true;} in
-  let path = {sprite = "path.jpg"; is_wall = false;} in 
-  let start = {sprite = "start.jpg"; is_wall = false;} in 
-  let exit = {sprite = "exit.jpg"; is_wall = false;} in 
-  let layer1 = [wall; wall; wall; wall] in 
-  let layer2 = [wall; start; path; wall] in
-  let layer3 = [wall; path; path; wall] in
-  let layer4 = [wall; path; exit; wall] in
-  { tiles = [layer1; layer2; layer3; layer4]; start = start; exit = exit}
 
+type cell = {tile: tile; x : int; y : int}
 
-let rec print_dungeon_row acc row =
-  match row with
-| [] -> acc
-| {sprite; is_wall} :: t -> if is_wall then
-  print_dungeon_row (acc ^ "#") t else
-    print_dungeon_row (acc ^ ".") t
+type dungeon = {
+  cells : (int * int, cell) Hashtbl.t;
+  start : (int * int); 
+}
+let spawn_dungeon x y dungeon_cells= 
 
-let rec print_dungeon dungeon = 
-match dungeon with
-| [] -> ()
-| x :: x' -> print_string (print_dungeon_row "" x); print_newline(); print_dungeon x'
+  for y = 0 to counter_y do
+    for x = 0 to counter_x do
+      if y = 0 || y = counter_y or x =0 or x = counter_x then
+        Hashtbl.add dungeon_cells (counter_x,counter_y) {tile = {sprite = "wall.jpg"; is_wall = true}; x=counter_x; y=counter_y};
+      else
+        Hashtbl.add dungeon_cells (counter_x,counter_y) {tile = {sprite = "path.jpg"; is_wall = false}; x=counter_x; y=counter_y};
+      done
+    done
 
+let dungeon_4x4 = {cells = spawn_dungeon 4 4 (Hashtbl.create (16)); start = (0,0)}
+
+let print_dungeon counter_x counter_y dungeon= 
+  for y = 0 to counter_y do
+    for x = 0 to counter_x do
+      let c = if (Hashtbl.find dungeon.cells (x, y).tile.is_wall)
+        then "#"
+      else
+        "."
+    in
+    print_string(c);
+  done
+      print_newline();
+done
