@@ -10,7 +10,8 @@ type cell = {tile: tile; x : int; y : int}
 
 type t = {
   cells : (int * int, cell) Hashtbl.t;
-  start : (int * int); 
+  start : (int * int);
+  exit :  (int * int);
   dimensions : (int * int);
 }
 
@@ -29,7 +30,7 @@ let instantiate_dungeon_cells x y dungeon_cells=
 let instantiate_dungeon x y : t=
   let c = Hashtbl.create (x*y) in
   instantiate_dungeon_cells x y c;
-  {cells = c; start = (1,1); dimensions = (x,y)}
+  {cells = c; start = (1,1); exit = (x-1,y-1); dimensions = (x,y)}
 
 let print_dungeon dungeon = 
   for y = 0 to dungeon.dimensions |> fst do
@@ -46,3 +47,7 @@ let print_dungeon dungeon =
 
 let is_wall dungeon (x, y) =
   (Hashtbl.find dungeon.cells (x, y)).tile.is_wall
+
+let get_start dungeon = dungeon.start
+
+let get_exit dungeon = dungeon.exit
