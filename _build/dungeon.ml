@@ -81,3 +81,9 @@ let is_wall dungeon (x, y) =
 let get_start dungeon = dungeon.start
 
 let get_exit dungeon = dungeon.exit
+
+let get_dimensions dungeon = dungeon.dimensions
+
+let get_cells dungeon = dungeon.cells
+
+let get_tile cell = cell.tile
