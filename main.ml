@@ -5,8 +5,7 @@ let locale = GtkMain.Main.init ()
 
 let main () =
   let window =
-    GWindow.window ~width:320 ~height:240
-      ~title:"Simple lablgtk program" ()
+    GWindow.window ~width:640 ~height:480 ~title:"CamelQuest" ()
   in
   let vbox = GPack.vbox ~packing:window#add () in
   window#connect#destroy ~callback:Main.quit;
@@ -21,9 +20,9 @@ let main () =
   let factory = new GMenu.factory file_menu ~accel_group in
   factory#add_item "Quit" ~key:_Q ~callback:Main.quit;
 
-  (* Button *)
-  let button = GButton.button ~label:"Push me!" ~packing:vbox#add () in
-  button#connect#clicked ~callback:(fun () -> prerr_endline "Ouch!");
+  (* Button let button = GButton.button ~label:"Push me!"
+     ~packing:vbox#add () in button#connect#clicked ~callback:(fun () ->
+     prerr_endline "Ouch!"); *)
 
   (* Display the windows and enter Gtk+ main loop *)
   window#add_accel_group accel_group;
