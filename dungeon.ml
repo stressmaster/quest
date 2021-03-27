@@ -8,7 +8,7 @@ type tile = {material : material; is_wall : bool}
 
 type cell = {tile: tile; x : int; y : int}
 
-type dungeon = {
+type t = {
   cells : (int * int, cell) Hashtbl.t;
   start : (int * int); 
   dimensions : (int * int);
@@ -26,7 +26,7 @@ let instantiate_dungeon_cells x y dungeon_cells=
     done
 
 (* [instantiate_dungeon x y] is a dugeon with [x] columns [y] rows *)
-let instantiate_dungeon x y : dungeon=
+let instantiate_dungeon x y : t=
   let c = Hashtbl.create (x*y) in
   instantiate_dungeon_cells x y c;
   {cells = c; start = (1,1); dimensions = (x,y)}
