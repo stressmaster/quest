@@ -68,9 +68,8 @@ let print_dungeon dungeon =
     for x = 0 to dungeon.dimensions |> snd do
       let c = ref "." in
       if (Hashtbl.find dungeon.cells (x, y)).tile.is_wall then c := "#"
-      else if x = fst dungeon.start && y = snd dungeon.start then
-        c := "<"
-      else if x = fst dungeon.exit && y = snd dungeon.exit then c := ">";
+      else if (x, y) = dungeon.start then c := "<"
+      else if (x, y) = dungeon.exit then c := ">";
       print_string !c
     done
   done
