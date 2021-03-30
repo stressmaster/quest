@@ -1,4 +1,1 @@
-B _build
 PKG lablgl
-PKG lablgtk3
-PKG tgls
