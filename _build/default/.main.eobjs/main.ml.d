@@ -1,1 +1,1 @@
-main.ml: Gl GlClear GlDraw GlMat GluMat Glut List Sys
+main.ml: Dungeon Gl GlClear GlDraw GlMat GluMat Glut List Sys

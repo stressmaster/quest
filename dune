@@ -1,7 +1,7 @@
 (env
  (dev
   (flags
-   (:standard -w -27))))
+   (:standard -w -27 -w -6 -w -32 -w -37))))
 
 (executable
  (name main)

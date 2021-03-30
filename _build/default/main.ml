@@ -15,16 +15,22 @@ let renderAt ~x ~y ~rgb =
 
 let render_square ~square = renderAt ~x:square.x ~y:square.y
 
-let render_dungeon ~n ~m =
-  for i = 0 to n do
-    for j = 0 to m do
+let render_dungeon (dungeon : Dungeon.t) =
+  for i = 0 to dungeon |> Dungeon.get_dimensions |> fst do
+    for j = 0 to dungeon |> Dungeon.get_dimensions |> snd do
       render_square
-        ~square:
-          {
-            x = 1. /. float_of_int n *. float_of_int i *. 2.;
-            y = 1. /. float_of_int m *. float_of_int j *. 2.;
-          }
-        ~rgb:(if i = j then (0., 1., 0.) else (1., 1., 1.))
+        {
+          x =
+            1.
+            /. float_of_int (dungeon |> Dungeon.get_dimensions |> fst)
+            *. float_of_int i *. 2.;
+          y =
+            1.
+            /. float_of_int (dungeon |> Dungeon.get_dimensions |> snd)
+            *. float_of_int j *. 2.;
+        }
+        (if Dungeon.is_wall dungeon (i, j) then (0., 1., 0.)
+        else (1., 1., 1.))
     done
   done
 
@@ -44,7 +50,7 @@ let w = 500
 and h = 500
 
 let main () =
-  ignore (Glut.init ~argv:Sys.argv);
+  ignore (Glut.init Sys.argv);
   Glut.initDisplayMode ~alpha:true ~depth:true ();
   Glut.initWindowSize ~w ~h;
   ignore (Glut.createWindow ~title:"fuck");
@@ -53,7 +59,7 @@ let main () =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      render_dungeon ~n:(w / 10) ~m:(h / 10);
+      render_dungeon (Dungeon.instantiate_dungeon 10 10);
       Gl.flush ());
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
   Glut.specialFunc ~cb:(fun ~key ~x ~y -> tile := move !tile key);
