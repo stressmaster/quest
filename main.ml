@@ -31,8 +31,8 @@ let render_square ~square =
     ~height:square.height
 
 let render_dungeon (dungeon : Dungeon.t) =
-  let x_length = (dungeon |> Dungeon.get_dimensions |> fst) + 1 in
-  let y_length = (dungeon |> Dungeon.get_dimensions |> snd) + 1 in
+  let x_length = dungeon |> Dungeon.get_dimensions |> fst in
+  let y_length = dungeon |> Dungeon.get_dimensions |> snd in
   let width = float_of_int w /. float_of_int x_length in
   let height = float_of_int h /. float_of_int y_length in
   Hashtbl.iter
@@ -44,8 +44,8 @@ let render_dungeon (dungeon : Dungeon.t) =
           width;
           height;
         }
-        (if Dungeon.is_wall dungeon (x, y) then (0., 1., 0.)
-        else (1., 1., 1.)))
+        ( if Dungeon.is_wall dungeon (x, y) then (0., 1., 0.)
+        else (1., 1., 1.) ))
     (dungeon |> Dungeon.get_cells)
 
 (*let render_dungeon (dungeon : Dungeon.t) = for i = 0 to dungeon |>
