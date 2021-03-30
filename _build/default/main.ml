@@ -18,7 +18,12 @@ let renderAt ~x ~y ~width ~height ~rgb =
   GlDraw.color (r, g, b);
   GlDraw.begins `quads;
   List.iter GlDraw.vertex2
-    [ (0., 0.); (0., width); (height, width); (height, 0.) ];
+    [
+      (0., 0.);
+      (0., height -. 1.);
+      (width -. 1., height -. 1.);
+      (width -. 1., 0.);
+    ];
   GlDraw.ends ()
 
 let render_square ~square =
@@ -34,8 +39,8 @@ let render_dungeon (dungeon : Dungeon.t) =
     (fun (x, y) cell ->
       render_square
         {
-          x = 1. /. float_of_int x_length *. float_of_int x;
-          y = 1. /. float_of_int y_length *. float_of_int y;
+          x = float_of_int x /. float_of_int x_length *. 2.;
+          y = float_of_int y /. float_of_int y_length *. 2.;
           width;
           height;
         }
@@ -62,7 +67,7 @@ let main () =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      render_dungeon (Dungeon.instantiate_dungeon 10 10);
+      render_dungeon (Dungeon.instantiate_dungeon 5 5);
       Gl.flush ());
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
   (* Glut.idleFunc ~cb:(Some Glut.postRedisplay); *)

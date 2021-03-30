@@ -1,10 +1,10 @@
 # dune build main.bc
 # OCAMLPARAM: unset
 # Workspace root: /Users/jd/Desktop/S21/3110/CamelQuest
-$ /usr/bin/getconf _NPROCESSORS_ONLN > /var/folders/tx/czny_1211mb8jyjmrytx2zjr0000gp/T/dunea03bbd.output 2> /dev/null
+$ /usr/bin/getconf _NPROCESSORS_ONLN > /var/folders/tx/czny_1211mb8jyjmrytx2zjr0000gp/T/duneacb4df.output 2> /dev/null
 # Auto-detected concurrency: 4
 # disable binary cache
-$ /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /var/folders/tx/czny_1211mb8jyjmrytx2zjr0000gp/T/dune268f8b.output
+$ /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /var/folders/tx/czny_1211mb8jyjmrytx2zjr0000gp/T/dunee9931d.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
