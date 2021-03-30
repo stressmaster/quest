@@ -47,7 +47,7 @@ let determine_color tile =
   | Sprite s -> if s = "wall.jpg" then (0., 1., 0.) else (1., 1., 1.)
   | Color c -> if c = Green then (0., 1., 0.) else (0.5, 0.5, 0.5)
 
-let render_dungeon player_x player_y (dungeon : Dungeon.t) =
+let render_dungeon player_pos (dungeon : Dungeon.t) =
   let dungeon_cells = dungeon |> Dungeon.get_cells in
   let x_length = dungeon |> Dungeon.get_dimensions |> fst in
   let y_length = dungeon |> Dungeon.get_dimensions |> snd in
@@ -55,26 +55,22 @@ let render_dungeon player_x player_y (dungeon : Dungeon.t) =
   let height = float_of_int h /. float_of_int y_length in
   Hashtbl.iter
     (fun (x, y) cell ->
-      if x = player_x && y = player_y then
-        render_square
-          {
-            x = float_of_int x /. float_of_int x_length *. 2.;
-            y = float_of_int y /. float_of_int y_length *. 2.;
-            width;
-            height;
-            rgb = (0., 0., 1.);
-          }
-      else
-        render_square
-          {
-            x = float_of_int x /. float_of_int x_length *. 2.;
-            y = float_of_int y /. float_of_int y_length *. 2.;
-            width;
-            height;
-            rgb =
-              determine_color
-                (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile);
-          })
+      let color =
+        if (x, y) = player_pos then (0., 0., 1.)
+        else if (x, y) = Dungeon.get_start dungeon then (1., 0., 0.)
+        else if Dungeon.get_exit dungeon = (x, y) then (1., 1., 0.)
+        else
+          determine_color
+            (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile)
+      in
+      render_square
+        {
+          x = float_of_int x /. float_of_int x_length *. 2.;
+          y = float_of_int y /. float_of_int y_length *. 2.;
+          width;
+          height;
+          rgb = color;
+        })
     dungeon_cells
 
 (*let render_dungeon (dungeon : Dungeon.t) = for i = 0 to dungeon |>
@@ -96,7 +92,7 @@ let main () =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      render_dungeon 1 1 (Dungeon.instantiate_dungeon 10 10);
+      render_dungeon (5, 6) (Dungeon.instantiate_dungeon 10 10);
       Gl.flush ());
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
   (* Glut.idleFunc ~cb:(Some Glut.postRedisplay); *)
