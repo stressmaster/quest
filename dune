@@ -1,0 +1,9 @@
+(env
+ (dev
+  (flags
+   (:standard -w -27))))
+
+(executable
+ (name main)
+ (modes byte exe)
+ (libraries lablgl.glut stdlib))
