@@ -3,6 +3,7 @@ type square = {
   mutable y : float;
   mutable width : float;
   mutable height : float;
+  mutable rgb : float * float * float;
 }
 
 type tile_sprite = string
@@ -38,7 +39,7 @@ let renderAt ~x ~y ~width ~height ~rgb =
 
 let render_square ~square =
   renderAt ~x:square.x ~y:square.y ~width:square.width
-    ~height:square.height
+    ~height:square.height ~rgb:square.rgb
 
 let determine_color tile =
   let material = tile |> Dungeon.tile_material in
@@ -46,7 +47,7 @@ let determine_color tile =
   | Sprite s -> if s = "wall.jpg" then (0., 1., 0.) else (1., 1., 1.)
   | Color c -> if c = Green then (0., 1., 0.) else (0.5, 0.5, 0.5)
 
-let render_dungeon (dungeon : Dungeon.t) (player : int * int) =
+let render_dungeon player_x player_y (dungeon : Dungeon.t) =
   let dungeon_cells = dungeon |> Dungeon.get_cells in
   let x_length = dungeon |> Dungeon.get_dimensions |> fst in
   let y_length = dungeon |> Dungeon.get_dimensions |> snd in
@@ -54,15 +55,15 @@ let render_dungeon (dungeon : Dungeon.t) (player : int * int) =
   let height = float_of_int h /. float_of_int y_length in
   Hashtbl.iter
     (fun (x, y) cell ->
-      if (x, y) = player then
+      if x = player_x && y = player_y then
         render_square
           {
             x = float_of_int x /. float_of_int x_length *. 2.;
             y = float_of_int y /. float_of_int y_length *. 2.;
             width;
             height;
+            rgb = (0., 0., 1.);
           }
-          (0., 0., 1.)
       else
         render_square
           {
@@ -70,8 +71,10 @@ let render_dungeon (dungeon : Dungeon.t) (player : int * int) =
             y = float_of_int y /. float_of_int y_length *. 2.;
             width;
             height;
-          }
-          determine_color (Hashtbl.find dungeon_cells (x, y)).tile)
+            rgb =
+              determine_color
+                (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile);
+          })
     dungeon_cells
 
 (*let render_dungeon (dungeon : Dungeon.t) = for i = 0 to dungeon |>
@@ -93,7 +96,7 @@ let main () =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      render_dungeon (Dungeon.instantiate_dungeon 10 10) (1, 1);
+      render_dungeon 1 1 (Dungeon.instantiate_dungeon 10 10);
       Gl.flush ());
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
   (* Glut.idleFunc ~cb:(Some Glut.postRedisplay); *)
