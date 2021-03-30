@@ -81,6 +81,9 @@ let render_dungeon player_pos (dungeon : Dungeon.t) =
   Dungeon.get_dimensions |> snd) *. float_of_int j *. 2.; } (if
   Dungeon.is_wall dungeon (i, j) then (0., 1., 0.) else (1., 1., 1.))
   done done*)
+let dungeon = Dungeon.instantiate_dungeon 10 10
+
+let game = ref (State.init_state dungeon)
 
 let main () =
   ignore (Glut.init Sys.argv);
@@ -92,10 +95,12 @@ let main () =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      render_dungeon (5, 6) (Dungeon.instantiate_dungeon 10 10);
+      let g = !game in
+      render_dungeon (State.player_loc g) dungeon;
       Gl.flush ());
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
-  (* Glut.idleFunc ~cb:(Some Glut.postRedisplay); *)
+  Glut.specialFunc ~cb:(fun ~key ~x ~y -> game := State.move !game key);
+  Glut.idleFunc ~cb:(Some Glut.postRedisplay);
   Glut.mainLoop ()
 
 let _ = main ()
