@@ -89,3 +89,5 @@ let get_dimensions dungeon = dungeon.dimensions
 let get_cells dungeon = dungeon.cells
 
 let get_tile cell = cell.tile
+
+let tile_material tile = tile.material

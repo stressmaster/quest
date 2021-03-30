@@ -7,12 +7,26 @@ type tile
 (* an abstract type representing a dungeon cell*)
 type cell
 
+type tile_sprite = string
+
+type color =
+  | Green
+  | Gray
+
+type material =
+  | Color of color
+  | Sprite of tile_sprite
+
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 val instantiate_dungeon : int -> int -> t
 
 (* [is_wall dungeon (x, y)] returns true iff the cell at coordinate [(x,
    y)] is a wall in [dungeon] *)
 val is_wall : t -> int * int -> bool
+
+(* [is_wall dungeon (x, y)] is the material of the tile at [(x,y)] in
+   [dungeon] *)
+val tile_material : tile -> material
 
 (* [get_start dungeon] is the coordinates of the starting tile in
    [dungeon]*)
