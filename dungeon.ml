@@ -33,7 +33,10 @@ let instantiate_dungeon_cells x y dungeon_cells =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
       if
-        counter_y = 0 || counter_y = y || counter_x = 0 || counter_x = x
+        counter_y = 0
+        || counter_y = y - 1
+        || counter_x = 0
+        || counter_x = x - 1
       then
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           {
