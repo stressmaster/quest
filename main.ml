@@ -1,59 +1,62 @@
-open GtkMain
-open GdkKeysyms
-open Dungeon
+type square = {
+  mutable x : float;
+  mutable y : float;
+}
 
-let locale = GtkMain.Main.init ()
-
-let renderWall () =
-  GlDraw.color (0., 0., 0.);
-  GlDraw.begins `quads;
-  List.iter GlDraw.vertex2
-    [ (-10., -10.); (-10., 10.); (10., 10.); (10., -10.) ];
-  GlDraw.ends ()
-
-let renderPath () =
-  GlDraw.color (1., 0., 1.);
-  GlDraw.begins `quads;
-  List.iter GlDraw.vertex2
-    [ (-10., -10.); (-10., 10.); (10., 10.); (10., -10.) ];
-  GlDraw.ends ()
-
-(*GlMat.translate3(, invader.y, 0.0);*)
-
-let render (dungeon : Dungeon.t) =
+let renderAt ~x ~y ~rgb =
   GlMat.load_identity ();
-  for y = 0 to dungeon |> get_dimensions |> fst do
-    for x = 0 to dungeon |> get_dimensions |> snd do
-      GlMat.translate3 (float_of_int x, float_of_int x, 0.0);
-      if is_wall dungeon (x, y) then renderWall () else renderPath ()
+  GlMat.translate3 (x, y, 0.);
+  let r, g, b = rgb in
+  GlDraw.color (r, g, b);
+  GlDraw.begins `quads;
+  List.iter GlDraw.vertex2
+    [ (0., 0.); (0., 10.); (10., 10.); (10., 0.) ];
+  GlDraw.ends ()
+
+let render_square ~square = renderAt ~x:square.x ~y:square.y
+
+let render_dungeon ~n ~m =
+  for i = 0 to n do
+    for j = 0 to m do
+      render_square
+        {
+          x = 1. /. float_of_int n *. float_of_int i *. 2.;
+          y = 1. /. float_of_int m *. float_of_int j *. 2.;
+        }
+        (if i = j then (0., 1., 0.) else (1., 1., 1.))
     done
   done
 
+let move character = function
+  | Glut.KEY_RIGHT ->
+      character.x <- character.x +. 0.1;
+      character
+  | Glut.KEY_LEFT ->
+      character.x <- character.x -. 0.1;
+      character
+  | _ -> character
+
+let tile = ref { x = 1.; y = 1. }
+
+let w = 500
+
+and h = 500
+
 let main () =
-  let window =
-    GWindow.window ~width:640 ~height:480 ~title:"CamelQuest" ()
-  in
-  let vbox = GPack.vbox ~packing:window#add () in
-  window#connect#destroy ~callback:Main.quit;
+  ignore (Glut.init Sys.argv);
+  Glut.initDisplayMode ~alpha:true ~depth:true ();
+  Glut.initWindowSize ~w ~h;
+  ignore (Glut.createWindow ~title:"fuck");
+  Glut.displayFunc ~cb:(fun () ->
+      GlClear.color (0.0, 0.0, 0.0);
+      GlClear.clear [ `color ];
+      GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
+      GlMat.mode `projection;
+      render_dungeon ~n:(w / 10) ~m:(h / 10);
+      Gl.flush ());
+  Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
+  Glut.specialFunc ~cb:(fun ~key ~x ~y -> tile := move !tile key);
+  (* Glut.idleFunc ~cb:(Some Glut.postRedisplay); *)
+  Glut.mainLoop ()
 
-  (* Menu bar *)
-  let menubar = GMenu.menu_bar ~packing:vbox#pack () in
-  let factory = new GMenu.factory menubar in
-  let accel_group = factory#accel_group in
-  let file_menu = factory#add_submenu "File" in
-
-  (* File menu *)
-  let factory = new GMenu.factory file_menu ~accel_group in
-  factory#add_item "Quit" ~key:_Q ~callback:Main.quit;
-
-  (* Button let button = GButton.button ~label:"Push me!"
-     ~packing:vbox#add () in button#connect#clicked ~callback:(fun () ->
-     prerr_endline "Ouch!"); *)
-  render (instantiate_dungeon 10 10);
-
-  (* Display the windows and enter Gtk+ main loop *)
-  window#add_accel_group accel_group;
-  window#show ();
-  Main.main ()
-
-let () = main ()
+let _ = main ()
