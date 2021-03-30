@@ -1,6 +1,0 @@
-"Rule: ocaml dependencies mli (%=dungeon )": "\t\216\0208\182\172\150\216\221/\186\177\255\247\247\214"
-"Rule: ocaml dependencies ml (%=dungeon )": "\214\025\243N\130\018N\238h\201\020\193I\188\162\131"
-"Rule: ocaml: ml & cmi -> cmo (%=dungeon )": "O\155\188\136\197\149s\203\nT\218\222H\1366\204"
-"Resource: /Users/matthewrosen/Desktop/CamelQuest/dungeon.ml": "\235\144\011\167kQc\190\223\208\129\210t\023)'"
-"Resource: /Users/matthewrosen/Desktop/CamelQuest/dungeon.mli": "b\195\200\186?\132\128\199\248\202\135\030{\154\164\132"
-"Rule: ocaml: mli -> cmi (%=dungeon )": "U\000\017k\210\160\255\168\164\151\174\2479\210b\242"
