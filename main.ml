@@ -16,6 +16,20 @@ let renderAt ~x ~y ~rgb =
 let render_square ~square = renderAt ~x:square.x ~y:square.y
 
 let render_dungeon (dungeon : Dungeon.t) =
+  let x_length = Dungeon.get_dimensions |> fst in
+  let y_length = Dungeon.get_dimensions |> snd in
+  Hashtbl.iter
+    (fun (x, y) cell ->
+      render_square
+        {
+          x = 1. /. float_of_int x_length *. float_of_int x *. 45;
+          y = 1. /. float_of_int y_length *. float_of_int y *. 45;
+        }
+        ( if Dungeon.is_wall dungeon (i, j) then (0., 1., 0.)
+        else (1., 1., 1.) ))
+    dungeon.cells
+
+let render_dungeon (dungeon : Dungeon.t) =
   for i = 0 to dungeon |> Dungeon.get_dimensions |> fst do
     for j = 0 to dungeon |> Dungeon.get_dimensions |> snd do
       render_square
@@ -29,8 +43,8 @@ let render_dungeon (dungeon : Dungeon.t) =
             /. float_of_int (dungeon |> Dungeon.get_dimensions |> snd)
             *. float_of_int j *. 2.;
         }
-        (if Dungeon.is_wall dungeon (i, j) then (0., 1., 0.)
-        else (1., 1., 1.))
+        ( if Dungeon.is_wall dungeon (i, j) then (0., 1., 0.)
+        else (1., 1., 1.) )
     done
   done
 
