@@ -1,8 +1,8 @@
-let image_height = 50
+let image_height = 40
 
-and image_width = 50
+and image_width = 40
 
-let make_image color1 color2 =
+let make_texture color1 color2 =
   let image =
     GlPix.create `ubyte ~format:`rgb ~width:image_width
       ~height:image_height
@@ -20,10 +20,11 @@ let start_texture () = Gl.enable `texture_2d
 
 let end_texture () = Gl.disable `texture_2d
 
-let init_texture color1 color2 =
-  let image = make_image color1 color2 in
+let set_texture color1 color2 =
+  GlTex.image2d (make_texture color1 color2)
+
+let init_texture () =
   GlPix.store (`unpack_alignment 1);
-  GlTex.image2d image;
   List.iter
     (GlTex.parameter ~target:`texture_2d)
     [
@@ -33,4 +34,4 @@ let init_texture color1 color2 =
       `min_filter `nearest;
     ];
   GlTex.env (`mode `decal);
-  start_texture ()
+  ()

@@ -3,18 +3,16 @@ type square = {
   mutable y : float;
   mutable width : float;
   mutable height : float;
-  mutable rgb : float * float * float;
+  mutable texture : int array * int array;
 }
 
-type tile_sprite = string
+let wall_brick = ([| 255; 255; 0 |], [| 100; 100; 50 |])
 
-type color =
-  | Green
-  | Gray
+and path = ([| 10; 10; 10 |], [| 50; 0; 0 |])
 
-type material =
-  | Color of color
-  | Sprite of tile_sprite
+and entrance = ([| 255; 0; 0 |], [| 255; 0; 0 |])
+
+and exit_tex = ([| 255; 255; 0 |], [| 255; 255; 0 |])
 
 let w = 500
 
@@ -30,33 +28,35 @@ let height = float_of_int h /. float_of_int y_length
 
 let square_height ~height = float_of_int h /. height
 
-let renderAt ~x ~y ~width ~height ~rgb =
+let renderAt ~x ~y ~width ~height ~texture =
   GlMat.load_identity ();
   GlMat.translate3 (x, y, 0.);
-  let r, g, b = rgb in
-  GlDraw.color (r, g, b);
+  Texturemap.set_texture (fst texture) (snd texture);
+  Texturemap.start_texture ();
   GlDraw.begins `quads;
-  List.iter GlDraw.vertex2
-    [
-      (0., 0.);
-      (0., height -. 1.);
-      (width -. 1., height -. 1.);
-      (width -. 1., 0.);
-    ];
+  GlTex.coord2 (0.0, 0.0);
+  GlDraw.vertex2 (0., 0.);
+  GlTex.coord2 (0.0, 1.0);
+  GlDraw.vertex2 (0., height -. 1.);
+  GlTex.coord2 (1.0, 1.0);
+  GlDraw.vertex2 (width -. 1., height -. 1.);
+  GlTex.coord2 (1.0, 0.0);
+  GlDraw.vertex2 (width -. 1., 0.);
+  Texturemap.end_texture ();
   GlDraw.ends ()
 
 let render_square ~square =
   renderAt ~x:square.x ~y:square.y ~width:square.width
-    ~height:square.height ~rgb:square.rgb
+    ~height:square.height ~texture:square.texture
 
 let determine_color tile movement_offset =
-  let movement_offset = float_of_int movement_offset *. 0.05 in
   let material = tile |> Dungeon.tile_material in
   match material with
   | Sprite s ->
-      if s = "wall.jpg" then (0., 1., 0.)
-      else (1., 1. -. movement_offset, 1.)
-  | Color c -> if c = Green then (0., 1., 0.) else (0.5, 0.5, 0.5)
+      if s = "wall.jpg" then wall_brick
+      else if s = "path.jpg" then path
+      else ([| 0; 0; 0 |], [| 0; 0; 0 |])
+  | Color _ -> ([| 0; 0; 0 |], [| 0; 0; 0 |])
 
 let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
   let dungeon_cells = dungeon |> Dungeon.get_cells in
@@ -88,17 +88,17 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
   in
   for x = x_start to x_end do
     for y = y_start to y_end do
-      let color =
-        if (x, y) = (p_x, p_y) then (0., 0., 1.)
+      let texture =
+        if (x, y) = (p_x, p_y) then ([| 0; 0; 255 |], [| 0; 0; 255 |])
         else if Hashtbl.find_opt dungeon_cells (x, y) = None then
-          (0., 0., 0.)
-        else if (x, y) = Dungeon.get_start dungeon then (1., 0., 0.)
-        else if Dungeon.get_exit dungeon = (x, y) then (1., 1., 0.)
+          ([| 0; 0; 0 |], [| 0; 0; 0 |])
+        else if (x, y) = Dungeon.get_start dungeon then entrance
+        else if Dungeon.get_exit dungeon = (x, y) then exit_tex
         else
           determine_color
             (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile)
             ( if x * y mod 12 = 0 && x mod 12 != 0 && y mod 12 != 0 then
-              1
+              255
             else 0 )
       in
       render_square
@@ -107,7 +107,7 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
           y = float_of_int (y - y_start) /. float_of_int y_length *. 2.;
           width;
           height;
-          rgb = color;
+          texture;
         }
     done
   done
@@ -121,6 +121,7 @@ let main () =
   Glut.initDisplayMode ~alpha:true ~depth:true ();
   Glut.initWindowSize ~w ~h;
   ignore (Glut.createWindow ~title:"fuck");
+  Texturemap.init_texture ();
   Glut.displayFunc ~cb:(fun () ->
       GlClear.color (0.0, 0.0, 0.0);
       GlClear.clear [ `color ];
