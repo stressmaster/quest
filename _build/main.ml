@@ -49,10 +49,13 @@ let render_square ~square =
   renderAt ~x:square.x ~y:square.y ~width:square.width
     ~height:square.height ~rgb:square.rgb
 
-let determine_color tile =
+let determine_color tile movement_offset =
+  let movement_offset = float_of_int movement_offset *. 0.05 in
   let material = tile |> Dungeon.tile_material in
   match material with
-  | Sprite s -> if s = "wall.jpg" then (0., 1., 0.) else (1., 1., 1.)
+  | Sprite s ->
+      if s = "wall.jpg" then (0., 1., 0.)
+      else (1., 1. -. movement_offset, 1.)
   | Color c -> if c = Green then (0., 1., 0.) else (0.5, 0.5, 0.5)
 
 let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
@@ -73,12 +76,12 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
   in
   let y_start =
     if p_y - ((y_length - 1) / 2) < 0 then 0
-    else if p_y + ((y_length - 1) / 2) > dungeon_y_length then
+    else if p_y + ((y_length - 1) / 2) + 1 > dungeon_y_length then
       dungeon_y_length - y_length
     else p_y - ((y_length - 1) / 2)
   in
   let y_end =
-    if p_y + ((y_length - 1) / 2) > dungeon_y_length then
+    if p_y + ((y_length - 1) / 2) + 1 > dungeon_y_length then
       dungeon_y_length
     else if p_y - ((y_length - 1) / 2) < 0 then y_length
     else p_y + ((y_length - 1) / 2)
@@ -92,6 +95,7 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
         else
           determine_color
             (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile)
+            ((x + y) mod 2)
       in
       render_square
         {
@@ -104,15 +108,7 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
     done
   done
 
-(*let render_dungeon (dungeon : Dungeon.t) = for i = 0 to dungeon |>
-  Dungeon.get_dimensions |> fst do for j = 0 to dungeon |>
-  Dungeon.get_dimensions |> snd do render_square { x = 1. /.
-  float_of_int (dungeon |> Dungeon.get_dimensions |> fst) *.
-  float_of_int i *. 2.; y = 1. /. float_of_int (dungeon |>
-  Dungeon.get_dimensions |> snd) *. float_of_int j *. 2.; } (if
-  Dungeon.is_wall dungeon (i, j) then (0., 1., 0.) else (1., 1., 1.))
-  done done*)
-let dungeon = Dungeon.instantiate_dungeon 10 10
+let dungeon = Dungeon.instantiate_dungeon 20 50
 
 let game = ref (State.init_state dungeon)
 

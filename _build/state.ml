@@ -5,6 +5,8 @@ type current = {
   mutable room : Dungeon.t;
 }
 
+type special_key_t = Glut.special_key_t
+
 let init_state dungeon =
   { location = dungeon |> Dungeon.get_start; room = dungeon }
 

@@ -1,18 +1,34 @@
 ### Starting build.
-# Target: main.ml.depends, tags: { extension:ml, file:main.ml, ocaml, ocamldep, quiet }
-/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamldep.opt -modules main.ml > main.ml.depends # cached
-# Target: dungeon.mli.depends, tags: { extension:mli, file:dungeon.mli, ocaml, ocamldep, quiet }
-/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamldep.opt -modules dungeon.mli > dungeon.mli.depends # cached
-# Target: dungeon.cmi, tags: { byte, compile, extension:mli, file:dungeon.mli, interf, ocaml, quiet }
-/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o dungeon.cmi dungeon.mli # cached
-# Target: state.mli.depends, tags: { extension:mli, file:state.mli, ocaml, ocamldep, quiet }
-/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamldep.opt -modules state.mli > state.mli.depends # cached
-# Target: state.cmi, tags: { byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet }
-/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o state.cmi state.mli
-+ /Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o state.cmi state.mli
-File "state.mli", line 7, characters 22-40:
-7 | val move : current -> Glut.special_key_t -> current
-                          ^^^^^^^^^^^^^^^^^^
-Error: Unbound module Glut
-Command exited with code 2.
-# Compilation unsuccessful.
+# Target: dungeon.mli.depends, tags: { package(lablgl), extension:mli, file:dungeon.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules dungeon.mli > dungeon.mli.depends # cached
+# Target: dungeon.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:dungeon.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o dungeon.cmi dungeon.mli # cached
+# Target: dungeon.ml.depends, tags: { package(lablgl), extension:ml, file:dungeon.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules dungeon.ml > dungeon.ml.depends # cached
+# Target: dungeon.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:dungeon.cmo, file:dungeon.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o dungeon.cmo dungeon.ml # cached
+# Target: engine.mli.depends, tags: { package(lablgl), extension:mli, file:engine.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules engine.mli > engine.mli.depends # cached
+# Target: engine.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:engine.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o engine.cmi engine.mli # cached
+# Target: engine.ml.depends, tags: { package(lablgl), extension:ml, file:engine.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules engine.ml > engine.ml.depends # cached
+# Target: engine.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:engine.cmo, file:engine.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o engine.cmo engine.ml # cached
+# Target: main.ml.depends, tags: { package(lablgl), extension:ml, file:main.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules main.ml > main.ml.depends # cached
+# Target: state.mli.depends, tags: { package(lablgl), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules state.mli > state.mli.depends # cached
+# Target: state.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o state.cmi state.mli # cached
+# Target: main.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o main.cmo main.ml # cached
+# Target: authors.mli.depends, tags: { package(lablgl), extension:mli, file:authors.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules authors.mli > authors.mli.depends # cached
+# Target: authors.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:authors.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o authors.cmi authors.mli # cached
+# Target: authors.ml.depends, tags: { package(lablgl), extension:ml, file:authors.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules authors.ml > authors.ml.depends # cached
+# Target: authors.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:authors.cmo, file:authors.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o authors.cmo authors.ml # cached
+# Compilation successful.
