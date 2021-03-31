@@ -12,15 +12,23 @@ let move current key =
   let x, y = current.location in
   match key with
   | Glut.KEY_RIGHT ->
-      current.location <- (x + 1, y);
+      current.location <-
+        ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+        else (x + 1, y) );
       current
   | Glut.KEY_LEFT ->
-      current.location <- (x - 1, y);
+      current.location <-
+        ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+        else (x - 1, y) );
       current
   | Glut.KEY_UP ->
-      current.location <- (x, y + 1);
+      current.location <-
+        ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+        else (x, y + 1) );
       current
   | Glut.KEY_DOWN ->
-      current.location <- (x, y - 1);
+      current.location <-
+        ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+        else (x, y - 1) );
       current
   | _ -> current
