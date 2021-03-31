@@ -90,6 +90,8 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
     for y = y_start to y_end do
       let color =
         if (x, y) = (p_x, p_y) then (0., 0., 1.)
+        else if Hashtbl.find_opt dungeon_cells (x, y) = None then
+          (0., 0., 0.)
         else if (x, y) = Dungeon.get_start dungeon then (1., 0., 0.)
         else if Dungeon.get_exit dungeon = (x, y) then (1., 1., 0.)
         else
@@ -108,7 +110,7 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
     done
   done
 
-let dungeon = Dungeon.instantiate_dungeon 20 50
+let dungeon = Dungeon.instantiate_dungeon 12 30
 
 let game = ref (State.init_state dungeon)
 
