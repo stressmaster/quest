@@ -97,7 +97,9 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
         else
           determine_color
             (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile)
-            ((x + y) mod 2)
+            ( if x * y mod 12 = 0 && x mod 12 != 0 && y mod 12 != 0 then
+              1
+            else 0 )
       in
       render_square
         {
@@ -110,7 +112,7 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
     done
   done
 
-let dungeon = Dungeon.instantiate_dungeon 12 30
+let dungeon = Dungeon.instantiate_dungeon 30 50
 
 let game = ref (State.init_state dungeon)
 
