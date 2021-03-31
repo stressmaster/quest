@@ -61,7 +61,7 @@ let instantiate_dungeon x y : t =
   {
     cells = c;
     start = (1, 1);
-    exit = (x - 1, y - 1);
+    exit = (x - 2, y - 2);
     dimensions = (x, y);
   }
 
