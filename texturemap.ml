@@ -17,6 +17,10 @@ let make_image () =
   done;
   image
 
+let start_texture () = Gl.enable `texture_2d
+
+let end_texture () = Gl.disable `texture_2d
+
 let init_texture () =
   let image = make_image () in
   GlPix.store (`unpack_alignment 1);
@@ -30,4 +34,4 @@ let init_texture () =
       `min_filter `nearest;
     ];
   GlTex.env (`mode `decal);
-  Gl.enable `texture_2d
+  start_texture ()
