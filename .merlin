@@ -1,4 +1,3 @@
 B _build
 PKG lablgl
 PKG camlimages.core
-PKG camlimages.png
