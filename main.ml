@@ -1,3 +1,7 @@
+open Images
+open OImages
+open Info
+
 type square = {
   mutable x : float;
   mutable y : float;
@@ -115,6 +119,13 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
 let dungeon = Dungeon.instantiate_dungeon 20 30
 
 let game = ref (State.init_state dungeon)
+
+let _ =
+  Bitmap.maximum_live := 15000000;
+  Bitmap.maximum_block_size := !Bitmap.maximum_live / 16;
+  let r = Gc.get () in
+  r.Gc.max_overhead <- 30;
+  Gc.set r
 
 let main () =
   ignore (Glut.init Sys.argv);
