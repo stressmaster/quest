@@ -6,17 +6,17 @@ type square = {
   mutable texture : string;
 }
 
-let wall = "wall.png"
+let wall = "./wall.png"
 
-and path = "path.png"
+and path = "./path.png"
 
-and entrance = "entrance.png"
+and entrance = "./entrance.png"
 
-and exit_tex = "exit.png"
+and exit_tex = "./exit.png"
 
-and player = "player.png"
+and player = "./player.png"
 
-and darkness = "darkness.png"
+and darkness = "./darkness.png"
 
 let texture_list = [ wall; path; entrance; exit_tex; player; darkness ]
 
