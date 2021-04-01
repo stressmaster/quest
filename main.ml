@@ -1,22 +1,22 @@
-open Images
-open OImages
-open Info
-
 type square = {
   mutable x : float;
   mutable y : float;
   mutable width : float;
   mutable height : float;
-  mutable texture : int array * int array;
+  mutable texture : string;
 }
 
-let wall_brick = ([| 255; 255; 0 |], [| 100; 100; 50 |])
+let wall_brick = "./wall.png"
 
-and path = ([| 10; 10; 10 |], [| 50; 0; 0 |])
+and path = "./path.png"
 
-and entrance = ([| 255; 0; 0 |], [| 255; 0; 0 |])
+and entrance = "./entrance.png"
 
-and exit_tex = ([| 0; 255; 0 |], [| 0; 255; 0 |])
+and exit_tex = "./exit.png"
+
+and player = "./player.png"
+
+and darkness = "./darkness.png"
 
 let w = 500
 
@@ -35,7 +35,7 @@ let square_height ~height = float_of_int h /. height
 let renderAt ~x ~y ~width ~height ~texture =
   GlMat.load_identity ();
   GlMat.translate3 (x, y, 0.);
-  Texturemap.set_texture (fst texture) (snd texture);
+  Texturemap.set_texture texture;
   Texturemap.start_texture ();
   GlDraw.begins `quads;
   GlTex.coord2 (0.0, 0.0);
@@ -53,14 +53,14 @@ let render_square ~square =
   renderAt ~x:square.x ~y:square.y ~width:square.width
     ~height:square.height ~texture:square.texture
 
-let determine_color tile movement_offset =
+let determine_color tile =
   let material = tile |> Dungeon.tile_material in
   match material with
   | Sprite s ->
       if s = "wall.jpg" then wall_brick
       else if s = "path.jpg" then path
-      else ([| 0; 0; 0 |], [| 0; 0; 0 |])
-  | Color _ -> ([| 0; 0; 0 |], [| 0; 0; 0 |])
+      else darkness
+  | Color _ -> darkness
 
 let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
   let dungeon_cells = dungeon |> Dungeon.get_cells in
@@ -93,17 +93,14 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
   for x = x_start to x_end do
     for y = y_start to y_end do
       let texture =
-        if (x, y) = (p_x, p_y) then ([| 0; 0; 255 |], [| 0; 0; 255 |])
+        if (x, y) = (p_x, p_y) then player
         else if Hashtbl.find_opt dungeon_cells (x, y) = None then
-          ([| 0; 0; 0 |], [| 0; 0; 0 |])
+          darkness
         else if (x, y) = Dungeon.get_start dungeon then entrance
         else if Dungeon.get_exit dungeon = (x, y) then exit_tex
         else
           determine_color
             (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile)
-            ( if x * y mod 12 = 0 && x mod 12 != 0 && y mod 12 != 0 then
-              255
-            else 0 )
       in
       render_square
         {

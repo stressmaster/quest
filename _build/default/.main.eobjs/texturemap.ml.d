@@ -1,1 +1,1 @@
-texturemap.ml: Gl GlPix GlTex List Raw
+texturemap.ml: Gl GlPix GlTex Images Info List OImages Raw

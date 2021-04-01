@@ -1,17 +1,17 @@
-let image_height = 40
+open Images
+open OImages
+open Info
 
-and image_width = 40
-
-let make_texture color1 color2 =
-  let image =
-    GlPix.create `ubyte ~format:`rgb ~width:image_width
-      ~height:image_height
-  in
-  for i = 0 to image_width - 1 do
-    for j = 0 to image_height - 1 do
+let make_texture img =
+  let w = img#width and h = img#height in
+  let image = GlPix.create `ubyte ~format:`rgb ~width:w ~height:h in
+  for i = 0 to w - 1 do
+    for j = 0 to h - 1 do
+      let pixel = img#get i j in
+      (* pixel is a Color.rgb *)
       Raw.sets (GlPix.to_raw image)
-        ~pos:(3 * ((i * image_height) + j))
-        (if i land 8 lxor (j land 8) = 0 then color1 else color2)
+        ~pos:(3 * ((i * h) + j))
+        [| pixel.r; pixel.g; pixel.b |]
     done
   done;
   image
@@ -20,8 +20,11 @@ let start_texture () = Gl.enable `texture_2d
 
 let end_texture () = Gl.disable `texture_2d
 
-let set_texture color1 color2 =
-  GlTex.image2d (make_texture color1 color2)
+let load_texture file = OImages.load file [] |> OImages.rgba32
+
+let set_texture file =
+  let img = load_texture file in
+  GlTex.image2d (make_texture img#to_rgb24)
 
 let init_texture () =
   GlPix.store (`unpack_alignment 1);
