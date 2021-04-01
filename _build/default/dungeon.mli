@@ -7,8 +7,10 @@ type tile
 (* an abstract type representing a dungeon cell*)
 type cell
 
+(* type of tile_sprint *)
 type tile_sprite = string
 
+(* type of material *)
 type material = Sprite of tile_sprite
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)

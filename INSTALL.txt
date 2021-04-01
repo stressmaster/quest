@@ -1,0 +1,7 @@
+Install the following packages:
+
+
+From the terminal, navigate to the directory and run:
+dune build
+Then navigate to ./_build/default and run:
+ocamlrun main.bc

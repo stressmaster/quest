@@ -4,6 +4,7 @@ open Info
 
 let texture_list = ref []
 
+(* [make_texture img] makes a texture out of [img]*)
 let make_texture img =
   let w = img#width and h = img#height in
   let image = GlPix.create `ubyte ~format:`rgb ~width:w ~height:h in
@@ -25,6 +26,8 @@ let load_texture file = OImages.load file [] |> OImages.rgba32
 
 let set_texture file = GlTex.image2d (List.assoc file !texture_list)
 
+(* [make_texture_list file_lst lst] is a list of textures made from
+   files in [file_lst] *)
 let rec make_texture_list file_lst lst =
   match file_lst with
   | [] -> lst
@@ -32,6 +35,8 @@ let rec make_texture_list file_lst lst =
       make_texture_list t
         ((h, make_texture (load_texture h)#to_rgb24) :: lst)
 
+(* [init_texture file_lst] is a list of filtered textures from
+   [file_list] *)
 let init_texture file_lst =
   GlPix.store (`unpack_alignment 1);
   List.iter

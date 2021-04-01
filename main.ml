@@ -55,6 +55,7 @@ let render_square ~square =
   renderAt ~x:square.x ~y:square.y ~width:square.width
     ~height:square.height ~texture:square.texture
 
+(* [determine_color tile] is the color [tile] should be rendered *)
 let determine_color tile =
   let material = tile |> Dungeon.tile_material in
   match material with
@@ -63,10 +64,10 @@ let determine_color tile =
       else if s = "path.jpg" then path
       else darkness
 
-let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
-  let dungeon_cells = dungeon |> Dungeon.get_cells in
-  let dungeon_x_length = dungeon |> Dungeon.get_dimensions |> fst in
-  let dungeon_y_length = dungeon |> Dungeon.get_dimensions |> snd in
+(* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
+   bounds for rendering based on [(p_x, p_y) dungeon_x_length
+   dungeon_y_length] *)
+let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
   let x_start =
     if p_x - ((x_length - 1) / 2) < 0 then 0
     else if p_x + ((x_length - 1) / 2) + 1 > dungeon_x_length then
@@ -91,17 +92,34 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
     else if p_y - ((y_length - 1) / 2) < 0 then y_length
     else p_y + ((y_length - 1) / 2)
   in
+  (x_start, x_end, y_start, y_end)
+
+(* [determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon] is the
+   texture of the tile at [(x, y)] based on [(p_x, p_y) dungeon_cells
+   dungeon] *)
+let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
+  if (x, y) = (p_x, p_y) then player
+  else if Hashtbl.find_opt dungeon_cells (x, y) = None then darkness
+  else if (x, y) = Dungeon.get_start dungeon then entrance
+  else if Dungeon.get_exit dungeon = (x, y) then exit_tex
+  else
+    determine_color
+      (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile)
+
+(* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
+   based on [(p_x, p_y)]*)
+let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
+  let dungeon_cells = dungeon |> Dungeon.get_cells in
+  let dungeon_x_length, dungeon_y_length =
+    dungeon |> Dungeon.get_dimensions
+  in
+  let x_start, x_end, y_start, y_end =
+    get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length
+  in
   for x = x_start to x_end do
     for y = y_start to y_end do
       let texture =
-        if (x, y) = (p_x, p_y) then player
-        else if Hashtbl.find_opt dungeon_cells (x, y) = None then
-          darkness
-        else if (x, y) = Dungeon.get_start dungeon then entrance
-        else if Dungeon.get_exit dungeon = (x, y) then exit_tex
-        else
-          determine_color
-            (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile)
+        determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon
       in
       render_square
         {
@@ -125,6 +143,7 @@ let _ =
   r.Gc.max_overhead <- 30;
   Gc.set r
 
+(* [main] renders the game*)
 let main () =
   ignore (Glut.init Sys.argv);
   Glut.initDisplayMode ~alpha:true ~depth:true ();

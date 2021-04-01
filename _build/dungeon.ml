@@ -1,12 +1,6 @@
 type tile_sprite = string
 
-type color =
-  | Green
-  | Gray
-
-type material =
-  | Color of color
-  | Sprite of tile_sprite
+type material = Sprite of tile_sprite
 
 type tile = {
   material : material;
@@ -32,25 +26,17 @@ type t = {
 let instantiate_dungeon_cells x y dungeon_cells =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
-      if
-        counter_y = 0
-        || counter_y = y - 1
-        || counter_x = 0
-        || counter_x = x - 1
-      then
-        Hashtbl.add dungeon_cells (counter_x, counter_y)
-          {
-            tile = { material = Sprite "wall.jpg"; is_wall = true };
-            x = counter_x;
-            y = counter_y;
-          }
-      else
-        Hashtbl.add dungeon_cells (counter_x, counter_y)
-          {
-            tile = { material = Sprite "path.jpg"; is_wall = false };
-            x = counter_x;
-            y = counter_y;
-          }
+      let tile =
+        if
+          counter_y = 0
+          || counter_y = y - 1
+          || counter_x = 0
+          || counter_x = x - 1
+        then { material = Sprite "wall.jpg"; is_wall = true }
+        else { material = Sprite "path.jpg"; is_wall = false }
+      in
+      Hashtbl.add dungeon_cells (counter_x, counter_y)
+        { tile; x = counter_x; y = counter_y }
     done
   done
 

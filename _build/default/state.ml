@@ -8,6 +8,7 @@ let init_state dungeon =
 
 let player_loc state = state.location
 
+(* [move current key] assigns a location to [current] based on [key]*)
 let move current key =
   let x, y = current.location in
   match key with

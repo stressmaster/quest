@@ -1,3 +1,4 @@
 #require "lablgtk3";;
+#require "ounit2";;
 #directory "_build";;
 #load "dungeon.cmo";;

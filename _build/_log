@@ -1,42 +1,16 @@
 ### Starting build.
+# Target: test.ml.depends, tags: { package(lablgl), extension:ml, file:test.ml, ocaml, ocamldep, quiet, traverse }
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamldep.opt -modules test.ml > test.ml.depends
 # Target: dungeon.mli.depends, tags: { package(lablgl), extension:mli, file:dungeon.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules dungeon.mli > dungeon.mli.depends # cached
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamldep.opt -modules dungeon.mli > dungeon.mli.depends # cached
 # Target: dungeon.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:dungeon.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o dungeon.cmi dungeon.mli # cached
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -c -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/bytes -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/oUnit -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ocaml -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ounit2 -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ounit2/advanced -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/stdlib-shims -o dungeon.cmi dungeon.mli
+# Target: test.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:test.cmo, file:test.ml, implem, ocaml, quiet, traverse }
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -c -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/bytes -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/oUnit -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ocaml -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ounit2 -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ounit2/advanced -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/stdlib-shims -o test.cmo test.ml
 # Target: dungeon.ml.depends, tags: { package(lablgl), extension:ml, file:dungeon.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules dungeon.ml > dungeon.ml.depends # cached
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamldep.opt -modules dungeon.ml > dungeon.ml.depends # cached
 # Target: dungeon.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:dungeon.cmo, file:dungeon.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o dungeon.cmo dungeon.ml # cached
-# Target: engine.mli.depends, tags: { package(lablgl), extension:mli, file:engine.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules engine.mli > engine.mli.depends # cached
-# Target: engine.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:engine.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o engine.cmi engine.mli # cached
-# Target: engine.ml.depends, tags: { package(lablgl), extension:ml, file:engine.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules engine.ml > engine.ml.depends # cached
-# Target: engine.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:engine.cmo, file:engine.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o engine.cmo engine.ml # cached
-# Target: main.ml.depends, tags: { package(lablgl), extension:ml, file:main.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules main.ml > main.ml.depends # cached
-# Target: state.mli.depends, tags: { package(lablgl), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules state.mli > state.mli.depends # cached
-# Target: state.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o state.cmi state.mli # cached
-# Target: texturemap.mli.depends, tags: { package(lablgl), extension:mli, file:texturemap.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules texturemap.mli > texturemap.mli.depends # cached
-# Target: texturemap.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:texturemap.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o texturemap.cmi texturemap.mli # cached
-# Target: main.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o main.cmo main.ml # cached
-# Target: authors.mli.depends, tags: { package(lablgl), extension:mli, file:authors.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules authors.mli > authors.mli.depends # cached
-# Target: authors.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:authors.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o authors.cmi authors.mli # cached
-# Target: authors.ml.depends, tags: { package(lablgl), extension:ml, file:authors.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules authors.ml > authors.ml.depends # cached
-# Target: authors.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:authors.cmo, file:authors.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o authors.cmo authors.ml # cached
-# Target: texturemap.ml.depends, tags: { package(lablgl), extension:ml, file:texturemap.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -modules texturemap.ml > texturemap.ml.depends
-# Target: texturemap.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:texturemap.cmo, file:texturemap.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -o texturemap.cmo texturemap.ml
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -c -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/bytes -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/oUnit -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ocaml -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ounit2 -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ounit2/advanced -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/stdlib-shims -o dungeon.cmo dungeon.ml
+# Target: test.byte, tags: { package(lablgl), byte, dont_link_with, extension:byte, file:test.byte, link, ocaml, program, quiet, traverse }
+/Users/matthewrosen/.opam/cs3110-2021sp/bin/ocamlc.opt -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/bytes -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/oUnit -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ocaml -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ounit2 -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/ounit2/advanced -I /Users/matthewrosen/.opam/cs3110-2021sp/lib/stdlib-shims stdlib_shims.cma unix.cma oUnitAdvanced.cma oUnit.cma dungeon.cmo test.cmo -o test.byte
 # Compilation successful.
