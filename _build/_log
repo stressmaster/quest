@@ -21,6 +21,10 @@ ocamlfind ocamldep -package lablgl -modules main.ml > main.ml.depends # cached
 ocamlfind ocamldep -package lablgl -modules state.mli > state.mli.depends # cached
 # Target: state.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package lablgl -o state.cmi state.mli # cached
+# Target: texturemap.mli.depends, tags: { package(lablgl), extension:mli, file:texturemap.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules texturemap.mli > texturemap.mli.depends # cached
+# Target: texturemap.cmi, tags: { package(lablgl), byte, compile, extension:mli, file:texturemap.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o texturemap.cmi texturemap.mli # cached
 # Target: main.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package lablgl -o main.cmo main.ml # cached
 # Target: authors.mli.depends, tags: { package(lablgl), extension:mli, file:authors.mli, ocaml, ocamldep, quiet, traverse }
@@ -31,4 +35,8 @@ ocamlfind ocamlc -c -package lablgl -o authors.cmi authors.mli # cached
 ocamlfind ocamldep -package lablgl -modules authors.ml > authors.ml.depends # cached
 # Target: authors.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:authors.cmo, file:authors.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package lablgl -o authors.cmo authors.ml # cached
+# Target: texturemap.ml.depends, tags: { package(lablgl), extension:ml, file:texturemap.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package lablgl -modules texturemap.ml > texturemap.ml.depends
+# Target: texturemap.cmo, tags: { package(lablgl), byte, compile, extension:cmo, extension:ml, file:texturemap.cmo, file:texturemap.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package lablgl -o texturemap.cmo texturemap.ml
 # Compilation successful.
