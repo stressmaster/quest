@@ -2,13 +2,14 @@ open Images
 open OImages
 open Info
 
+let texture_list = ref []
+
 let make_texture img =
   let w = img#width and h = img#height in
   let image = GlPix.create `ubyte ~format:`rgb ~width:w ~height:h in
   for i = 0 to w - 1 do
     for j = 0 to h - 1 do
       let pixel = img#get i j in
-      (* pixel is a Color.rgb *)
       Raw.sets (GlPix.to_raw image)
         ~pos:(3 * ((i * h) + j))
         [| pixel.r; pixel.g; pixel.b |]
@@ -22,11 +23,16 @@ let end_texture () = Gl.disable `texture_2d
 
 let load_texture file = OImages.load file [] |> OImages.rgba32
 
-let set_texture file =
-  let img = load_texture file in
-  GlTex.image2d (make_texture img#to_rgb24)
+let set_texture file = GlTex.image2d (List.assoc file !texture_list)
 
-let init_texture () =
+let rec make_texture_list file_lst lst =
+  match file_lst with
+  | [] -> lst
+  | h :: t ->
+      make_texture_list t
+        ((h, make_texture (load_texture h)#to_rgb24) :: lst)
+
+let init_texture file_lst =
   GlPix.store (`unpack_alignment 1);
   List.iter
     (GlTex.parameter ~target:`texture_2d)
@@ -37,4 +43,5 @@ let init_texture () =
       `min_filter `nearest;
     ];
   GlTex.env (`mode `decal);
+  texture_list := make_texture_list file_lst !texture_list;
   ()

@@ -1,5 +1,5 @@
 (* initializes texture *)
-val init_texture : unit -> unit
+val init_texture : string list -> unit
 
 (* sets texture*)
 val set_texture : string -> unit

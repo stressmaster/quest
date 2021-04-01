@@ -6,17 +6,19 @@ type square = {
   mutable texture : string;
 }
 
-let wall_brick = "./wall.png"
+let wall = "wall.png"
 
-and path = "./path.png"
+and path = "path.png"
 
-and entrance = "./entrance.png"
+and entrance = "entrance.png"
 
-and exit_tex = "./exit.png"
+and exit_tex = "exit.png"
 
-and player = "./player.png"
+and player = "player.png"
 
-and darkness = "./darkness.png"
+and darkness = "darkness.png"
+
+let texture_list = [ wall; path; entrance; exit_tex; player; darkness ]
 
 let w = 500
 
@@ -57,10 +59,9 @@ let determine_color tile =
   let material = tile |> Dungeon.tile_material in
   match material with
   | Sprite s ->
-      if s = "wall.jpg" then wall_brick
+      if s = "wall.jpg" then wall
       else if s = "path.jpg" then path
       else darkness
-  | Color _ -> darkness
 
 let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
   let dungeon_cells = dungeon |> Dungeon.get_cells in
@@ -129,7 +130,7 @@ let main () =
   Glut.initDisplayMode ~alpha:true ~depth:true ();
   Glut.initWindowSize ~w ~h;
   ignore (Glut.createWindow ~title:"fuck");
-  Texturemap.init_texture ();
+  Texturemap.init_texture texture_list;
   Glut.displayFunc ~cb:(fun () ->
       GlClear.color (0.0, 0.0, 0.0);
       GlClear.clear [ `color ];

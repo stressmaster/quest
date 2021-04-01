@@ -1,12 +1,6 @@
 type tile_sprite = string
 
-type color =
-  | Green
-  | Gray
-
-type material =
-  | Color of color
-  | Sprite of tile_sprite
+type material = Sprite of tile_sprite
 
 type tile = {
   material : material;
