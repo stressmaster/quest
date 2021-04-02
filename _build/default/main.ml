@@ -148,7 +148,7 @@ let main () =
   ignore (Glut.init Sys.argv);
   Glut.initDisplayMode ~alpha:true ~depth:true ();
   Glut.initWindowSize ~w ~h;
-  ignore (Glut.createWindow ~title:"fuck");
+  ignore (Glut.createWindow ~title:"CamelQuest");
   Texturemap.init_texture texture_list;
   Glut.displayFunc ~cb:(fun () ->
       GlClear.color (0.0, 0.0, 0.0);
