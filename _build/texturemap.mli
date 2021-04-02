@@ -1,11 +1,11 @@
-(* initializes texture *)
-val init_texture : unit -> unit
+(* [init_texture] initializes texture *)
+val init_texture : string list -> unit
 
-(* sets texture*)
-val set_texture : int array -> int array -> unit
+(* [set_texture] sets texture *)
+val set_texture : string -> unit
 
-(* enables texture *)
+(* [start_texture] enables texture *)
 val start_texture : unit -> unit
 
-(* disables texture*)
+(* [end_texture] disables texture*)
 val end_texture : unit -> unit
