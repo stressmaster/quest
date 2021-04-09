@@ -16,7 +16,7 @@ ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -pac
 # Target: engine.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:engine.cmo, file:engine.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o engine.cmo engine.ml # cached
 # Target: main.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:ml, file:main.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules main.ml > main.ml.depends # cached
+ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules main.ml > main.ml.depends
 # Target: state.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules state.mli > state.mli.depends # cached
 # Target: state.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse }
@@ -26,7 +26,7 @@ ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -pac
 # Target: texturemap.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:mli, file:texturemap.mli, interf, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o texturemap.cmi texturemap.mli # cached
 # Target: main.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o main.cmo main.ml # cached
+ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o main.cmo main.ml
 # Target: authors.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:mli, file:authors.mli, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules authors.mli > authors.mli.depends # cached
 # Target: authors.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:mli, file:authors.mli, interf, ocaml, quiet, traverse }
@@ -40,7 +40,7 @@ ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -pac
 # Target: texturemap.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:texturemap.cmo, file:texturemap.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o texturemap.cmo texturemap.ml # cached
 # Target: state.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:ml, file:state.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules state.ml > state.ml.depends # cached
+ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules state.ml > state.ml.depends
 # Target: state.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:state.cmo, file:state.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o state.cmo state.ml # cached
+ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o state.cmo state.ml
 # Compilation successful.

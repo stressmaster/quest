@@ -18,6 +18,7 @@ type t = {
   start : int * int;
   exit : int * int;
   dimensions : int * int;
+  bound : int;
 }
 
 (* [instantiate_dungeon_cells x y dungeon_cells] associates (x', y')
@@ -41,7 +42,7 @@ let instantiate_dungeon_cells x y dungeon_cells =
   done
 
 (* [instantiate_dungeon x y] is a dugeon with [x] columns [y] rows *)
-let instantiate_dungeon x y : t =
+let instantiate_dungeon x y b : t =
   let c = Hashtbl.create (x * y) in
   instantiate_dungeon_cells x y c;
   {
@@ -49,6 +50,7 @@ let instantiate_dungeon x y : t =
     start = (1, 1);
     exit = (x - 2, y - 2);
     dimensions = (x, y);
+    bound = b;
   }
 
 let print_dungeon dungeon =
@@ -77,3 +79,5 @@ let get_cells dungeon = dungeon.cells
 let get_tile cell = cell.tile
 
 let tile_material tile = tile.material
+
+let get_bound dungeon = dungeon.bound

@@ -132,7 +132,7 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
     done
   done
 
-let dungeon = Dungeon.instantiate_dungeon 20 30
+let dungeon = Dungeon.instantiate_dungeon 20 30 8
 
 let game = ref (State.init_state dungeon)
 
@@ -148,7 +148,7 @@ let main () =
   ignore (Glut.init Sys.argv);
   Glut.initDisplayMode ~alpha:true ~depth:true ();
   Glut.initWindowSize ~w ~h;
-  ignore (Glut.createWindow ~title:"fuck");
+  ignore (Glut.createWindow ~title:"CamelQuest");
   Texturemap.init_texture texture_list;
   Glut.displayFunc ~cb:(fun () ->
       GlClear.color (0.0, 0.0, 0.0);

@@ -132,7 +132,7 @@ let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
     done
   done
 
-let dungeon = Dungeon.instantiate_dungeon 20 30
+let dungeon = Dungeon.instantiate_dungeon 20 30 8
 
 let game = ref (State.init_state dungeon)
 
