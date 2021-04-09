@@ -42,4 +42,5 @@ val get_cells : t -> (int * int, cell) Hashtbl.t
 (* [get_cells cell] is the tile of [cell]*)
 val get_tile : cell -> tile
 
+(* [get_bound dungeon] is the current bound of [dungeon]*)
 val get_bound : t -> int
