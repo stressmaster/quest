@@ -22,6 +22,7 @@ type monster = {
 }
 
 type t = {
+  id : int;
   cells : (int * int, cell) Hashtbl.t;
   start : int * int;
   exit : int * int;
@@ -53,16 +54,17 @@ let instantiate_dungeon_cells x y dungeon_cells =
   done
 
 (* [instantiate_dungeon x y] is a dugeon with [x] columns [y] rows *)
-let instantiate_dungeon x y b mlst next prev : t =
+let instantiate_dungeon id x y start exit bound monsters next prev : t =
   let c = Hashtbl.create (x * y) in
   instantiate_dungeon_cells x y c;
   {
+    id;
     cells = c;
-    start = (1, 1);
-    exit = (x - 2, y - 2);
+    start;
+    exit;
     dimensions = (x, y);
-    bound = b;
-    monsters = mlst;
+    bound;
+    monsters;
     next;
     prev;
   }
