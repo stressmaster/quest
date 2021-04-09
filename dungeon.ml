@@ -21,6 +21,14 @@ type t = {
   bound : int;
 }
 
+type monster = {
+  name : string;
+  sprite : string;
+  hitpoints : int;
+  encounter_chance : int;
+  attack_strings : string list;
+}
+
 (* [instantiate_dungeon_cells x y dungeon_cells] associates (x', y')
    with a tile that has x-cord x' and y-cord y' for 0<=x'<=[x]-1 and
    0<=y'<=[y]-1 in dungeon_cells *)
