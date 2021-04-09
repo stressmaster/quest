@@ -4,6 +4,7 @@ MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
 #TEST=test.byte#
 MAIN=main.byte
+OURMAIN=_build/default/main.bc
 OCAMLBUILD=ocamlbuild -use-ocamlfind
 
 default: build
@@ -16,4 +17,4 @@ test:
 	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
 
 play:
-	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)
+	ocamlrun ./$(OURMAIN)
