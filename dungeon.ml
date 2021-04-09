@@ -13,20 +13,23 @@ type cell = {
   y : int;
 }
 
-type t = {
-  cells : (int * int, cell) Hashtbl.t;
-  start : int * int;
-  exit : int * int;
-  dimensions : int * int;
-  bound : int;
-}
-
 type monster = {
   name : string;
   sprite : string;
   hitpoints : int;
   encounter_chance : int;
   attack_strings : string list;
+}
+
+type t = {
+  cells : (int * int, cell) Hashtbl.t;
+  start : int * int;
+  exit : int * int;
+  dimensions : int * int;
+  difficulty : int;
+  monsters : monster list;
+  next : t option;
+  prev : t option;
 }
 
 (* [instantiate_dungeon_cells x y dungeon_cells] associates (x', y')
