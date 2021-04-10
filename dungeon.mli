@@ -59,3 +59,5 @@ val get_tile : cell -> tile
 
 (* [get_bound dungeon] is the current bound of [dungeon]*)
 val get_bound : t -> int
+
+val render_dungeon : int * int -> t -> unit

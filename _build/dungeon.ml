@@ -2,14 +2,6 @@ type tile_sprite = string
 
 type material = Sprite of tile_sprite
 
-type square = {
-  mutable x : float;
-  mutable y : float;
-  mutable width : float;
-  mutable height : float;
-  mutable texture : string;
-}
-
 type tile = {
   material : material;
   is_wall : bool;
@@ -118,37 +110,41 @@ let determine_color tile =
   let material = tile |> tile_material in
   match material with
   | Sprite s ->
-      if s = "wall.jpg" then Main.wall
-      else if s = "path.jpg" then Main.path
-      else Main.darkness
+      if s = "wall.jpg" then Magic_numbers.wall
+      else if s = "path.jpg" then Magic_numbers.path
+      else Magic_numbers.darkness
 
 (* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
    bounds for rendering based on [(p_x, p_y) dungeon_x_length
    dungeon_y_length] *)
 let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
   let x_start =
-    if p_x - ((Main.x_length - 1) / 2) < 0 then 0
-    else if p_x + ((Main.x_length - 1) / 2) + 1 > dungeon_x_length then
-      dungeon_x_length - Main.x_length
-    else p_x - ((Main.x_length - 1) / 2)
+    if p_x - ((Magic_numbers.x_length - 1) / 2) < 0 then 0
+    else if
+      p_x + ((Magic_numbers.x_length - 1) / 2) + 1 > dungeon_x_length
+    then dungeon_x_length - Magic_numbers.x_length
+    else p_x - ((Magic_numbers.x_length - 1) / 2)
   in
   let x_end =
-    if p_x + ((Main.x_length - 1) / 2) + 1 > dungeon_x_length then
-      dungeon_x_length
-    else if p_x - ((Main.x_length - 1) / 2) < 0 then Main.x_length
-    else p_x + ((Main.x_length - 1) / 2)
+    if p_x + ((Magic_numbers.x_length - 1) / 2) + 1 > dungeon_x_length
+    then dungeon_x_length
+    else if p_x - ((Magic_numbers.x_length - 1) / 2) < 0 then
+      Magic_numbers.x_length
+    else p_x + ((Magic_numbers.x_length - 1) / 2)
   in
   let y_start =
-    if p_y - ((Main.y_length - 1) / 2) < 0 then 0
-    else if p_y + ((Main.y_length - 1) / 2) + 1 > dungeon_y_length then
-      dungeon_y_length - Main.y_length
-    else p_y - ((Main.y_length - 1) / 2)
+    if p_y - ((Magic_numbers.y_length - 1) / 2) < 0 then 0
+    else if
+      p_y + ((Magic_numbers.y_length - 1) / 2) + 1 > dungeon_y_length
+    then dungeon_y_length - Magic_numbers.y_length
+    else p_y - ((Magic_numbers.y_length - 1) / 2)
   in
   let y_end =
-    if p_y + ((Main.y_length - 1) / 2) + 1 > dungeon_y_length then
-      dungeon_y_length
-    else if p_y - ((Main.y_length - 1) / 2) < 0 then Main.y_length
-    else p_y + ((Main.y_length - 1) / 2)
+    if p_y + ((Magic_numbers.y_length - 1) / 2) + 1 > dungeon_y_length
+    then dungeon_y_length
+    else if p_y - ((Magic_numbers.y_length - 1) / 2) < 0 then
+      Magic_numbers.y_length
+    else p_y + ((Magic_numbers.y_length - 1) / 2)
   in
   (x_start, x_end, y_start, y_end)
 
@@ -156,11 +152,11 @@ let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
    texture of the tile at [(x, y)] based on [(p_x, p_y) dungeon_cells
    dungeon] *)
 let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
-  if (x, y) = (p_x, p_y) then Main.player
+  if (x, y) = (p_x, p_y) then Magic_numbers.player
   else if Hashtbl.find_opt dungeon_cells (x, y) = None then
-    Main.darkness
-  else if (x, y) = get_start dungeon then Main.entrance
-  else if get_exit dungeon = (x, y) then Main.exit_tex
+    Magic_numbers.darkness
+  else if (x, y) = get_start dungeon then Magic_numbers.entrance
+  else if get_exit dungeon = (x, y) then Magic_numbers.exit_tex
   else determine_color (Hashtbl.find dungeon_cells (x, y) |> get_tile)
 
 (* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
@@ -180,11 +176,11 @@ let render_dungeon (p_x, p_y) (dungeon : t) =
         (Render.new_square
            (3.
            *. float_of_int (x - x_start)
-           /. float_of_int Main.x_length
+           /. float_of_int Magic_numbers.x_length
            *. 2.)
            (float_of_int (y - y_start)
-           /. float_of_int Main.y_length
+           /. float_of_int Magic_numbers.y_length
            *. 2.)
-           Main.width Main.height new_texture)
+           Magic_numbers.width Magic_numbers.height new_texture)
     done
   done

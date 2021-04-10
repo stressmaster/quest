@@ -1,0 +1,17 @@
+{
+	"dungeons": [
+		{
+			"id": "4",
+			"x-dim": 50,
+			"y-dim": 20,
+			"start-x": 1,
+			"start-y": 1,
+			"end-x": 48,
+			"end-y": 18,
+			"bound": 10,
+			"monsters": [],
+			"prev": 1,
+			"next": 3
+		}
+	]
+}

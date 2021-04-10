@@ -7,6 +7,8 @@ type current = {
   mutable in_fight : bool;
 }
 
+let curr_room c = c.room
+
 let init_state file_name =
   let g = Yojson.Basic.from_file file_name |> Game.from_json in
   let r = g |> Game.start_room in

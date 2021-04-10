@@ -27,11 +27,11 @@ let init_input game =
   Glut.specialFunc ~cb:(fun ~key ~x ~y -> game := State.move !game key)
 
 let init_engine texture_list w h x_length y_length =
-  let dungeon = Dungeon.instantiate_dungeon 20 30 7 in
-  let game = ref (State.init_state dungeon) in
+  let game = ref (State.init_state "sample_game.json") in
+  let curr_dungeon = State.curr_room !game in
   init_texture texture_list;
   init_window w h;
-  init_display dungeon game w h;
+  init_display curr_dungeon game w h;
   init_input game;
   Glut.idleFunc ~cb:(Some Glut.postRedisplay);
   Glut.mainLoop ()

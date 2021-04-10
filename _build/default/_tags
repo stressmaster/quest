@@ -1,1 +1,1 @@
-true: package(lablgl)
+true: package(yojson), package(lablgl),package(ounit2), package(camlimages.core), package(camlimages.png)

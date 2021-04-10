@@ -1,11 +1,11 @@
-MODULES=render main authors texturemap game dungeon state
+MODULES=render main authors texturemap game dungeon state magic_numbers
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
 #TEST=test.byte#
 MAIN=main.byte
 OURMAIN=_build/default/main.bc
-OCAMLBUILD=ocamlbuild -use-ocamlfind
+OCAMLBUILD=ocamlbuild -use-ocamlfind -pkg yojson
 
 default: build
 	OCAMLRUNPARAM=b utop

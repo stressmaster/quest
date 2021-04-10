@@ -10,8 +10,20 @@ module Dungeon = Dune__exe__Dungeon
 module Engine = Dune__exe__Engine
 
 
+(** @canonical Dune__exe.Game *)
+module Game = Dune__exe__Game
+
+
+(** @canonical Dune__exe.Magic_numbers *)
+module Magic_numbers = Dune__exe__Magic_numbers
+
+
 (** @canonical Dune__exe.Main *)
 module Main = Dune__exe__Main
+
+
+(** @canonical Dune__exe.Render *)
+module Render = Dune__exe__Render
 
 
 (** @canonical Dune__exe.State *)

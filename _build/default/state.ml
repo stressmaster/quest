@@ -1,20 +1,25 @@
 open Random
 
 type current = {
+  game : Game.t;
   mutable location : int * int;
   mutable room : Dungeon.t;
   mutable in_fight : bool;
 }
 
-let init_state dungeon =
+let curr_room c = c.room
+
+let init_state file_name =
+  let g = Yojson.Basic.from_file file_name |> Game.from_json in
+  let r = g |> Game.start_room in
   {
-    location = dungeon |> Dungeon.get_start;
-    room = dungeon;
+    game = g;
+    room = r;
+    location = r |> Dungeon.get_start;
     in_fight = false;
   }
 
-let fight_decision bound =
-  match Random.int bound with 0 -> true | _ -> false
+let fight_decision bound = Random.int bound = 0
 
 let debug_encounters c =
   if c.in_fight then print_string "Encounter!" else ()

@@ -1,10 +1,11 @@
-MODULES=dungeon engine main authors texturemap
+MODULES=render main authors texturemap game dungeon state magic_numbers
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
 #TEST=test.byte#
 MAIN=main.byte
-OCAMLBUILD=ocamlbuild -use-ocamlfind
+OURMAIN=_build/default/main.bc
+OCAMLBUILD=ocamlbuild -use-ocamlfind -pkg yojson
 
 default: build
 	OCAMLRUNPARAM=b utop
@@ -16,4 +17,4 @@ test:
 	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
 
 play:
-	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)
+	ocamlrun ./$(OURMAIN)

@@ -3,13 +3,7 @@
     Initializes graphics, gain inputs from user, render new graphics
     based on new state, and repeat. *)
 
-(* type representing the directions the player can move *)
-type direction =
-  | Right
-  | Left
-  | Up
-  | Down
+(* [init_engine texture_list w h x_length y_length ] initilizes the game
+   engine *)
 
-(* Renders the scene using current game state *)
-
-(* The input by the user as an direction *)
+val init_engine : string list -> int -> int -> int -> int -> unit
