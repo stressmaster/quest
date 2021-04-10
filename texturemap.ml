@@ -24,7 +24,20 @@ let end_texture () = Gl.disable `texture_2d
 
 let load_texture file = OImages.load file [] |> OImages.rgba32
 
-let set_texture file = GlTex.image2d (List.assoc file !texture_list)
+let set_texture file =
+  GlPix.store (`unpack_alignment 1);
+  GlTex.image2d (List.assoc file !texture_list);
+  List.iter
+    (GlTex.parameter ~target:`texture_2d)
+    [
+      `wrap_s `clamp;
+      `wrap_t `clamp;
+      `mag_filter `nearest;
+      `min_filter `nearest;
+    ];
+  GlTex.env (`mode `decal);
+  start_texture ();
+  GlDraw.shade_model `flat
 
 (* [make_texture_list file_lst lst] is a list of textures made from
    files in [file_lst] *)
@@ -38,15 +51,4 @@ let rec make_texture_list file_lst lst =
 (* [init_texture file_lst] is a list of filtered textures from
    [file_list] *)
 let init_texture file_lst =
-  GlPix.store (`unpack_alignment 1);
-  List.iter
-    (GlTex.parameter ~target:`texture_2d)
-    [
-      `wrap_s `clamp;
-      `wrap_t `clamp;
-      `mag_filter `nearest;
-      `min_filter `nearest;
-    ];
-  GlTex.env (`mode `decal);
-  texture_list := make_texture_list file_lst !texture_list;
-  ()
+  texture_list := make_texture_list file_lst !texture_list

@@ -1,10 +1,4 @@
-let init_texture texture_list =
-  Bitmap.maximum_live := 15000000;
-  Bitmap.maximum_block_size := !Bitmap.maximum_live / 16;
-  let r = Gc.get () in
-  r.Gc.max_overhead <- 30;
-  Gc.set r;
-  Texturemap.init_texture texture_list
+let init_texture texture_list = Texturemap.init_texture texture_list
 
 let init_window w h =
   ignore (Glut.init Sys.argv);
@@ -18,8 +12,7 @@ let init_display dungeon game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      let g = !game in
-      Dungeon.render_dungeon (State.player_loc g) dungeon;
+      Dungeon.render_dungeon (State.player_loc !game) dungeon;
       Gl.flush ())
 
 let init_input game =
