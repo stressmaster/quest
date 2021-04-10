@@ -1,6 +1,9 @@
 open Yojson.Basic.Util
 
-type t = { dungeons : Dungeon.t list }
+type t = {
+  dungeons : Dungeon.t list;
+  start_dungeon : Dungeon.t;
+}
 
 type monster = {
   name : string;
@@ -35,4 +38,8 @@ let from_json json =
   {
     dungeons =
       json |> member "dungeons" |> to_list |> List.map dungeon_of_json;
+    start_dungeon =
+      Dungeon.instantiate_dungeon 1 20 50 (1, 1) (18, 48) 10 [] 0 9;
   }
+
+let start_room game = game.start_dungeon
