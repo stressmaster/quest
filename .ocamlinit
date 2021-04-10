@@ -1,4 +1,7 @@
 #require "lablgtk3";;
 #require "ounit2";;
+#require "yojson";;
 #directory "_build";;
 #load "dungeon.cmo";;
+#load "game.cmo";;
+#load "render.cmo";;

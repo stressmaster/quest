@@ -1,11 +1,3 @@
-type square = {
-  mutable x : float;
-  mutable y : float;
-  mutable width : float;
-  mutable height : float;
-  mutable texture : string;
-}
-
 let wall = "./wall.png"
 
 and path = "./path.png"
@@ -34,107 +26,9 @@ let height = float_of_int h /. float_of_int y_length
 
 let square_height ~height = float_of_int h /. height
 
-let renderAt ~x ~y ~width ~height ~texture =
-  GlMat.load_identity ();
-  GlMat.translate3 (x, y, 0.);
-  Texturemap.set_texture texture;
-  Texturemap.start_texture ();
-  GlDraw.begins `quads;
-  GlTex.coord2 (0.0, 0.0);
-  GlDraw.vertex2 (0., 0.);
-  GlTex.coord2 (0.0, 1.0);
-  GlDraw.vertex2 (0., height -. 1.);
-  GlTex.coord2 (1.0, 1.0);
-  GlDraw.vertex2 (width -. 1., height -. 1.);
-  GlTex.coord2 (1.0, 0.0);
-  GlDraw.vertex2 (width -. 1., 0.);
-  Texturemap.end_texture ();
-  GlDraw.ends ()
+(*let dungeon = Dungeon.instantiate_dungeon 20 30 7
 
-let render_square ~square =
-  renderAt ~x:square.x ~y:square.y ~width:square.width
-    ~height:square.height ~texture:square.texture
-
-(* [determine_color tile] is the color [tile] should be rendered *)
-let determine_color tile =
-  let material = tile |> Dungeon.tile_material in
-  match material with
-  | Sprite s ->
-      if s = "wall.jpg" then wall
-      else if s = "path.jpg" then path
-      else darkness
-
-(* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
-   bounds for rendering based on [(p_x, p_y) dungeon_x_length
-   dungeon_y_length] *)
-let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
-  let x_start =
-    if p_x - ((x_length - 1) / 2) < 0 then 0
-    else if p_x + ((x_length - 1) / 2) + 1 > dungeon_x_length then
-      dungeon_x_length - x_length
-    else p_x - ((x_length - 1) / 2)
-  in
-  let x_end =
-    if p_x + ((x_length - 1) / 2) + 1 > dungeon_x_length then
-      dungeon_x_length
-    else if p_x - ((x_length - 1) / 2) < 0 then x_length
-    else p_x + ((x_length - 1) / 2)
-  in
-  let y_start =
-    if p_y - ((y_length - 1) / 2) < 0 then 0
-    else if p_y + ((y_length - 1) / 2) + 1 > dungeon_y_length then
-      dungeon_y_length - y_length
-    else p_y - ((y_length - 1) / 2)
-  in
-  let y_end =
-    if p_y + ((y_length - 1) / 2) + 1 > dungeon_y_length then
-      dungeon_y_length
-    else if p_y - ((y_length - 1) / 2) < 0 then y_length
-    else p_y + ((y_length - 1) / 2)
-  in
-  (x_start, x_end, y_start, y_end)
-
-(* [determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon] is the
-   texture of the tile at [(x, y)] based on [(p_x, p_y) dungeon_cells
-   dungeon] *)
-let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
-  if (x, y) = (p_x, p_y) then player
-  else if Hashtbl.find_opt dungeon_cells (x, y) = None then darkness
-  else if (x, y) = Dungeon.get_start dungeon then entrance
-  else if Dungeon.get_exit dungeon = (x, y) then exit_tex
-  else
-    determine_color
-      (Hashtbl.find dungeon_cells (x, y) |> Dungeon.get_tile)
-
-(* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
-   based on [(p_x, p_y)]*)
-let render_dungeon (p_x, p_y) (dungeon : Dungeon.t) =
-  let dungeon_cells = dungeon |> Dungeon.get_cells in
-  let dungeon_x_length, dungeon_y_length =
-    dungeon |> Dungeon.get_dimensions
-  in
-  let x_start, x_end, y_start, y_end =
-    get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length
-  in
-  for x = x_start to x_end do
-    for y = y_start to y_end do
-      let texture =
-        determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon
-      in
-      render_square
-        {
-          x = float_of_int (x - x_start) /. float_of_int x_length *. 2.;
-          y = float_of_int (y - y_start) /. float_of_int y_length *. 2.;
-          width;
-          height;
-          texture;
-        }
-    done
-  done
-
-let dungeon = Dungeon.instantiate_dungeon 20 30 8
-
-let game = ref (State.init_state dungeon)
+  let game = ref (State.init_state dungeon)*)
 
 let _ =
   Bitmap.maximum_live := 15000000;
@@ -155,12 +49,12 @@ let main () =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      let g = !game in
-      render_dungeon (State.player_loc g) dungeon;
+      (*let g = !game in*)
+      (*Dungeon.render_dungeon (State.player_loc g) dungeon;*)
       Gl.flush ());
-  Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
-  Glut.specialFunc ~cb:(fun ~key ~x ~y -> game := State.move !game key);
-  Glut.idleFunc ~cb:(Some Glut.postRedisplay);
+  (*Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
+    Glut.specialFunc ~cb:(fun ~key ~x ~y -> game := State.move !game
+    key); Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.mainLoop ()
 
 let _ = main ()

@@ -15,7 +15,7 @@ type tile_sprite = string
 (* type of material *)
 type material = Sprite of tile_sprite
 
-val instantiate_monsters :
+val instantiate_monster :
   string -> string -> int -> int -> string list -> monster
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)

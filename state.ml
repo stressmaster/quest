@@ -1,15 +1,19 @@
 open Random
 
 type current = {
+  game : Game.t;
   mutable location : int * int;
   mutable room : Dungeon.t;
   mutable in_fight : bool;
 }
 
-let init_state dungeon =
+let init_state file_name =
   {
-    location = dungeon |> Dungeon.get_start;
-    room = dungeon;
+    game =
+      Yojson.Basic.from_file file_name
+      |> Game.from_json;
+    room = game |> Game.start_room;
+    location = room |> Dungeon.get_start;
     in_fight = false;
   }
 
@@ -27,8 +31,8 @@ let move current key =
   match key with
   | Glut.KEY_RIGHT ->
       current.location <-
-        ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-        else (x + 1, y) );
+        (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+        else (x + 1, y));
       current.in_fight <- fight_decision current_bound;
       (*debug stuff start*)
       debug_encounters current;
@@ -36,8 +40,8 @@ let move current key =
       current
   | Glut.KEY_LEFT ->
       current.location <-
-        ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-        else (x - 1, y) );
+        (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+        else (x - 1, y));
       current.in_fight <- fight_decision current_bound;
       (*debug stuff start*)
       debug_encounters current;
@@ -45,8 +49,8 @@ let move current key =
       current
   | Glut.KEY_UP ->
       current.location <-
-        ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-        else (x, y + 1) );
+        (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+        else (x, y + 1));
       current.in_fight <- fight_decision current_bound;
       (*debug stuff start*)
       debug_encounters current;
@@ -54,8 +58,8 @@ let move current key =
       current
   | Glut.KEY_DOWN ->
       current.location <-
-        ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-        else (x, y - 1) );
+        (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+        else (x, y - 1));
       current.in_fight <- fight_decision current_bound;
       (*debug stuff start*)
       debug_encounters current;

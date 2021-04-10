@@ -13,8 +13,10 @@ let init_state dungeon =
     in_fight = false;
   }
 
-let fight_decision bound =
-  match Random.int bound with 0 -> true | _ -> false
+let fight_decision bound = Random.int bound = 0
+
+let debug_encounters c =
+  if c.in_fight then print_string "Encounter!" else ()
 
 let player_loc state = state.location
 
@@ -25,26 +27,38 @@ let move current key =
   match key with
   | Glut.KEY_RIGHT ->
       current.location <-
-        (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-        else (x + 1, y));
+        ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+        else (x + 1, y) );
       current.in_fight <- fight_decision current_bound;
+      (*debug stuff start*)
+      debug_encounters current;
+      (*debug stuff end*)
       current
   | Glut.KEY_LEFT ->
       current.location <-
-        (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-        else (x - 1, y));
+        ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+        else (x - 1, y) );
       current.in_fight <- fight_decision current_bound;
+      (*debug stuff start*)
+      debug_encounters current;
+      (*debug stuff end*)
       current
   | Glut.KEY_UP ->
       current.location <-
-        (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-        else (x, y + 1));
+        ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+        else (x, y + 1) );
       current.in_fight <- fight_decision current_bound;
+      (*debug stuff start*)
+      debug_encounters current;
+      (*debug stuff end*)
       current
   | Glut.KEY_DOWN ->
       current.location <-
-        (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-        else (x, y - 1));
+        ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+        else (x, y - 1) );
       current.in_fight <- fight_decision current_bound;
+      (*debug stuff start*)
+      debug_encounters current;
+      (*debug stuff end*)
       current
   | _ -> current

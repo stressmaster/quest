@@ -1,46 +1,17 @@
 ### Starting build.
-# Target: dungeon.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:mli, file:dungeon.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules dungeon.mli > dungeon.mli.depends # cached
-# Target: dungeon.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:mli, file:dungeon.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o dungeon.cmi dungeon.mli # cached
-# Target: dungeon.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:ml, file:dungeon.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules dungeon.ml > dungeon.ml.depends # cached
-# Target: dungeon.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:dungeon.cmo, file:dungeon.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o dungeon.cmo dungeon.ml # cached
-# Target: engine.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:mli, file:engine.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules engine.mli > engine.mli.depends # cached
-# Target: engine.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:mli, file:engine.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o engine.cmi engine.mli # cached
-# Target: engine.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:ml, file:engine.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules engine.ml > engine.ml.depends # cached
-# Target: engine.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:engine.cmo, file:engine.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o engine.cmo engine.ml # cached
-# Target: main.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:ml, file:main.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules main.ml > main.ml.depends
-# Target: state.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules state.mli > state.mli.depends # cached
-# Target: state.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o state.cmi state.mli # cached
-# Target: texturemap.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:mli, file:texturemap.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules texturemap.mli > texturemap.mli.depends # cached
-# Target: texturemap.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:mli, file:texturemap.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o texturemap.cmi texturemap.mli # cached
-# Target: main.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o main.cmo main.ml
-# Target: authors.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:mli, file:authors.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules authors.mli > authors.mli.depends # cached
-# Target: authors.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:mli, file:authors.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o authors.cmi authors.mli # cached
-# Target: authors.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:ml, file:authors.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules authors.ml > authors.ml.depends # cached
-# Target: authors.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:authors.cmo, file:authors.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o authors.cmo authors.ml # cached
-# Target: texturemap.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:ml, file:texturemap.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules texturemap.ml > texturemap.ml.depends # cached
-# Target: texturemap.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:texturemap.cmo, file:texturemap.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o texturemap.cmo texturemap.ml # cached
-# Target: state.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), extension:ml, file:state.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules state.ml > state.ml.depends
-# Target: state.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), byte, compile, extension:cmo, extension:ml, file:state.cmo, file:state.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o state.cmo state.ml
-# Compilation successful.
+# Target: render.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:render.ml, ocaml, ocamldep, quiet, traverse }
+/Users/jd/.opam/cs3110-2021sp/bin/ocamldep.opt -modules render.ml > render.ml.depends
+# Target: texturemap.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:texturemap.mli, ocaml, ocamldep, quiet, traverse }
+/Users/jd/.opam/cs3110-2021sp/bin/ocamldep.opt -modules texturemap.mli > texturemap.mli.depends
+# Target: texturemap.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:mli, file:texturemap.mli, interf, ocaml, quiet, traverse }
+/Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o texturemap.cmi texturemap.mli
+# Target: render.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:render.cmo, file:render.ml, implem, ocaml, quiet, traverse }
+/Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o render.cmo render.ml
++ /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o render.cmo render.ml
+File "render.ml", line 10, characters 2-21:
+10 |   GlMat.load_identity ();
+       ^^^^^^^^^^^^^^^^^^^
+Error: Unbound module GlMat
+Hint: Did you mean Float?
+Command exited with code 2.
+# Compilation unsuccessful.

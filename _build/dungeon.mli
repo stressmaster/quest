@@ -1,6 +1,8 @@
 (* an abstract type representing a dungeon*)
 type t
 
+type monster
+
 (* an abstract type representing a tile*)
 type tile
 
@@ -13,8 +15,21 @@ type tile_sprite = string
 (* type of material *)
 type material = Sprite of tile_sprite
 
+val instantiate_monster :
+  string -> string -> int -> int -> string list -> monster
+
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
-val instantiate_dungeon : int -> int -> int -> t
+val instantiate_dungeon :
+  int ->
+  int ->
+  int ->
+  int * int ->
+  int * int ->
+  int ->
+  monster list ->
+  int ->
+  int ->
+  t
 
 (* [is_wall dungeon (x, y)] returns true iff the cell at coordinate [(x,
    y)] is a wall in [dungeon] *)
@@ -42,4 +57,5 @@ val get_cells : t -> (int * int, cell) Hashtbl.t
 (* [get_cells cell] is the tile of [cell]*)
 val get_tile : cell -> tile
 
+(* [get_bound dungeon] is the current bound of [dungeon]*)
 val get_bound : t -> int
