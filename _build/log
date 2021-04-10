@@ -1,10 +1,10 @@
-# dune build
+# dune build main.bc
 # OCAMLPARAM: unset
-# Workspace root: /Users/jd/Desktop/S21/3110/CamelQuest
-$ /usr/bin/getconf _NPROCESSORS_ONLN > /var/folders/tx/czny_1211mb8jyjmrytx2zjr0000gp/T/dune293b9a.output 2> /dev/null
+# Workspace root: /Users/PokemonDeath/Documents/3110/CamelQuest
+$ /usr/bin/getconf _NPROCESSORS_ONLN > /var/folders/k1/ds3sg17n02zbnc9x0r85rhl80000gn/T/dunecd2b14.output 2> /dev/null
 # Auto-detected concurrency: 4
 # disable binary cache
-$ /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /var/folders/tx/czny_1211mb8jyjmrytx2zjr0000gp/T/dunebabbae.output
+$ /Users/PokemonDeath/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /var/folders/k1/ds3sg17n02zbnc9x0r85rhl80000gn/T/dunead2158.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -13,40 +13,46 @@ $ /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /var/folders/tx/czny_12
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = "default"
-#  ; toplevel_path = Some External "/Users/jd/.opam/cs3110-2021sp/lib/toplevel"
-#  ; ocaml_bin = External "/Users/jd/.opam/cs3110-2021sp/bin"
-#  ; ocaml = Ok External "/Users/jd/.opam/cs3110-2021sp/bin/ocaml"
-#  ; ocamlc = External "/Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt"
-#  ; ocamlopt = Ok External "/Users/jd/.opam/cs3110-2021sp/bin/ocamlopt.opt"
-#  ; ocamldep = Ok External "/Users/jd/.opam/cs3110-2021sp/bin/ocamldep.opt"
+#  ; toplevel_path =
+#      Some External "/Users/PokemonDeath/.opam/cs3110-2021sp/lib/toplevel"
+#  ; ocaml_bin = External "/Users/PokemonDeath/.opam/cs3110-2021sp/bin"
+#  ; ocaml = Ok External "/Users/PokemonDeath/.opam/cs3110-2021sp/bin/ocaml"
+#  ; ocamlc = External "/Users/PokemonDeath/.opam/cs3110-2021sp/bin/ocamlc.opt"
+#  ; ocamlopt =
+#      Ok External "/Users/PokemonDeath/.opam/cs3110-2021sp/bin/ocamlopt.opt"
+#  ; ocamldep =
+#      Ok External "/Users/PokemonDeath/.opam/cs3110-2021sp/bin/ocamldep.opt"
 #  ; ocamlmklib =
-#      Ok External "/Users/jd/.opam/cs3110-2021sp/bin/ocamlmklib.opt"
+#      Ok External "/Users/PokemonDeath/.opam/cs3110-2021sp/bin/ocamlmklib.opt"
 #  ; env =
 #      map
-#        { "DUNE_OCAML_HARDCODED" : "/Users/jd/.opam/cs3110-2021sp/lib"
-#        ; "DUNE_OCAML_STDLIB" : "/Users/jd/.opam/cs3110-2021sp/lib/ocaml"
-#        ; "DUNE_SOURCEROOT" : "/Users/jd/Desktop/S21/3110/CamelQuest"
+#        { "DUNE_OCAML_HARDCODED" :
+#            "/Users/PokemonDeath/.opam/cs3110-2021sp/lib"
+#        ; "DUNE_OCAML_STDLIB" :
+#            "/Users/PokemonDeath/.opam/cs3110-2021sp/lib/ocaml"
+#        ; "DUNE_SOURCEROOT" : "/Users/PokemonDeath/Documents/3110/CamelQuest"
 #        ; "INSIDE_DUNE" :
-#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/default"
+#            "/Users/PokemonDeath/Documents/3110/CamelQuest/_build/default"
 #        ; "MANPATH" :
-#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/install/default/bin"
+#            "/Users/PokemonDeath/Documents/3110/CamelQuest/_build/install/default/bin"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/install/default/lib"
+#            "/Users/PokemonDeath/Documents/3110/CamelQuest/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/install/default/lib"
+#            "/Users/PokemonDeath/Documents/3110/CamelQuest/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/install/default/lib/toplevel"
+#            "/Users/PokemonDeath/Documents/3110/CamelQuest/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
-#  ; findlib_path = [ External "/Users/jd/.opam/cs3110-2021sp/lib" ]
+#  ; findlib_path = [ External "/Users/PokemonDeath/.opam/cs3110-2021sp/lib" ]
 #  ; arch_sixtyfour = true
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
 #      { version = "4.11.1"
-#      ; standard_library_default = "/Users/jd/.opam/cs3110-2021sp/lib/ocaml"
-#      ; standard_library = "/Users/jd/.opam/cs3110-2021sp/lib/ocaml"
+#      ; standard_library_default =
+#          "/Users/PokemonDeath/.opam/cs3110-2021sp/lib/ocaml"
+#      ; standard_library = "/Users/PokemonDeath/.opam/cs3110-2021sp/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
 #      ; c_compiler = "cc"
@@ -89,8 +95,8 @@ $ /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /var/folders/tx/czny_12
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "x86_64-apple-darwin19.6.0"
-#      ; target = "x86_64-apple-darwin19.6.0"
+#      ; host = "x86_64-apple-darwin20.3.0"
+#      ; target = "x86_64-apple-darwin20.3.0"
 #      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
@@ -110,10 +116,3 @@ $ /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /var/folders/tx/czny_12
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /Users/jd/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf game.mli) > _build/default/.main.eobjs/game.mli.d
-$ (cd _build/default && /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /Users/jd/.opam/cs3110-2021sp/lib/camlimages/core -I /Users/jd/.opam/cs3110-2021sp/lib/camlimages/png -I /Users/jd/.opam/cs3110-2021sp/lib/lablgl -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Game.cmi -c -intf game.mli)
-> File "game.mli", line 5, characters 16-30:
-> 5 | val from_json : Yojson.Basic.t -> t
->                     ^^^^^^^^^^^^^^
-> Error: Unbound module Yojson
-[2]

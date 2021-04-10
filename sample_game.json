@@ -1,7 +1,7 @@
 {
 	"dungeons": [
 		{
-			"id": "4",
+			"id": 4,
 			"x-dim": 50,
 			"y-dim": 20,
 			"start-x": 1,
