@@ -36,7 +36,7 @@ let set_texture file =
       `min_filter `nearest;
     ];
   GlTex.env (`mode `decal);
-  Gl.enable `texture_2d;
+  start_texture ();
   GlDraw.shade_model `flat
 
 (* [make_texture_list file_lst lst] is a list of textures made from
