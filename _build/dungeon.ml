@@ -173,22 +173,18 @@ let render_dungeon (p_x, p_y) (dungeon : t) =
   in
   for x = x_start to x_end do
     for y = y_start to y_end do
-      let texture =
+      let new_texture =
         determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon
       in
       Render.render_square
-        {
-          x =
-            3 float_of_int (x - x_start)
-            /. float_of_int Main.x_length
-            *. 2.;
-          y =
-            float_of_int (y - y_start)
-            /. float_of_int Main.y_length
-            *. 2.;
-          Main.width;
-          Main.height;
-          texture;
-        }
+        (Render.new_square
+           (3.
+           *. float_of_int (x - x_start)
+           /. float_of_int Main.x_length
+           *. 2.)
+           (float_of_int (y - y_start)
+           /. float_of_int Main.y_length
+           *. 2.)
+           Main.width Main.height new_texture)
     done
   done

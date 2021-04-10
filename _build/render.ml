@@ -1,10 +1,13 @@
 type square = {
-  mutable x : float;
-  mutable y : float;
+  mutable square_x : float;
+  mutable square_y : float;
   mutable width : float;
   mutable height : float;
   mutable texture : string;
 }
+
+let new_square x y w h t =
+  { square_x = x; square_y = y; width = w; height = h; texture = t }
 
 let renderAt ~x ~y ~width ~height ~texture =
   GlMat.load_identity ();
@@ -24,5 +27,5 @@ let renderAt ~x ~y ~width ~height ~texture =
   GlDraw.ends ()
 
 let render_square ~square =
-  renderAt ~x:square.x ~y:square.y ~width:square.width
+  renderAt ~x:square.square_x ~y:square.square_y ~width:square.width
     ~height:square.height ~texture:square.texture

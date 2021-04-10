@@ -9,9 +9,7 @@ type current = {
 
 let init_state file_name =
   {
-    game =
-      Yojson.Basic.from_file file_name
-      |> Game.from_json;
+    game = Yojson.Basic.from_file file_name |> Game.from_json;
     room = game |> Game.start_room;
     location = room |> Dungeon.get_start;
     in_fight = false;

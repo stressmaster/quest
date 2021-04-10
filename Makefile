@@ -1,4 +1,4 @@
-MODULES=render dungeon engine main authors texturemap state game 
+MODULES=render main authors texturemap game dungeon
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
