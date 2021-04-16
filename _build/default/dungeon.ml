@@ -46,6 +46,10 @@ let is_wall dungeon (x, y) =
 
 let get_start dungeon = dungeon.start
 
+let get_prev dungeon = dungeon.prev
+
+let get_next dungeon = dungeon.next
+
 let get_exit dungeon = dungeon.exit
 
 let get_dimensions dungeon = dungeon.dimensions
@@ -93,6 +97,8 @@ let instantiate_dungeon id x y start exit bound monsters next prev : t =
     next;
     prev;
   }
+
+let get_id d = d.id
 
 let print_dungeon dungeon =
   for y = 0 to dungeon.dimensions |> fst do

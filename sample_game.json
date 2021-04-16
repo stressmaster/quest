@@ -1,17 +1,30 @@
 {
 	"dungeons": [
 		{
-			"id": 4,
-			"x-dim": 50,
-			"y-dim": 20,
+			"id": 0,
+			"x-dim": 12,
+			"y-dim": 24,
 			"start-x": 1,
 			"start-y": 1,
-			"end-x": 11,
-			"end-y": 11,
+			"end-x": 10,
+			"end-y": 22,
 			"bound": 10,
 			"monsters": [],
-			"prev": 1,
+			"prev": 3,
 			"next": 3
+		},
+		{
+			"id": 3,
+			"x-dim": 24,
+			"y-dim": 12,
+			"start-x": 1,
+			"start-y": 1,
+			"end-x": 22,
+			"end-y": 10,
+			"bound": 10,
+			"monsters": [],
+			"prev": 0,
+			"next": 0
 		}
 	]
 }

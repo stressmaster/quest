@@ -13,7 +13,6 @@ let renderAt ~x ~y ~width ~height ~texture =
   GlMat.load_identity ();
   GlMat.translate3 (x, y, 0.);
   Texturemap.set_texture texture;
-  Texturemap.start_texture ();
   GlDraw.begins `quads;
   GlTex.coord2 (0.0, 0.0);
   GlDraw.vertex2 (0., 0.);
