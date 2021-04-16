@@ -1,9 +1,25 @@
 open Random
 
+type action =
+  | Run
+  | Recover
+  | Attack
+
+let get_next_action = function
+  | Run -> Attack
+  | Recover -> Run
+  | Attack -> Recover
+
+let get_prev_action = function
+  | Run -> Recover
+  | Recover -> Attack
+  | Attack -> Run
+
 type current = {
   game : Game.t;
   mutable location : int * int;
   mutable room : Dungeon.t;
+  mutable room_exit : int * int;
   mutable in_fight : bool;
 }
 
@@ -15,6 +31,7 @@ let init_state file_name =
   {
     game = g;
     room = r;
+    room_exit = r |> Dungeon.get_exit;
     location = r |> Dungeon.get_start;
     in_fight = false;
   }
@@ -61,9 +78,7 @@ let move current key =
       debug_encounters current (*debug stuff end*)
   | _ -> () );
 
-  let should_change_room =
-    Dungeon.get_exit current.room = current.location
-  in
+  let should_change_room = current.room_exit = current.location in
   current.room <-
     ( if should_change_room then
       Game.next_dungeon current.game current.room
@@ -71,5 +86,7 @@ let move current key =
   current.location <-
     ( if should_change_room then Dungeon.get_start current.room
     else current.location );
-
+  current.room_exit <-
+    ( if should_change_room then Dungeon.get_exit current.room
+    else current.room_exit );
   current

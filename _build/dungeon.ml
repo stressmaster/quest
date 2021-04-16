@@ -1,9 +1,5 @@
-type tile_sprite = string
-
-type material = Sprite of tile_sprite
-
 type tile = {
-  material : material;
+  material : string;
   is_wall : bool;
 }
 
@@ -74,8 +70,8 @@ let instantiate_dungeon_cells x y dungeon_cells =
           || counter_y = y - 1
           || counter_x = 0
           || counter_x = x - 1
-        then { material = Sprite "wall.jpg"; is_wall = true }
-        else { material = Sprite "path.jpg"; is_wall = false }
+        then { material = "wall.jpg"; is_wall = true }
+        else { material = "path.jpg"; is_wall = false }
       in
       Hashtbl.add dungeon_cells (counter_x, counter_y)
         { tile; x = counter_x; y = counter_y }
@@ -114,11 +110,9 @@ let print_dungeon dungeon =
 
 let determine_color tile =
   let material = tile |> tile_material in
-  match material with
-  | Sprite s ->
-      if s = "wall.jpg" then Magic_numbers.wall
-      else if s = "path.jpg" then Magic_numbers.path
-      else Magic_numbers.darkness
+  if material = "wall.jpg" then Magic_numbers.wall
+  else if material = "path.jpg" then Magic_numbers.path
+  else Magic_numbers.darkness
 
 (* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
    bounds for rendering based on [(p_x, p_y) dungeon_x_length
