@@ -8,6 +8,6 @@ val init_state : string -> current
 val player_loc : current -> int * int
 
 (* [move] updates player location *)
-val move : current -> Glut.special_key_t -> current
+val map_move_controller : current -> Glut.special_key_t -> current
 
 val curr_room : current -> Dungeon.t

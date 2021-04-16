@@ -44,7 +44,7 @@ let debug_encounters c =
 let player_loc state = state.location
 
 (* [move current key] assigns a location to [current] based on [key]*)
-let move current key =
+let map_move_controller current key =
   let current_bound = Dungeon.get_bound current.room in
   let x, y = current.location in
   ( match key with
