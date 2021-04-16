@@ -1,5 +1,17 @@
 open Random
 
+type action =
+  | Action of {
+      prev : action;
+      next : action;
+    }
+
+let attack = Action { prev = run; next = recover }
+
+let recover = Action { prev = attack; next = run }
+
+let run = Action { prev = recover; next = attack }
+
 type current = {
   game : Game.t;
   mutable location : int * int;
@@ -32,46 +44,46 @@ let player_loc state = state.location
 let move current key =
   let current_bound = Dungeon.get_bound current.room in
   let x, y = current.location in
-  ( match key with
+  (match key with
   | Glut.KEY_RIGHT ->
       current.location <-
-        ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-        else (x + 1, y) );
+        (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+        else (x + 1, y));
       current.in_fight <- fight_decision current_bound;
       (*debug stuff start*)
       debug_encounters current (*debug stuff end*)
   | Glut.KEY_LEFT ->
       current.location <-
-        ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-        else (x - 1, y) );
+        (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+        else (x - 1, y));
       current.in_fight <- fight_decision current_bound;
       (*debug stuff start*)
       debug_encounters current (*debug stuff end*)
   | Glut.KEY_UP ->
       current.location <-
-        ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-        else (x, y + 1) );
+        (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+        else (x, y + 1));
       current.in_fight <- fight_decision current_bound;
       (*debug stuff start*)
       debug_encounters current (*debug stuff end*)
   | Glut.KEY_DOWN ->
       current.location <-
-        ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-        else (x, y - 1) );
+        (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+        else (x, y - 1));
       current.in_fight <- fight_decision current_bound;
       (*debug stuff start*)
       debug_encounters current (*debug stuff end*)
-  | _ -> () );
+  | _ -> ());
 
   let should_change_room = current.room_exit = current.location in
   current.room <-
-    ( if should_change_room then
-      Game.next_dungeon current.game current.room
-    else current.room );
+    (if should_change_room then
+     Game.next_dungeon current.game current.room
+    else current.room);
   current.location <-
-    ( if should_change_room then Dungeon.get_start current.room
-    else current.location );
+    (if should_change_room then Dungeon.get_start current.room
+    else current.location);
   current.room_exit <-
-    ( if should_change_room then Dungeon.get_exit current.room
-    else current.room_exit );
+    (if should_change_room then Dungeon.get_exit current.room
+    else current.room_exit);
   current
