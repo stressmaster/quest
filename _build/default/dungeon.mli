@@ -9,12 +9,6 @@ type tile
 (* an abstract type representing a dungeon cell*)
 type cell
 
-(* type of tile_sprint *)
-type tile_sprite = string
-
-(* type of material *)
-type material = Sprite of tile_sprite
-
 val instantiate_monster :
   string -> string -> int -> int -> string list -> monster
 
@@ -37,7 +31,7 @@ val is_wall : t -> int * int -> bool
 
 (* [is_wall dungeon (x, y)] is the material of the tile at [(x,y)] in
    [dungeon] *)
-val tile_material : tile -> material
+val tile_material : tile -> string
 
 (* [get_start dungeon] is the coordinates of the starting tile in
    [dungeon]*)

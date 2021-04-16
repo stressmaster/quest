@@ -19,7 +19,8 @@ let init_display game w h =
 
 let init_input game =
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
-  Glut.specialFunc ~cb:(fun ~key ~x ~y -> game := State.move !game key)
+  Glut.specialFunc ~cb:(fun ~key ~x ~y ->
+      game := State.map_move_controller !game key)
 
 let init_engine texture_list w h x_length y_length =
   let game = ref (State.init_state "sample_game.json") in

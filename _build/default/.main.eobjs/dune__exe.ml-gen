@@ -14,6 +14,10 @@ module Engine = Dune__exe__Engine
 module Game = Dune__exe__Game
 
 
+(** @canonical Dune__exe.Levenshtein *)
+module Levenshtein = Dune__exe__Levenshtein
+
+
 (** @canonical Dune__exe.Magic_numbers *)
 module Magic_numbers = Dune__exe__Magic_numbers
 
