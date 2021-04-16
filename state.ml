@@ -54,37 +54,37 @@ let map_move_controller current key =
     match key with
     | Glut.KEY_RIGHT ->
         current.location <-
-          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-          else (x + 1, y) )
+          (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y))
     | Glut.KEY_LEFT ->
         current.location <-
-          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-          else (x - 1, y) )
+          (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y))
     | Glut.KEY_UP ->
         current.location <-
-          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-          else (x, y + 1) )
+          (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1))
     | Glut.KEY_DOWN ->
         current.location <-
-          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-          else (x, y - 1) )
+          (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1))
     | _ -> ()
   end;
   debug_encounters current;
   current
 
 let menu_move current key =
-  ( match key with
+  (match key with
   | Glut.KEY_RIGHT -> current.action <- get_next_action current.action
   | Glut.KEY_LEFT -> current.action <- get_prev_action current.action
   | Glut.KEY_F2 -> current.in_fight <- false
   | Glut.KEY_F1 ->
       print_string
-        ( match current.action with
-        | Run -> "run"
-        | Attack -> "attack"
-        | Recover -> "recover" )
-  | _ -> () );
+        (match current.action with
+        | Run -> " Run| "
+        | Attack -> " Attack| "
+        | Recover -> " Recover |")
+  | _ -> ());
   current
 
 (* [controller current key] updates the [current] based on [key]*)
