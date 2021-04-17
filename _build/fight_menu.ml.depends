@@ -1,1 +1,1 @@
-fight_menu.ml: Magic_numbers Render
+fight_menu.ml: Magic_numbers Render State
