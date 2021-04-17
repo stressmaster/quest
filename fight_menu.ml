@@ -14,7 +14,7 @@ let render_menu
   | Run ->
       Render.render_square
         (Render.new_square
-           (10. /. float_of_int Magic_numbers.x_length *. 2.)
+           (9. /. float_of_int Magic_numbers.x_length *. 2.)
            (0.5 /. float_of_int 3 *. 2.)
            Magic_numbers.width Magic_numbers.height "./path.png")
   | Recover ->
@@ -26,6 +26,6 @@ let render_menu
   | Attack ->
       Render.render_square
         (Render.new_square
-           (0. /. float_of_int Magic_numbers.x_length *. 2.)
+           (1. /. float_of_int Magic_numbers.x_length *. 2.)
            (0.5 /. float_of_int 3 *. 2.)
            Magic_numbers.width Magic_numbers.height "./player.png")
