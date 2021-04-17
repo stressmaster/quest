@@ -13,6 +13,7 @@ let rec turner cur_x cur_y dir end_x end_y table =
   Hashtbl.add table (cur_x, cur_y) true;
   if cur_x = end_x && cur_y = end_y then ()
   else
+    (* pause for a little while*)
     match dir with
     | Right ->
         if Hashtbl.find table (cur_x, cur_y - 1) = false then
