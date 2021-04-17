@@ -6,6 +6,7 @@ type action =
   | Attack
 
 type fight = {
+  mutable spiraled : bool;
   mutable action : action;
   mutable attacking : bool;
   mutable monster : Dungeon.monster;

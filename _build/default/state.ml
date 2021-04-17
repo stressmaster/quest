@@ -6,6 +6,7 @@ type action =
   | Attack
 
 type fight = {
+  mutable spiraled : bool;
   mutable action : action;
   mutable attacking : bool;
   mutable monster : Dungeon.monster;
@@ -51,6 +52,7 @@ let init_state file_name =
     in_fight = false;
     fight =
       {
+        spiraled = false;
         action = Attack;
         attacking = false;
         monster = m;
@@ -61,9 +63,6 @@ let init_state file_name =
   }
 
 let fight_decision bound = Random.int bound = 0
-
-let debug_encounters c =
-  if c.in_fight then print_string "Encounter!" else ()
 
 let player_loc state = state.location
 
@@ -93,23 +92,26 @@ let map_move current key =
     | _ -> ()
   end;
   let should_change_room = current.room_exit = current.location in
-  current.room <-
-    (if should_change_room then
-     Game.next_dungeon current.game current.room
-    else current.room);
-  current.location <-
-    (if should_change_room then Dungeon.get_start current.room
-    else current.location);
-  current.room_exit <-
-    (if should_change_room then Dungeon.get_exit current.room
-    else current.room_exit);
-  debug_encounters current;
+  if should_change_room then (
+    current.room <- Game.next_dungeon current.game current.room;
+    current.location <- Dungeon.get_start current.room;
+    current.room_exit <- Dungeon.get_exit current.room);
   current
+
+let typing_case current key =
+  let str = current.fight.input_string in
+  if key = 13 then (
+    current.fight.attacking <- false;
+    "")
+  else if key = 127 then
+    String.sub str 0 (max (String.length str - 1) 0)
+  else str ^ Char.escaped (Char.chr key)
+
+let clamp_str str = String.sub str 0 (min (String.length str) 20)
 
 let typing_move current key =
   if current.in_fight && current.fight.attacking then
-    current.fight.input_string <-
-      current.fight.input_string ^ Char.escaped (Char.chr key);
+    current.fight.input_string <- clamp_str (typing_case current key);
   current
 
 let menu_move current key =

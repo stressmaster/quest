@@ -58,6 +58,7 @@ let texture_list =
     "./fonts/y.png";
     "./fonts/z.png";
     "./fonts/>.png";
+    "./fonts/space.png";
   ]
 
 let w = 500

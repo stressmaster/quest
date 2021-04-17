@@ -2,7 +2,7 @@ open Images
 open OImages
 open Info
 
-let textures = ref (Hashtbl.create 30)
+let textures = ref (Hashtbl.create 50)
 
 (* [make_texture img] makes a texture out of [img]*)
 let make_texture img =

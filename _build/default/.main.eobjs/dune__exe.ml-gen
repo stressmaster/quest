@@ -52,3 +52,7 @@ module Test = Dune__exe__Test
 
 (** @canonical Dune__exe.Texturemap *)
 module Texturemap = Dune__exe__Texturemap
+
+
+(** @canonical Dune__exe.Timer *)
+module Timer = Dune__exe__Timer
