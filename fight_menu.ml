@@ -13,11 +13,8 @@ let render_menu
   match action with
   | Run ->
       Font.render_font
-        (Font.new_font ">fuck"
-           ( (float_of_int Magic_numbers.x_length -. 2.)
-           /. float_of_int Magic_numbers.x_length )
-           (0.5 /. float_of_int 3 *. 2.)
-           Magic_numbers.width Magic_numbers.height)
+        (Font.new_font ">fuck" 0. 0. Magic_numbers.width
+           Magic_numbers.height)
   | Recover ->
       Render.render_square
         (Render.new_square
