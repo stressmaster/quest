@@ -12,7 +12,7 @@
 			"monsters": [
 				{
 					"name": "monster",
-					"sprite": "monster.png",
+					"sprite": "./monster.png",
 					"hitpoints": 5,
 					"chance": 5,
 					"attacks": [
