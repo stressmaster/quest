@@ -14,6 +14,10 @@ module Engine = Dune__exe__Engine
 module Fight_menu = Dune__exe__Fight_menu
 
 
+(** @canonical Dune__exe.Font *)
+module Font = Dune__exe__Font
+
+
 (** @canonical Dune__exe.Game *)
 module Game = Dune__exe__Game
 

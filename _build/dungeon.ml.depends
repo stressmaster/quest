@@ -1,1 +1,1 @@
-dungeon.ml: Hashtbl Magic_numbers Render
+dungeon.ml: Hashtbl List Magic_numbers Render

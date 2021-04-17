@@ -1,1 +1,1 @@
-fight_menu.ml: Magic_numbers Render State
+fight_menu.ml: Dungeon Magic_numbers Render State

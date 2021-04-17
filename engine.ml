@@ -13,7 +13,7 @@ let init_display game w h =
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
       if State.in_fight !game then
-        Fight_menu.render_menu (State.curr_action !game)
+        Fight_menu.render_menu (State.curr_fight !game)
       else
         Dungeon.render_dungeon
           (State.player_loc !game)

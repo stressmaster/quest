@@ -1,4 +1,4 @@
-MODULES=render main authors texturemap game dungeon state magic_numbers levenshtein
+MODULES=render main authors texturemap game dungeon state magic_numbers levenshtein fight_menu
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)

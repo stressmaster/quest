@@ -9,7 +9,17 @@
 			"end-x": 10,
 			"end-y": 22,
 			"bound": 10,
-			"monsters": [],
+			"monsters": [
+				{
+					"name": "monster",
+					"sprite": "monster.png",
+					"hitpoints": 5,
+					"chance": 5,
+					"attacks": [
+						"mega defense"
+					]
+				}
+			],
 			"prev": 3,
 			"next": 3
 		},
@@ -22,7 +32,17 @@
 			"end-x": 22,
 			"end-y": 10,
 			"bound": 10,
-			"monsters": [],
+			"monsters": [
+				{
+					"name": "monster",
+					"sprite": "monster.png",
+					"hitpoints": 5,
+					"chance": 5,
+					"attacks": [
+						"mega defense"
+					]
+				}
+			],
 			"prev": 0,
 			"next": 0
 		}
