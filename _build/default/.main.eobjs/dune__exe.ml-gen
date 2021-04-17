@@ -10,6 +10,10 @@ module Dungeon = Dune__exe__Dungeon
 module Engine = Dune__exe__Engine
 
 
+(** @canonical Dune__exe.Fight_menu *)
+module Fight_menu = Dune__exe__Fight_menu
+
+
 (** @canonical Dune__exe.Game *)
 module Game = Dune__exe__Game
 
