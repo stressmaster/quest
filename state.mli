@@ -1,4 +1,3 @@
-(* abstract type representing current player location *)
 type current
 
 type action =
@@ -10,6 +9,8 @@ type fight = {
   mutable action : action;
   mutable attacking : bool;
   mutable monster : Dungeon.monster;
+  mutable monster_string : string;
+  mutable input_string : string;
 }
 
 (* [init_state] assigns player to starting location in dungeon *)
@@ -20,6 +21,8 @@ val player_loc : current -> int * int
 
 (* [controller] updates current based on key input *)
 val controller : current -> Glut.special_key_t -> current
+
+val typing_move : current -> int -> current
 
 val curr_room : current -> Dungeon.t
 

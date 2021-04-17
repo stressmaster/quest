@@ -1,29 +1,48 @@
 let render_menu
-    ({ action; attacking : bool; monster : Dungeon.monster } :
+    ({
+       action;
+       attacking : bool;
+       monster : Dungeon.monster;
+       monster_string : string;
+       input_string : string;
+     } :
       State.fight) =
+  (* print_string monster.sprite; *)
   Render.render_square
     (Render.new_square
+       (1. /. float_of_int 3 *. 2.)
        (1.25 /. float_of_int 3 *. 2.)
-       (1.5 /. float_of_int 3 *. 2.)
-       (Magic_numbers.width *. 2.)
-       (Magic_numbers.height *. 2.)
+       (Magic_numbers.width *. 4.)
+       (Magic_numbers.height *. 4.)
        monster.sprite);
   match action with
   | Run ->
-      Render.render_square
-        (Render.new_square
-           (float_of_int 2 /. float_of_int 3 *. 2.)
-           (0.5 /. float_of_int 3 *. 2.)
-           Magic_numbers.width Magic_numbers.height "./path.png")
+      Font.render_font
+        (Font.new_font ">fuck" 0. 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "duck" 0.75 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "cuck" 1.5 0.2 Magic_numbers.width
+           Magic_numbers.height)
   | Recover ->
-      Render.render_square
-        (Render.new_square
-           (float_of_int 1 /. float_of_int 3 *. 2.)
-           (0.5 /. float_of_int 3 *. 2.)
-           Magic_numbers.width Magic_numbers.height "./wall.png")
+      Font.render_font
+        (Font.new_font "fuck" 0. 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font ">duck" 0.75 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "cuck" 1.5 0.2 Magic_numbers.width
+           Magic_numbers.height)
   | Attack ->
-      Render.render_square
-        (Render.new_square
-           (float_of_int 0 /. float_of_int 3 *. 2.)
-           (0.5 /. float_of_int 3 *. 2.)
-           Magic_numbers.width Magic_numbers.height "./player.png")
+      Font.render_font
+        (Font.new_font "fuck" 0. 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "duck" 0.75 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font ">cuck" 1.5 0.2 Magic_numbers.width
+           Magic_numbers.height)

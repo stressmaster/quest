@@ -68,4 +68,6 @@ val get_next : t -> int
 
 val get_prev : t -> int
 
+val get_monster_string : monster -> string
+
 val render_dungeon : int * int -> t -> unit

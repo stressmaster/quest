@@ -17,6 +17,8 @@ type monster = {
   attack_strings : string list;
 }
 
+let get_monster_string m = List.hd m.attack_strings
+
 type t = {
   id : int;
   cells : (int * int, cell) Hashtbl.t;
