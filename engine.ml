@@ -12,9 +12,12 @@ let init_display game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      Dungeon.render_dungeon
-        (State.player_loc !game)
-        (State.curr_room !game);
+      if State.in_fight !game then
+        Fight_menu.render_menu (State.curr_action !game)
+      else
+        Dungeon.render_dungeon
+          (State.player_loc !game)
+          (State.curr_room !game);
       Gl.flush ())
 
 let init_input game =

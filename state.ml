@@ -26,6 +26,10 @@ type current = {
 
 let curr_room c = c.room
 
+let in_fight c = c.in_fight
+
+let curr_action c = c.action
+
 let init_state file_name =
   let g = Yojson.Basic.from_file file_name |> Game.from_json in
   let r = g |> Game.start_room in
@@ -54,37 +58,48 @@ let map_move_controller current key =
     match key with
     | Glut.KEY_RIGHT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-          else (x + 1, y))
+          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y) )
     | Glut.KEY_LEFT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-          else (x - 1, y))
+          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y) )
     | Glut.KEY_UP ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-          else (x, y + 1))
+          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1) )
     | Glut.KEY_DOWN ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-          else (x, y - 1))
+          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1) )
     | _ -> ()
   end;
+  let should_change_room = current.room_exit = current.location in
+  current.room <-
+    ( if should_change_room then
+      Game.next_dungeon current.game current.room
+    else current.room );
+  current.location <-
+    ( if should_change_room then Dungeon.get_start current.room
+    else current.location );
+  current.room_exit <-
+    ( if should_change_room then Dungeon.get_exit current.room
+    else current.room_exit );
   debug_encounters current;
   current
 
 let menu_move current key =
-  (match key with
+  ( match key with
   | Glut.KEY_RIGHT -> current.action <- get_next_action current.action
   | Glut.KEY_LEFT -> current.action <- get_prev_action current.action
   | Glut.KEY_F2 -> current.in_fight <- false
   | Glut.KEY_F1 ->
       print_string
-        (match current.action with
+        ( match current.action with
         | Run -> " Run| "
         | Attack -> " Attack| "
-        | Recover -> " Recover |")
-  | _ -> ());
+        | Recover -> " Recover |" )
+  | _ -> () );
   current
 
 (* [controller current key] updates the [current] based on [key]*)
