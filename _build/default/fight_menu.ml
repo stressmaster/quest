@@ -14,13 +14,18 @@ let render_menu
   | Run ->
       Render.render_square
         (Render.new_square
-           (9. /. float_of_int Magic_numbers.x_length *. 2.)
+           ((float_of_int Magic_numbers.x_length -. 2.)
+           /. float_of_int Magic_numbers.x_length
+           *. 2.)
            (0.5 /. float_of_int 3 *. 2.)
            Magic_numbers.width Magic_numbers.height "./path.png")
   | Recover ->
       Render.render_square
         (Render.new_square
-           (5. /. float_of_int Magic_numbers.x_length *. 2.)
+           ((float_of_int Magic_numbers.x_length -. 1.)
+           /. 2.
+           /. float_of_int Magic_numbers.x_length
+           *. 2.)
            (0.5 /. float_of_int 3 *. 2.)
            Magic_numbers.width Magic_numbers.height "./wall.png")
   | Attack ->

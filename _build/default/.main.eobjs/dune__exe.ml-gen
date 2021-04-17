@@ -38,6 +38,10 @@ module Main = Dune__exe__Main
 module Render = Dune__exe__Render
 
 
+(** @canonical Dune__exe.Spiral *)
+module Spiral = Dune__exe__Spiral
+
+
 (** @canonical Dune__exe.State *)
 module State = Dune__exe__State
 
