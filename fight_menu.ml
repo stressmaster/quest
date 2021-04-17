@@ -12,20 +12,19 @@ let render_menu
 
   match action with
   | Run ->
-      Render.render_square
-        (Render.new_square
-           ((float_of_int Magic_numbers.x_length -. 2.)
-           /. float_of_int Magic_numbers.x_length
-           *. 2.)
+      Font.render_font
+        (Font.new_font ">fuck"
+           ( (float_of_int Magic_numbers.x_length -. 2.)
+           /. float_of_int Magic_numbers.x_length )
            (0.5 /. float_of_int 3 *. 2.)
-           Magic_numbers.width Magic_numbers.height "./path.png")
+           Magic_numbers.width Magic_numbers.height)
   | Recover ->
       Render.render_square
         (Render.new_square
-           ((float_of_int Magic_numbers.x_length -. 1.)
+           ( (float_of_int Magic_numbers.x_length -. 1.)
            /. 2.
            /. float_of_int Magic_numbers.x_length
-           *. 2.)
+           *. 2. )
            (0.5 /. float_of_int 3 *. 2.)
            Magic_numbers.width Magic_numbers.height "./wall.png")
   | Attack ->
