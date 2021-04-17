@@ -74,6 +74,17 @@ let map_move_controller current key =
           else (x, y - 1) )
     | _ -> ()
   end;
+  let should_change_room = current.room_exit = current.location in
+  current.room <-
+    ( if should_change_room then
+      Game.next_dungeon current.game current.room
+    else current.room );
+  current.location <-
+    ( if should_change_room then Dungeon.get_start current.room
+    else current.location );
+  current.room_exit <-
+    ( if should_change_room then Dungeon.get_exit current.room
+    else current.room_exit );
   debug_encounters current;
   current
 

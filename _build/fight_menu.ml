@@ -1,9 +1,7 @@
-type action =
-  | Run
-  | Recover
-  | Attack
+type action = State.action
 
-let render_menu = function
+let render_menu (a : action) =
+  match a with
   | Run ->
       Render.render_square
         (Render.new_square
