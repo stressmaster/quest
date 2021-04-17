@@ -24,9 +24,11 @@ let end_texture () = Gl.disable `texture_2d
 
 let load_texture file = OImages.load file [] |> OImages.rgba32
 
-let set_texture file =
+let get_texture file = List.assoc file !texture_list
+
+let set_texture texture =
   GlPix.store (`unpack_alignment 1);
-  GlTex.image2d (List.assoc file !texture_list);
+  GlTex.image2d texture;
   List.iter
     (GlTex.parameter ~target:`texture_2d)
     [
