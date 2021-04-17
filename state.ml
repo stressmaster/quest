@@ -51,7 +51,7 @@ let init_state file_name =
     in_fight = false;
     fight =
       {
-        action = Run;
+        action = Attack;
         attacking = false;
         monster = m;
         monster_string = Dungeon.get_monster_string m;
