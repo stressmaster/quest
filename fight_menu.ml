@@ -22,13 +22,13 @@ let render_menu
     (Font.new_font input_string 0. 0.5 Magic_numbers.width
        Magic_numbers.height);
   Font.render_font
-    (Font.new_font "fuck" 0.1 0.2 Magic_numbers.width
+    (Font.new_font "fight" 0.1 0.2 Magic_numbers.width
        Magic_numbers.height);
   Font.render_font
-    (Font.new_font "duck" 0.75 0.2 Magic_numbers.width
+    (Font.new_font "heal" 0.88 0.2 Magic_numbers.width
        Magic_numbers.height);
   Font.render_font
-    (Font.new_font "cuck" 1.5 0.2 Magic_numbers.width
+    (Font.new_font "run" 1.6 0.2 Magic_numbers.width
        Magic_numbers.height);
   match action with
   | Attack ->
@@ -37,9 +37,9 @@ let render_menu
            Magic_numbers.height)
   | Recover ->
       Font.render_font
-        (Font.new_font ">" 0.66 0.2 Magic_numbers.width
+        (Font.new_font ">" 0.78 0.2 Magic_numbers.width
            Magic_numbers.height)
   | Run ->
       Font.render_font
-        (Font.new_font ">" 1.41 0.2 Magic_numbers.width
+        (Font.new_font ">" 1.5 0.2 Magic_numbers.width
            Magic_numbers.height)
