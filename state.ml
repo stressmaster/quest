@@ -62,9 +62,6 @@ let init_state file_name =
 
 let fight_decision bound = Random.int bound = 0
 
-let debug_encounters c =
-  if c.in_fight then print_string "Encounter!" else ()
-
 let player_loc state = state.location
 
 (* [move current key] assigns a location to [current] based on [key]*)
@@ -76,44 +73,45 @@ let map_move current key =
     match key with
     | Glut.KEY_RIGHT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-          else (x + 1, y))
+          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y) )
     | Glut.KEY_LEFT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-          else (x - 1, y))
+          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y) )
     | Glut.KEY_UP ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-          else (x, y + 1))
+          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1) )
     | Glut.KEY_DOWN ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-          else (x, y - 1))
+          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1) )
     | _ -> ()
   end;
   let should_change_room = current.room_exit = current.location in
-  current.room <-
-    (if should_change_room then
-     Game.next_dungeon current.game current.room
-    else current.room);
-  current.location <-
-    (if should_change_room then Dungeon.get_start current.room
-    else current.location);
-  current.room_exit <-
-    (if should_change_room then Dungeon.get_exit current.room
-    else current.room_exit);
-  debug_encounters current;
+  if should_change_room then (
+    current.room <- Game.next_dungeon current.game current.room;
+    current.location <- Dungeon.get_start current.room;
+    current.room_exit <- Dungeon.get_exit current.room );
   current
+
+let typing_case current key =
+  let str = current.fight.input_string in
+  if key = 13 then (
+    current.fight.attacking <- false;
+    "" )
+  else if key = 127 then
+    String.sub str 0 (max (String.length str - 1) 0)
+  else str ^ Char.escaped (Char.chr key)
 
 let typing_move current key =
   if current.in_fight && current.fight.attacking then
-    current.fight.input_string <-
-      current.fight.input_string ^ Char.escaped (Char.chr key);
+    current.fight.input_string <- typing_case current key;
   current
 
 let menu_move current key =
-  (match key with
+  ( match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
@@ -121,7 +119,7 @@ let menu_move current key =
   | Glut.KEY_DOWN -> current.in_fight <- false
   | Glut.KEY_UP ->
       current.fight.attacking <- not current.fight.attacking
-  | _ -> ());
+  | _ -> () );
   current
 
 (* [controller current key] updates the [current] based on [key]*)
