@@ -8,6 +8,8 @@ type bitmap_string = {
 
 let foi i = float_of_int i
 
+let new_font str x y w h = { str; x; y; w; h }
+
 let render_char c x y char_width char_height =
   Render.render_square
     (Render.new_square x y char_width char_height
