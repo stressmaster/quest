@@ -1,7 +1,7 @@
-type action = State.action
-
-let render_menu (a : action) =
-  match a with
+let render_menu
+    ({ action; attacking : bool; monster : Dungeon.monster } :
+      State.fight) =
+  match action with
   | Run ->
       Render.render_square
         (Render.new_square

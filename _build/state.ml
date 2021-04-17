@@ -5,6 +5,12 @@ type action =
   | Recover
   | Attack
 
+type fight = {
+  mutable action : action;
+  mutable attacking : bool;
+  mutable monster : Dungeon.monster;
+}
+
 let get_next_action = function
   | Run -> Attack
   | Attack -> Recover
@@ -21,14 +27,14 @@ type current = {
   mutable room : Dungeon.t;
   mutable room_exit : int * int;
   mutable in_fight : bool;
-  mutable action : action;
+  mutable fight : fight;
 }
 
 let curr_room c = c.room
 
 let in_fight c = c.in_fight
 
-let curr_action c = c.action
+let curr_fight c = c.fight
 
 let init_state file_name =
   let g = Yojson.Basic.from_file file_name |> Game.from_json in
@@ -39,7 +45,12 @@ let init_state file_name =
     room_exit = r |> Dungeon.get_exit;
     location = r |> Dungeon.get_start;
     in_fight = false;
-    action = Run;
+    fight =
+      {
+        action = Run;
+        attacking = false;
+        monster = Dungeon.get_monster r;
+      };
   }
 
 let fight_decision bound = Random.int bound = 0
@@ -90,12 +101,14 @@ let map_move_controller current key =
 
 let menu_move current key =
   ( match key with
-  | Glut.KEY_RIGHT -> current.action <- get_next_action current.action
-  | Glut.KEY_LEFT -> current.action <- get_prev_action current.action
+  | Glut.KEY_RIGHT ->
+      current.fight.action <- get_next_action current.fight.action
+  | Glut.KEY_LEFT ->
+      current.fight.action <- get_prev_action current.fight.action
   | Glut.KEY_F2 -> current.in_fight <- false
   | Glut.KEY_F1 ->
       print_string
-        ( match current.action with
+        ( match current.fight.action with
         | Run -> " Run| "
         | Attack -> " Attack| "
         | Recover -> " Recover |" )

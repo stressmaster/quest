@@ -42,6 +42,8 @@ let is_wall dungeon (x, y) =
 
 let get_start dungeon = dungeon.start
 
+let get_monster d = List.hd d.monsters
+
 let get_prev dungeon = dungeon.prev
 
 let get_next dungeon = dungeon.next

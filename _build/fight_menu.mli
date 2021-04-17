@@ -1,1 +1,1 @@
-val render_menu : State.action -> unit
+val render_menu : State.fight -> unit

@@ -6,6 +6,12 @@ type action =
   | Recover
   | Attack
 
+type fight = {
+  mutable action : action;
+  mutable attacking : bool;
+  mutable monster : Dungeon.monster;
+}
+
 (* [init_state] assigns player to starting location in dungeon *)
 val init_state : string -> current
 
@@ -19,4 +25,4 @@ val curr_room : current -> Dungeon.t
 
 val in_fight : current -> bool
 
-val curr_action : current -> action
+val curr_fight : current -> fight
