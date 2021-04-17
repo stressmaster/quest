@@ -1,8 +1,13 @@
-type fight = State.fight
-
 let render_menu
     ({ action; attacking : bool; monster : Dungeon.monster } :
       State.fight) =
+  Render.render_square
+    (Render.new_square
+       (1.25 /. float_of_int 3 *. 2.)
+       (1.5 /. float_of_int 3 *. 2.)
+       (Magic_numbers.width *. 2.)
+       (Magic_numbers.height *. 2.)
+       monster.sprite);
   match action with
   | Run ->
       Render.render_square

@@ -1,7 +1,13 @@
 (* an abstract type representing a dungeon*)
 type t
 
-type monster
+type monster = {
+  name : string;
+  sprite : string;
+  hitpoints : int;
+  encounter_chance : int;
+  attack_strings : string list;
+}
 
 (* an abstract type representing a tile*)
 type tile

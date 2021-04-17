@@ -10,7 +10,10 @@ and player = "./player.png"
 
 and darkness = "./darkness.png"
 
-let texture_list = [ wall; path; entrance; exit_tex; player; darkness ]
+and monster = "./monster.png"
+
+let texture_list =
+  [ wall; path; entrance; exit_tex; player; darkness; monster ]
 
 let w = 500
 
