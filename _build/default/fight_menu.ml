@@ -9,28 +9,34 @@ let render_menu
        (Magic_numbers.width *. 4.)
        (Magic_numbers.height *. 4.)
        monster.sprite);
-
   match action with
   | Run ->
-      Render.render_square
-        (Render.new_square
-           ((float_of_int Magic_numbers.x_length -. 2.)
-           /. float_of_int Magic_numbers.x_length
-           *. 2.)
-           (0.5 /. float_of_int 3 *. 2.)
-           Magic_numbers.width Magic_numbers.height "./path.png")
-  | Recover ->
-      Render.render_square
-        (Render.new_square
-           ((float_of_int Magic_numbers.x_length -. 1.)
-           /. 2.
-           /. float_of_int Magic_numbers.x_length
-           *. 2.)
-           (0.5 /. float_of_int 3 *. 2.)
-           Magic_numbers.width Magic_numbers.height "./wall.png")
+      Font.render_font
+        (Font.new_font "Attack" 0. 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "Recover" 0.75 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font ">Run" 1.5 0.2 Magic_numbers.width
+           Magic_numbers.height)
   | Attack ->
-      Render.render_square
-        (Render.new_square
-           (1. /. float_of_int Magic_numbers.x_length *. 2.)
-           (0.5 /. float_of_int 3 *. 2.)
-           Magic_numbers.width Magic_numbers.height "./player.png")
+      Font.render_font
+        (Font.new_font ">Attack" 0. 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font ">Recover" 0.75 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "Run" 1.5 0.2 Magic_numbers.width
+           Magic_numbers.height)
+  | Recover ->
+      Font.render_font
+        (Font.new_font "Attack" 0. 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font ">Recover" 0.75 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font ">Run" 1.5 0.2 Magic_numbers.width
+           Magic_numbers.height)

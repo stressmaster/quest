@@ -2,7 +2,7 @@ open Images
 open OImages
 open Info
 
-let texture_list = ref []
+let textures = ref (Hashtbl.create 30)
 
 (* [make_texture img] makes a texture out of [img]*)
 let make_texture img =
@@ -26,7 +26,7 @@ let load_texture file = OImages.load file [] |> OImages.rgba32
 
 let set_texture file =
   GlPix.store (`unpack_alignment 1);
-  GlTex.image2d (List.assoc file !texture_list);
+  GlTex.image2d (Hashtbl.find !textures file);
   List.iter
     (GlTex.parameter ~target:`texture_2d)
     [
@@ -45,10 +45,10 @@ let rec make_texture_list file_lst lst =
   match file_lst with
   | [] -> lst
   | h :: t ->
-      make_texture_list t
-        ((h, make_texture (load_texture h)#to_rgb24) :: lst)
+      Hashtbl.add lst h (make_texture (load_texture h)#to_rgb24);
+      make_texture_list t lst
 
 (* [init_texture file_lst] is a list of filtered textures from
    [file_list] *)
 let init_texture file_lst =
-  texture_list := make_texture_list file_lst !texture_list
+  textures := make_texture_list file_lst !textures

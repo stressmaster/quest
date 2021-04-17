@@ -106,12 +106,6 @@ let menu_move current key =
   | Glut.KEY_LEFT ->
       current.fight.action <- get_prev_action current.fight.action
   | Glut.KEY_F2 -> current.in_fight <- false
-  | Glut.KEY_F1 ->
-      print_string
-        ( match current.fight.action with
-        | Run -> " Run| "
-        | Attack -> " Attack| "
-        | Recover -> " Recover |" )
   | _ -> () );
   current
 

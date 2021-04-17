@@ -12,31 +12,31 @@ let render_menu
   match action with
   | Run ->
       Font.render_font
-        (Font.new_font ">fuck" 0. 0.2 Magic_numbers.width
+        (Font.new_font "Attack" 0. 0.2 Magic_numbers.width
            Magic_numbers.height);
       Font.render_font
-        (Font.new_font "duck" 0.75 0.2 Magic_numbers.width
+        (Font.new_font "Recover" 0.75 0.2 Magic_numbers.width
            Magic_numbers.height);
       Font.render_font
-        (Font.new_font "cuck" 1.5 0.2 Magic_numbers.width
+        (Font.new_font ">Run" 1.5 0.2 Magic_numbers.width
            Magic_numbers.height)
   | Attack ->
       Font.render_font
-        (Font.new_font "fuck" 0. 0.2 Magic_numbers.width
+        (Font.new_font ">Attack" 0. 0.2 Magic_numbers.width
            Magic_numbers.height);
       Font.render_font
-        (Font.new_font ">duck" 0.75 0.2 Magic_numbers.width
+        (Font.new_font ">Recover" 0.75 0.2 Magic_numbers.width
            Magic_numbers.height);
       Font.render_font
-        (Font.new_font "cuck" 1.5 0.2 Magic_numbers.width
+        (Font.new_font "Run" 1.5 0.2 Magic_numbers.width
            Magic_numbers.height)
   | Recover ->
       Font.render_font
-        (Font.new_font "fuck" 0. 0.2 Magic_numbers.width
+        (Font.new_font "Attack" 0. 0.2 Magic_numbers.width
            Magic_numbers.height);
       Font.render_font
-        (Font.new_font "duck" 0.75 0.2 Magic_numbers.width
+        (Font.new_font ">Recover" 0.75 0.2 Magic_numbers.width
            Magic_numbers.height);
       Font.render_font
-        (Font.new_font ">cuck" 1.5 0.2 Magic_numbers.width
+        (Font.new_font ">Run" 1.5 0.2 Magic_numbers.width
            Magic_numbers.height)
