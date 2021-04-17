@@ -14,23 +14,29 @@ let rec turner (fight : State.fight) cur_x cur_y dir end_x end_y table =
   if cur_x = end_x && cur_y = end_y then fight.spiraled <- true
   else
     (* pause for a little while*)
-    match dir with
-    | Right ->
-        if Hashtbl.find table (cur_x, cur_y - 1) = false then
-          turner fight cur_x (cur_y - 1) Down end_x end_y table
-        else turner fight (cur_x + 1) cur_y Right end_x end_y table
-    | Down ->
-        if Hashtbl.find table (cur_x - 1, cur_y) = false then
-          turner fight (cur_x - 1) cur_y Left end_x end_y table
-        else turner fight cur_x (cur_y - 1) Down end_x end_y table
-    | Left ->
-        if Hashtbl.find table (cur_x, cur_y + 1) = false then
-          turner fight cur_x (cur_y + 1) Up end_x end_y table
-        else turner fight (cur_x - 1) cur_y Left end_x end_y table
-    | Up ->
-        if Hashtbl.find table (cur_x + 1, cur_y) = false then
-          turner fight (cur_x + 1) cur_y Right end_x end_y table
-        else turner fight cur_x (cur_y + 1) Up end_x end_y table
+    let delay = Sys.time () +. 0.001 in
+    let rec wait d =
+      if Sys.time () > d then
+        match dir with
+        | Right ->
+            if Hashtbl.find table (cur_x, cur_y - 1) = false then
+              turner fight cur_x (cur_y - 1) Down end_x end_y table
+            else turner fight (cur_x + 1) cur_y Right end_x end_y table
+        | Down ->
+            if Hashtbl.find table (cur_x - 1, cur_y) = false then
+              turner fight (cur_x - 1) cur_y Left end_x end_y table
+            else turner fight cur_x (cur_y - 1) Down end_x end_y table
+        | Left ->
+            if Hashtbl.find table (cur_x, cur_y + 1) = false then
+              turner fight cur_x (cur_y + 1) Up end_x end_y table
+            else turner fight (cur_x - 1) cur_y Left end_x end_y table
+        | Up ->
+            if Hashtbl.find table (cur_x + 1, cur_y) = false then
+              turner fight (cur_x + 1) cur_y Right end_x end_y table
+            else turner fight cur_x (cur_y + 1) Up end_x end_y table
+      else wait d
+    in
+    wait delay
 
 let render_spiral f =
   let middle_x = (Magic_numbers.x_length - 1) / 2 in
