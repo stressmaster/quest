@@ -1,4 +1,4 @@
-MODULES=render main authors texturemap game dungeon state magic_numbers levenshtein fight_menu font
+MODULES=render main authors texturemap game dungeon state magic_numbers levenshtein fight_menu spiral font
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
