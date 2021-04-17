@@ -13,7 +13,9 @@ let new_font str x y w h = { str; x; y; w; h }
 let render_char c x y char_width char_height =
   Render.render_square
     (Render.new_square x y char_width char_height
-       ("./fonts/" ^ Char.escaped c ^ ".png"))
+       ( "./fonts/"
+       ^ (if int_of_char c = 32 then "space" else Char.escaped c)
+       ^ ".png" ))
 
 let render_font bit =
   let w = bit.w and h = bit.h in

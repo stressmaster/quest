@@ -14,11 +14,15 @@ let render_menu
        (Magic_numbers.width *. 4.)
        (Magic_numbers.height *. 4.)
        monster.sprite);
+  if attacking then
+    Font.render_font
+      (Font.new_font monster_string 0.8 0.8 Magic_numbers.width
+         Magic_numbers.height);
   Font.render_font
     (Font.new_font input_string 0. 0.5 Magic_numbers.width
        Magic_numbers.height);
   match action with
-  | Run ->
+  | Attack ->
       Font.render_font
         (Font.new_font ">fuck" 0. 0.2 Magic_numbers.width
            Magic_numbers.height);
@@ -38,7 +42,7 @@ let render_menu
       Font.render_font
         (Font.new_font "cuck" 1.5 0.2 Magic_numbers.width
            Magic_numbers.height)
-  | Attack ->
+  | Run ->
       Font.render_font
         (Font.new_font "fuck" 0. 0.2 Magic_numbers.width
            Magic_numbers.height);
