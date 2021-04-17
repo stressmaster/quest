@@ -1,7 +1,12 @@
 let render_menu
-    ({ action; attacking : bool; monster : Dungeon.monster } :
+    ({
+       action;
+       attacking : bool;
+       monster : Dungeon.monster;
+       monster_string : string;
+       input_string : string;
+     } :
       State.fight) =
-  (* print_string monster.sprite; *)
   Render.render_square
     (Render.new_square
        (1. /. float_of_int 3 *. 2.)
@@ -9,6 +14,9 @@ let render_menu
        (Magic_numbers.width *. 4.)
        (Magic_numbers.height *. 4.)
        monster.sprite);
+  Font.render_font
+    (Font.new_font input_string 0. 0.5 Magic_numbers.width
+       Magic_numbers.height);
   match action with
   | Run ->
       Font.render_font

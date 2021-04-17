@@ -68,6 +68,8 @@ let x_length = 11
 
 let y_length = 11
 
+let health = 10
+
 let width = float_of_int w /. float_of_int x_length
 
 let height = float_of_int h /. float_of_int y_length

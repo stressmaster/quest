@@ -21,7 +21,8 @@ let init_display game w h =
       Gl.flush ())
 
 let init_input game =
-  Glut.keyboardFunc ~cb:(fun ~key ~x ~y -> if key = 27 then exit 0);
+  Glut.keyboardFunc ~cb:(fun ~key ~x ~y ->
+      if key = 27 then exit 0 else game := State.typing_move !game key);
   Glut.specialFunc ~cb:(fun ~key ~x ~y ->
       game := State.controller !game key)
 
