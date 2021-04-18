@@ -30,6 +30,11 @@ let render_menu (fight : State.fight) =
   Font.render_font
     (Font.new_font "run" 1.6 0.2 Magic_numbers.width
        Magic_numbers.height);
+  Font.render_font
+    (Font.new_font
+       ( Timer.current_time () |> int_of_float |> Int.abs
+       |> string_of_int )
+       1. 1.6 Magic_numbers.width Magic_numbers.height);
   match fight.action with
   | Attack ->
       Font.render_font
