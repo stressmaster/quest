@@ -18,6 +18,10 @@ let init_display game w h =
         Dungeon.render_dungeon
           (State.player_loc !game)
           (State.curr_room !game);
+      Font.render_font
+        (Font.new_font
+           (string_of_int (Timer.current_time ()))
+           0. 0.5 Magic_numbers.width Magic_numbers.height);
       Gl.flush ())
 
 let init_input game =
@@ -33,10 +37,11 @@ let init_engine texture_list w h x_length y_length =
   init_display game w h;
   init_input game;
   let rec timer ~value =
+    Timer.increase_time 1;
     Glut.postRedisplay ();
     Glut.timerFunc ~ms:value ~cb:timer ~value
   in
-  let ms = 10 in
+  let ms = 1000 in
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.timerFunc ~ms ~cb:timer ~value:ms;
   Glut.mainLoop ()

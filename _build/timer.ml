@@ -1,5 +1,7 @@
-let start_time = ref (Sys.time ())
+let time = ref 0
 
-let current_time () = !start_time -. Sys.time ()
+let current_time () = !time
 
-let reset_timer () = start_time := Sys.time ()
+let reset_timer () = time := 0
+
+let increase_time t = time := !time + t

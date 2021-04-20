@@ -1,1 +1,1 @@
-spiral.ml: Hashtbl Int Magic_numbers Render State Timer
+spiral.ml: Hashtbl Magic_numbers Render State

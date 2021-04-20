@@ -4,7 +4,7 @@ type t
 type monster = {
   name : string;
   sprite : string;
-  hitpoints : int;
+  mutable hitpoints : int;
   encounter_chance : int;
   attack_strings : string list;
 }
@@ -69,5 +69,9 @@ val get_next : t -> int
 val get_prev : t -> int
 
 val get_monster_string : monster -> string
+
+val get_monster_HP : monster -> int
+
+val update_monster_HP : monster -> int -> unit
 
 val render_dungeon : int * int -> t -> unit
