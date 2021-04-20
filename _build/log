@@ -1,10 +1,10 @@
 # dune build main.bc
 # OCAMLPARAM: unset
 # Workspace root: /home/stressmaster/3110/cs3110-project/CamelQuest
-$ /usr/bin/nproc > /tmp/dunefd62db.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dunecd9278.output 2> /dev/null
 # Auto-detected concurrency: 8
 # disable binary cache
-$ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dunee661ad.output
+$ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dune6b4efc.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -118,6 +118,6 @@ $ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dunee661a
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl spiral.ml) > _build/default/.main.eobjs/spiral.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Spiral.cmo -c -impl spiral.ml)
+$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl fight_menu.ml) > _build/default/.main.eobjs/fight_menu.ml.d
+$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Fight_menu.cmo -c -impl fight_menu.ml)
 $ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -o main.bc /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl/lablgl.cma /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl/lablglut.cma /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core/camlimages.cma /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png/camlimages_png.cma /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format/easy_format.cma /home/stressmaster/.opam/cs3110-2021sp/lib/biniou/biniou.cma /home/stressmaster/.opam/cs3110-2021sp/lib/yojson/yojson.cma .main.eobjs/byte/dune__exe.cmo .main.eobjs/byte/dune__exe__Magic_numbers.cmo .main.eobjs/byte/dune__exe__Texturemap.cmo .main.eobjs/byte/dune__exe__Render.cmo .main.eobjs/byte/dune__exe__Dungeon.cmo .main.eobjs/byte/dune__exe__Font.cmo .main.eobjs/byte/dune__exe__Game.cmo .main.eobjs/byte/dune__exe__State.cmo .main.eobjs/byte/dune__exe__Spiral.cmo .main.eobjs/byte/dune__exe__Timer.cmo .main.eobjs/byte/dune__exe__Fight_menu.cmo .main.eobjs/byte/dune__exe__Engine.cmo .main.eobjs/byte/dune__exe__Main.cmo)

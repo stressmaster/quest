@@ -13,6 +13,7 @@ let render_menu (fight : State.fight) =
        (Magic_numbers.width *. 4.)
        (Magic_numbers.height *. 4.)
        fight.monster.sprite);
+
   if fight.spiraled = false then
     Spiral.render_spiral fight Magic_numbers.x_length
       Magic_numbers.y_length
