@@ -13,7 +13,7 @@
 				{
 					"name": "monster",
 					"sprite": "./monster.png",
-					"hitpoints": 5,
+					"hitpoints": 50,
 					"chance": 5,
 					"attacks": [
 						"cs 3110"
@@ -36,7 +36,7 @@
 				{
 					"name": "monster",
 					"sprite": "./monster.png",
-					"hitpoints": 5,
+					"hitpoints": 50,
 					"chance": 5,
 					"attacks": [
 						"mega defense"
