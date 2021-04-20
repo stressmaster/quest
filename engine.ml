@@ -41,7 +41,7 @@ let init_engine texture_list w h x_length y_length =
     Glut.postRedisplay ();
     Glut.timerFunc ~ms:value ~cb:timer ~value
   in
-  let ms = 1000 in
+  let ms = 1 in
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.timerFunc ~ms ~cb:timer ~value:ms;
   Glut.mainLoop ()
