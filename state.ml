@@ -77,20 +77,20 @@ let map_move current key =
     match key with
     | Glut.KEY_RIGHT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-          else (x + 1, y))
+          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y) )
     | Glut.KEY_LEFT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-          else (x - 1, y))
+          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y) )
     | Glut.KEY_UP ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-          else (x, y + 1))
+          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1) )
     | Glut.KEY_DOWN ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-          else (x, y - 1))
+          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1) )
     | _ -> ()
   end;
   let should_change_room = current.room_exit = current.location in
@@ -98,22 +98,20 @@ let map_move current key =
   if should_change_room then (
     current.room <- Game.next_dungeon current.game current.room;
     current.location <- Dungeon.get_start current.room;
-    current.room_exit <- Dungeon.get_exit current.room);
+    current.room_exit <- Dungeon.get_exit current.room );
   current
 
 let typing_case current key =
   let str = current.fight.input_string
-  (* and mon_str = current.fight.monster_string *)
+  and mon_str = current.fight.monster_string
   and mon_HP = current.fight.monster_health in
   if key = 13 then (
     current.fight.monster_health <-
       max
-        ( mon_HP
-        - 50 (* String.length mon_str + Levenshtein.dist str mon_str*)
-        )
+        (mon_HP - String.length mon_str + Levenshtein.dist str mon_str)
         0;
     current.fight.attacking <- false;
-    "")
+    "" )
   else if key = 127 then
     String.sub str 0 (max (String.length str - 1) 0)
   else str ^ Char.escaped (Char.chr key)
@@ -126,7 +124,7 @@ let typing_move current key =
   current
 
 let menu_move current key =
-  (match key with
+  ( match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
@@ -134,7 +132,7 @@ let menu_move current key =
   | Glut.KEY_DOWN -> current.in_fight <- false
   | Glut.KEY_UP ->
       current.fight.attacking <- not current.fight.attacking
-  | _ -> ());
+  | _ -> () );
   current
 
 (* [controller current key] updates the [current] based on [key]*)
