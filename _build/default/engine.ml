@@ -32,5 +32,11 @@ let init_engine texture_list w h x_length y_length =
   init_window w h;
   init_display game w h;
   init_input game;
-  Glut.idleFunc ~cb:(Some Glut.postRedisplay);
+  let rec timer ~value =
+    Glut.postRedisplay ();
+    Glut.timerFunc ~ms:value ~cb:timer ~value
+  in
+  let ms = 10 in
+  (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
+  Glut.timerFunc ~ms ~cb:timer ~value:ms;
   Glut.mainLoop ()

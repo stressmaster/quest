@@ -29,7 +29,7 @@ let rec turner
   Hashtbl.add table (cur_x, cur_y) true;
   if cur_x = end_x && cur_y = end_y then fight.spiraled <- true
   else fight.spiraled <- false;
-  if number_done + 1 = number_needed then ()
+  if number_done = number_needed || fight.spiraled = true then ()
   else
     (* pause for a little while*)
     match dir with
