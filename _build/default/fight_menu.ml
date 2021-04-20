@@ -36,8 +36,7 @@ let render_menu (fight : State.fight) =
        Magic_numbers.height);
   Font.render_font
     (Font.new_font
-       (Timer.current_time () |> int_of_float |> Int.abs
-      |> string_of_int)
+       (Dungeon.get_monster_HP fight.monster |> string_of_int)
        1. 1.6 Magic_numbers.width Magic_numbers.height);
   match fight.action with
   | Attack ->
