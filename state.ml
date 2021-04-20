@@ -111,14 +111,16 @@ let typing_case current key =
   let str = current.fight.input_string
   and mon_str = current.fight.monster_string
   and mon_HP = current.fight.monster_health in
-  if key = 13 then (
+  let enter = 13 in
+  let backspace = 127 in
+  if key = enter then (
     current.fight.monster_health <-
       max
         (mon_HP - String.length mon_str + Levenshtein.dist str mon_str)
         0;
     current.fight.attacking <- false;
     "")
-  else if key = 127 then
+  else if key = backspace then
     String.sub str 0 (max (String.length str - 1) 0)
   else str ^ Char.escaped (Char.chr key)
 
