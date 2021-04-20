@@ -1,3 +1,3 @@
 type direction
 
-val render_spiral : State.fight -> unit
+val render_spiral : State.fight -> int -> int -> unit

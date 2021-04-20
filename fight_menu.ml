@@ -13,7 +13,10 @@ let render_menu (fight : State.fight) =
        (Magic_numbers.width *. 4.)
        (Magic_numbers.height *. 4.)
        fight.monster.sprite);
-  (*if fight.spiraled = false then Spiral.render_spiral fight else*)
+  if fight.spiraled = false then
+    Spiral.render_spiral fight Magic_numbers.x_length
+      Magic_numbers.y_length
+  else ();
   if fight.attacking then
     Font.render_font
       (Font.new_font fight.monster_string 0.8 0.8 Magic_numbers.width
@@ -32,8 +35,8 @@ let render_menu (fight : State.fight) =
        Magic_numbers.height);
   Font.render_font
     (Font.new_font
-       ( Timer.current_time () |> int_of_float |> Int.abs
-       |> string_of_int )
+       (Timer.current_time () |> int_of_float |> Int.abs
+      |> string_of_int)
        1. 1.6 Magic_numbers.width Magic_numbers.height);
   match fight.action with
   | Attack ->

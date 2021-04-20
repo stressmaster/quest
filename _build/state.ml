@@ -107,9 +107,11 @@ let typing_case current key =
     String.sub str 0 (max (String.length str - 1) 0)
   else str ^ Char.escaped (Char.chr key)
 
+let clamp_str str = String.sub str 0 (min (String.length str) 20)
+
 let typing_move current key =
   if current.in_fight && current.fight.attacking then
-    current.fight.input_string <- typing_case current key;
+    current.fight.input_string <- clamp_str (typing_case current key);
   current
 
 let menu_move current key =

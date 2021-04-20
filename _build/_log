@@ -32,9 +32,9 @@ ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package caml
 # Target: authors.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:authors.cmo, file:authors.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o authors.cmo authors.ml # cached
 # Target: texturemap.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:texturemap.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules texturemap.ml > texturemap.ml.depends
+ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules texturemap.ml > texturemap.ml.depends # cached
 # Target: texturemap.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:texturemap.cmo, file:texturemap.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o texturemap.cmo texturemap.ml
+ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o texturemap.cmo texturemap.ml # cached
 # Target: game.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:game.mli, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules game.mli > game.mli.depends # cached
 # Target: dungeon.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:dungeon.mli, ocaml, ocamldep, quiet, traverse }
@@ -73,10 +73,6 @@ ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package caml
 ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o fight_menu.cmi fight_menu.mli # cached
 # Target: fight_menu.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:fight_menu.ml, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules fight_menu.ml > fight_menu.ml.depends # cached
-# Target: font.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:font.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules font.mli > font.mli.depends # cached
-# Target: font.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:mli, file:font.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o font.cmi font.mli # cached
 # Target: spiral.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:spiral.mli, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules spiral.mli > spiral.mli.depends # cached
 # Target: spiral.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:mli, file:spiral.mli, interf, ocaml, quiet, traverse }
@@ -84,11 +80,23 @@ ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package cam
 # Target: fight_menu.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:fight_menu.cmo, file:fight_menu.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o fight_menu.cmo fight_menu.ml # cached
 # Target: spiral.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:spiral.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules spiral.ml > spiral.ml.depends
+ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules spiral.ml > spiral.ml.depends # cached
 # Target: spiral.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:spiral.cmo, file:spiral.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o spiral.cmo spiral.ml
+ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o spiral.cmo spiral.ml # cached
+# Target: font.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:font.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules font.mli > font.mli.depends # cached
+# Target: font.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:mli, file:font.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o font.cmi font.mli # cached
 # Target: font.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:font.ml, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules font.ml > font.ml.depends # cached
 # Target: font.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:font.cmo, file:font.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o font.cmo font.ml # cached
+# Target: timer.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:timer.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules timer.mli > timer.mli.depends # cached
+# Target: timer.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:mli, file:timer.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o timer.cmi timer.mli # cached
+# Target: timer.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:timer.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules timer.ml > timer.ml.depends # cached
+# Target: timer.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:timer.cmo, file:timer.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o timer.cmo timer.ml # cached
 # Compilation successful.
