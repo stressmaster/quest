@@ -99,10 +99,11 @@ let map_move current key =
   current
 
 let typing_case current key =
-  let str = current.fight.input_string in
+  let str = current.fight.input_string
+  and mon_str = current.fight.monster_string in
   if key = 13 then (
     Dungeon.update_monster_HP current.fight.monster
-      (10 - Levenshtein.dist str current.fight.monster_string);
+      (String.length mon_str - Levenshtein.dist str mon_str);
     current.fight.attacking <- false;
     "" )
   else if key = 127 then
