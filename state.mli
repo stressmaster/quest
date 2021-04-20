@@ -12,6 +12,7 @@ type fight = {
   mutable monster : Dungeon.monster;
   mutable monster_string : string;
   mutable monster_health : int;
+  mutable player_health : int;
   mutable input_string : string;
 }
 

@@ -12,6 +12,7 @@ type fight = {
   mutable monster : Dungeon.monster;
   mutable monster_string : string;
   mutable monster_health : int;
+  mutable player_health : int;
   mutable input_string : string;
 }
 
@@ -59,16 +60,11 @@ let init_state file_name =
         monster = m;
         monster_string = Dungeon.get_monster_string m;
         monster_health = Dungeon.get_monster_HP m;
+        player_health = Magic_numbers.health;
         input_string = "";
       };
     health = Magic_numbers.health;
   }
-
-let reset_fight c =
-  c.in_fight <- false;
-  c.fight.spiraled <- false;
-  c.fight.action <- Attack;
-  c.fight.attacking <- false
 
 let fight_decision bound = Random.int bound = 0
 
@@ -83,20 +79,20 @@ let map_move current key =
     match key with
     | Glut.KEY_RIGHT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-          else (x + 1, y))
+          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y) )
     | Glut.KEY_LEFT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-          else (x - 1, y))
+          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y) )
     | Glut.KEY_UP ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-          else (x, y + 1))
+          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1) )
     | Glut.KEY_DOWN ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-          else (x, y - 1))
+          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1) )
     | _ -> ()
   end;
   let should_change_room = current.room_exit = current.location in
@@ -104,23 +100,30 @@ let map_move current key =
   if should_change_room then (
     current.room <- Game.next_dungeon current.game current.room;
     current.location <- Dungeon.get_start current.room;
-    current.room_exit <- Dungeon.get_exit current.room);
+    current.room_exit <- Dungeon.get_exit current.room );
   current
 
 let typing_case current key =
   let str = current.fight.input_string
   and mon_str = current.fight.monster_string
   and mon_HP = current.fight.monster_health in
-  let enter = 13 in
-  let backspace = 127 in
-  if key = enter then (
-    current.fight.monster_health <-
-      max
-        (mon_HP - String.length mon_str + Levenshtein.dist str mon_str)
-        0;
+  if key = 13 then (
+    let diff = Levenshtein.dist str mon_str in
+    ( match current.fight.action with
+    | Attack ->
+        current.fight.monster_health <-
+          max (mon_HP - String.length mon_str + diff) 0
+    | Recover ->
+        current.health <-
+          min
+            (current.fight.player_health + String.length mon_str - diff)
+            current.health
+    | Run ->
+        if diff <= String.length str / 3 then current.in_fight <- false
+    );
     current.fight.attacking <- false;
-    "")
-  else if key = backspace then
+    "" )
+  else if key = 127 then
     String.sub str 0 (max (String.length str - 1) 0)
   else str ^ Char.escaped (Char.chr key)
 
@@ -132,15 +135,15 @@ let typing_move current key =
   current
 
 let menu_move current key =
-  (match key with
+  ( match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
       current.fight.action <- get_prev_action current.fight.action
-  | Glut.KEY_DOWN -> reset_fight current
+  | Glut.KEY_DOWN -> current.in_fight <- false
   | Glut.KEY_UP ->
       current.fight.attacking <- not current.fight.attacking
-  | _ -> ());
+  | _ -> () );
   current
 
 (* [controller current key] updates the [current] based on [key]*)
@@ -149,7 +152,7 @@ let controller current key =
     current.fight.monster_health <-
       Dungeon.get_monster_HP current.fight.monster;
     current.in_fight <- false;
-    current)
+    current )
   else if current.in_fight && not current.fight.attacking then
     menu_move current key
   else if not current.in_fight then map_move current key

@@ -34,6 +34,10 @@ let render_menu (fight : State.fight) =
       (Font.new_font
          (fight.monster_health |> string_of_int)
          1. 1.6 Magic_numbers.width Magic_numbers.height);
+    Font.render_font
+      (Font.new_font
+         (fight.player_health |> string_of_int)
+         1.5 1.6 Magic_numbers.width Magic_numbers.height);
     match fight.action with
     | Attack ->
         Font.render_font
