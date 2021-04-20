@@ -12,7 +12,7 @@ type cell = {
 type monster = {
   name : string;
   sprite : string;
-  hitpoints : int;
+  mutable hitpoints : int;
   encounter_chance : int;
   attack_strings : string list;
 }
