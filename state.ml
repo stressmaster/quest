@@ -80,7 +80,12 @@ let player_loc state = state.location
 let map_move current key =
   let current_bound = Dungeon.get_bound current.room in
   let x, y = current.location in
-  current.in_fight <- fight_decision current_bound;
+  current.in_fight <-
+    (if
+     current.location = current.room_exit
+     || current.location = Dungeon.get_start current.room
+    then false
+    else fight_decision current_bound);
   begin
     match key with
     | Glut.KEY_RIGHT ->
