@@ -25,7 +25,7 @@ let rec turner
     (Render.new_square
        (float_of_int cur_x /. float_of_int Magic_numbers.x_length *. 2.)
        (float_of_int cur_y /. float_of_int Magic_numbers.x_length *. 2.)
-       Magic_numbers.width Magic_numbers.height "./path.png");
+       Magic_numbers.width Magic_numbers.height "./darkness.png");
   Hashtbl.add table (cur_x, cur_y) true;
   if cur_x = end_x && cur_y = end_y then fight.spiraled <- true
   else fight.spiraled <- false;
@@ -68,5 +68,5 @@ let render_spiral fight x y =
   let spiral_table = Hashtbl.create (x * y) in
   instantiate_dungeon_cells x y spiral_table;
   let endpoint = Timer.current_time () in
-  turner fight 0 endpoint middle_x middle_y Up (x - 1) (y - 1)
+  turner fight 0 (5 * endpoint) middle_x middle_y Up (x - 1) (y - 1)
     spiral_table

@@ -16,37 +16,42 @@ let render_menu (fight : State.fight) =
          fight.monster.sprite);
     if fight.attacking then
       Font.render_font
-        (Font.new_font fight.monster_string 0.8 0.8 Magic_numbers.width
+        (Font.new_font fight.monster_string 0. 0.3 Magic_numbers.width
            Magic_numbers.height);
     Font.render_font
-      (Font.new_font fight.input_string 0. 0.5 Magic_numbers.width
-         Magic_numbers.height);
-    Font.render_font
-      (Font.new_font "fight" 0.1 0.2 Magic_numbers.width
-         Magic_numbers.height);
-    Font.render_font
-      (Font.new_font "heal" 0.88 0.2 Magic_numbers.width
-         Magic_numbers.height);
-    Font.render_font
-      (Font.new_font "run" 1.6 0.2 Magic_numbers.width
+      (Font.new_font fight.input_string 0. 0.1 Magic_numbers.width
          Magic_numbers.height);
     Font.render_font
       (Font.new_font
-         (fight.monster_health |> string_of_int)
-         1. 1.6 Magic_numbers.width Magic_numbers.height);
-    match fight.action with
-    | Attack ->
-        Font.render_font
-          (Font.new_font ">" 0. 0.2 Magic_numbers.width
-             Magic_numbers.height)
-    | Recover ->
-        Font.render_font
-          (Font.new_font ">" 0.78 0.2 Magic_numbers.width
-             Magic_numbers.height)
-    | Run ->
-        Font.render_font
-          (Font.new_font ">" 1.5 0.2 Magic_numbers.width
-             Magic_numbers.height)
+         ("hp " ^ string_of_int fight.monster_health)
+         0.8 1.6 Magic_numbers.width Magic_numbers.height);
+    Font.render_font
+      (Font.new_font
+         ("hp " ^ string_of_int fight.player_health)
+         0.1 0.6 Magic_numbers.width Magic_numbers.height);
+    if not fight.attacking then (
+      Font.render_font
+        (Font.new_font "fight" 0.1 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "heal" 0.88 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "run" 1.6 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      match fight.action with
+      | Attack ->
+          Font.render_font
+            (Font.new_font ">" 0. 0.2 Magic_numbers.width
+               Magic_numbers.height)
+      | Recover ->
+          Font.render_font
+            (Font.new_font ">" 0.78 0.2 Magic_numbers.width
+               Magic_numbers.height)
+      | Run ->
+          Font.render_font
+            (Font.new_font ">" 1.5 0.2 Magic_numbers.width
+               Magic_numbers.height))
   end
   else
     Font.render_font

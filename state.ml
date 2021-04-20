@@ -66,6 +66,12 @@ let init_state file_name =
     health = Magic_numbers.health;
   }
 
+let reset_fight c =
+  c.in_fight <- false;
+  c.fight.spiraled <- false;
+  c.fight.action <- Attack;
+  c.fight.attacking <- false
+
 let fight_decision bound = Random.int bound = 0
 
 let player_loc state = state.location

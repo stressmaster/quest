@@ -12,8 +12,11 @@ type fight = {
   mutable monster : Dungeon.monster;
   mutable monster_string : string;
   mutable monster_health : int;
+  mutable player_health : int;
   mutable input_string : string;
 }
+
+val reset_fight : current -> unit
 
 (* [init_state] assigns player to starting location in dungeon *)
 val init_state : string -> current
