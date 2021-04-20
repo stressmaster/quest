@@ -4,11 +4,6 @@ type direction =
   | Right
   | Left
 
-let noexn_hashtable_find table elt =
-  match try Some (Hashtbl.find table elt) with Not_found -> None with
-  | Some a -> true
-  | None -> false
-
 let instantiate_dungeon_cells x y dungeon_cells =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
