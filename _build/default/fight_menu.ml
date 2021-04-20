@@ -22,31 +22,36 @@ let render_menu (fight : State.fight) =
       (Font.new_font fight.input_string 0. 0.5 Magic_numbers.width
          Magic_numbers.height);
     Font.render_font
-      (Font.new_font "fight" 0.1 0.2 Magic_numbers.width
-         Magic_numbers.height);
-    Font.render_font
-      (Font.new_font "heal" 0.88 0.2 Magic_numbers.width
-         Magic_numbers.height);
-    Font.render_font
-      (Font.new_font "run" 1.6 0.2 Magic_numbers.width
-         Magic_numbers.height);
-    Font.render_font
       (Font.new_font
          (fight.monster_health |> string_of_int)
          1. 1.6 Magic_numbers.width Magic_numbers.height);
-    match fight.action with
-    | Attack ->
-        Font.render_font
-          (Font.new_font ">" 0. 0.2 Magic_numbers.width
-             Magic_numbers.height)
-    | Recover ->
-        Font.render_font
-          (Font.new_font ">" 0.78 0.2 Magic_numbers.width
-             Magic_numbers.height)
-    | Run ->
-        Font.render_font
-          (Font.new_font ">" 1.5 0.2 Magic_numbers.width
-             Magic_numbers.height)
+    Font.render_font
+      (Font.new_font
+         (fight.player_health |> string_of_int)
+         1.5 1.6 Magic_numbers.width Magic_numbers.height);
+    if not fight.attacking then (
+      Font.render_font
+        (Font.new_font "fight" 0.1 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "heal" 0.88 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      Font.render_font
+        (Font.new_font "run" 1.6 0.2 Magic_numbers.width
+           Magic_numbers.height);
+      match fight.action with
+      | Attack ->
+          Font.render_font
+            (Font.new_font ">" 0. 0.2 Magic_numbers.width
+               Magic_numbers.height)
+      | Recover ->
+          Font.render_font
+            (Font.new_font ">" 0.78 0.2 Magic_numbers.width
+               Magic_numbers.height)
+      | Run ->
+          Font.render_font
+            (Font.new_font ">" 1.5 0.2 Magic_numbers.width
+               Magic_numbers.height) )
   end
   else
     Font.render_font

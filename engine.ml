@@ -29,7 +29,7 @@ let init_display game w h =
       Font.render_font
         (Font.new_font
            (string_of_int (Timer.current_time ()))
-           0. 0.5 Magic_numbers.width Magic_numbers.height);
+           1.5 1.8 Magic_numbers.width Magic_numbers.height);
       Gl.flush ())
 
 let init_input game =
