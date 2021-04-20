@@ -21,9 +21,6 @@ let get_monster_string m = List.hd m.attack_strings
 
 let get_monster_HP m = m.hitpoints
 
-let update_monster_HP m damage =
-  m.hitpoints <- max (m.hitpoints - damage) 0
-
 type t = {
   id : int;
   cells : (int * int, cell) Hashtbl.t;

@@ -25,7 +25,7 @@ let rec turner
     (Render.new_square
        (float_of_int cur_x /. float_of_int Magic_numbers.x_length *. 2.)
        (float_of_int cur_y /. float_of_int Magic_numbers.x_length *. 2.)
-       Magic_numbers.width Magic_numbers.height "./path.png");
+       Magic_numbers.width Magic_numbers.height "./darkness.png");
   Hashtbl.add table (cur_x, cur_y) true;
   if cur_x = end_x && cur_y = end_y then fight.spiraled <- true
   else fight.spiraled <- false;

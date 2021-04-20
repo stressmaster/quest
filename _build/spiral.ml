@@ -29,7 +29,7 @@ let rec turner
   Hashtbl.add table (cur_x, cur_y) true;
   if cur_x = end_x && cur_y = end_y then fight.spiraled <- true
   else fight.spiraled <- false;
-  if number_done + 1 = number_needed then ()
+  if number_done = number_needed || fight.spiraled = true then ()
   else
     (* pause for a little while*)
     match dir with
@@ -67,6 +67,6 @@ let render_spiral fight x y =
   let middle_y = (y - 1) / 2 in
   let spiral_table = Hashtbl.create (x * y) in
   instantiate_dungeon_cells x y spiral_table;
-  (*let endpoint = 10. *. Timer.current_time () |> int_of_float |>
-    Int.abs in*)
-  turner fight 0 50 middle_x middle_y Up (x - 1) (y - 1) spiral_table
+  let endpoint = Timer.current_time () in
+  turner fight 0 endpoint middle_x middle_y Up (x - 1) (y - 1)
+    spiral_table

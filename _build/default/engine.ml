@@ -12,7 +12,15 @@ let init_display game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      if State.in_fight !game then
+      let thisfight = State.curr_fight !game in
+      if thisfight.spiraled = false && State.in_fight !game then (
+        Dungeon.render_dungeon
+          (State.player_loc !game)
+          (State.curr_room !game);
+        Spiral.render_spiral
+          (State.curr_fight !game)
+          Magic_numbers.x_length Magic_numbers.y_length)
+      else if thisfight.spiraled = true && State.in_fight !game then
         Fight_menu.render_menu (State.curr_fight !game)
       else
         Dungeon.render_dungeon
