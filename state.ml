@@ -168,11 +168,14 @@ let menu_move current key =
 
 (* [controller current key] updates the [current] based on [key]*)
 let controller current key =
+  (* move after end of fight*)
   if current.in_fight && current.fight.monster_health = 0 then (
     reset_fight current;
-    current)
+    current (* can't move during spiral animation*))
+  else if current.in_fight && not current.fight.spiraled then current
+    (* menu move*)
   else if current.in_fight && not current.fight.attacking then
-    menu_move current key
+    menu_move current key (* move around map*)
   else if not current.in_fight then map_move current key
   else current
 
