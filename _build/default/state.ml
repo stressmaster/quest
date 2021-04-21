@@ -171,6 +171,7 @@ let controller current key =
   if current.in_fight && current.fight.monster_health = 0 then (
     reset_fight current;
     current)
+  else if current.in_fight && not current.fight.spiraled then current
   else if current.in_fight && not current.fight.attacking then
     menu_move current key
   else if not current.in_fight then map_move current key
