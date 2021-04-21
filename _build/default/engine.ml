@@ -25,31 +25,23 @@ let init_display game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      (match Stack.pop stack with
+      (match Render_stack.stack_peek () with
       | SpiralRender ->
-          if (State.curr_fight !game).spiraled = false then (
-            Dungeon.render_dungeon
-              (State.player_loc !game)
-              (State.curr_room !game);
-            Spiral.render_spiral
-              (State.curr_fight !game)
-              Magic_numbers.x_length Magic_numbers.y_length;
-            stack_push SpiralRender)
-          else stack_push FightRender
-      | FightRender ->
-          Fight_menu.render_menu (State.curr_fight !game);
-          if State.in_fight !game then stack_push FightRender
-      | DungeonRender ->
           Dungeon.render_dungeon
             (State.player_loc !game)
             (State.curr_room !game);
-          stack_push DungeonRender;
-          if State.in_fight !game then stack_push SpiralRender);
-      Font.render_font
-        (Font.new_font
-           (string_of_int (Timer.current_time ()))
-           1.5 1.8 Magic_numbers.width Magic_numbers.height);
-      Gl.flush ())
+          Spiral.render_spiral
+            (State.curr_fight !game)
+            Magic_numbers.x_length Magic_numbers.y_length
+      | FightRender -> Fight_menu.render_menu (State.curr_fight !game)
+      | DungeonRender ->
+          Dungeon.render_dungeon
+            (State.player_loc !game)
+            (State.curr_room !game));
+      Gl.flush ()
+      (* (Font.render_font (Font.new_font (string_of_int
+         (Timer.current_time ())) 1.5 1.8 Magic_numbers.width
+         Magic_numbers.height)) *))
 
 let init_input game =
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y ->

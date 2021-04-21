@@ -85,29 +85,34 @@ let map_move current key =
   let current_bound = Dungeon.get_bound current.room in
   let x, y = current.location in
   current.in_fight <-
-    ( if
-      current.location = current.room_exit
-      || current.location = Dungeon.get_start current.room
+    (if
+     current.location = current.room_exit
+     || current.location = Dungeon.get_start current.room
     then false
-    else fight_decision current_bound );
+    else fight_decision current_bound);
+  if current.in_fight then
+    Render_stack.stack_push Render_stack.SpiralRender;
+  (* delete light right below when spiral works. it is a work around*)
+  (* current.fight.spiraled <- true; *)
+  (* Render_stack.stack_push Render_stack.FightRender); *)
   begin
     match key with
     | Glut.KEY_RIGHT ->
         current.location <-
-          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-          else (x + 1, y) )
+          (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y))
     | Glut.KEY_LEFT ->
         current.location <-
-          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-          else (x - 1, y) )
+          (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y))
     | Glut.KEY_UP ->
         current.location <-
-          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-          else (x, y + 1) )
+          (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1))
     | Glut.KEY_DOWN ->
         current.location <-
-          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-          else (x, y - 1) )
+          (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1))
     | _ -> ()
   end;
   if current.in_fight = true then Timer.reset_timer ();
@@ -118,11 +123,11 @@ let map_move current key =
   if should_change_next then (
     current.room <- Game.next_dungeon current.game current.room;
     current.location <- Dungeon.get_start current.room;
-    current.room_exit <- Dungeon.get_exit current.room )
+    current.room_exit <- Dungeon.get_exit current.room)
   else if should_change_prev then (
     current.room <- Game.prev_dungeon current.game current.room;
     current.location <- Dungeon.get_exit current.room;
-    current.room_exit <- Dungeon.get_exit current.room );
+    current.room_exit <- Dungeon.get_exit current.room);
   current
 
 let typing_case current key =
@@ -131,7 +136,7 @@ let typing_case current key =
   and mon_HP = current.fight.monster_health in
   if key = 13 then (
     let diff = Levenshtein.dist str mon_str in
-    ( match current.fight.action with
+    (match current.fight.action with
     | Attack ->
         let damage = max (String.length mon_str - diff) 0 in
         current.fight.monster_health <- max (mon_HP - damage) 0
@@ -139,10 +144,12 @@ let typing_case current key =
         current.health <-
           (let healing = max (String.length mon_str - diff) 0 in
            min (current.fight.player_health + healing) current.health)
-    | Run -> if diff <= String.length str / 3 then reset_fight current
-    );
+    | Run ->
+        if diff <= String.length str / 3 then (
+          Render_stack.stack_pop ();
+          reset_fight current));
     current.fight.attacking <- false;
-    "" )
+    "")
   else if key = 127 then
     String.sub str 0 (max (String.length str - 1) 0)
   else str ^ Char.escaped (Char.chr key)
@@ -155,7 +162,7 @@ let typing_move current key =
   current
 
 let menu_move current key =
-  ( match key with
+  (match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
@@ -164,15 +171,16 @@ let menu_move current key =
   | Glut.KEY_UP ->
       Timer.reset_timer ();
       current.fight.attacking <- not current.fight.attacking
-  | _ -> () );
+  | _ -> ());
   current
 
 (* [controller current key] updates the [current] based on [key]*)
 let controller current key =
   (* move after end of fight*)
   if current.in_fight && current.fight.monster_health = 0 then (
+    Render_stack.stack_pop ();
     reset_fight current;
-    current (* can't move during spiral animation*) )
+    current (* can't move during spiral animation*))
   else if current.in_fight && not current.fight.spiraled then current
     (* menu move*)
   else if current.in_fight && not current.fight.attacking then

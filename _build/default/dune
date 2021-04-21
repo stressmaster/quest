@@ -1,0 +1,9 @@
+(env
+ (dev
+  (flags
+   (:standard -w -27 -w -6 -w -32 -w -37 -w -33))))
+
+(executable
+ (name main)
+ (modes byte exe)
+ (libraries lablgl.glut stdlib camlimages.core camlimages.png yojson))

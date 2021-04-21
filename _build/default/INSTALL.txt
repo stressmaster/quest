@@ -1,0 +1,14 @@
+Install the following packages: 
+lablgl, camlimages, and their dependencies if needed
+
+
+From the terminal, navigate to the Camelquest directory and run:
+dune build main.bc
+
+Then navigate to ./_build/default in Camelquest directory and run:
+ocamlrun main.bc
+
+or from the Camelquest directory run:
+ocamlrun _build/default/main.bc
+
+Please consult one of us if any problem arises.
