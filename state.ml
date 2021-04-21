@@ -165,7 +165,9 @@ let menu_move current key =
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
       current.fight.action <- get_prev_action current.fight.action
-  | Glut.KEY_DOWN -> reset_fight current
+  | Glut.KEY_DOWN ->
+      Render_stack.stack_pop ();
+      reset_fight current
   | Glut.KEY_UP ->
       Timer.reset_timer ();
       current.fight.attacking <- not current.fight.attacking
