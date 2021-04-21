@@ -31,7 +31,6 @@ let rec turner
   else fight.spiraled <- false;
   if number_done = number_needed || fight.spiraled = true then ()
   else
-    (* pause for a little while*)
     match dir with
     | Right ->
         if Hashtbl.find table (cur_x, cur_y - 1) = false then
