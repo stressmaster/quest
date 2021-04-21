@@ -90,9 +90,23 @@ let map_move current key =
      || current.location = Dungeon.get_start current.room
     then false
     else fight_decision current_bound);
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   if current.in_fight then
     Render_stack.stack_push Render_stack.SpiralRender;
   (* delete light right below when spiral works. it is a work around*)
+=======
+=======
+>>>>>>> Stashed changes
+  if current.in_fight then (
+    (* Render_stack.stack_push Render_stack.SpiralRender; *)
+    (* delete light right below when spiral works. it is a work around*)
+    current.fight.spiraled <- true;
+    Render_stack.stack_push Render_stack.FightRender);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   begin
     match key with
     | Glut.KEY_RIGHT ->
