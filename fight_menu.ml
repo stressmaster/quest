@@ -59,7 +59,8 @@ let render_menu (fight : State.fight) =
             (Font.new_font ">" 1.5 0.2 Magic_numbers.width
                Magic_numbers.height))
   end
-  else
+  else (
     Font.render_font
       (Font.new_font "you win" 0.6 1. Magic_numbers.width
-         Magic_numbers.height)
+         Magic_numbers.height);
+    Render_stack.stack_pop ())
