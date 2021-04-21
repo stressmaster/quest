@@ -36,33 +36,59 @@ let rec turner
   else
     match dir with
     | Right ->
-        if Hashtbl.find table (cur_x, cur_y - 1) = false then
+        print_string "matched right";
+        print_newline ();
+
+        if Hashtbl.find table (cur_x, cur_y - 1) = false then (
+          print_string "right -> down";
+          print_newline ();
+
           turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
-            Down end_x end_y table
-        else
+            Down end_x end_y table)
+        else (
+          print_string "right -> right";
+          print_newline ();
           turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
-            Right end_x end_y table
+            Right end_x end_y table)
     | Down ->
-        if Hashtbl.find table (cur_x - 1, cur_y) = false then
+        print_string "matched down";
+        print_newline ();
+        if Hashtbl.find table (cur_x - 1, cur_y) = false then (
+          print_string "down -> left";
+          print_newline ();
           turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
-            Left end_x end_y table
-        else
+            Left end_x end_y table)
+        else (
+          print_string "down -> down";
+          print_newline ();
           turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
-            Down end_x end_y table
+            Down end_x end_y table)
     | Left ->
-        if Hashtbl.find table (cur_x, cur_y + 1) = false then
+        print_string "matched left";
+        print_newline ();
+        if Hashtbl.find table (cur_x, cur_y + 1) = false then (
+          print_string "left -> up";
+          print_newline ();
           turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
-            Up end_x end_y table
-        else
+            Up end_x end_y table)
+        else (
+          print_string "left -> left";
+          print_newline ();
           turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
-            Left end_x end_y table
+            Left end_x end_y table)
     | Up ->
-        if Hashtbl.find table (cur_x + 1, cur_y) = false then
+        print_string "matched up";
+        print_newline ();
+        if Hashtbl.find table (cur_x + 1, cur_y) = false then (
+          print_string "right -> right";
+          print_newline ();
           turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
-            Right end_x end_y table
-        else
+            Right end_x end_y table)
+        else (
+          print_string "up -> up";
+          print_newline ();
           turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
-            Up end_x end_y table
+            Up end_x end_y table)
 
 let render_spiral fight x y =
   let middle_x = (x - 1) / 2 in
