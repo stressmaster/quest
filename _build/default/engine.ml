@@ -1,5 +1,18 @@
 let init_texture texture_list = Texturemap.init_texture texture_list
 
+type animation =
+  | DungeonRender
+  | FightRender
+  | SpiralRender
+
+let stack = Stack.create ()
+
+let _ = Stack.push DungeonRender stack
+
+let stack_push x = Stack.push x stack
+
+let stack_pop () = Stack.pop stack
+
 let init_window w h =
   ignore (Glut.init Sys.argv);
   Glut.initDisplayMode ~alpha:true ~depth:true ();
@@ -12,20 +25,26 @@ let init_display game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      let thisfight = State.curr_fight !game in
-      if thisfight.spiraled = false && State.in_fight !game then (
-        Dungeon.render_dungeon
-          (State.player_loc !game)
-          (State.curr_room !game);
-        Spiral.render_spiral
-          (State.curr_fight !game)
-          Magic_numbers.x_length Magic_numbers.y_length )
-      else if thisfight.spiraled = true && State.in_fight !game then
-        Fight_menu.render_menu (State.curr_fight !game)
-      else
-        Dungeon.render_dungeon
-          (State.player_loc !game)
-          (State.curr_room !game);
+      (match Stack.pop stack with
+      | SpiralRender ->
+          if (State.curr_fight !game).spiraled = false then (
+            Dungeon.render_dungeon
+              (State.player_loc !game)
+              (State.curr_room !game);
+            Spiral.render_spiral
+              (State.curr_fight !game)
+              Magic_numbers.x_length Magic_numbers.y_length;
+            stack_push SpiralRender)
+          else stack_push FightRender
+      | FightRender ->
+          Fight_menu.render_menu (State.curr_fight !game);
+          if State.in_fight !game then stack_push FightRender
+      | DungeonRender ->
+          Dungeon.render_dungeon
+            (State.player_loc !game)
+            (State.curr_room !game);
+          stack_push DungeonRender;
+          if State.in_fight !game then stack_push SpiralRender);
       Font.render_font
         (Font.new_font
            (string_of_int (Timer.current_time ()))
