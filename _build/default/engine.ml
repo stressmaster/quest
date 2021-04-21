@@ -19,7 +19,7 @@ let init_display game w h =
           (State.curr_room !game);
         Spiral.render_spiral
           (State.curr_fight !game)
-          Magic_numbers.x_length Magic_numbers.y_length)
+          Magic_numbers.x_length Magic_numbers.y_length )
       else if thisfight.spiraled = true && State.in_fight !game then
         Fight_menu.render_menu (State.curr_fight !game)
       else
@@ -40,6 +40,7 @@ let init_input game =
 
 let init_engine texture_list w h x_length y_length =
   let game = ref (State.init_state "sample_game.json") in
+  let start = Sys.time () in
   init_texture texture_list;
   init_window w h;
   init_display game w h;
@@ -49,7 +50,12 @@ let init_engine texture_list w h x_length y_length =
     Glut.postRedisplay ();
     Glut.timerFunc ~ms:value ~cb:timer ~value
   in
-  let ms = 1 in
+  let rec typing_timer ~value =
+    game := State.check_time_limit !game;
+    Glut.timerFunc ~ms:value ~cb:typing_timer ~value
+  in
+  let ms = 200. *. (Sys.time () -. start) |> int_of_float in
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.timerFunc ~ms ~cb:timer ~value:ms;
+  Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
   Glut.mainLoop ()

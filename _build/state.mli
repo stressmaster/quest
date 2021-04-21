@@ -13,6 +13,7 @@ type fight = {
   mutable monster_string : string;
   mutable monster_health : int;
   mutable player_health : int;
+  mutable typing_limit : int;
   mutable input_string : string;
 }
 
@@ -34,3 +35,5 @@ val curr_room : current -> Dungeon.t
 val in_fight : current -> bool
 
 val curr_fight : current -> fight
+
+val check_time_limit : current -> current

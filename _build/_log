@@ -38,9 +38,9 @@ ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package cam
 # Target: game.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:game.mli, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules game.mli > game.mli.depends # cached
 # Target: dungeon.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:dungeon.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules dungeon.mli > dungeon.mli.depends
+ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules dungeon.mli > dungeon.mli.depends # cached
 # Target: dungeon.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:mli, file:dungeon.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o dungeon.cmi dungeon.mli
+ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o dungeon.cmi dungeon.mli # cached
 # Target: game.cmi, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:mli, file:game.mli, interf, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o game.cmi game.mli # cached
 # Target: game.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:game.ml, ocaml, ocamldep, quiet, traverse }

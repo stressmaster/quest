@@ -137,9 +137,8 @@ let typing_case current key =
         current.fight.monster_health <- max (mon_HP - damage) 0
     | Recover ->
         current.health <-
-          min
-            (current.fight.player_health + String.length mon_str - diff)
-            current.health
+          (let healing = max (String.length mon_str - diff) 0 in
+           min (current.fight.player_health + healing) current.health)
     | Run -> if diff <= String.length str / 3 then reset_fight current);
     current.fight.attacking <- false;
     "")
