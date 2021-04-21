@@ -13,6 +13,7 @@ type fight = {
   mutable monster_string : string;
   mutable monster_health : int;
   mutable player_health : int;
+  mutable typing_limit : int;
   mutable input_string : string;
 }
 
@@ -61,6 +62,8 @@ let init_state file_name =
         monster_string = Dungeon.get_monster_string m;
         monster_health = Dungeon.get_monster_HP m;
         player_health = Magic_numbers.health;
+        typing_limit =
+          m |> Dungeon.get_monster_string |> String.length |> ( * ) 10;
         input_string = "";
       };
     health = Magic_numbers.health;
@@ -153,6 +156,7 @@ let menu_move current key =
       current.fight.action <- get_prev_action current.fight.action
   | Glut.KEY_DOWN -> current.in_fight <- false
   | Glut.KEY_UP ->
+      Timer.reset_timer ();
       current.fight.attacking <- not current.fight.attacking
   | _ -> () );
   current
