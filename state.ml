@@ -137,7 +137,8 @@ let typing_case current key =
     (match current.fight.action with
     | Attack ->
         let damage = max (String.length mon_str - diff) 0 in
-        current.fight.monster_health <- max (mon_HP - damage) 0
+        current.fight.monster_health <- max (mon_HP - damage) 0;
+        Render_stack.stack_push Render_stack.AttackRender
     | Recover ->
         current.health <-
           (let healing = max (String.length mon_str - diff) 0 in

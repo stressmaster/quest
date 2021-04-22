@@ -21,6 +21,7 @@ let rec turner
     end_x
     end_y
     table =
+  (* print_string (string_of_int number_needed); print_newline (); *)
   Render.render_square
     (Render.new_square
        (float_of_int cur_x /. float_of_int Magic_numbers.x_length *. 2.)

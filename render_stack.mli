@@ -2,6 +2,7 @@ type animation =
   | DungeonRender
   | FightRender
   | SpiralRender
+  | AttackRender
 
 val stack_push : animation -> unit
 

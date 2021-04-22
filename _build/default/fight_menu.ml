@@ -63,3 +63,23 @@ let render_menu (fight : State.fight) =
     Font.render_font
       (Font.new_font "you win" 0.6 1. Magic_numbers.width
          Magic_numbers.height)
+
+let render_attack (fight : State.fight) =
+  let monster_sprite =
+    Render.new_square
+      (1. /. float_of_int 3 *. 2.)
+      (1.25 /. float_of_int 3 *. 2.)
+      (Magic_numbers.width *. 4.)
+      (Magic_numbers.height *. 4.)
+      fight.monster.sprite
+  in
+
+  let darkness_sprite =
+    Render.new_square
+      (1. /. float_of_int 3 *. 2.)
+      (1.25 /. float_of_int 3 *. 2.)
+      (Magic_numbers.width *. 4.)
+      (Magic_numbers.height *. 4.)
+      "./darkness.png"
+  in
+  Render.render_square_flashes monster_sprite darkness_sprite 3

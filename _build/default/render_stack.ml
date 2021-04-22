@@ -2,6 +2,7 @@ type animation =
   | DungeonRender
   | FightRender
   | SpiralRender
+  | AttackRender
 
 let stack = Stack.create ()
 
@@ -10,6 +11,7 @@ let string_of_animation a =
   | DungeonRender -> "DungeonRender"
   | FightRender -> "FightRender"
   | SpiralRender -> "SpiralRender"
+  | AttackRender -> "AttackRender"
 
 let debug_stack r p =
   match (r, p) with

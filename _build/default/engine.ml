@@ -33,6 +33,9 @@ let init_display game w h =
           Spiral.render_spiral
             (State.curr_fight !game)
             Magic_numbers.x_length Magic_numbers.y_length
+      | AttackRender ->
+          Fight_menu.render_menu (State.curr_fight !game);
+          Fight_menu.render_attack (State.curr_fight !game)
       | FightRender -> Fight_menu.render_menu (State.curr_fight !game)
       | DungeonRender ->
           Dungeon.render_dungeon
