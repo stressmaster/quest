@@ -193,7 +193,5 @@ let check_time_limit current =
   if
     current.fight.attacking
     && Timer.current_time () > current.fight.typing_limit
-  then (
-    Render_stack.stack_push Render_stack.AttackRender;
-    typing_move current 13)
+  then typing_move current 13
   else current
