@@ -53,7 +53,7 @@ let get_monster d =
   let no = Random.int total + 1 in
   let rec find_m acc = function
     | h :: t ->
-        if h.encounter_chance + acc <= no then h
+        if h.encounter_chance + acc >= no then h
         else find_m (h.encounter_chance + acc) t
     | [] -> List.hd d.monsters
   in

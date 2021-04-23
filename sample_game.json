@@ -18,6 +18,15 @@
 					"attacks": [
 						"cs 3110"
 					]
+				},
+				{
+					"name": "goblin_1",
+					"sprite": "./goblin_1.png",
+					"hitpoints": 50,
+					"chance": 5,
+					"attacks": [
+						"cs 3110"
+					]
 				}
 			],
 			"prev": 3,
