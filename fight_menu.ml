@@ -82,3 +82,5 @@ let render_attack (fight : State.fight) =
       "./darkness.png"
   in
   Render.render_square_flashes monster_sprite darkness_sprite 15
+
+let render_player_damage () = Render.render_screen_shake 18

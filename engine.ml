@@ -36,6 +36,9 @@ let init_display game w h =
       | AttackRender ->
           Fight_menu.render_menu (State.curr_fight !game);
           Fight_menu.render_attack (State.curr_fight !game)
+      | ScreenshakeRender ->
+          Fight_menu.render_menu (State.curr_fight !game);
+          Fight_menu.render_player_damage ()
       | FightRender -> Fight_menu.render_menu (State.curr_fight !game)
       | DungeonRender ->
           Dungeon.render_dungeon
