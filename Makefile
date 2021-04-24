@@ -20,4 +20,4 @@ play:
 	ocamlrun ./$(OURMAIN)
 
 zip:
-  zip camelquest.zip *.ml* *.json *.png _tags *.txt .merlin .ocamlformat .ocamlinit Makefile dune dune-project fonts
+	zip camelquest.zip *.ml* *.json *.png _tags .txt .merlin .ocamlformat .ocamlinit Makefile	dune dune-project .md font

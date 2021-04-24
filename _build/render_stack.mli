@@ -3,6 +3,7 @@ type animation =
   | FightRender
   | SpiralRender
   | AttackRender
+  | ScreenshakeRender
 
 val stack_push : animation -> unit
 

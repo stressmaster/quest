@@ -3,6 +3,7 @@ type animation =
   | FightRender
   | SpiralRender
   | AttackRender
+  | ScreenshakeRender
 
 let stack = Stack.create ()
 
@@ -12,6 +13,7 @@ let string_of_animation a =
   | FightRender -> "FightRender"
   | SpiralRender -> "SpiralRender"
   | AttackRender -> "AttackRender"
+  | ScreenshakeRender -> "ScreenshakeRender"
 
 let debug_stack r p =
   match (r, p) with
