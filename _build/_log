@@ -56,7 +56,7 @@ ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package caml
 # Target: game.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:game.cmo, file:game.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o game.cmo game.ml # cached
 # Target: dungeon.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:dungeon.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules dungeon.ml > dungeon.ml.depends # cached
+ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules dungeon.ml > dungeon.ml.depends
 # Target: dungeon.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:dungeon.cmo, file:dungeon.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o dungeon.cmo dungeon.ml
 # Target: state.mli.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
@@ -94,11 +94,11 @@ ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package cam
 # Target: spiral.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:spiral.ml, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules spiral.ml > spiral.ml.depends # cached
 # Target: spiral.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:spiral.cmo, file:spiral.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o spiral.cmo spiral.ml
+ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o spiral.cmo spiral.ml # cached
 # Target: font.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:font.ml, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules font.ml > font.ml.depends # cached
 # Target: font.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:font.cmo, file:font.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o font.cmo font.ml
+ocamlfind ocamlc -c -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -o font.cmo font.ml # cached
 # Target: timer.ml.depends, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), extension:ml, file:timer.ml, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -package yojson -package lablgl -package ounit2 -package camlimages.core -package camlimages.png -modules timer.ml > timer.ml.depends # cached
 # Target: timer.cmo, tags: { package(camlimages.core), package(camlimages.png), package(lablgl), package(ounit2), package(yojson), byte, compile, extension:cmo, extension:ml, file:timer.cmo, file:timer.ml, implem, ocaml, quiet, traverse }

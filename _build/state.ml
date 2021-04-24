@@ -70,11 +70,14 @@ let init_state file_name =
   }
 
 let reset_fight c =
+  let new_m = Dungeon.get_monster c.room in
   c.in_fight <- false;
   c.fight.spiraled <- false;
   c.fight.action <- Attack;
   c.fight.attacking <- false;
-  c.fight.monster_health <- Dungeon.get_monster_HP c.fight.monster
+  c.fight.monster <- new_m;
+  c.fight.monster_string <- Dungeon.get_monster_string new_m;
+  c.fight.monster_health <- Dungeon.get_monster_HP new_m
 
 let fight_decision bound = Random.int bound = 0
 

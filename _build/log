@@ -1,10 +1,10 @@
-# dune build main.bc
+# dune build
 # OCAMLPARAM: unset
-# Workspace root: /home/stressmaster/3110/cs3110-project/CamelQuest
-$ /usr/bin/nproc > /tmp/duned89cec.output 2> /dev/null
-# Auto-detected concurrency: 8
+# Workspace root: /Users/jd/Desktop/S21/3110/CamelQuest
+$ /usr/bin/getconf _NPROCESSORS_ONLN > /var/folders/tx/czny_1211mb8jyjmrytx2zjr0000gp/T/dune1ebddc.output 2> /dev/null
+# Auto-detected concurrency: 4
 # disable binary cache
-$ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dune69ab01.output
+$ /Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /var/folders/tx/czny_1211mb8jyjmrytx2zjr0000gp/T/dunec7c988.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -13,80 +13,72 @@ $ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dune69ab0
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = "default"
-#  ; toplevel_path =
-#      Some External "/home/stressmaster/.opam/cs3110-2021sp/lib/toplevel"
-#  ; ocaml_bin = External "/home/stressmaster/.opam/cs3110-2021sp/bin"
-#  ; ocaml = Ok External "/home/stressmaster/.opam/cs3110-2021sp/bin/ocaml"
-#  ; ocamlc = External "/home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt"
-#  ; ocamlopt =
-#      Ok External "/home/stressmaster/.opam/cs3110-2021sp/bin/ocamlopt.opt"
-#  ; ocamldep =
-#      Ok External "/home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt"
+#  ; toplevel_path = Some External "/Users/jd/.opam/cs3110-2021sp/lib/toplevel"
+#  ; ocaml_bin = External "/Users/jd/.opam/cs3110-2021sp/bin"
+#  ; ocaml = Ok External "/Users/jd/.opam/cs3110-2021sp/bin/ocaml"
+#  ; ocamlc = External "/Users/jd/.opam/cs3110-2021sp/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/Users/jd/.opam/cs3110-2021sp/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/Users/jd/.opam/cs3110-2021sp/bin/ocamldep.opt"
 #  ; ocamlmklib =
-#      Ok External "/home/stressmaster/.opam/cs3110-2021sp/bin/ocamlmklib.opt"
+#      Ok External "/Users/jd/.opam/cs3110-2021sp/bin/ocamlmklib.opt"
 #  ; env =
 #      map
-#        { "DUNE_OCAML_HARDCODED" :
-#            "/home/stressmaster/.opam/cs3110-2021sp/lib"
-#        ; "DUNE_OCAML_STDLIB" :
-#            "/home/stressmaster/.opam/cs3110-2021sp/lib/ocaml"
-#        ; "DUNE_SOURCEROOT" :
-#            "/home/stressmaster/3110/cs3110-project/CamelQuest"
+#        { "DUNE_OCAML_HARDCODED" : "/Users/jd/.opam/cs3110-2021sp/lib"
+#        ; "DUNE_OCAML_STDLIB" : "/Users/jd/.opam/cs3110-2021sp/lib/ocaml"
+#        ; "DUNE_SOURCEROOT" : "/Users/jd/Desktop/S21/3110/CamelQuest"
 #        ; "INSIDE_DUNE" :
-#            "/home/stressmaster/3110/cs3110-project/CamelQuest/_build/default"
+#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/default"
+#        ; "MANPATH" :
+#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/install/default/bin"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/home/stressmaster/3110/cs3110-project/CamelQuest/_build/install/default/lib"
+#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/home/stressmaster/3110/cs3110-project/CamelQuest/_build/install/default/lib"
+#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/home/stressmaster/3110/cs3110-project/CamelQuest/_build/install/default/lib/toplevel"
+#            "/Users/jd/Desktop/S21/3110/CamelQuest/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
-#  ; findlib_path = [ External "/home/stressmaster/.opam/cs3110-2021sp/lib" ]
+#  ; findlib_path = [ External "/Users/jd/.opam/cs3110-2021sp/lib" ]
 #  ; arch_sixtyfour = true
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
 #      { version = "4.11.1"
-#      ; standard_library_default =
-#          "/home/stressmaster/.opam/cs3110-2021sp/lib/ocaml"
-#      ; standard_library = "/home/stressmaster/.opam/cs3110-2021sp/lib/ocaml"
+#      ; standard_library_default = "/Users/jd/.opam/cs3110-2021sp/lib/ocaml"
+#      ; standard_library = "/Users/jd/.opam/cs3110-2021sp/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
-#      ; c_compiler = "gcc"
-#      ; ocamlc_cflags = [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-fPIC" ]
+#      ; c_compiler = "cc"
+#      ; ocamlc_cflags = [ "-O2"; "-fno-strict-aliasing"; "-fwrapv" ]
 #      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64"; "-D_REENTRANT" ]
-#      ; ocamlopt_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-fPIC" ]
+#      ; ocamlopt_cflags = [ "-O2"; "-fno-strict-aliasing"; "-fwrapv" ]
 #      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64"; "-D_REENTRANT" ]
 #      ; bytecomp_c_compiler =
-#          [ "gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
-#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ; "-D_REENTRANT"
 #          ]
-#      ; bytecomp_c_libraries = [ "-lm"; "-ldl"; "-lpthread" ]
+#      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_c_compiler =
-#          [ "gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
-#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ; "-D_REENTRANT"
 #          ]
-#      ; native_c_libraries = [ "-lm"; "-ldl" ]
+#      ; native_c_libraries = [ "-lm" ]
 #      ; cc_profile = []
 #      ; architecture = "amd64"
 #      ; model = "default"
 #      ; int_size = 63
 #      ; word_size = 64
-#      ; system = "linux"
-#      ; asm = [ "as" ]
+#      ; system = "macosx"
+#      ; asm = [ "clang"; "-arch"; "x86_64"; "-Wno-trigraphs"; "-c" ]
 #      ; asm_cfi_supported = true
 #      ; with_frame_pointers = false
 #      ; ext_exe = ""
@@ -97,8 +89,8 @@ $ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dune69ab0
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "x86_64-pc-linux-gnu"
-#      ; target = "x86_64-pc-linux-gnu"
+#      ; host = "x86_64-apple-darwin19.6.0"
+#      ; target = "x86_64-apple-darwin19.6.0"
 #      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
@@ -118,59 +110,3 @@ $ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dune69ab0
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl authors.ml) > _build/default/.main.eobjs/authors.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl dungeon.ml) > _build/default/.main.eobjs/dungeon.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl engine.ml) > _build/default/.main.eobjs/engine.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl fight_menu.ml) > _build/default/.main.eobjs/fight_menu.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl font.ml) > _build/default/.main.eobjs/font.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl game.ml) > _build/default/.main.eobjs/game.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl levenshtein.ml) > _build/default/.main.eobjs/levenshtein.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl magic_numbers.ml) > _build/default/.main.eobjs/magic_numbers.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl main.ml) > _build/default/.main.eobjs/main.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl render.ml) > _build/default/.main.eobjs/render.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl render_stack.ml) > _build/default/.main.eobjs/render_stack.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl spiral.ml) > _build/default/.main.eobjs/spiral.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl state.ml) > _build/default/.main.eobjs/state.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl test.ml) > _build/default/.main.eobjs/test.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl texturemap.ml) > _build/default/.main.eobjs/texturemap.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -impl timer.ml) > _build/default/.main.eobjs/timer.ml.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf render.mli) > _build/default/.main.eobjs/render.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf dungeon.mli) > _build/default/.main.eobjs/dungeon.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf fight_menu.mli) > _build/default/.main.eobjs/fight_menu.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf render_stack.mli) > _build/default/.main.eobjs/render_stack.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf spiral.mli) > _build/default/.main.eobjs/spiral.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf state.mli) > _build/default/.main.eobjs/state.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf texturemap.mli) > _build/default/.main.eobjs/texturemap.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf timer.mli) > _build/default/.main.eobjs/timer.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf font.mli) > _build/default/.main.eobjs/font.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf engine.mli) > _build/default/.main.eobjs/engine.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf game.mli) > _build/default/.main.eobjs/game.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamldep.opt -modules -intf levenshtein.mli) > _build/default/.main.eobjs/levenshtein.mli.d
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I .main.eobjs/byte -no-alias-deps -opaque -o .main.eobjs/byte/dune__exe.cmo -c -impl .main.eobjs/dune__exe.ml-gen)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Engine.cmi -c -intf engine.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Dungeon.cmi -c -intf dungeon.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Font.cmi -c -intf font.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Levenshtein.cmi -c -intf levenshtein.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Magic_numbers.cmo -c -impl magic_numbers.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Render.cmi -c -intf render.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Render_stack.cmi -c -intf render_stack.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Texturemap.cmi -c -intf texturemap.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Timer.cmi -c -intf timer.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__State.cmi -c -intf state.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Game.cmi -c -intf game.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Levenshtein.cmo -c -impl levenshtein.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Main.cmo -c -impl main.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Dungeon.cmo -c -impl dungeon.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Font.cmo -c -impl font.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Render_stack.cmo -c -impl render_stack.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Texturemap.cmo -c -impl texturemap.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Timer.cmo -c -impl timer.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Render.cmo -c -impl render.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Fight_menu.cmi -c -intf fight_menu.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Spiral.cmi -c -intf spiral.mli)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Game.cmo -c -impl game.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__State.cmo -c -impl state.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Fight_menu.cmo -c -impl fight_menu.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Spiral.cmo -c -impl spiral.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -bin-annot -I .main.eobjs/byte -I /home/stressmaster/.opam/cs3110-2021sp/lib/biniou -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core -I /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png -I /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format -I /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl -I /home/stressmaster/.opam/cs3110-2021sp/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .main.eobjs/byte/dune__exe__Engine.cmo -c -impl engine.ml)
-$ (cd _build/default && /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -27 -w -6 -w -32 -w -37 -w -33 -g -o main.bc /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl/lablgl.cma /home/stressmaster/.opam/cs3110-2021sp/lib/lablgl/lablglut.cma /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/core/camlimages.cma /home/stressmaster/.opam/cs3110-2021sp/lib/camlimages/png/camlimages_png.cma /home/stressmaster/.opam/cs3110-2021sp/lib/easy-format/easy_format.cma /home/stressmaster/.opam/cs3110-2021sp/lib/biniou/biniou.cma /home/stressmaster/.opam/cs3110-2021sp/lib/yojson/yojson.cma .main.eobjs/byte/dune__exe.cmo .main.eobjs/byte/dune__exe__Magic_numbers.cmo .main.eobjs/byte/dune__exe__Render_stack.cmo .main.eobjs/byte/dune__exe__Texturemap.cmo .main.eobjs/byte/dune__exe__Timer.cmo .main.eobjs/byte/dune__exe__Render.cmo .main.eobjs/byte/dune__exe__Dungeon.cmo .main.eobjs/byte/dune__exe__Font.cmo .main.eobjs/byte/dune__exe__Game.cmo .main.eobjs/byte/dune__exe__Levenshtein.cmo .main.eobjs/byte/dune__exe__State.cmo .main.eobjs/byte/dune__exe__Fight_menu.cmo .main.eobjs/byte/dune__exe__Spiral.cmo .main.eobjs/byte/dune__exe__Engine.cmo .main.eobjs/byte/dune__exe__Main.cmo)
