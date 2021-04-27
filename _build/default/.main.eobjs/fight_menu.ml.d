@@ -1,1 +1,1 @@
-fight_menu.ml: Font Magic_numbers Render State Timer
+fight_menu.ml: Font List Magic_numbers Random Render State Timer

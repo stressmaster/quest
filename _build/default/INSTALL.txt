@@ -1,14 +1,15 @@
-Install the following packages: 
-lablgl, camlimages, and their dependencies if needed
+1. Install packages lablgl, yojson, camlimages, lablgtk, and all
+necessary dependencies.
 
+2. In the Ubuntu terminal, navigate to the CamelQuest directory and run
+command "dune build main.bc"
 
-From the terminal, navigate to the Camelquest directory and run:
-dune build main.bc
+3. (Windows only:
+Install Xming from this link: https://sourceforge.net/projects/xming/
+Every time you want to play the game, make sure to
+i. open Xming from the start menu
+ii. type the command "export DISPLAY=:0" in Ubuntu terminal)
 
-Then navigate to ./_build/default in Camelquest directory and run:
-ocamlrun main.bc
-
-or from the Camelquest directory run:
-ocamlrun _build/default/main.bc
+4. Run "make play" from the CamelQuest directory.
 
 Please consult one of us if any problem arises.

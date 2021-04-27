@@ -51,9 +51,6 @@ let get_monster d =
     List.fold_left (fun acc m -> acc + m.encounter_chance) 0 d.monsters
   in
   let no = Random.int total + 1 in
-  print_int (List.length d.monsters);
-  print_int no;
-  print_int total;
   let rec find_m acc = function
     | h :: t ->
         if h.encounter_chance + acc >= no then h

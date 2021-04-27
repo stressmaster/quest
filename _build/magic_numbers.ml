@@ -12,6 +12,8 @@ and darkness = "./darkness.png"
 
 and monster = "./monster.png"
 
+and goblin_1 = "./goblin_1.png"
+
 let texture_list =
   [
     wall;
@@ -21,6 +23,7 @@ let texture_list =
     player;
     darkness;
     monster;
+    goblin_1;
     "./fonts/0.png";
     "./fonts/1.png";
     "./fonts/2.png";

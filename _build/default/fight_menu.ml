@@ -6,7 +6,11 @@
   monster_string : string; input_string : string; } : State.fight)*)
 
 let render_menu (fight : State.fight) =
-  if not (fight.monster_health = 0) then begin
+  if fight.player_health <= 0 then
+    Font.render_font
+      (Font.new_font "you lose" 0.6 1. Magic_numbers.width
+         Magic_numbers.height)
+  else if not (fight.monster_health = 0) then begin
     Render.render_square
       (Render.new_square
          (1. /. float_of_int 3 *. 2.)
@@ -17,13 +21,13 @@ let render_menu (fight : State.fight) =
     if fight.attacking then (
       Render.render_square
         (Render.new_square 0. 1.8
-           (500.
+           ( 500.
            *. (Timer.current_time () |> float_of_int)
-           /. (fight.typing_limit |> float_of_int))
+           /. (fight.typing_limit |> float_of_int) )
            Magic_numbers.height fight.monster.sprite);
       Font.render_font
         (Font.new_font fight.monster_string 0. 0.3 Magic_numbers.width
-           Magic_numbers.height));
+           Magic_numbers.height) );
     Font.render_font
       (Font.new_font fight.input_string 0. 0.1 Magic_numbers.width
          Magic_numbers.height);
@@ -57,7 +61,7 @@ let render_menu (fight : State.fight) =
       | Run ->
           Font.render_font
             (Font.new_font ">" 1.5 0.2 Magic_numbers.width
-               Magic_numbers.height))
+               Magic_numbers.height) )
   end
   else
     Font.render_font
@@ -82,5 +86,16 @@ let render_attack (fight : State.fight) =
       "./darkness.png"
   in
   Render.render_square_flashes monster_sprite darkness_sprite 15
+
+let monster_move (fight : State.fight) =
+  let ourstringlist = fight.monster.attack_strings in
+  let ourlen = List.length ourstringlist in
+  let ourint = Random.int ourlen in
+  let rec listsearcher lst cur num =
+    match lst with
+    | [] -> failwith "wtf"
+    | h :: t -> if cur == num then h else listsearcher t (cur + 1) num
+  in
+  listsearcher ourstringlist 0 ourint
 
 let render_player_damage () = Render.render_screen_shake 18

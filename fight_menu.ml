@@ -6,7 +6,11 @@
   monster_string : string; input_string : string; } : State.fight)*)
 
 let render_menu (fight : State.fight) =
-  if not (fight.monster_health = 0) then begin
+  if fight.player_health <= 0 then
+    Font.render_font
+      (Font.new_font "you lose" 0.6 1. Magic_numbers.width
+         Magic_numbers.height)
+  else if not (fight.monster_health = 0) then begin
     Render.render_square
       (Render.new_square
          (1. /. float_of_int 3 *. 2.)
@@ -59,10 +63,6 @@ let render_menu (fight : State.fight) =
             (Font.new_font ">" 1.5 0.2 Magic_numbers.width
                Magic_numbers.height) )
   end
-  else if fight.player_health <= 0 then
-    Font.render_font
-      (Font.new_font "you lose" 0.6 1. Magic_numbers.width
-         Magic_numbers.height)
   else
     Font.render_font
       (Font.new_font "you win" 0.6 1. Magic_numbers.width
