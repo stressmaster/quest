@@ -139,12 +139,12 @@ let typing_case current key =
     let diff = Levenshtein.dist str mon_str in
     ( match current.fight.action with
     | Attack ->
-        current.fight.player_health <-
-          max 0 (-1 + current.fight.player_health - (mon_HP / 30));
         let damage = max (String.length mon_str - diff) 0 in
         current.fight.monster_health <- max (mon_HP - damage) 0;
-        if current.fight.monster_health > 0 then
+        if current.fight.monster_health > 0 then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
+          current.fight.player_health <-
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         if damage > 0 then
           Render_stack.stack_push Render_stack.AttackRender
         else ()
