@@ -2,8 +2,10 @@ MODULES=render main authors texturemap game dungeon state magic_numbers levensht
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
-PNGS= darkness entrance exit goblin_1 monster path player space wall
-IM=$(PNGS:=.png)
+PNGS= darkness entrance exit goblin_1 monster path player wall
+IM1=$(PNGS:=.png)
+FONTS= fonts/*
+IM2=$(FONTS:=.png)
 TEST=test.byte
 MAIN=main.byte
 OURMAIN=_build/default/main.bc
@@ -13,7 +15,7 @@ default: build
 	OCAMLRUNPARAM=b utop
 
 build:
-	$(OCAMLBUILD) $(OBJECTS) && cp $(IM) ./_build/default
+	$(OCAMLBUILD) $(OBJECTS) && cp $(IM1) ./_build/default && mkdir -p ./_build/default/fonts && cp $(IM2) ./_build/default/fonts
 
 test:
 	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
