@@ -149,13 +149,25 @@ let typing_case current key =
           Render_stack.stack_push Render_stack.AttackRender
         else ()
     | Recover ->
+        if current.fight.monster_health > 0 then (
+          Render_stack.stack_push Render_stack.ScreenshakeRender;
+          current.fight.player_health <-
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         current.fight.player_health <-
           (let healing = max (String.length mon_str - diff) 0 in
            min (current.fight.player_health + healing) current.health)
     | Run ->
+        if
+          diff > String.length str / 3
+          && current.fight.monster_health > 0
+        then (
+          Render_stack.stack_push Render_stack.ScreenshakeRender;
+          current.fight.player_health <-
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         if diff <= String.length str / 3 then (
           Render_stack.stack_pop ();
           reset_fight current ) );
+
     current.fight.attacking <- false;
     "" )
   else if key = 127 then
