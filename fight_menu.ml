@@ -17,13 +17,13 @@ let render_menu (fight : State.fight) =
     if fight.attacking then (
       Render.render_square
         (Render.new_square 0. 1.8
-           (500.
+           ( 500.
            *. (Timer.current_time () |> float_of_int)
-           /. (fight.typing_limit |> float_of_int))
+           /. (fight.typing_limit |> float_of_int) )
            Magic_numbers.height fight.monster.sprite);
       Font.render_font
         (Font.new_font fight.monster_string 0. 0.3 Magic_numbers.width
-           Magic_numbers.height));
+           Magic_numbers.height) );
     Font.render_font
       (Font.new_font fight.input_string 0. 0.1 Magic_numbers.width
          Magic_numbers.height);
@@ -57,8 +57,12 @@ let render_menu (fight : State.fight) =
       | Run ->
           Font.render_font
             (Font.new_font ">" 1.5 0.2 Magic_numbers.width
-               Magic_numbers.height))
+               Magic_numbers.height) )
   end
+  else if fight.player_health <= 0 then
+    Font.render_font
+      (Font.new_font "you lose" 0.6 1. Magic_numbers.width
+         Magic_numbers.height)
   else
     Font.render_font
       (Font.new_font "you win" 0.6 1. Magic_numbers.width
