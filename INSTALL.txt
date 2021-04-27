@@ -10,6 +10,6 @@ Every time you want to play the game, make sure to
 i. open Xming from the start menu
 ii. type the command "export DISPLAY=:0" in Ubuntu terminal)
 
-4. Run "make play" from the CamelQuest directory.
+4. Run "make build" and "make play" from the CamelQuest directory.
 
 Please consult one of us if any problem arises.
