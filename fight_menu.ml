@@ -83,4 +83,15 @@ let render_attack (fight : State.fight) =
   in
   Render.render_square_flashes monster_sprite darkness_sprite 15
 
+let monster_move (fight : State.fight) =
+  let ourstringlist = fight.monster.attack_strings in
+  let ourlen = List.length ourstringlist in
+  let ourint = Random.int ourlen in
+  let rec listsearcher lst cur num =
+    match lst with
+    | [] -> failwith "wtf"
+    | h :: t -> if cur == num then h else listsearcher t (cur + 1) num
+  in
+  listsearcher ourstringlist 0 ourint
+
 let render_player_damage () = Render.render_screen_shake 18
