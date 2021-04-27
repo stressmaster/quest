@@ -140,7 +140,7 @@ let typing_case current key =
     ( match current.fight.action with
     | Attack ->
         current.fight.player_health <-
-          max 0 (-1 + current.fight.player_health - (mon_HP / 25));
+          max 0 (-1 + current.fight.player_health - (mon_HP / 30));
         let damage = max (String.length mon_str - diff) 0 in
         current.fight.monster_health <- max (mon_HP - damage) 0;
         if current.fight.monster_health > 0 then
