@@ -17,6 +17,17 @@ type monster = {
   attack_strings : string list;
 }
 
+let monster_move (mon : monster) =
+  let ourstringlist = mon.attack_strings in
+  let ourlen = List.length ourstringlist in
+  let ourint = Random.int ourlen in
+  let rec listsearcher lst cur num =
+    match lst with
+    | [] -> failwith "wtf"
+    | h :: t -> if cur == num then h else listsearcher t (cur + 1) num
+  in
+  listsearcher ourstringlist 0 ourint
+
 let get_monster_string m = List.hd m.attack_strings
 
 let get_monster_HP m = m.hitpoints

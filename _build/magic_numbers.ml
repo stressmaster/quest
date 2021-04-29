@@ -14,6 +14,8 @@ and monster = "./monster.png"
 
 and goblin_1 = "./goblin_1.png"
 
+and timer = "./timer.png"
+
 let texture_list =
   [
     wall;
@@ -24,6 +26,7 @@ let texture_list =
     darkness;
     monster;
     goblin_1;
+    timer;
     "./fonts/0.png";
     "./fonts/1.png";
     "./fonts/2.png";

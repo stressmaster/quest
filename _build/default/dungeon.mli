@@ -73,3 +73,5 @@ val get_monster_string : monster -> string
 val get_monster_HP : monster -> int
 
 val render_dungeon : int * int -> t -> unit
+
+val monster_move : monster -> string
