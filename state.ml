@@ -77,7 +77,8 @@ let reset_fight c =
   c.fight.attacking <- false;
   c.fight.monster <- new_m;
   c.fight.monster_string <- Dungeon.get_monster_string new_m;
-  c.fight.monster_health <- Dungeon.get_monster_HP new_m
+  c.fight.monster_health <- Dungeon.get_monster_HP new_m;
+  c.fight.player_health <- c.health
 
 let fight_decision bound = Random.int bound = 0
 

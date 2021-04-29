@@ -18,6 +18,7 @@ let render_menu (fight : State.fight) =
          (Magic_numbers.width *. 4.)
          (Magic_numbers.height *. 4.)
          fight.monster.sprite);
+    (* insert textbox that says last thing that happened*)
     if fight.attacking then (
       Render.render_square
         (Render.new_square 0. 1.8

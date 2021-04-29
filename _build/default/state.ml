@@ -77,7 +77,8 @@ let reset_fight c =
   c.fight.attacking <- false;
   c.fight.monster <- new_m;
   c.fight.monster_string <- Dungeon.get_monster_string new_m;
-  c.fight.monster_health <- Dungeon.get_monster_HP new_m
+  c.fight.monster_health <- Dungeon.get_monster_HP new_m;
+  c.fight.player_health <- c.health
 
 let fight_decision bound = Random.int bound = 0
 
@@ -145,12 +146,9 @@ let typing_case current key =
           Render_stack.stack_push Render_stack.ScreenshakeRender;
           current.fight.player_health <-
             max 0 (current.fight.player_health - max 1 (mon_HP / 20)));
-        Font.render_font
-          (Font.new_font
-             ("Monster used "
-             ^ Dungeon.monster_move current.fight.monster
-             ^ "!")
-             0. 0.3 Magic_numbers.width Magic_numbers.height);
+        (* Font.render_font (Font.new_font ("Monster used " ^
+           Dungeon.monster_move current.fight.monster ^ "!") 0. 0.3
+           Magic_numbers.width Magic_numbers.height); *)
         if damage > 0 then
           Render_stack.stack_push Render_stack.AttackRender
         else ()
