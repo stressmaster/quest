@@ -183,7 +183,7 @@ let typing_case current key =
   else if key = 127 then
     String.sub str 0 (max (String.length str - 1) 0)
   else if is_typable key then str ^ Char.escaped (Char.chr key)
-  else ""
+  else str
 
 let clamp_str str = String.sub str 0 (min (String.length str) 20)
 
