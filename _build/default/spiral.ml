@@ -33,7 +33,7 @@ let rec turner
     Render_stack.stack_pop ();
     Render_stack.stack_push Render_stack.FightRender)
   else fight.spiraled <- false;
-  if number_done = number_needed || fight.spiraled = true then ()
+  if number_done = number_needed || fight.spiraled then ()
   else
     match dir with
     | Right ->
