@@ -1,1 +1,1 @@
-dungeon.ml: Hashtbl List Magic_numbers Random Render Walker
+dungeon.ml: Hashtbl List Magic_numbers Random Render

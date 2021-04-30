@@ -33,7 +33,7 @@ let rec turner
     Render_stack.stack_pop ();
     Render_stack.stack_push Render_stack.FightRender)
   else fight.spiraled <- false;
-  if number_done = number_needed || fight.spiraled = true then ()
+  if number_done = number_needed || fight.spiraled then ()
   else
     match dir with
     | Right ->
@@ -44,21 +44,21 @@ let rec turner
           turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
             Right end_x end_y table
     | Down ->
-        if Hashtbl.find table (cur_x - 1, cur_y) = false then
+        if not (Hashtbl.find table (cur_x - 1, cur_y)) then
           turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
             Left end_x end_y table
         else
           turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
             Down end_x end_y table
     | Left ->
-        if Hashtbl.find table (cur_x, cur_y + 1) = false then
+        if not (Hashtbl.find table (cur_x, cur_y + 1)) then
           turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
             Up end_x end_y table
         else
           turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
             Left end_x end_y table
     | Up ->
-        if Hashtbl.find table (cur_x + 1, cur_y) = false then
+        if not (Hashtbl.find table (cur_x + 1, cur_y)) then
           turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
             Right end_x end_y table
         else
