@@ -152,16 +152,16 @@ let randdir dir =
   let ourrand = Random.int 3 in
   match dir with
   | Up ->
-      let newlst = [ Down; Right; Left ] in
+      let newlst = [ Right; Left ] in
       list_element newlst ourrand
   | Right ->
-      let newlst = [ Up; Down; Left ] in
+      let newlst = [ Up; Down ] in
       list_element newlst ourrand
   | Down ->
-      let newlst = [ Up; Right; Left ] in
+      let newlst = [ Right; Left ] in
       list_element newlst ourrand
   | Left ->
-      let newlst = [ Up; Down; Right ] in
+      let newlst = [ Up; Down ] in
       list_element newlst ourrand
 
 let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
@@ -201,9 +201,9 @@ let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start exit bound monsters next prev : t =
   let c = Hashtbl.create (x * y) in
-  (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
-  let w = Walker.init_walker 0 x 0 y in
-  let ourlst = Walker.walk 60 w in
+  let ourlst = carver 0 0 x y Right [] 5 300 in
+  (* let w = Walker.init_walker 0 x 0 y in let ourlst = Walker.walk 60 w
+     in *)
   instantiate_dungeon_cells2 x y c ourlst;
   (* instantiate_dungeon_cells x y c;*)
   {
