@@ -126,15 +126,14 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
   listsearcher dungeon_cells lst;
   for counter_y = 0 to y do
     for counter_x = 0 to x do
-      let tile =
-        if
-          noexn_hashtable_find dungeon_cells (counter_x, counter_y)
-          = false
-        then { material = "wall.jpg"; is_wall = true }
-        else { material = "path.jpg"; is_wall = false }
-      in
-      Hashtbl.add dungeon_cells (counter_x, counter_y)
-        { tile; x = counter_x; y = counter_y }
+      if
+        noexn_hashtable_find dungeon_cells (counter_x, counter_y)
+        = false
+      then
+        let tile = { material = "wall.jpg"; is_wall = true } in
+        Hashtbl.add dungeon_cells (counter_x, counter_y)
+          { tile; x = counter_x; y = counter_y }
+      else ()
     done
   done
 
