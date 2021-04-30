@@ -6,4 +6,11 @@
 (executable
  (name main)
  (modes byte exe)
- (libraries lablgl.glut stdlib camlimages.core camlimages.png yojson))
+ (libraries
+  lablgl.glut
+  stdlib
+  camlimages.core
+  camlimages.png
+  yojson
+  sdl
+  sdl.sdlmixer))
