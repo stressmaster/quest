@@ -166,7 +166,7 @@ let randdir dir =
 
 let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
   let newlst = (cur_x, cur_y) :: lst in
-  if bigmore = 0 then ()
+  if bigmore = 0 then lst
   else
     match dir with
     | Right ->
@@ -201,7 +201,11 @@ let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start exit bound monsters next prev : t =
   let c = Hashtbl.create (x * y) in
-  instantiate_dungeon_cells x y c;
+  (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
+  let w = Walker.init_walker 0 x 0 y in
+  let ourlst = Walker.walk 60 w in
+  instantiate_dungeon_cells2 x y c ourlst;
+  (* instantiate_dungeon_cells x y c;*)
   {
     id;
     cells = c;

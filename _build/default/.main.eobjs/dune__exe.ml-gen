@@ -1,3 +1,7 @@
+(** @canonical Dune__exe.Audio *)
+module Audio = Dune__exe__Audio
+
+
 (** @canonical Dune__exe.Authors *)
 module Authors = Dune__exe__Authors
 
@@ -60,3 +64,7 @@ module Texturemap = Dune__exe__Texturemap
 
 (** @canonical Dune__exe.Timer *)
 module Timer = Dune__exe__Timer
+
+
+(** @canonical Dune__exe.Walker *)
+module Walker = Dune__exe__Walker

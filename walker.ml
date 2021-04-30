@@ -76,7 +76,9 @@ let walk steps w =
       w.step_history <- w.current_pos :: w.step_history
     else change_direction w
   in
-  for step = 0 to steps do
-    walk_helper ()
-  done;
+  let rec times index =
+    walk_helper ();
+    if index = 0 then () else times (index - 1)
+  in
+  times steps;
   w.step_history
