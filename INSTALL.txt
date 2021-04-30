@@ -1,7 +1,7 @@
 Follow these instructions in order.
 
-1. Install packages lablgl, yojson, camlimages, lablgtk, and all
-necessary dependencies.
+1. Install packages lablgl, yojson, camlimages, lablgtk, conf-sdl-mixer,
+ocamlsdl, and all necessary dependencies.
 
 2. In the Ubuntu terminal, navigate to the CamelQuest directory and run
 command "dune build main.bc"

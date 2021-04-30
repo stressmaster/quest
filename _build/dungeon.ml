@@ -28,7 +28,10 @@ let monster_move (mon : monster) =
   in
   listsearcher ourstringlist 0 ourint
 
-let get_monster_string m = List.hd m.attack_strings
+let get_monster_string m =
+  print_int (List.length m.attack_strings);
+  let no = Random.int (List.length m.attack_strings) in
+  List.nth m.attack_strings no
 
 let get_monster_HP m = m.hitpoints
 
@@ -106,7 +109,96 @@ let instantiate_dungeon_cells x y dungeon_cells =
     done
   done
 
-(* [instantiate_dungeon x y] is a dugeon with [x] columns [y] rows *)
+let noexn_hashtable_find table elt =
+  match try Some (Hashtbl.find table elt) with Not_found -> None with
+  | Some a -> true
+  | None -> false
+
+let instantiate_dungeon_cells2 x y dungeon_cells lst =
+  let rec listsearcher dungeon_cells lst =
+    match lst with
+    | [] -> ()
+    | h :: t ->
+        let tile = { material = "path.jpg"; is_wall = false } in
+        Hashtbl.add dungeon_cells h { tile; x = fst h; y = snd h };
+        listsearcher dungeon_cells t
+  in
+  listsearcher dungeon_cells lst;
+  for counter_y = 0 to y do
+    for counter_x = 0 to x do
+      if
+        noexn_hashtable_find dungeon_cells (counter_x, counter_y)
+        = false
+      then
+        let tile = { material = "wall.jpg"; is_wall = true } in
+        Hashtbl.add dungeon_cells (counter_x, counter_y)
+          { tile; x = counter_x; y = counter_y }
+      else ()
+    done
+  done
+
+type direction =
+  | Up
+  | Down
+  | Right
+  | Left
+
+let rec list_element lst k =
+  match lst with
+  | [] -> failwith "fuck you"
+  | h :: t -> if k = 0 then h else list_element t (k - 1)
+
+let randdir dir =
+  let ourrand = Random.int 3 in
+  match dir with
+  | Up ->
+      let newlst = [ Down; Right; Left ] in
+      list_element newlst ourrand
+  | Right ->
+      let newlst = [ Up; Down; Left ] in
+      list_element newlst ourrand
+  | Down ->
+      let newlst = [ Up; Right; Left ] in
+      list_element newlst ourrand
+  | Left ->
+      let newlst = [ Up; Down; Right ] in
+      list_element newlst ourrand
+
+let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
+  let newlst = (cur_x, cur_y) :: lst in
+  if bigmore = 0 then ()
+  else
+    match dir with
+    | Right ->
+        if cur_x + 1 >= x_bound || more = 0 then
+          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
+            (Random.int x_bound) bigmore
+        else
+          carver (cur_x + 1) cur_y x_bound y_bound Right newlst
+            (more - 1) (bigmore - 1)
+    | Left ->
+        if cur_x - 1 <= 0 || more = 0 then
+          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
+            (Random.int x_bound) bigmore
+        else
+          carver (cur_x - 1) cur_y x_bound y_bound Left newlst
+            (more - 1) (bigmore - 1)
+    | Up ->
+        if cur_y + 1 >= y_bound || more = 0 then
+          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
+            (Random.int y_bound) bigmore
+        else
+          carver cur_x (cur_y + 1) x_bound y_bound Up newlst (more - 1)
+            (bigmore - 1)
+    | Down ->
+        if cur_y - 1 <= 0 || more = 0 then
+          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
+            (Random.int x_bound) bigmore
+        else
+          carver cur_x (cur_y - 1) x_bound y_bound Down newlst
+            (more - 1) (bigmore - 1)
+
+(* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start exit bound monsters next prev : t =
   let c = Hashtbl.create (x * y) in
   instantiate_dungeon_cells x y c;
