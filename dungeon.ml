@@ -109,6 +109,35 @@ let instantiate_dungeon_cells x y dungeon_cells =
     done
   done
 
+let noexn_hashtable_find table elt =
+  match try Some (Hashtbl.find table elt) with Not_found -> None with
+  | Some a -> true
+  | None -> false
+
+let instantiate_dungeon_cells2 x y dungeon_cells lst =
+  let rec listsearcher dungeon_cells lst =
+    match lst with
+    | [] -> ()
+    | h :: t ->
+        let tile = { material = "path.jpg"; is_wall = false } in
+        Hashtbl.add dungeon_cells h { tile; x = fst h; y = snd h };
+        listsearcher dungeon_cells t
+  in
+  listsearcher dungeon_cells lst;
+  for counter_y = 0 to y do
+    for counter_x = 0 to x do
+      let tile =
+        if
+          noexn_hashtable_find dungeon_cells (counter_x, counter_y)
+          = false
+        then { material = "wall.jpg"; is_wall = true }
+        else { material = "path.jpg"; is_wall = false }
+      in
+      Hashtbl.add dungeon_cells (counter_x, counter_y)
+        { tile; x = counter_x; y = counter_y }
+    done
+  done
+
 (* [instantiate_dungeon x y] is a dugeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start exit bound monsters next prev : t =
   let c = Hashtbl.create (x * y) in
@@ -203,16 +232,16 @@ let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
 
   Render.render_square
     (Render.new_square
-       ( p_x *. 2.
+       (p_x *. 2.
        /. (dungeon_x_length +. 2.)
        *. (dungeon_x_length *. Magic_numbers.width /. 10.)
-       /. 500. )
-       ( starting_y
+       /. 500.)
+       (starting_y
        +. p_y
           /. (dungeon_y_length +. 2.)
           *. 2.
           *. (dungeon_y_length *. Magic_numbers.height /. 10.)
-          /. 500. )
+          /. 500.)
        10. 10. "./fonts/i.png")
 
 (* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
@@ -230,12 +259,12 @@ let render_dungeon (p_x, p_y) (dungeon : t) =
       in
       Render.render_square
         (Render.new_square
-           ( float_of_int (x - x_start)
+           (float_of_int (x - x_start)
            /. float_of_int Magic_numbers.x_length
-           *. 2. )
-           ( float_of_int (y - y_start)
+           *. 2.)
+           (float_of_int (y - y_start)
            /. float_of_int Magic_numbers.y_length
-           *. 2. )
+           *. 2.)
            Magic_numbers.width Magic_numbers.height new_texture)
     done
   done;
