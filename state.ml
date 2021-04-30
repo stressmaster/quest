@@ -143,6 +143,8 @@ let typing_case current key =
   and mon_str = current.fight.monster_string
   and mon_HP = current.fight.monster_health in
   if key = 13 then (
+    current.fight.monster_string <-
+      Dungeon.get_monster_string current.fight.monster;
     let diff = Levenshtein.dist str mon_str in
     ( match current.fight.action with
     | Attack ->
