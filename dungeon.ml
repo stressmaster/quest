@@ -137,7 +137,68 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
     done
   done
 
-(* [instantiate_dungeon x y] is a dugeon with [x] columns [y] rows *)
+type direction =
+  | Up
+  | Down
+  | Right
+  | Left
+
+let rec list_element lst k =
+  match lst with
+  | [] -> failwith "fuck you"
+  | h :: t -> if k = 0 then h else list_element t (k - 1)
+
+let randdir dir =
+  let ourrand = Random.int 3 in
+  match dir with
+  | Up ->
+      let newlst = [ Down; Right; Left ] in
+      list_element newlst ourrand
+  | Right ->
+      let newlst = [ Up; Down; Left ] in
+      list_element newlst ourrand
+  | Down ->
+      let newlst = [ Up; Right; Left ] in
+      list_element newlst ourrand
+  | Left ->
+      let newlst = [ Up; Down; Right ] in
+      list_element newlst ourrand
+
+let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
+  let newlst = (cur_x, cur_y) :: lst in
+  if bigmore = 0 then ()
+  else
+    match dir with
+    | Right ->
+        if cur_x + 1 >= x_bound || more = 0 then
+          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
+            (Random.int x_bound) bigmore
+        else
+          carver (cur_x + 1) cur_y x_bound y_bound Right newlst
+            (more - 1) (bigmore - 1)
+    | Left ->
+        if cur_x - 1 <= 0 || more = 0 then
+          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
+            (Random.int x_bound) bigmore
+        else
+          carver (cur_x - 1) cur_y x_bound y_bound Left newlst
+            (more - 1) (bigmore - 1)
+    | Up ->
+        if cur_y + 1 >= y_bound || more = 0 then
+          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
+            (Random.int y_bound) bigmore
+        else
+          carver cur_x (cur_y + 1) x_bound y_bound Up newlst (more - 1)
+            (bigmore - 1)
+    | Down ->
+        if cur_y - 1 <= 0 || more = 0 then
+          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
+            (Random.int x_bound) bigmore
+        else
+          carver cur_x (cur_y - 1) x_bound y_bound Down newlst
+            (more - 1) (bigmore - 1)
+
+(* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start exit bound monsters next prev : t =
   let c = Hashtbl.create (x * y) in
   instantiate_dungeon_cells x y c;
