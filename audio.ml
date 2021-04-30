@@ -1,12 +1,12 @@
 type t = Sdlmixer.music
 
-let music = ref (Sdlmixer.load_music "./camlished.wav")
-
-let init_audio () =
+let _ =
   Sdl.init [ `AUDIO ];
   at_exit Sdl.quit;
   Sdlmixer.open_audio ();
   at_exit Sdlmixer.close_audio
+
+let music = ref (Sdlmixer.load_music "./camlished.wav")
 
 let set_music file = music := Sdlmixer.load_music file
 
