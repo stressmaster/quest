@@ -20,3 +20,5 @@ let change_music file =
   halt_music ();
   set_music file;
   play_music ()
+
+let play_sound file = file |> Sdlmixer.loadWAV |> Sdlmixer.play_sound

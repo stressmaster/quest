@@ -160,8 +160,8 @@ let typing_case current key =
            Dungeon.monster_move current.fight.monster ^ "!") 0. 0.3
            Magic_numbers.width Magic_numbers.height); *)
         if damage > 0 then
-          Render_stack.stack_push Render_stack.AttackRender
-        else ()
+          Render_stack.stack_push Render_stack.AttackRender;
+        Audio.play_sound "./oof.wav"
     | Recover ->
         if current.fight.monster_health > 0 then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
