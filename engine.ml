@@ -7,8 +7,6 @@ type animation =
   | FightRender
   | SpiralRender
 
-let dim = ref (Magic_numbers.w, Magic_numbers.h)
-
 let stack = Stack.create ()
 
 let _ = Stack.push DungeonRender stack
@@ -16,6 +14,8 @@ let _ = Stack.push DungeonRender stack
 let stack_push x = Stack.push x stack
 
 let stack_pop () = Stack.pop stack
+
+let dim = ref (Magic_numbers.w, Magic_numbers.h)
 
 let init_window w h =
   ignore (Glut.init Sys.argv);
@@ -27,8 +27,6 @@ let init_display game =
   Glut.displayFunc ~cb:(fun () ->
       let w, h = !dim in
       GlClear.color (0.0, 0.0, 0.0);
-      GlClear.clear [ `color ];
-
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       (* let c = min w h in GlDraw.viewport 0 0 (2 * c) (2 * c); *)
       GlMat.mode `projection;
@@ -68,9 +66,6 @@ let init_engine texture_list w h x_length y_length =
   let game = ref (State.init_state "sample_game.json") in
   let start = Sys.time () in
   init_texture texture_list;
-  let x, y = !dim in
-  init_window x y;
-  init_display game;
   init_audio ();
   (* init_window w h; *)
   init_input game;
