@@ -23,7 +23,7 @@ let monster_move (mon : monster) =
   let ourint = Random.int ourlen in
   let rec listsearcher lst cur num =
     match lst with
-    | [] -> failwith "wtf"
+    | [] -> failwith "invalid index"
     | h :: t -> if cur == num then h else listsearcher t (cur + 1) num
   in
   listsearcher ourstringlist 0 ourint
@@ -145,7 +145,7 @@ type direction =
 
 let rec list_element lst k =
   match lst with
-  | [] -> failwith "fuck you"
+  | [] -> failwith "invalid index"
   | h :: t -> if k = 0 then h else list_element t (k - 1)
 
 let randdir dir =
@@ -296,16 +296,16 @@ let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
 
   Render.render_square
     (Render.new_square
-       ( p_x *. 2.
+       (p_x *. 2.
        /. (dungeon_x_length +. 2.)
        *. (dungeon_x_length *. Magic_numbers.width /. 10.)
-       /. 500. )
-       ( starting_y
+       /. 500.)
+       (starting_y
        +. p_y
           /. (dungeon_y_length +. 2.)
           *. 2.
           *. (dungeon_y_length *. Magic_numbers.height /. 10.)
-          /. 500. )
+          /. 500.)
        10. 10. "./fonts/i.png")
 
 (* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
@@ -323,12 +323,12 @@ let render_dungeon (p_x, p_y) (dungeon : t) =
       in
       Render.render_square
         (Render.new_square
-           ( float_of_int (x - x_start)
+           (float_of_int (x - x_start)
            /. float_of_int Magic_numbers.x_length
-           *. 2. )
-           ( float_of_int (y - y_start)
+           *. 2.)
+           (float_of_int (y - y_start)
            /. float_of_int Magic_numbers.y_length
-           *. 2. )
+           *. 2.)
            Magic_numbers.width Magic_numbers.height new_texture)
     done
   done;
