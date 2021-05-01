@@ -30,10 +30,9 @@ let init_display game =
       GlClear.clear [ `color ];
 
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
-      let c = min w h in
-      GlDraw.viewport 0 0 (2 * c) (2 * c);
+      (* let c = min w h in GlDraw.viewport 0 0 (2 * c) (2 * c); *)
       GlMat.mode `projection;
-      ( match Render_stack.stack_peek () with
+      (match Render_stack.stack_peek () with
       | SpiralRender ->
           Dungeon.render_dungeon
             (State.player_loc !game)
@@ -51,7 +50,7 @@ let init_display game =
       | DungeonRender ->
           Dungeon.render_dungeon
             (State.player_loc !game)
-            (State.curr_room !game) );
+            (State.curr_room !game));
       Gl.flush ()
       (* (Font.render_font (Font.new_font (string_of_int
          (Timer.current_time ())) 1.5 1.8 Magic_numbers.width
@@ -73,7 +72,7 @@ let init_engine texture_list w h x_length y_length =
   init_window x y;
   init_display game;
   init_audio ();
-  init_window w h;
+  (* init_window w h; *)
   init_input game;
   let rec timer ~value =
     Timer.increase_time 1;
