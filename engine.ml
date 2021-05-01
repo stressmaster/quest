@@ -7,6 +7,8 @@ type animation =
   | FightRender
   | SpiralRender
 
+let dim = ref (Magic_numbers.w, Magic_numbers.h)
+
 let stack = Stack.create ()
 
 let _ = Stack.push DungeonRender stack
@@ -21,11 +23,15 @@ let init_window w h =
   Glut.initWindowSize ~w ~h;
   ignore (Glut.createWindow ~title:"CamelQuest")
 
-let init_display game w h =
+let init_display game =
   Glut.displayFunc ~cb:(fun () ->
+      let w, h = !dim in
       GlClear.color (0.0, 0.0, 0.0);
       GlClear.clear [ `color ];
+
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
+      let c = min w h in
+      GlDraw.viewport 0 0 (2 * c) (2 * c);
       GlMat.mode `projection;
       ( match Render_stack.stack_peek () with
       | SpiralRender ->
@@ -57,13 +63,17 @@ let init_input game =
   Glut.specialFunc ~cb:(fun ~key ~x ~y ->
       game := State.controller !game key)
 
+let reshape ~w ~h = dim := (w, h)
+
 let init_engine texture_list w h x_length y_length =
   let game = ref (State.init_state "sample_game.json") in
   let start = Sys.time () in
   init_texture texture_list;
+  let x, y = !dim in
+  init_window x y;
+  init_display game;
   init_audio ();
   init_window w h;
-  init_display game w h;
   init_input game;
   let rec timer ~value =
     Timer.increase_time 1;
@@ -78,4 +88,5 @@ let init_engine texture_list w h x_length y_length =
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.timerFunc ~ms ~cb:timer ~value:ms;
   Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
+  Glut.reshapeFunc reshape;
   Glut.mainLoop ()
