@@ -15,3 +15,8 @@ let play_music () = Sdlmixer.play_music !music
 let halt_music () =
   Sdlmixer.free_music !music;
   Sdlmixer.halt_music ()
+
+let change_music file =
+  halt_music ();
+  set_music file;
+  play_music ()
