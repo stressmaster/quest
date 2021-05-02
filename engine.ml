@@ -26,10 +26,10 @@ let init_window w h =
 let init_display game =
   Glut.displayFunc ~cb:(fun () ->
       let w, h = !dim in
-      GlClear.color (0.0, 0.0, 0.0);
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       let c = min w h in
-      GlDraw.viewport 0 0 (2 * c) (2 * c);
+      GlDraw.viewport (w - c) (h - c) (2 * c) (2 * c);
+      GlClear.color (0.0, 0.0, 0.0);
       GlMat.mode `projection;
       ( match Render_stack.stack_peek () with
       | SpiralRender ->
