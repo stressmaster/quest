@@ -68,6 +68,9 @@ let rec shake t1 t =
     current_flashes := !current_flashes + 1;
     ())
   else if t / 2 mod 2 = 0 then (
+    offset := -0.012;
+    shake (t1 + 1) t)
+  else if t mod 2 = 0 then (
     offset := 0.;
     shake (t1 + 1) t)
   else (

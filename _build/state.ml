@@ -78,7 +78,8 @@ let reset_fight c =
   c.fight.monster <- new_m;
   c.fight.monster_string <- Dungeon.get_monster_string new_m;
   c.fight.monster_health <- Dungeon.get_monster_HP new_m;
-  c.fight.player_health <- c.health
+  c.fight.player_health <- c.health;
+  Audio.change_music "./camlished.wav"
 
 let fight_decision bound = Random.int bound = 0
 
@@ -94,8 +95,9 @@ let map_move current key =
      || current.location = Dungeon.get_start current.room
     then false
     else fight_decision current_bound);
-  if current.in_fight then
-    Render_stack.stack_push Render_stack.SpiralRender;
+  if current.in_fight then (
+    Audio.change_music "./unravel.wav";
+    Render_stack.stack_push Render_stack.SpiralRender);
   (* delete light right below when spiral works. it is a work around*)
   begin
     match key with
@@ -158,8 +160,8 @@ let typing_case current key =
            Dungeon.monster_move current.fight.monster ^ "!") 0. 0.3
            Magic_numbers.width Magic_numbers.height); *)
         if damage > 0 then
-          Render_stack.stack_push Render_stack.AttackRender
-        else ()
+          Render_stack.stack_push Render_stack.AttackRender;
+        Audio.play_sound "./oof.wav"
     | Recover ->
         if current.fight.monster_health > 0 then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
@@ -210,18 +212,25 @@ let menu_move current key =
   current
 
 (* [controller current key] updates the [current] based on [key]*)
+
 let controller current key =
   (* move after end of fight*)
-  if current.in_fight && current.fight.monster_health = 0 then (
-    Render_stack.stack_pop ();
-    reset_fight current;
-    current (* can't move during spiral animation*))
-  else if current.in_fight && not current.fight.spiraled then current
-    (* menu move*)
-  else if current.in_fight && not current.fight.attacking then
-    menu_move current key (* move around map*)
-  else if not current.in_fight then map_move current key
-  else current
+  let top = Render_stack.stack_peek () in
+  match top with
+  | Render_stack.DungeonRender -> map_move current key
+  | Render_stack.FightRender -> menu_move current key
+  | Render_stack.SpiralRender -> current
+  | Render_stack.AttackRender -> current
+  | Render_stack.ScreenshakeRender -> current
+
+(* (* move after end of fight*) if current.in_fight &&
+   current.fight.monster_health = 0 then ( Render_stack.stack_pop ();
+   reset_fight current; current (* can't move during spiral animation*)
+   ) else if current.in_fight && not current.fight.spiraled then current
+   (* menu move*) else if current.in_fight && not
+   current.fight.attacking then menu_move current key (* move around
+   map*) else if not current.in_fight then map_move current key else
+   current *)
 
 let check_time_limit current =
   if

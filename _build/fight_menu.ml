@@ -66,7 +66,7 @@ let render_menu (fight : State.fight) =
   end
   else
     Font.render_font
-      (Font.new_font "you win" 0.6 1. Magic_numbers.width
+      (Font.new_font "you win" 0.6499 1. Magic_numbers.width
          Magic_numbers.height)
 
 let render_attack (fight : State.fight) =

@@ -23,7 +23,7 @@ let monster_move (mon : monster) =
   let ourint = Random.int ourlen in
   let rec listsearcher lst cur num =
     match lst with
-    | [] -> failwith "wtf"
+    | [] -> failwith "invalid index"
     | h :: t -> if cur == num then h else listsearcher t (cur + 1) num
   in
   listsearcher ourstringlist 0 ourint
@@ -145,11 +145,11 @@ type direction =
 
 let rec list_element lst k =
   match lst with
-  | [] -> failwith "fuck you"
+  | [] -> failwith "invalid index"
   | h :: t -> if k = 0 then h else list_element t (k - 1)
 
 let randdir dir =
-  let ourrand = Random.int 3 in
+  let ourrand = Random.int 2 in
   match dir with
   | Up ->
       let newlst = [ Right; Left ] in
@@ -201,9 +201,9 @@ let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start exit bound monsters next prev : t =
   let c = Hashtbl.create (x * y) in
-  let ourlst = carver 0 0 x y Right [] 5 300 in
-  (* let w = Walker.init_walker 0 x 0 y in let ourlst = Walker.walk 60 w
-     in *)
+  (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
+  let w = Walker.init_walker 0 x 0 y in
+  let ourlst = Walker.walk 2600 w in
   instantiate_dungeon_cells2 x y c ourlst;
   (* instantiate_dungeon_cells x y c;*)
   {
