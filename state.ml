@@ -218,7 +218,12 @@ let controller current key =
   let top = Render_stack.stack_peek () in
   match top with
   | Render_stack.DungeonRender -> map_move current key
-  | Render_stack.FightRender -> menu_move current key
+  | Render_stack.FightRender ->
+      if current.fight.monster_health = 0 then (
+        Render_stack.stack_pop ();
+        reset_fight current;
+        current)
+      else menu_move current key
   | Render_stack.SpiralRender -> current
   | Render_stack.AttackRender -> current
   | Render_stack.ScreenshakeRender -> current
