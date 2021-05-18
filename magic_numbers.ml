@@ -76,6 +76,8 @@ let texture_list =
     "./fonts/space.png";
   ]
 
+let animations = [ ("player", [ player; monster ]) ]
+
 let w = 500
 
 and h = 500

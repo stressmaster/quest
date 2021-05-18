@@ -2,6 +2,9 @@ let init_texture texture_list = Texturemap.init_texture texture_list
 
 let init_audio () = Audio.play_music ()
 
+let init_animation () =
+  Spriteanimation.init_animations Magic_numbers.animations
+
 type animation =
   | DungeonRender
   | FightRender
@@ -27,7 +30,7 @@ let init_display game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      (match Render_stack.stack_peek () with
+      ( match Render_stack.stack_peek () with
       | SpiralRender ->
           Dungeon.render_dungeon
             (State.player_loc !game)
@@ -47,7 +50,7 @@ let init_display game w h =
           Dungeon.render_dungeon
             (State.player_loc !game)
             (State.curr_room !game);
-          State.render_inventory !game);
+          State.render_inventory !game );
 
       Gl.flush ()
       (* (Font.render_font (Font.new_font (string_of_int
