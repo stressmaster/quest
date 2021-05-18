@@ -297,7 +297,7 @@ let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
    texture of the tile at [(x, y)] based on [(p_x, p_y) dungeon_cells
    dungeon] *)
 let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
-  if (x, y) = (p_x, p_y) then Magic_numbers.player
+  if (x, y) = (p_x, p_y) then Spriteanimation.get_sprite "player"
   else if Hashtbl.find_opt dungeon_cells (x, y) = None then
     Magic_numbers.darkness
   else if (x, y) = get_start dungeon then Magic_numbers.entrance

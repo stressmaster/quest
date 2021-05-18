@@ -69,6 +69,7 @@ let init_engine texture_list w h x_length y_length =
   init_texture texture_list;
   init_audio ();
   init_window w h;
+  init_animation ();
   init_display game w h;
   init_input game;
   let rec timer ~value =
@@ -80,8 +81,13 @@ let init_engine texture_list w h x_length y_length =
     game := State.check_time_limit !game;
     Glut.timerFunc ~ms:value ~cb:typing_timer ~value
   in
+  let rec animation_timer ~value =
+    Spriteanimation.step_animation ();
+    Glut.timerFunc ~ms:value ~cb:animation_timer ~value
+  in
   let ms = 200. *. (Sys.time () -. start) |> int_of_float in
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.timerFunc ~ms ~cb:timer ~value:ms;
   Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
+  Glut.timerFunc ~ms ~cb:animation_timer ~value:(10 * ms);
   Glut.mainLoop ()
