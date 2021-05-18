@@ -89,5 +89,5 @@ let init_engine texture_list w h x_length y_length =
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.timerFunc ~ms ~cb:timer ~value:ms;
   Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
-  Glut.timerFunc ~ms ~cb:animation_timer ~value:(10 * ms);
+  Glut.timerFunc ~ms ~cb:animation_timer ~value:(5 * ms);
   Glut.mainLoop ()
