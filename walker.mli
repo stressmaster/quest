@@ -5,6 +5,7 @@ type direction =
   | Right
 
 type walker = {
+  mutable furthest_pos : int * int;
   mutable current_pos : int * int;
   mutable dir : direction;
   mutable x_min : int;
