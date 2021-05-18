@@ -18,6 +18,10 @@ and timer = "./timer.png"
 
 and empty_item_png = "./empty_item.png"
 
+and weapon_pickup_png = "./weapon_pickup.png"
+
+and armor_pickup_png = "./armor_pickup.png"
+
 let texture_list =
   [
     wall;
@@ -30,6 +34,8 @@ let texture_list =
     goblin_1;
     timer;
     empty_item_png;
+    weapon_pickup_png;
+    armor_pickup_png;
     "./fonts/0.png";
     "./fonts/1.png";
     "./fonts/2.png";
