@@ -1,7 +1,9 @@
-type t
+type animation
 
-val init_animation : string -> string list -> t
+type id = string
 
-val get_sprite : t -> string
+val init_animations : (id * string list) list -> unit
 
-val animation_ticker : t -> t
+val get_sprite : id -> string
+
+val step_animation : unit -> unit
