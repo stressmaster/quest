@@ -18,12 +18,12 @@ https://www.freedesktop.org/wiki/Software/PulseAudio/Ports/Windows/Support/
 (use the "zipfile containing preview binaries" download link there).
 Now, configure it with the following steps:
 a. Extract everything into a new folder "pulseaudio-1.1"
-b. Go to "pulseaudio-1.1/etc/pulse/default.pa". In that defaul.pa file,
+b. Go to "pulseaudio-1.1/etc/pulse/default.pa". In that default.pa file,
 find the line "#load-module module-native-protocol-tcp". Replace this
 entire line with "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1"
 (make sure there is no "#" after this change). Also, find the line
 "load-module module-waveout sink_name=output source_name=input" and add
-"record = 0" at the end of it.
+"record=0" at the end of it.
 c. Go to "pulseaudio-1.1/etc/pulse/daemon.conf". In that daemond.conf file,
 find the line "; exit-idle-time = 20" and replace it with "exit-idle-time = -1"
 (make sure there is no ";" after this change).

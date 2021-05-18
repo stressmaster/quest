@@ -5,6 +5,7 @@ type direction =
   | Right
 
 type walker = {
+  mutable furthest_pos : int * int;
   mutable current_pos : int * int;
   mutable dir : direction;
   mutable x_min : int;
@@ -19,6 +20,7 @@ let directions = ref [ Up; Down; Left; Right ]
 
 let init_walker xmin xmax ymin ymax =
   {
+    furthest_pos = (1, 1);
     current_pos = (1, 1);
     dir = Right;
     x_min = xmin;
