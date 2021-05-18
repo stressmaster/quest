@@ -22,14 +22,6 @@ and weapon_pickup_png = "./weapon_pickup.png"
 
 and armor_pickup_png = "./armor_pickup.png"
 
-and rockman1 = "./Rockman1.png"
-
-and rockman2 = "./Rockman2.png"
-
-and rockman3 = "./Rockman3.png"
-
-and rockman4 = "./Rockman4.png"
-
 let texture_list =
   [
     wall;
@@ -37,10 +29,6 @@ let texture_list =
     entrance;
     exit_tex;
     player;
-    rockman1;
-    rockman2;
-    rockman3;
-    rockman4;
     darkness;
     monster;
     goblin_1;
@@ -88,9 +76,8 @@ let texture_list =
     "./fonts/space.png";
   ]
 
-let rockman_anim = [ rockman1; rockman2; rockman3; rockman4 ]
-
-let animations = [ ("player", rockman_anim) ]
+let animations =
+  [ ("player", [ player; wall; path; entrance; exit_tex ]) ]
 
 let w = 500
 
