@@ -9,12 +9,12 @@ type animations = (id * animation) list
 
 let animation_map = ref []
 
-let rec init_animation (id_sprites_lst : (id * string list) list) =
+let rec init_animations (id_sprites_lst : (id * string list) list) =
   match id_sprites_lst with
   | h :: t ->
       animation_map :=
         (fst h, { sprites = snd h; ticker = ref 0 }) :: !animation_map;
-      init_animation t
+      init_animations t
   | [] -> ()
 
 let get_sprite id =
