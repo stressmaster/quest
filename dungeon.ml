@@ -237,11 +237,27 @@ let print_dungeon dungeon =
     done
   done
 
+(*if tile.item != None then match tile.item with | Some (Weapon _) ->
+  Magic_numbers.weapon_pickup_png | Some (Armor _) ->
+  Magic_numbers.armor_pickup_png | Some NoItem -> let material = tile |>
+  tile_material in if material = "wall.jpg" then Magic_numbers.wall else
+  if material = "path.jpg" then Magic_numbers.path else
+  Magic_numbers.darkness | None -> Magic_numbers.path*)
+
+(*let material = tile |> tile_material in if material = "wall.jpg" then
+  Magic_numbers.wall else if material = "path.jpg" then
+  Magic_numbers.path else Magic_numbers.darkness*)
+
 let determine_color tile =
-  let material = tile |> tile_material in
-  if material = "wall.jpg" then Magic_numbers.wall
-  else if material = "path.jpg" then Magic_numbers.path
-  else Magic_numbers.darkness
+  match tile.item with
+  | Some (Weapon _) -> Magic_numbers.weapon_pickup_png
+  | Some (Armor _) -> Magic_numbers.armor_pickup_png
+  | Some NoItem ->
+      let material = tile |> tile_material in
+      if material = "wall.jpg" then Magic_numbers.wall
+      else if material = "path.jpg" then Magic_numbers.path
+      else Magic_numbers.darkness
+  | None -> Magic_numbers.path
 
 (* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
    bounds for rendering based on [(p_x, p_y) dungeon_x_length
