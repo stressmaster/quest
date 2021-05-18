@@ -36,4 +36,6 @@ val in_fight : current -> bool
 
 val curr_fight : current -> fight
 
+val render_inventory : current -> unit
+
 val check_time_limit : current -> current

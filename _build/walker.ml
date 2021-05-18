@@ -5,6 +5,7 @@ type direction =
   | Right
 
 type walker = {
+  mutable furthest_pos : int * int;
   mutable current_pos : int * int;
   mutable dir : direction;
   mutable x_min : int;
@@ -19,6 +20,7 @@ let directions = ref [ Up; Down; Left; Right ]
 
 let init_walker xmin xmax ymin ymax =
   {
+    furthest_pos = (1, 1);
     current_pos = (1, 1);
     dir = Right;
     x_min = xmin;
@@ -42,14 +44,24 @@ let determine_border w target =
   let target_x = fst target in
   let target_y = snd target in
   if
-    (target_x >= w.x_max || target_x <= w.x_min)
-    || target_y <= w.y_min || target_y >= w.y_max
+    (target_x >= w.x_max - 1 || target_x <= w.x_min)
+    || target_y <= w.y_min
+    || target_y >= w.y_max - 1
   then false
   else true
 
 let step w =
   let target_pos = tup_add w.current_pos (eval_dir w.dir) in
+  let current = w.furthest_pos in
   if determine_border w target_pos then (
+    w.furthest_pos <-
+      (if
+       (fst target_pos * fst target_pos)
+       + (snd target_pos * snd target_pos)
+       > (fst w.furthest_pos * fst w.furthest_pos)
+         + (snd w.furthest_pos * snd w.furthest_pos)
+      then target_pos
+      else current);
     w.steps_since_turn <- w.steps_since_turn + 1;
     w.current_pos <- target_pos;
     true)

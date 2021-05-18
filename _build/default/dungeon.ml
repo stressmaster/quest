@@ -1,6 +1,7 @@
 type tile = {
   material : string;
   is_wall : bool;
+  item : Item.item option;
 }
 
 type cell = {
@@ -29,7 +30,7 @@ let monster_move (mon : monster) =
   listsearcher ourstringlist 0 ourint
 
 let get_monster_string m =
-  print_int (List.length m.attack_strings);
+  (*print_int (List.length m.attack_strings);*)
   let no = Random.int (List.length m.attack_strings) in
   List.nth m.attack_strings no
 
@@ -101,8 +102,8 @@ let instantiate_dungeon_cells x y dungeon_cells =
           || counter_y = y - 1
           || counter_x = 0
           || counter_x = x - 1
-        then { material = "wall.jpg"; is_wall = true }
-        else { material = "path.jpg"; is_wall = false }
+        then { material = "wall.jpg"; is_wall = true; item = None }
+        else { material = "path.jpg"; is_wall = false; item = None }
       in
       Hashtbl.add dungeon_cells (counter_x, counter_y)
         { tile; x = counter_x; y = counter_y }
@@ -119,7 +120,9 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
     match lst with
     | [] -> ()
     | h :: t ->
-        let tile = { material = "path.jpg"; is_wall = false } in
+        let tile =
+          { material = "path.jpg"; is_wall = false; item = None }
+        in
         Hashtbl.add dungeon_cells h { tile; x = fst h; y = snd h };
         listsearcher dungeon_cells t
   in
@@ -130,7 +133,9 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
         noexn_hashtable_find dungeon_cells (counter_x, counter_y)
         = false
       then
-        let tile = { material = "wall.jpg"; is_wall = true } in
+        let tile =
+          { material = "wall.jpg"; is_wall = true; item = None }
+        in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y }
       else ()
@@ -210,7 +215,7 @@ let instantiate_dungeon id x y start exit bound monsters next prev : t =
     id;
     cells = c;
     start;
-    exit;
+    exit = w.furthest_pos;
     dimensions = (x, y);
     bound;
     monsters;

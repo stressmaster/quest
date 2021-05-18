@@ -2,7 +2,9 @@ Audio
 Dune__exe
 Dungeon
 Game
+Item
 Levenshtein
 Magic_numbers
+Render
 Render_stack
 Timer

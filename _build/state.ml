@@ -35,6 +35,8 @@ type current = {
   mutable in_fight : bool;
   mutable fight : fight;
   mutable health : int;
+  mutable current_weapon : Item.item;
+  mutable current_armor : Item.item;
 }
 
 let curr_room c = c.room
@@ -67,6 +69,8 @@ let init_state file_name =
         input_string = "";
       };
     health = Magic_numbers.health;
+    current_weapon = Item.empty_item;
+    current_armor = Item.empty_item;
   }
 
 let reset_fight c =
@@ -218,7 +222,12 @@ let controller current key =
   let top = Render_stack.stack_peek () in
   match top with
   | Render_stack.DungeonRender -> map_move current key
-  | Render_stack.FightRender -> menu_move current key
+  | Render_stack.FightRender ->
+      if current.fight.monster_health = 0 then (
+        Render_stack.stack_pop ();
+        reset_fight current;
+        current)
+      else menu_move current key
   | Render_stack.SpiralRender -> current
   | Render_stack.AttackRender -> current
   | Render_stack.ScreenshakeRender -> current
@@ -231,6 +240,18 @@ let controller current key =
    current.fight.attacking then menu_move current key (* move around
    map*) else if not current.in_fight then map_move current key else
    current *)
+
+let render_inventory c =
+  Render.render_square
+    (Render.new_square 1.4 0.1
+       (Magic_numbers.width *. 1.3)
+       (Magic_numbers.height *. 1.3)
+       (Item.get_item_sprite c.current_weapon));
+  Render.render_square
+    (Render.new_square 1.7 0.1
+       (Magic_numbers.width *. 1.3)
+       (Magic_numbers.height *. 1.3)
+       (Item.get_item_sprite c.current_armor))
 
 let check_time_limit current =
   if
