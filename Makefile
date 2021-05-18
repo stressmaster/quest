@@ -1,8 +1,8 @@
-MODULES=render main authors texturemap game dungeon state magic_numbers levenshtein fight_menu spiral font timer render_stack walker audio
+MODULES=render main authors texturemap game dungeon state magic_numbers levenshtein fight_menu spiral font timer render_stack walker audio item
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
-PNGS= darkness entrance exit goblin_1 monster path player wall timer
+PNGS= darkness entrance exit goblin_1 monster path player wall timer empty_item
 IM1=$(PNGS:=.png)
 FONTS= fonts/*
 IM2=$(FONTS:=.png)
