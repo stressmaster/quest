@@ -57,7 +57,15 @@ let tier_three_prefixes =
   ]
 
 let tier_one_materials =
-  [ "paper"; "wood"; "styrofoam"; "cardboard"; "tin foil"; "flint" ]
+  [
+    "paper";
+    "wood";
+    "styrofoam";
+    "cardboard";
+    "tin foil";
+    "flint";
+    "cloth";
+  ]
 
 let tier_two_materials =
   [ "iron"; "steel"; "bronze"; "copper"; "metal" ]
@@ -70,7 +78,6 @@ let tier_three_materials =
     "mithril";
     "depleted uranium";
     "carbon fiber";
-    "obsidian";
   ]
 
 let tier_one_weapons =
@@ -99,16 +106,19 @@ let tier_three_weapons =
     "kunai";
     "chainsaw";
     "zweihander";
-    "saw blade";
+    "saw cleaver";
     "lance of longinus";
+    "katana";
   ]
 
-let tier_one_armor = [ "polo"; "apron"; "smock"; "tank top" ]
+let tier_one_armors =
+  [ "covering"; "apron"; "smock"; "tank top"; "rags"; "jacket" ]
 
-let tier_two_armor = [ "vest"; "suit" ]
+let tier_two_armors =
+  [ "vest"; "suit"; "chestplate"; "plate mail"; "cuirass"; "hauberk" ]
 
-let tier_three_armor =
-  [ "chestplate"; "plate mail"; "cuirass"; "armor" ]
+let tier_three_armors =
+  [ "armor"; "power armor"; "mecha suit"; "oyoroi"; "exoskeleton" ]
 
 let get_item_sprite i =
   match i with
@@ -125,47 +135,27 @@ let get_item_modifier i =
   | Armor a -> a.modifier
   | NoItem -> 0
 
+let list_rand_elt lst = List.nth lst (Random.int (List.length lst))
+
 let generate_name tier itype =
   let prefix =
-    if tier = 3. then
-      List.nth tier_three_prefixes
-        (Random.int (List.length tier_three_prefixes))
-    else if tier = 1. then
-      List.nth tier_two_prefixes
-        (Random.int (List.length tier_two_prefixes))
-    else
-      List.nth tier_one_prefixes
-        (Random.int (List.length tier_one_prefixes))
+    if tier = 3. then list_rand_elt tier_three_prefixes
+    else if tier = 1. then list_rand_elt tier_two_prefixes
+    else list_rand_elt tier_one_prefixes
   in
   let material =
-    if tier = 3. then
-      List.nth tier_three_materials
-        (Random.int (List.length tier_three_materials))
-    else if tier = 1. then
-      List.nth tier_two_materials
-        (Random.int (List.length tier_two_materials))
-    else
-      List.nth tier_one_materials
-        (Random.int (List.length tier_one_materials))
+    if tier = 3. then list_rand_elt tier_three_materials
+    else if tier = 1. then list_rand_elt tier_two_materials
+    else list_rand_elt tier_one_materials
   in
   let base =
     if itype = true then
-      if tier = 3. then
-        List.nth tier_three_weapons
-          (Random.int (List.length tier_three_weapons))
-      else if tier = 1. then
-        List.nth tier_two_weapons
-          (Random.int (List.length tier_two_weapons))
-      else
-        List.nth tier_one_weapons
-          (Random.int (List.length tier_one_weapons))
-    else if tier = 3. then
-      List.nth tier_three_armor
-        (Random.int (List.length tier_three_armor))
-    else if tier = 1. then
-      List.nth tier_two_armor (Random.int (List.length tier_two_armor))
-    else
-      List.nth tier_one_armor (Random.int (List.length tier_one_armor))
+      if tier = 3. then list_rand_elt tier_three_weapons
+      else if tier = 1. then list_rand_elt tier_two_weapons
+      else list_rand_elt tier_one_weapons
+    else if tier = 3. then list_rand_elt tier_three_armors
+    else if tier = 1. then list_rand_elt tier_two_armors
+    else list_rand_elt tier_one_armors
   in
   prefix ^ " " ^ material ^ " " ^ base
 
