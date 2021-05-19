@@ -84,6 +84,13 @@ let tier_three_weapons =
     "halberd"; "scimitar"; "claymore"; "warhammer"; "kunai"; "chainsaw";
   ]
 
+let tier_one_armor = [ "polo"; "apron"; "smock"; "tank top" ]
+
+let tier_two_armor = [ "vest"; "suit" ]
+
+let tier_three_armor =
+  [ "chestplate"; "plate mail"; "cuirass"; "armor" ]
+
 let get_item_sprite i =
   match i with
   | Weapon w -> w.sprite
@@ -99,7 +106,7 @@ let get_item_modifier i =
   | Armor a -> a.modifier
   | NoItem -> 0
 
-let generate_name tier =
+let generate_name tier itype =
   let prefix =
     if tier = 3. then
       List.nth tier_three_prefixes
@@ -119,33 +126,42 @@ let generate_name tier =
       List.nth tier_two_materials
         (Random.int (List.length tier_two_materials))
     else
-      List.nth tier_one_prefixes
+      List.nth tier_one_materials
         (Random.int (List.length tier_one_materials))
   in
-  let weapon =
-    if tier = 3. then
-      List.nth tier_three_weapons
-        (Random.int (List.length tier_three_weapons))
+  let base =
+    if itype = true then
+      if tier = 3. then
+        List.nth tier_three_weapons
+          (Random.int (List.length tier_three_weapons))
+      else if tier = 1. then
+        List.nth tier_two_weapons
+          (Random.int (List.length tier_two_weapons))
+      else
+        List.nth tier_one_weapons
+          (Random.int (List.length tier_one_weapons))
+    else if tier = 3. then
+      List.nth tier_three_armor
+        (Random.int (List.length tier_three_armor))
     else if tier = 1. then
       List.nth tier_two_weapons
-        (Random.int (List.length tier_two_weapons))
+        (Random.int (List.length tier_two_armor))
     else
       List.nth tier_one_weapons
-        (Random.int (List.length tier_one_weapons))
+        (Random.int (List.length tier_one_armor))
   in
-  prefix ^ " " ^ material ^ " " ^ weapon
+  prefix ^ " " ^ material ^ " " ^ base
 
 let create_item depth itype =
   let tier =
     let rand = Random.float 1. in
     if rand > 0.9 then 3. else if rand > 0.5 then 1. else 0.5
   in
-  let n = generate_name tier in
   if itype = true then
     Weapon
       {
         sprite = Magic_numbers.tier_one_weapon;
-        name = n;
+        name = generate_name tier true;
         depth;
         modifier = int_of_float (float_of_int depth *. tier);
       }
@@ -153,7 +169,7 @@ let create_item depth itype =
     Armor
       {
         sprite = Magic_numbers.tier_one_armor;
-        name = n;
+        name = generate_name tier false;
         depth;
         modifier = int_of_float (float_of_int depth *. tier);
       }

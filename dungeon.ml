@@ -60,6 +60,13 @@ let instantiate_monster
 let is_wall dungeon (x, y) =
   (Hashtbl.find dungeon.cells (x, y)).tile.is_wall
 
+let get_item dungeon (x, y) =
+  let cell = Hashtbl.find dungeon.cells (x, y) in
+  let tile = cell.tile in
+  let path_tile = { tile with material = "path.jpg"; item = None } in
+  Hashtbl.add dungeon.cells (x, y) { cell with tile = path_tile };
+  tile.item
+
 let get_start dungeon = dungeon.start
 
 let get_monster d =
@@ -215,6 +222,29 @@ let add_npcs x y dungeon_cells =
     done
   done
 
+let add_items x y dungeon_cells =
+  for counter_y = 0 to y do
+    for counter_x = 0 to x do
+      if
+        tile_is_path counter_x counter_y dungeon_cells
+        && Random.int 20 > 18
+      then
+        let item_type = Random.bool () in
+        let item = Item.create_item 1 item_type in
+        let tile =
+          {
+            material = Item.get_item_sprite item;
+            is_wall = false;
+            item = Some item;
+            npc = None;
+          }
+        in
+        Hashtbl.add dungeon_cells (counter_x, counter_y)
+          { tile; x = counter_x; y = counter_y }
+      else ()
+    done
+  done
+
 let instantiate_dungeon_cells2 x y dungeon_cells lst =
   let rec listsearcher dungeon_cells lst =
     match lst with
@@ -251,7 +281,8 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
       else ()
     done
   done;
-  add_npcs x y dungeon_cells
+  add_npcs x y dungeon_cells;
+  add_items x y dungeon_cells
 
 type direction =
   | Up
@@ -350,12 +381,16 @@ let print_dungeon dungeon =
   done
 
 let determine_color tile =
-  let material = tile |> tile_material in
-  if material = "wall.jpg" then Magic_numbers.wall
-  else if material = "path.jpg" then Magic_numbers.path
-  else if material = "monster.png" then Magic_numbers.monster
-  else if material = "goblin_1.jpg" then Magic_numbers.goblin_1
-  else Magic_numbers.darkness
+  match tile.item with
+  | Some (Armor _) -> Magic_numbers.armor_pickup_png
+  | Some (Weapon _) -> Magic_numbers.weapon_pickup_png
+  | _ ->
+      let material = tile |> tile_material in
+      if material = "wall.jpg" then Magic_numbers.wall
+      else if material = "path.jpg" then Magic_numbers.path
+      else if material = "monster.png" then Magic_numbers.monster
+      else if material = "goblin_1.jpg" then Magic_numbers.goblin_1
+      else Magic_numbers.darkness
 
 (* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
    bounds for rendering based on [(p_x, p_y) dungeon_x_length

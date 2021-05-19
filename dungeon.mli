@@ -35,6 +35,8 @@ val instantiate_dungeon :
    y)] is a wall in [dungeon] *)
 val is_wall : t -> int * int -> bool
 
+val get_item : t -> int * int -> Item.t option
+
 val get_monster : t -> monster
 
 val get_monsters : t -> monster list

@@ -34,6 +34,10 @@ val width : float
 
 val height : float
 
+val weapon_pickup_png : string
+
+val armor_pickup_png : string
+
 val tier_one_weapon : string
 
 val tier_one_armor : string
