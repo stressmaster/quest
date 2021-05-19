@@ -217,8 +217,9 @@ let menu_move current key =
       Render_stack.stack_pop ();
       reset_fight current
   | Glut.KEY_UP ->
-      Timer.reset_timer ();
-      current.fight.attacking <- not current.fight.attacking
+      if not current.fight.attacking then (
+        Timer.reset_timer ();
+        current.fight.attacking <- not current.fight.attacking )
   | _ -> () );
   current
 
