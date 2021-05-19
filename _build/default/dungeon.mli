@@ -24,7 +24,6 @@ val instantiate_dungeon :
   int ->
   int ->
   int * int ->
-  int * int ->
   int ->
   monster list ->
   int ->
@@ -76,6 +75,6 @@ val get_monster_string : monster -> string
 
 val get_monster_HP : monster -> int
 
-val render_dungeon : int * int -> t -> unit
+val render_dungeon : int * int -> t -> bool -> unit
 
 val monster_move : monster -> string

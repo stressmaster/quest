@@ -53,12 +53,6 @@ let next_dungeon game dungeon =
 let prev_dungeon game dungeon =
   (* let prev_dungeon_id = Dungeon.get_prev dungeon in *)
   let prev_id = Dungeon.get_id dungeon - 1 in
-  let prev_dungeon =
-    List.find (fun g -> Dungeon.get_id g = prev_id) game.dungeons
-  in
-  let dim = Dungeon.get_dimensions prev_dungeon in
-  Dungeon.instantiate_dungeon prev_id (fst dim) (snd dim) (1, 1) 20
-    (Dungeon.get_monsters dungeon)
-    (prev_id + 1) (prev_id - 1)
+  List.find (fun g -> Dungeon.get_id g = prev_id) game.dungeons
 
 let add_to_game game dungeon = { dungeons = dungeon :: game.dungeons }

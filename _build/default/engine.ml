@@ -30,12 +30,11 @@ let init_display game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      ( match Render_stack.stack_peek () with
+      (match Render_stack.stack_peek () with
       | SpiralRender ->
           Dungeon.render_dungeon
             (State.player_loc !game)
-            (State.curr_room !game);
-          State.render_inventory !game;
+            (State.curr_room !game) false;
           Spiral.render_spiral
             (State.curr_fight !game)
             Magic_numbers.x_length Magic_numbers.y_length
@@ -49,8 +48,8 @@ let init_display game w h =
       | DungeonRender ->
           Dungeon.render_dungeon
             (State.player_loc !game)
-            (State.curr_room !game);
-          State.render_inventory !game );
+            (State.curr_room !game) true;
+          State.render_inventory !game);
 
       Gl.flush ()
       (* (Font.render_font (Font.new_font (string_of_int

@@ -181,8 +181,8 @@ let render_npc_speech x y dungeon_cells =
       match npc with
       | Some n ->
           let speech = Npc.get_npc_speech n in
-          Font.render_font
-            (Font.new_font speech 0. 1.
+          Font.render_font ~spacing:0.05
+            (Font.new_font speech 1.1 1.2
                (Magic_numbers.width *. 0.5)
                (Magic_numbers.height *. 0.5))
       | None -> ())
@@ -209,7 +209,7 @@ let add_npcs x y dungeon_cells =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
       if become_npc counter_x counter_y dungeon_cells then (
-        let npc = Npc.get_npc (Random.int 4) in
+        let npc = Npc.get_npc (Random.int 3) in
         let tile =
           {
             material = Npc.get_npc_sprite npc;
@@ -349,7 +349,7 @@ let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
             (more - 1) (bigmore - 1)
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
-let instantiate_dungeon id x y start exit bound monsters next prev : t =
+let instantiate_dungeon id x y start bound monsters next prev : t =
   Random.init id;
   let c = Hashtbl.create (x * y) in
   (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
@@ -429,7 +429,7 @@ let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
    texture of the tile at [(x, y)] based on [(p_x, p_y) dungeon_cells
    dungeon] *)
 let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
-  if (x, y) = (p_x, p_y) then Magic_numbers.player
+  if (x, y) = (p_x, p_y) then Spriteanimation.get_sprite "player"
   else if Hashtbl.find_opt dungeon_cells (x, y) = None then
     Magic_numbers.darkness
   else if (x, y) = get_start dungeon then Magic_numbers.entrance
@@ -463,7 +463,7 @@ let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
 
 (* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
    based on [(p_x, p_y)]*)
-let render_dungeon (p_x, p_y) (dungeon : t) =
+let render_dungeon (p_x, p_y) (dungeon : t) condition =
   let dungeon_cells = dungeon |> get_cells in
   let dungeon_x_length, dungeon_y_length = dungeon |> get_dimensions in
   let x_start, x_end, y_start, y_end =
@@ -488,6 +488,7 @@ let render_dungeon (p_x, p_y) (dungeon : t) =
   render_mini_map
     (float_of_int p_x, float_of_int p_y)
     (float_of_int dungeon_x_length, float_of_int dungeon_y_length);
-  render_npc_speech p_x p_y dungeon_cells
+  (* if Render_stack.stack_peek () != Render_stack.SpiralRender then *)
+  if condition then render_npc_speech p_x p_y dungeon_cells
 
 (* Render_stack.stack_push Render_stack.DungeonRender *)

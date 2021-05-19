@@ -26,6 +26,10 @@ module Font = Dune__exe__Font
 module Game = Dune__exe__Game
 
 
+(** @canonical Dune__exe.Gameover_menu *)
+module Gameover_menu = Dune__exe__Gameover_menu
+
+
 (** @canonical Dune__exe.Item *)
 module Item = Dune__exe__Item
 
@@ -80,3 +84,7 @@ module Timer = Dune__exe__Timer
 
 (** @canonical Dune__exe.Walker *)
 module Walker = Dune__exe__Walker
+
+
+(** @canonical Dune__exe.Win_menu *)
+module Win_menu = Dune__exe__Win_menu
