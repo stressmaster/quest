@@ -35,8 +35,8 @@ type current = {
   mutable in_fight : bool;
   mutable fight : fight;
   mutable health : int;
-  mutable current_weapon : Item.item;
-  mutable current_armor : Item.item;
+  mutable current_weapon : Item.t;
+  mutable current_armor : Item.t;
 }
 
 let curr_room c = c.room
@@ -94,33 +94,33 @@ let map_move current key =
   let current_bound = Dungeon.get_bound current.room in
   let x, y = current.location in
   current.in_fight <-
-    (if
-     current.location = current.room_exit
-     || current.location = Dungeon.get_start current.room
+    ( if
+      current.location = current.room_exit
+      || current.location = Dungeon.get_start current.room
     then false
-    else fight_decision current_bound);
+    else fight_decision current_bound );
   if current.in_fight then (
     Audio.change_music "./unravel.wav";
-    Render_stack.stack_push Render_stack.SpiralRender);
+    Render_stack.stack_push Render_stack.SpiralRender );
   (* delete light right below when spiral works. it is a work around*)
   begin
     match key with
     | Glut.KEY_RIGHT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-          else (x + 1, y))
+          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y) )
     | Glut.KEY_LEFT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-          else (x - 1, y))
+          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y) )
     | Glut.KEY_UP ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-          else (x, y + 1))
+          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1) )
     | Glut.KEY_DOWN ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-          else (x, y - 1))
+          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1) )
     | _ -> ()
   end;
   if current.in_fight then Timer.reset_timer ();
@@ -131,11 +131,11 @@ let map_move current key =
   if should_change_next then (
     current.room <- Game.next_dungeon current.game current.room;
     current.location <- Dungeon.get_start current.room;
-    current.room_exit <- Dungeon.get_exit current.room)
+    current.room_exit <- Dungeon.get_exit current.room )
   else if should_change_prev then (
     current.room <- Game.prev_dungeon current.game current.room;
     current.location <- Dungeon.get_exit current.room;
-    current.room_exit <- Dungeon.get_exit current.room);
+    current.room_exit <- Dungeon.get_exit current.room );
   current
 
 let is_typable key =
@@ -152,14 +152,14 @@ let typing_case current key =
     current.fight.monster_string <-
       Dungeon.get_monster_string current.fight.monster;
     let diff = Levenshtein.dist str mon_str in
-    (match current.fight.action with
+    ( match current.fight.action with
     | Attack ->
         let damage = max (String.length mon_str - diff) 0 in
         current.fight.monster_health <- max (mon_HP - damage) 0;
         if current.fight.monster_health > 0 then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
           current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)));
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         (* Font.render_font (Font.new_font ("Monster used " ^
            Dungeon.monster_move current.fight.monster ^ "!") 0. 0.3
            Magic_numbers.width Magic_numbers.height); *)
@@ -170,7 +170,7 @@ let typing_case current key =
         if current.fight.monster_health > 0 then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
           current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)));
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         current.fight.player_health <-
           (let healing = max (String.length mon_str - diff) 0 in
            min (current.fight.player_health + healing) current.health)
@@ -181,13 +181,13 @@ let typing_case current key =
         then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
           current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)));
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         if diff <= String.length str / 3 then (
           Render_stack.stack_pop ();
-          reset_fight current));
+          reset_fight current ) );
 
     current.fight.attacking <- false;
-    "")
+    "" )
   else if key = 127 then
     String.sub str 0 (max (String.length str - 1) 0)
   else if is_typable key then str ^ Char.escaped (Char.chr key)
@@ -201,7 +201,7 @@ let typing_move current key =
   current
 
 let menu_move current key =
-  (match key with
+  ( match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
@@ -212,7 +212,7 @@ let menu_move current key =
   | Glut.KEY_UP ->
       Timer.reset_timer ();
       current.fight.attacking <- not current.fight.attacking
-  | _ -> ());
+  | _ -> () );
   current
 
 (* [controller current key] updates the [current] based on [key]*)
@@ -226,7 +226,7 @@ let controller current key =
       if current.fight.monster_health = 0 then (
         Render_stack.stack_pop ();
         reset_fight current;
-        current)
+        current )
       else menu_move current key
   | Render_stack.SpiralRender -> current
   | Render_stack.AttackRender -> current

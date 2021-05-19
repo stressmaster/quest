@@ -2,6 +2,9 @@ let init_texture texture_list = Texturemap.init_texture texture_list
 
 let init_audio () = Audio.play_music ()
 
+let init_animation () =
+  Spriteanimation.init_animations Magic_numbers.animations
+
 type animation =
   | DungeonRender
   | FightRender
@@ -27,7 +30,7 @@ let init_display game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      (match Render_stack.stack_peek () with
+      ( match Render_stack.stack_peek () with
       | SpiralRender ->
           Dungeon.render_dungeon
             (State.player_loc !game)
@@ -47,7 +50,7 @@ let init_display game w h =
           Dungeon.render_dungeon
             (State.player_loc !game)
             (State.curr_room !game);
-          State.render_inventory !game);
+          State.render_inventory !game );
 
       Gl.flush ()
       (* (Font.render_font (Font.new_font (string_of_int
@@ -66,6 +69,7 @@ let init_engine texture_list w h x_length y_length =
   init_texture texture_list;
   init_audio ();
   init_window w h;
+  init_animation ();
   init_display game w h;
   init_input game;
   let rec timer ~value =
@@ -77,8 +81,13 @@ let init_engine texture_list w h x_length y_length =
     game := State.check_time_limit !game;
     Glut.timerFunc ~ms:value ~cb:typing_timer ~value
   in
+  let rec animation_timer ~value =
+    Spriteanimation.step_animation ();
+    Glut.timerFunc ~ms:value ~cb:animation_timer ~value
+  in
   let ms = 200. *. (Sys.time () -. start) |> int_of_float in
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.timerFunc ~ms ~cb:timer ~value:ms;
   Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
+  Glut.timerFunc ~ms ~cb:animation_timer ~value:ms;
   Glut.mainLoop ()

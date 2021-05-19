@@ -42,6 +42,10 @@ module Magic_numbers = Dune__exe__Magic_numbers
 module Main = Dune__exe__Main
 
 
+(** @canonical Dune__exe.Npc *)
+module Npc = Dune__exe__Npc
+
+
 (** @canonical Dune__exe.Render *)
 module Render = Dune__exe__Render
 
