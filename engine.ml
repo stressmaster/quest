@@ -71,6 +71,11 @@ let init_engine texture_list w h x_length y_length =
   init_animation ();
   init_display game w h;
   init_input game;
+  let rec bigtimer ~value =
+    Bigtimer.increase_time 1;
+    Glut.postRedisplay ();
+    Glut.timerFunc ~ms:value ~cb:bigtimer ~value
+  in
   let rec timer ~value =
     Timer.increase_time 1;
     Glut.postRedisplay ();
@@ -86,6 +91,7 @@ let init_engine texture_list w h x_length y_length =
   in
   let ms = 200. *. (Sys.time () -. start) |> int_of_float in
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
+  Glut.timerFunc ~ms ~cb:bigtimer ~value:ms;
   Glut.timerFunc ~ms ~cb:timer ~value:ms;
   Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
   Glut.timerFunc ~ms ~cb:animation_timer ~value:ms;

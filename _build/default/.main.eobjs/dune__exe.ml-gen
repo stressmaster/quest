@@ -6,6 +6,10 @@ module Audio = Dune__exe__Audio
 module Authors = Dune__exe__Authors
 
 
+(** @canonical Dune__exe.Bigtimer *)
+module Bigtimer = Dune__exe__Bigtimer
+
+
 (** @canonical Dune__exe.Dungeon *)
 module Dungeon = Dune__exe__Dungeon
 

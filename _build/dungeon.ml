@@ -350,7 +350,7 @@ let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start bound monsters next prev : t =
-  Random.init id;
+  Random.init (Bigtimer.current_time ());
   let c = Hashtbl.create (x * y) in
   (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
   let w = Walker.init_walker 0 x 0 y in

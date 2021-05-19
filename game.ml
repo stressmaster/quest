@@ -44,11 +44,14 @@ let start_room game =
 
 let next_dungeon game dungeon =
   let next_id = Dungeon.get_id dungeon + 1 in
-  let xdim = 11 + Random.int 20 in
-  let ydim = 11 + Random.int 20 in
-  Dungeon.instantiate_dungeon next_id xdim ydim (1, 1) 20
-    (Dungeon.get_monsters dungeon)
-    (next_id + 1) (next_id - 1)
+  try List.find (fun g -> Dungeon.get_id g = next_id) game.dungeons
+  with Not_found ->
+    let next_id = Dungeon.get_id dungeon + 1 in
+    let xdim = 11 + Random.int 20 in
+    let ydim = 11 + Random.int 20 in
+    Dungeon.instantiate_dungeon next_id xdim ydim (1, 1) 20
+      (Dungeon.get_monsters dungeon)
+      (next_id + 1) (next_id - 1)
 
 let prev_dungeon game dungeon =
   (* let prev_dungeon_id = Dungeon.get_prev dungeon in *)
