@@ -80,6 +80,8 @@ let texture_list =
     "./fonts/z.png";
     "./fonts/>.png";
     "./fonts/space.png";
+    "./fonts/question.png";
+    "./fonts/exclamation.png";
   ]
 
 let animations =
