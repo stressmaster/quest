@@ -23,11 +23,11 @@ let renderAt ~x ~y ~width ~height ~texture =
   GlTex.coord2 (0.0, 0.0);
   GlDraw.vertex2 (0., 0.);
   GlTex.coord2 (0.0, 1.0);
-  GlDraw.vertex2 (0., height -. 1.);
+  GlDraw.vertex2 (0., height);
   GlTex.coord2 (1.0, 1.0);
-  GlDraw.vertex2 (width -. 1., height -. 1.);
+  GlDraw.vertex2 (width, height);
   GlTex.coord2 (1.0, 0.0);
-  GlDraw.vertex2 (width -. 1., 0.);
+  GlDraw.vertex2 (width, 0.);
   Texturemap.end_texture ();
   GlDraw.ends ()
 
@@ -43,16 +43,16 @@ let render_square ~square =
 let rec flash t1 t sq1 sq2 =
   if current_flashes > max_flashes then (
     current_flashes := 0;
-    Render_stack.stack_pop ())
+    Render_stack.stack_pop () )
   else if t1 = t then (
     current_flashes := !current_flashes + 1;
-    ())
+    () )
   else if t mod 2 = 0 then (
     render_square sq1;
-    flash (t1 + 1) t sq1 sq2)
+    flash (t1 + 1) t sq1 sq2 )
   else (
     render_square sq2;
-    flash (t1 + 1) t sq1 sq2)
+    flash (t1 + 1) t sq1 sq2 )
 
 let render_square_flashes square1 square2 flashes =
   max_flashes := flashes;
@@ -63,19 +63,19 @@ let rec shake t1 t =
   if current_flashes > max_flashes then (
     current_flashes := 0;
     offset := 0.;
-    Render_stack.stack_pop ())
+    Render_stack.stack_pop () )
   else if t1 = t then (
     current_flashes := !current_flashes + 1;
-    ())
+    () )
   else if t / 2 mod 2 = 0 then (
     offset := -0.012;
-    shake (t1 + 1) t)
+    shake (t1 + 1) t )
   else if t mod 2 = 0 then (
     offset := 0.;
-    shake (t1 + 1) t)
+    shake (t1 + 1) t )
   else (
     offset := 0.012;
-    shake (t1 + 1) t)
+    shake (t1 + 1) t )
 
 let render_screen_shake shakes =
   max_flashes := shakes;
