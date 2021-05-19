@@ -13,3 +13,7 @@ type item =
 val empty_item : item
 
 val get_item_sprite : item -> string
+
+val get_item_name : item -> string
+
+val get_item_modifier : item -> int

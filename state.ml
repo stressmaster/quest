@@ -267,11 +267,23 @@ let render_inventory c =
        (Magic_numbers.width *. 1.3)
        (Magic_numbers.height *. 1.3)
        (Item.get_item_sprite c.current_weapon));
+  Font.render_font
+    (Font.new_font
+       (string_of_int (Item.get_item_modifier c.current_weapon))
+       1.56 0.12
+       (Magic_numbers.width *. 0.5)
+       (Magic_numbers.height *. 0.5));
   Render.render_square
     (Render.new_square 1.7 0.1
        (Magic_numbers.width *. 1.3)
        (Magic_numbers.height *. 1.3)
-       (Item.get_item_sprite c.current_armor))
+       (Item.get_item_sprite c.current_armor));
+  Font.render_font
+    (Font.new_font
+       (string_of_int (Item.get_item_modifier c.current_armor))
+       1.86 0.12
+       (Magic_numbers.width *. 0.5)
+       (Magic_numbers.height *. 0.5))
 
 let check_time_limit current =
   if
