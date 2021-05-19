@@ -22,6 +22,10 @@ and weapon_pickup_png = "./weapon_pickup.png"
 
 and armor_pickup_png = "./armor_pickup.png"
 
+and tier_one_weapon = "./tier_one_weapon.png"
+
+and tier_one_armor = "./tier_one_armor.png"
+
 let texture_list =
   [
     wall;
@@ -36,6 +40,8 @@ let texture_list =
     empty_item_png;
     weapon_pickup_png;
     armor_pickup_png;
+    tier_one_weapon;
+    tier_one_armor;
     "./fonts/0.png";
     "./fonts/1.png";
     "./fonts/2.png";
