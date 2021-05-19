@@ -78,6 +78,8 @@ let get_prev dungeon = dungeon.prev
 
 let get_next dungeon = dungeon.next
 
+let get_monsters dungeon = dungeon.monsters
+
 let get_exit dungeon = dungeon.exit
 
 let get_dimensions dungeon = dungeon.dimensions
@@ -317,16 +319,16 @@ let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
 
   Render.render_square
     (Render.new_square
-       ( p_x *. 2.
+       (p_x *. 2.
        /. (dungeon_x_length +. 2.)
        *. (dungeon_x_length *. Magic_numbers.width /. 10.)
-       /. 500. )
-       ( starting_y
+       /. 500.)
+       (starting_y
        +. p_y
           /. (dungeon_y_length +. 2.)
           *. 2.
           *. (dungeon_y_length *. Magic_numbers.height /. 10.)
-          /. 500. )
+          /. 500.)
        10. 10. "./fonts/i.png")
 
 (* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
@@ -344,12 +346,12 @@ let render_dungeon (p_x, p_y) (dungeon : t) =
       in
       Render.render_square
         (Render.new_square
-           ( float_of_int (x - x_start)
+           (float_of_int (x - x_start)
            /. float_of_int Magic_numbers.x_length
-           *. 2. )
-           ( float_of_int (y - y_start)
+           *. 2.)
+           (float_of_int (y - y_start)
            /. float_of_int Magic_numbers.y_length
-           *. 2. )
+           *. 2.)
            Magic_numbers.width Magic_numbers.height new_texture)
     done
   done;
