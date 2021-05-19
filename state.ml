@@ -241,9 +241,6 @@ let controller current key =
   | Render_stack.FightRender ->
       if current.fight.monster_health = 0 then (
         manage_exp current 50;
-        print_int current.level;
-        print_int current.exp_bound;
-        print_int current.current_exp;
         Render_stack.stack_pop ();
         reset_fight current;
         current )
