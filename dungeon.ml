@@ -153,10 +153,10 @@ let become_npc x y table =
   let visibility =
     if tile_is_path x y table then 0
     else
-      ( become_npc_helper (x + 1) y table
+      (become_npc_helper (x + 1) y table
       + become_npc_helper (x - 1) y table
       + become_npc_helper x (y - 1) table
-      + become_npc_helper x (y + 1) table )
+      + become_npc_helper x (y + 1) table)
       * Random.int 12
   in
   if visibility >= 22 then true else false
@@ -175,7 +175,7 @@ let render_npc_speech x y dungeon_cells =
           Font.render_font
             (Font.new_font speech 0. 1. Magic_numbers.width
                Magic_numbers.height)
-      | None -> () )
+      | None -> ())
 
 let add_npc_shadow x y dungeon_cells npc_shadow =
   match
@@ -210,7 +210,7 @@ let add_npcs x y dungeon_cells =
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y };
-        add_npc_shadows counter_x counter_y dungeon_cells (Some npc) )
+        add_npc_shadows counter_x counter_y dungeon_cells (Some npc))
       else ()
     done
   done
@@ -327,7 +327,7 @@ let instantiate_dungeon id x y start exit bound monsters next prev : t =
     id;
     cells = c;
     start;
-    exit;
+    exit = w.furthest_pos;
     dimensions = (x, y);
     bound;
     monsters;
