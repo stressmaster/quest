@@ -297,7 +297,7 @@ let render_inventory c =
   Font.render_font ~spacing:0.05
     (Font.new_font
        (Item.get_item_name c.current_armor)
-       0. 0.1
+       0. 0.05
        (Magic_numbers.width *. 0.5)
        (Magic_numbers.height *. 0.5))
 
