@@ -160,10 +160,10 @@ let become_npc x y table =
   let visibility =
     if tile_is_path x y table then 0
     else
-      ( become_npc_helper (x + 1) y table
+      (become_npc_helper (x + 1) y table
       + become_npc_helper (x - 1) y table
       + become_npc_helper x (y - 1) table
-      + become_npc_helper x (y + 1) table )
+      + become_npc_helper x (y + 1) table)
       * Random.int 12
   in
   if visibility >= 22 then true else false
@@ -182,7 +182,7 @@ let render_npc_speech x y dungeon_cells =
           Font.render_font
             (Font.new_font speech 0. 1. Magic_numbers.width
                Magic_numbers.height)
-      | None -> () )
+      | None -> ())
 
 let add_npc_shadow x y dungeon_cells npc_shadow =
   match
@@ -217,7 +217,7 @@ let add_npcs x y dungeon_cells =
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y };
-        add_npc_shadows counter_x counter_y dungeon_cells (Some npc) )
+        add_npc_shadows counter_x counter_y dungeon_cells (Some npc))
       else ()
     done
   done
@@ -450,21 +450,21 @@ let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
 
   Render.render_square
     (Render.new_square
-       ( p_x *. 2.
+       (p_x *. 2.
        /. (dungeon_x_length +. 2.)
        *. (dungeon_x_length *. Magic_numbers.width /. 10.)
-       /. 500. )
-       ( starting_y
+       /. 500.)
+       (starting_y
        +. p_y
           /. (dungeon_y_length +. 2.)
           *. 2.
           *. (dungeon_y_length *. Magic_numbers.height /. 10.)
-          /. 500. )
+          /. 500.)
        10. 10. "./fonts/i.png")
 
 (* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
    based on [(p_x, p_y)]*)
-let render_dungeon (p_x, p_y) (dungeon : t) =
+let render_dungeon (p_x, p_y) (dungeon : t) condition =
   let dungeon_cells = dungeon |> get_cells in
   let dungeon_x_length, dungeon_y_length = dungeon |> get_dimensions in
   let x_start, x_end, y_start, y_end =
@@ -477,18 +477,19 @@ let render_dungeon (p_x, p_y) (dungeon : t) =
       in
       Render.render_square
         (Render.new_square
-           ( float_of_int (x - x_start)
+           (float_of_int (x - x_start)
            /. float_of_int Magic_numbers.x_length
-           *. 2. )
-           ( float_of_int (y - y_start)
+           *. 2.)
+           (float_of_int (y - y_start)
            /. float_of_int Magic_numbers.y_length
-           *. 2. )
+           *. 2.)
            Magic_numbers.width Magic_numbers.height new_texture)
     done
   done;
   render_mini_map
     (float_of_int p_x, float_of_int p_y)
     (float_of_int dungeon_x_length, float_of_int dungeon_y_length);
-  render_npc_speech p_x p_y dungeon_cells
+  (* if Render_stack.stack_peek () != Render_stack.SpiralRender then *)
+  if condition then render_npc_speech p_x p_y dungeon_cells
 
 (* Render_stack.stack_push Render_stack.DungeonRender *)
