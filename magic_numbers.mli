@@ -34,6 +34,10 @@ val width : float
 
 val height : float
 
+val tier_one_weapon : string
+
+val tier_one_armor : string
+
 val square_height : height:float -> float
 
 val animations : (string * string list) list
