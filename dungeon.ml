@@ -63,7 +63,9 @@ let is_wall dungeon (x, y) =
 let get_item dungeon (x, y) =
   let cell = Hashtbl.find dungeon.cells (x, y) in
   let tile = cell.tile in
-  let path_tile = { tile with material = "path.jpg"; item = None } in
+  let path_tile =
+    { tile with material = Magic_numbers.path; item = None }
+  in
   Hashtbl.add dungeon.cells (x, y) { cell with tile = path_tile };
   tile.item
 
@@ -114,14 +116,14 @@ let instantiate_dungeon_cells x y dungeon_cells =
           || counter_x = x - 1
         then
           {
-            material = "wall.jpg";
+            material = Magic_numbers.wall;
             is_wall = true;
             item = None;
             npc = None;
           }
         else
           {
-            material = "path.jpg";
+            material = Magic_numbers.path;
             is_wall = false;
             item = None;
             npc = None;
@@ -144,7 +146,7 @@ let become_npc_helper x y table =
   | Some cell ->
       let { tile; x; y } = cell in
       let { material; is_wall; item; npc } = tile in
-      if material = "path.jpg" then 1 else 0
+      if material = Magic_numbers.path then 1 else 0
   | None -> 0
 
 let tile_is_path x y table =
@@ -179,9 +181,10 @@ let render_npc_speech x y dungeon_cells =
       match npc with
       | Some n ->
           let speech = Npc.get_npc_speech n in
-          Font.render_font
-            (Font.new_font speech 0. 1. Magic_numbers.width
-               Magic_numbers.height)
+          Font.render_font ~spacing:0.05
+            (Font.new_font speech 1.1 1.2
+               (Magic_numbers.width *. 0.5)
+               (Magic_numbers.height *. 0.5))
       | None -> ())
 
 let add_npc_shadow x y dungeon_cells npc_shadow =
@@ -206,7 +209,7 @@ let add_npcs x y dungeon_cells =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
       if become_npc counter_x counter_y dungeon_cells then (
-        let npc = Npc.get_npc (Random.int 4) in
+        let npc = Npc.get_npc (Random.int 3) in
         let tile =
           {
             material = Npc.get_npc_sprite npc;
@@ -252,7 +255,7 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
     | h :: t ->
         let tile =
           {
-            material = "path.jpg";
+            material = Magic_numbers.path;
             is_wall = false;
             item = None;
             npc = None;
@@ -270,7 +273,7 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
       then
         let tile =
           {
-            material = "wall.jpg";
+            material = Magic_numbers.wall;
             is_wall = true;
             item = None;
             npc = None;
@@ -386,11 +389,7 @@ let determine_color tile =
   | Some (Weapon _) -> Magic_numbers.weapon_pickup_png
   | _ ->
       let material = tile |> tile_material in
-      if material = "wall.jpg" then Magic_numbers.wall
-      else if material = "path.jpg" then Magic_numbers.path
-      else if material = "monster.png" then Magic_numbers.monster
-      else if material = "goblin_1.jpg" then Magic_numbers.goblin_1
-      else Magic_numbers.darkness
+      material
 
 (* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
    bounds for rendering based on [(p_x, p_y) dungeon_x_length

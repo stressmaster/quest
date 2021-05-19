@@ -44,7 +44,7 @@ let tier_two_prefixes =
 let tier_three_prefixes =
   [
     "epic";
-    "legendayr";
+    "legendary";
     "high quality";
     "amazing";
     "superb";
@@ -63,7 +63,15 @@ let tier_two_materials =
   [ "iron"; "steel"; "bronze"; "copper"; "metal" ]
 
 let tier_three_materials =
-  [ "tungsten"; "diamond"; "titanium"; "mithril"; "depleted uranium" ]
+  [
+    "tungsten";
+    "diamond";
+    "titanium";
+    "mithril";
+    "depleted uranium";
+    "carbon fiber";
+    "obsidian";
+  ]
 
 let tier_one_weapons =
   [
@@ -75,13 +83,24 @@ let tier_one_weapons =
     "clothes hanger";
     "mop";
     "broom";
+    "broken bottle";
+    "scissors";
   ]
 
-let tier_two_weapons = [ "sword"; "longsword"; "spear" ]
+let tier_two_weapons =
+  [ "sword"; "longsword"; "spear"; "blade"; "dagger"; "knife" ]
 
 let tier_three_weapons =
   [
-    "halberd"; "scimitar"; "claymore"; "warhammer"; "kunai"; "chainsaw";
+    "halberd";
+    "scimitar";
+    "claymore";
+    "warhammer";
+    "kunai";
+    "chainsaw";
+    "zweihander";
+    "saw blade";
+    "lance of longinus";
   ]
 
 let tier_one_armor = [ "polo"; "apron"; "smock"; "tank top" ]
@@ -144,11 +163,9 @@ let generate_name tier itype =
       List.nth tier_three_armor
         (Random.int (List.length tier_three_armor))
     else if tier = 1. then
-      List.nth tier_two_weapons
-        (Random.int (List.length tier_two_armor))
+      List.nth tier_two_armor (Random.int (List.length tier_two_armor))
     else
-      List.nth tier_one_weapons
-        (Random.int (List.length tier_one_armor))
+      List.nth tier_one_armor (Random.int (List.length tier_one_armor))
   in
   prefix ^ " " ^ material ^ " " ^ base
 

@@ -14,6 +14,8 @@ val monster : string
 
 val goblin_1 : string
 
+val monster3 : string
+
 val timer : string
 
 val empty_item_png : string

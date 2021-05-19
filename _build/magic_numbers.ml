@@ -14,6 +14,8 @@ and monster = "./monster.png"
 
 and goblin_1 = "./goblin_1.png"
 
+and monster3 = "./monster3.png"
+
 and timer = "./timer.png"
 
 and empty_item_png = "./empty_item.png"
@@ -36,6 +38,7 @@ let texture_list =
     darkness;
     monster;
     goblin_1;
+    monster3;
     timer;
     empty_item_png;
     weapon_pickup_png;
@@ -80,6 +83,8 @@ let texture_list =
     "./fonts/z.png";
     "./fonts/>.png";
     "./fonts/space.png";
+    "./fonts/question.png";
+    "./fonts/exclamation.png";
   ]
 
 let animations =
