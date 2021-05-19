@@ -5,7 +5,7 @@ type item_stats = {
   modifier : int;
 }
 
-type item =
+type t =
   | Weapon of item_stats
   | Armor of item_stats
   | NoItem

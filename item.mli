@@ -5,15 +5,15 @@ type item_stats = {
   modifier : int;
 }
 
-type item =
+type t =
   | Weapon of item_stats
   | Armor of item_stats
   | NoItem
 
-val empty_item : item
+val empty_item : t
 
-val get_item_sprite : item -> string
+val get_item_sprite : t -> string
 
-val get_item_name : item -> string
+val get_item_name : t -> string
 
-val get_item_modifier : item -> int
+val get_item_modifier : t -> int
