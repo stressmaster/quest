@@ -24,7 +24,6 @@ val instantiate_dungeon :
   int ->
   int ->
   int * int ->
-  int * int ->
   int ->
   monster list ->
   int ->

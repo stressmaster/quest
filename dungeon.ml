@@ -346,7 +346,7 @@ let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
             (more - 1) (bigmore - 1)
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
-let instantiate_dungeon id x y start exit bound monsters next prev : t =
+let instantiate_dungeon id x y start bound monsters next prev : t =
   Random.init id;
   let c = Hashtbl.create (x * y) in
   (* let ourlst = carver 0 0 x y Right [] 5 300 in *)

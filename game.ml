@@ -25,7 +25,6 @@ let dungeon_of_json json =
     (json |> member "y-dim" |> to_int)
     ( json |> member "start-x" |> to_int,
       json |> member "start-y" |> to_int )
-    (json |> member "end-x" |> to_int, json |> member "end-y" |> to_int)
     (json |> member "bound" |> to_int)
     (json |> member "monsters" |> to_list |> List.map monster_of_json)
     (json |> member "next" |> to_int)
@@ -47,7 +46,7 @@ let next_dungeon game dungeon =
   let next_id = Dungeon.get_id dungeon + 1 in
   let xdim = 11 + Random.int 20 in
   let ydim = 11 + Random.int 20 in
-  Dungeon.instantiate_dungeon next_id xdim ydim (1, 1) (1, 1) 20
+  Dungeon.instantiate_dungeon next_id xdim ydim (1, 1) 20
     (Dungeon.get_monsters dungeon)
     (next_id + 1) (next_id - 1)
 
@@ -58,8 +57,7 @@ let prev_dungeon game dungeon =
     List.find (fun g -> Dungeon.get_id g = prev_id) game.dungeons
   in
   let dim = Dungeon.get_dimensions prev_dungeon in
-  Dungeon.instantiate_dungeon prev_id (fst dim) (snd dim) (1, 1) (1, 1)
-    20
+  Dungeon.instantiate_dungeon prev_id (fst dim) (snd dim) (1, 1) 20
     (Dungeon.get_monsters dungeon)
     (prev_id + 1) (prev_id - 1)
 
