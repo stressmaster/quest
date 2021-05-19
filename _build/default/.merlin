@@ -1,8 +1,0 @@
-B _build
-PKG lablgl
-PKG ounit2
-PKG yojson
-PKG camlimages.core
-PKG camlimages.png
-PKG sdl 
-PKG sdl.sdlmixer

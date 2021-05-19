@@ -28,13 +28,16 @@ let get_prev_action = function
   | Attack -> Run
 
 type current = {
-  game : Game.t;
+  mutable game : Game.t;
   mutable location : int * int;
   mutable room : Dungeon.t;
   mutable room_exit : int * int;
   mutable in_fight : bool;
   mutable fight : fight;
   mutable health : int;
+  mutable level : int;
+  mutable current_exp : int;
+  mutable exp_bound : int;
   mutable current_weapon : Item.t;
   mutable current_armor : Item.t;
 }
@@ -69,6 +72,9 @@ let init_state file_name =
         input_string = "";
       };
     health = Magic_numbers.health;
+    level = 1;
+    current_exp = 0;
+    exp_bound = 10;
     current_weapon = Item.empty_item;
     current_armor = Item.empty_item;
   }
@@ -130,6 +136,7 @@ let map_move current key =
   in
   if should_change_next then (
     current.room <- Game.next_dungeon current.game current.room;
+    current.game <- Game.add_to_game current.game current.room;
     current.location <- Dungeon.get_start current.room;
     current.room_exit <- Dungeon.get_exit current.room )
   else if should_change_prev then (
@@ -217,6 +224,15 @@ let menu_move current key =
 
 (* [controller current key] updates the [current] based on [key]*)
 
+let manage_exp current exp =
+  current.current_exp <- current.current_exp + exp;
+  while current.current_exp > current.exp_bound do
+    current.level <- current.level + 1;
+    current.current_exp <- current.current_exp - current.exp_bound;
+    current.exp_bound <- current.level * current.exp_bound;
+    ()
+  done
+
 let controller current key =
   (* move after end of fight*)
   let top = Render_stack.stack_peek () in
@@ -224,6 +240,10 @@ let controller current key =
   | Render_stack.DungeonRender -> map_move current key
   | Render_stack.FightRender ->
       if current.fight.monster_health = 0 then (
+        manage_exp current 50;
+        print_int current.level;
+        print_int current.exp_bound;
+        print_int current.current_exp;
         Render_stack.stack_pop ();
         reset_fight current;
         current )

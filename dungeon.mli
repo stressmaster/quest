@@ -37,6 +37,8 @@ val is_wall : t -> int * int -> bool
 
 val get_monster : t -> monster
 
+val get_monsters : t -> monster list
+
 (* [is_wall dungeon (x, y)] is the material of the tile at [(x,y)] in
    [dungeon] *)
 val tile_material : tile -> string

@@ -135,7 +135,7 @@ let create_item depth itype =
   if itype = true then
     Weapon
       {
-        sprite = Magic_numbers.monster;
+        sprite = Magic_numbers.tier_one_weapon;
         name = n;
         depth;
         modifier = int_of_float (float_of_int depth *. tier);
@@ -143,7 +143,7 @@ let create_item depth itype =
   else
     Armor
       {
-        sprite = Magic_numbers.monster;
+        sprite = Magic_numbers.tier_one_armor;
         name = n;
         depth;
         modifier = int_of_float (float_of_int depth *. tier);
