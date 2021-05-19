@@ -31,7 +31,7 @@ let monster_move (mon : monster) =
   listsearcher ourstringlist 0 ourint
 
 let get_monster_string m =
-  print_int (List.length m.attack_strings);
+  (* print_int (List.length m.attack_strings); *)
   let no = Random.int (List.length m.attack_strings) in
   List.nth m.attack_strings no
 
