@@ -90,6 +90,15 @@ let get_item_sprite i =
   | Armor a -> a.sprite
   | NoItem -> Magic_numbers.empty_item_png
 
+let get_item_name i =
+  match i with Weapon w -> w.name | Armor a -> a.name | NoItem -> ""
+
+let get_item_modifier i =
+  match i with
+  | Weapon w -> w.modifier
+  | Armor a -> a.modifier
+  | NoItem -> 0
+
 let generate_name tier =
   let prefix =
     if tier = 3. then
@@ -124,7 +133,7 @@ let generate_name tier =
       List.nth tier_one_weapons
         (Random.int (List.length tier_one_weapons))
   in
-  prefix ^ material ^ weapon
+  prefix ^ " " ^ material ^ " " ^ weapon
 
 let create_item depth itype =
   let tier =
