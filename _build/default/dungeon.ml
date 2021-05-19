@@ -78,6 +78,8 @@ let get_prev dungeon = dungeon.prev
 
 let get_next dungeon = dungeon.next
 
+let get_monsters dungeon = dungeon.monsters
+
 let get_exit dungeon = dungeon.exit
 
 let get_dimensions dungeon = dungeon.dimensions
@@ -205,6 +207,7 @@ let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start exit bound monsters next prev : t =
+  Random.init id;
   let c = Hashtbl.create (x * y) in
   (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
   let w = Walker.init_walker 0 x 0 y in
@@ -237,11 +240,27 @@ let print_dungeon dungeon =
     done
   done
 
+(*if tile.item != None then match tile.item with | Some (Weapon _) ->
+  Magic_numbers.weapon_pickup_png | Some (Armor _) ->
+  Magic_numbers.armor_pickup_png | Some NoItem -> let material = tile |>
+  tile_material in if material = "wall.jpg" then Magic_numbers.wall else
+  if material = "path.jpg" then Magic_numbers.path else
+  Magic_numbers.darkness | None -> Magic_numbers.path*)
+
+(*let material = tile |> tile_material in if material = "wall.jpg" then
+  Magic_numbers.wall else if material = "path.jpg" then
+  Magic_numbers.path else Magic_numbers.darkness*)
+
 let determine_color tile =
-  let material = tile |> tile_material in
-  if material = "wall.jpg" then Magic_numbers.wall
-  else if material = "path.jpg" then Magic_numbers.path
-  else Magic_numbers.darkness
+  match tile.item with
+  | Some (Weapon _) -> Magic_numbers.weapon_pickup_png
+  | Some (Armor _) -> Magic_numbers.armor_pickup_png
+  | Some NoItem -> Magic_numbers.path
+  | None ->
+      let material = tile |> tile_material in
+      if material = "wall.jpg" then Magic_numbers.wall
+      else if material = "path.jpg" then Magic_numbers.path
+      else Magic_numbers.darkness
 
 (* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
    bounds for rendering based on [(p_x, p_y) dungeon_x_length
@@ -281,7 +300,7 @@ let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
    texture of the tile at [(x, y)] based on [(p_x, p_y) dungeon_cells
    dungeon] *)
 let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
-  if (x, y) = (p_x, p_y) then Magic_numbers.player
+  if (x, y) = (p_x, p_y) then Spriteanimation.get_sprite "player"
   else if Hashtbl.find_opt dungeon_cells (x, y) = None then
     Magic_numbers.darkness
   else if (x, y) = get_start dungeon then Magic_numbers.entrance

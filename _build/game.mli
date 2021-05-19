@@ -9,3 +9,5 @@ val start_room : t -> Dungeon.t
 val next_dungeon : t -> Dungeon.t -> Dungeon.t
 
 val prev_dungeon : t -> Dungeon.t -> Dungeon.t
+
+val add_to_game : t -> Dungeon.t -> t
