@@ -144,11 +144,9 @@ let generate_name tier itype =
       List.nth tier_three_armor
         (Random.int (List.length tier_three_armor))
     else if tier = 1. then
-      List.nth tier_two_weapons
-        (Random.int (List.length tier_two_armor))
+      List.nth tier_two_armor (Random.int (List.length tier_two_armor))
     else
-      List.nth tier_one_weapons
-        (Random.int (List.length tier_one_armor))
+      List.nth tier_one_armor (Random.int (List.length tier_one_armor))
   in
   prefix ^ " " ^ material ^ " " ^ base
 
