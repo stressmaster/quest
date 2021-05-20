@@ -17,6 +17,7 @@ type monster = {
   mutable hitpoints : int;
   encounter_chance : int;
   attack_strings : string list;
+  max_hp : int;
 }
 
 let monster_move (mon : monster) =
@@ -37,6 +38,8 @@ let get_monster_string m =
 
 let get_monster_HP m = m.hitpoints
 
+let get_monster_max_HP m = m.max_hp
+
 type t = {
   id : int;
   cells : (int * int, cell) Hashtbl.t;
@@ -55,7 +58,14 @@ let instantiate_monster
     hitpoints
     encounter_chance
     attack_strings =
-  { name; sprite; hitpoints; encounter_chance; attack_strings }
+  {
+    name;
+    sprite;
+    hitpoints;
+    encounter_chance;
+    attack_strings;
+    max_hp = hitpoints;
+  }
 
 let is_wall dungeon (x, y) =
   (Hashtbl.find dungeon.cells (x, y)).tile.is_wall

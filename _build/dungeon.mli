@@ -7,6 +7,7 @@ type monster = {
   mutable hitpoints : int;
   encounter_chance : int;
   attack_strings : string list;
+  max_hp : int;
 }
 
 (* an abstract type representing a tile*)
@@ -74,6 +75,8 @@ val get_prev : t -> int
 val get_monster_string : monster -> string
 
 val get_monster_HP : monster -> int
+
+val get_monster_max_HP : monster -> int
 
 val render_dungeon : int * int -> t -> bool -> unit
 

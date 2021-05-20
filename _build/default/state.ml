@@ -174,9 +174,9 @@ let typing_case current key =
   and mon_HP = current.fight.monster_health in
   if key = 13 then (
     current.fight.monster_string <-
-      (if mon_HP > 15 then
-       Dungeon.get_monster_string current.fight.monster
-      else random_string (Random.int 15) "");
+      (if mon_HP > Dungeon.get_monster_max_HP current.fight.monster / 2
+      then Dungeon.get_monster_string current.fight.monster
+      else random_string (Random.int 10) "");
     let diff = Levenshtein.dist str mon_str in
     (match current.fight.action with
     | Attack ->

@@ -1,10 +1,10 @@
 # dune build main.bc
 # OCAMLPARAM: unset
 # Workspace root: /home/stressmaster/3110/cs3110-project/CamelQuest
-$ /usr/bin/nproc > /tmp/dune7b3e31.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dune72286e.output 2> /dev/null
 # Auto-detected concurrency: 8
 # disable binary cache
-$ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dune72d60e.output
+$ /home/stressmaster/.opam/cs3110-2021sp/bin/ocamlc.opt -config > /tmp/dune84c5c2.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
