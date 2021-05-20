@@ -30,6 +30,8 @@ val controller : current -> Glut.special_key_t -> current
 
 val typing_move : current -> int -> current
 
+val typing_case : current -> int -> string
+
 val curr_room : current -> Dungeon.t
 
 val in_fight : current -> bool

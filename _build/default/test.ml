@@ -54,11 +54,13 @@ let make_in_fight_test
   assert_equal expected_output (State.in_fight c)
     ~printer:string_of_bool
 
-let dungeon_20x50 =
-  Dungeon.instantiate_dungeon 1 50 30 (1, 1) (18, 40) 5 [] 0 0
+let make_typing_test name c ch expected_output =
+  name >:: fun _ ->
+  assert_equal expected_output (State.typing_case c ch)
 
-let dungeon_2x2 =
-  Dungeon.instantiate_dungeon 1 2 2 (1, 1) (1, 1) 5 [] 5 10
+let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0 0
+
+let dungeon_2x2 = Dungeon.instantiate_dungeon 1 2 2 (1, 1) 5 [] 5 10
 
 let monster_20_hp =
   Dungeon.instantiate_monster "dog" "dog.pn" 20 59 [ "a" ]
@@ -93,6 +95,18 @@ let state_tests =
     make_player_location_test "beginning" current_sample_game (1, 1);
     make_in_fight_test "sample game not in fight" current_sample_game
       false;
+    make_typing_test "correct string output after enter"
+      current_sample_game 13 "";
+    make_typing_test
+      "ensure correct string output with lowercase letter"
+      current_sample_game 99 "c";
+    make_typing_test "ensure correct string output with backspace"
+      current_sample_game 127 "";
+    make_typing_test
+      "ensure correct string output with uppercase letter"
+      current_sample_game 65 "A";
+    make_typing_test "ensure correct string output with space"
+      current_sample_game 32 " ";
   ]
 
 let suite =

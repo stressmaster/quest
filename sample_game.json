@@ -16,7 +16,10 @@
 					"hitpoints": 50,
 					"chance": 5,
 					"attacks": [
-						"cs 3110"
+						"prog knife",
+						"laser strike",
+						"piercing screech",
+						"sudden strike"
 					]
 				},
 				{
@@ -25,7 +28,10 @@
 					"hitpoints": 50,
 					"chance": 5,
 					"attacks": [
-						"cs 3110"
+						"frenzied maul",
+						"wild swing",
+						"focus punch",
+						"mach punch"
 					]
 				}
 			],

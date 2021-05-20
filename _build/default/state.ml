@@ -158,13 +158,25 @@ let is_typable key =
   || (97 <= key && key <= 122)
   || key = 32
 
+let rec random_string length acc =
+  if length = 0 then acc
+  else
+    let ourrand = Random.int 36 in
+    let key =
+      if ourrand < 10 then char_of_int (ourrand + 48)
+      else char_of_int (ourrand + 87)
+    in
+    random_string (length - 1) (Char.escaped key ^ acc)
+
 let typing_case current key =
   let str = current.fight.input_string
   and mon_str = current.fight.monster_string
   and mon_HP = current.fight.monster_health in
   if key = 13 then (
     current.fight.monster_string <-
-      Dungeon.get_monster_string current.fight.monster;
+      (if mon_HP > 15 then
+       Dungeon.get_monster_string current.fight.monster
+      else random_string (Random.int 15) "");
     let diff = Levenshtein.dist str mon_str in
     (match current.fight.action with
     | Attack ->
