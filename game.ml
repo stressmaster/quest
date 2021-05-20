@@ -61,4 +61,4 @@ let prev_dungeon game dungeon =
 
 let add_to_game game dungeon = { dungeons = dungeon :: game.dungeons }
 
-let game_depth game = List.length game
+let game_depth game = List.length game.dungeons
