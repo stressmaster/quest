@@ -257,8 +257,8 @@ let controller current key =
   (* move after end of fight*)
   let top = Render_stack.stack_peek () in
   match top with
-  | Render_stack.DungeonRender -> map_move current key
-  | Render_stack.FightRender ->
+  | DungeonRender -> map_move current key
+  | FightRender ->
       if current.fight.monster_health = 0 then (
         manage_exp current 50;
         Render_stack.stack_pop ();
