@@ -46,6 +46,8 @@ let init_display game w h =
             (State.player_loc !game)
             (State.curr_room !game) true;
           State.render_inventory !game
+      | GameoverRender ->
+          Gameover_menu.render_menu (State.curr_game_over !game)
       | _ -> () );
 
       Gl.flush ()

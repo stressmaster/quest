@@ -5,6 +5,11 @@ type action =
   | Recover
   | Attack
 
+type game_over_action =
+  | Quit
+  | Revive
+  | Restart
+
 type fight = {
   mutable spiraled : bool;
   mutable action : action;
@@ -30,13 +35,15 @@ val controller : current -> Glut.special_key_t -> current
 
 val typing_move : current -> int -> current
 
-val typing_case : current -> int -> string
+val fighting_case : current -> int -> string
 
 val curr_room : current -> Dungeon.t
 
 val in_fight : current -> bool
 
 val curr_fight : current -> fight
+
+val curr_game_over : current -> game_over_action
 
 val render_inventory : current -> unit
 
