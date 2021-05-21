@@ -1,4 +1,4 @@
-MODULES=render bigtimer main authors texturemap game dungeon state magic_numbers levenshtein fight_menu npc spiral font timer render_stack walker audio item spriteanimation
+MODULES=render bigtimer main authors texturemap game dungeon state magic_numbers levenshtein fight_menu npc spiral font timer render_stack walker audio item spriteanimation gameover_menu win_menu
 MLIMODULES=render authors texturemap game dungeon state levenshtein fight_menu npc spiral font timer render_stack walker audio item spriteanimation
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
