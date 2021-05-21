@@ -50,7 +50,12 @@ let next_dungeon game dungeon =
     let next_id = Dungeon.get_id dungeon + 1 in
     let xdim = 11 + Random.int 20 in
     let ydim = 11 + Random.int 20 in
-    Dungeon.instantiate_dungeon next_id xdim ydim (1, 1) 20
+    let ourlist =
+      [ (1, 1); (xdim - 2, ydim - 2); (xdim - 2, 1); (2, ydim - 2) ]
+    in
+    Dungeon.instantiate_dungeon next_id xdim ydim
+      (List.nth ourlist (Random.int 4))
+      20
       (Dungeon.get_monsters dungeon)
       (next_id + 1) (next_id - 1)
 

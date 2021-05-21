@@ -3,6 +3,7 @@ Bigtimer
 Dune__exe
 Dungeon
 Fight_menu
+Gameover_menu
 Item
 Magic_numbers
 Render_stack

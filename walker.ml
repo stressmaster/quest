@@ -6,20 +6,6 @@ type direction =
 
 type walker = {
   mutable furthest_pos : int * int;
-  mutable current_pos : int * int;
-  mutable dir : direction;
-  mutable x_min : int;
-  mutable x_max : int;
-  mutable y_min : int;
-  mutable y_max : int;
-  mutable step_history : (int * int) list;
-  mutable steps_since_turn : int;
-}
-
-let directions = ref [ Up; Down; Left; Right ]
-
-type walker = {
-  mutable furthest_pos : int * int;
   mutable start_pos : int * int;
   mutable current_pos : int * int;
   mutable dir : direction;

@@ -6,6 +6,7 @@ type direction =
 
 type walker = {
   mutable furthest_pos : int * int;
+  mutable start_pos : int * int;
   mutable current_pos : int * int;
   mutable dir : direction;
   mutable x_min : int;
@@ -18,16 +19,17 @@ type walker = {
 
 let directions = ref [ Up; Down; Left; Right ]
 
-let init_walker xmin xmax ymin ymax =
+let init_walker xmin xmax ymin ymax start =
   {
-    furthest_pos = (1, 1);
-    current_pos = (1, 1);
+    furthest_pos = start;
+    start_pos = start;
+    current_pos = start;
     dir = Right;
     x_min = xmin;
     x_max = xmax;
     y_min = ymin;
     y_max = ymax;
-    step_history = [ (1, 1) ];
+    step_history = [ start ];
     steps_since_turn = 0;
   }
 
@@ -55,13 +57,15 @@ let step w =
   let current = w.furthest_pos in
   if determine_border w target_pos then (
     w.furthest_pos <-
-      (if
-       (fst target_pos * fst target_pos)
-       + (snd target_pos * snd target_pos)
-       > (fst w.furthest_pos * fst w.furthest_pos)
-         + (snd w.furthest_pos * snd w.furthest_pos)
-      then target_pos
-      else current);
+      (let newxdist = fst target_pos - fst w.start_pos in
+       let newydist = snd target_pos - snd w.start_pos in
+       let oldxdist = fst current - fst w.start_pos in
+       let oldydist = snd current - snd w.start_pos in
+       if
+         (newxdist * newxdist) + (newydist * newydist)
+         > (oldxdist * oldxdist) + (oldydist * oldydist)
+       then target_pos
+       else current);
     w.steps_since_turn <- w.steps_since_turn + 1;
     w.current_pos <- target_pos;
     true)

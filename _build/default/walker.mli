@@ -6,6 +6,7 @@ type direction =
 
 type walker = {
   mutable furthest_pos : int * int;
+  mutable start_pos : int * int;
   mutable current_pos : int * int;
   mutable dir : direction;
   mutable x_min : int;
@@ -16,6 +17,6 @@ type walker = {
   mutable steps_since_turn : int;
 }
 
-val init_walker : int -> int -> int -> int -> walker
+val init_walker : int -> int -> int -> int -> int * int -> walker
 
 val walk : int -> walker -> (int * int) list
