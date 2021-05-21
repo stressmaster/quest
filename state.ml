@@ -33,7 +33,7 @@ let get_prev_action = function
   | Attack -> Run
 
 let get_next_game_over = function
-  | Quit -> Restart
+  | Quit -> Revive
   | Revive -> Restart
   | Restart -> Quit
 
@@ -55,6 +55,7 @@ type current = {
   mutable exp_bound : int;
   mutable current_weapon : Item.t;
   mutable current_armor : Item.t;
+  mutable game_over : game_over_action;
 }
 
 let curr_room c = c.room
@@ -62,6 +63,8 @@ let curr_room c = c.room
 let in_fight c = c.in_fight
 
 let curr_fight c = c.fight
+
+let curr_game_over c = c.game_over
 
 let init_state file_name =
   let g = Yojson.Basic.from_file file_name |> Game.from_json in
@@ -92,6 +95,7 @@ let init_state file_name =
     exp_bound = 10;
     current_weapon = Item.empty_item;
     current_armor = Item.empty_item;
+    game_over = Quit;
   }
 
 let reset_fight c =
@@ -183,7 +187,7 @@ let rec random_string length acc =
     in
     random_string (length - 1) (Char.escaped key ^ acc)
 
-let typing_case current key =
+let fighting_case current key =
   let str = current.fight.input_string
   and mon_str = current.fight.monster_string
   and mon_HP = current.fight.monster_health in
@@ -237,9 +241,13 @@ let typing_case current key =
 let clamp_str str = String.sub str 0 (min (String.length str) 20)
 
 let typing_move current key =
-  if current.in_fight && current.fight.attacking then
-    current.fight.input_string <- clamp_str (typing_case current key);
-  current
+  match Render_stack.stack_peek () with
+  | FightRender when current.fight.attacking ->
+      current.fight.input_string <-
+        clamp_str (fighting_case current key);
+      current
+  | GameoverRender -> current
+  | _ -> current
 
 let menu_move current key =
   ( match key with
@@ -256,6 +264,16 @@ let menu_move current key =
         current.fight.attacking <- not current.fight.attacking )
   | _ -> () );
   current
+
+let game_over_move current key =
+  match key with
+  | Glut.KEY_DOWN ->
+      current.game_over <- get_next_game_over current.game_over;
+      current
+  | Glut.KEY_UP ->
+      current.game_over <- get_prev_game_over current.game_over;
+      current
+  | _ -> current
 
 (* [controller current key] updates the [current] based on [key]*)
 
@@ -279,7 +297,13 @@ let controller current key =
         Render_stack.stack_pop ();
         reset_fight current;
         current )
+      else if current.fight.player_health = 0 then (
+        Render_stack.stack_pop ();
+        Render_stack.stack_push GameoverRender;
+        reset_fight current;
+        current )
       else menu_move current key
+  | GameoverRender -> game_over_move current key
   | _ -> current
 
 (* (* move after end of fight*) if current.in_fight &&
