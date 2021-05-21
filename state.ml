@@ -238,6 +238,17 @@ let fighting_case current key =
   else if is_typable key then str ^ Char.escaped (Char.chr key)
   else str
 
+let gaming_move current key =
+  match current.game_over with
+  | Quit when key = 13 ->
+      ignore (exit 0);
+      current
+  | Revive when key = 13 ->
+      Render_stack.stack_pop ();
+      current
+  | Restart when key = 13 -> current
+  | _ -> current
+
 let clamp_str str = String.sub str 0 (min (String.length str) 20)
 
 let typing_move current key =
@@ -246,7 +257,7 @@ let typing_move current key =
       current.fight.input_string <-
         clamp_str (fighting_case current key);
       current
-  | GameoverRender -> current
+  | GameoverRender -> gaming_move current key
   | _ -> current
 
 let menu_move current key =
