@@ -5,6 +5,11 @@ type action =
   | Recover
   | Attack
 
+type game_over_action =
+  | Quit
+  | Revive
+  | Restart
+
 type fight = {
   mutable spiraled : bool;
   mutable action : action;

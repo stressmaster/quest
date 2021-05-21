@@ -5,6 +5,11 @@ type action =
   | Recover
   | Attack
 
+type game_over_action =
+  | Quit
+  | Revive
+  | Restart
+
 type fight = {
   mutable spiraled : bool;
   mutable action : action;
@@ -26,6 +31,16 @@ let get_prev_action = function
   | Run -> Recover
   | Recover -> Attack
   | Attack -> Run
+
+let get_next_game_over = function
+  | Quit -> Restart
+  | Revive -> Restart
+  | Restart -> Quit
+
+let get_prev_game_over = function
+  | Quit -> Restart
+  | Revive -> Quit
+  | Restart -> Revive
 
 type current = {
   mutable game : Game.t;
