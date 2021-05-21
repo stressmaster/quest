@@ -113,8 +113,7 @@ let reset_fight c =
   c.fight.player_health <- c.health;
   Audio.change_music "./camlished.wav"
 
-(* let fight_decision bound = Random.int bound = 0 *)
-let fight_decision bound = false
+let fight_decision bound = Random.int bound = 0
 
 let player_loc state = state.location
 
