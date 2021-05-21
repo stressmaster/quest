@@ -18,4 +18,4 @@ val get_item_name : t -> string
 
 val get_item_modifier : t -> int
 
-val create_item : int -> bool -> t
+val create_item : int -> bool -> Magic_numbers.t -> t

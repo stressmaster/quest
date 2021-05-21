@@ -24,14 +24,19 @@ let rec turner
   (* print_string (string_of_int number_needed); print_newline (); *)
   Render.render_square
     (Render.new_square
-       (float_of_int cur_x /. float_of_int Magic_numbers.x_length *. 2.)
-       (float_of_int cur_y /. float_of_int Magic_numbers.x_length *. 2.)
-       Magic_numbers.width Magic_numbers.height "./darkness.png");
+       ( float_of_int cur_x
+       /. float_of_int !Magic_numbers.get_magic.x_length
+       *. 2. )
+       ( float_of_int cur_y
+       /. float_of_int !Magic_numbers.get_magic.x_length
+       *. 2. )
+       !Magic_numbers.get_magic.width !Magic_numbers.get_magic.height
+       "./darkness.png");
   Hashtbl.add table (cur_x, cur_y) true;
   if cur_x = end_x && cur_y = end_y then (
     fight.spiraled <- true;
     Render_stack.stack_pop ();
-    Render_stack.stack_push Render_stack.FightRender)
+    Render_stack.stack_push Render_stack.FightRender )
   else fight.spiraled <- false;
   if number_done = number_needed || fight.spiraled then ()
   else

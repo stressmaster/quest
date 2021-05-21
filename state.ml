@@ -36,6 +36,7 @@ type current = {
   mutable fight : fight;
   mutable health : int;
   mutable level : int;
+  mutable depth : int;
   mutable current_exp : int;
   mutable exp_bound : int;
   mutable current_weapon : Item.t;
@@ -52,6 +53,7 @@ let init_state file_name =
   let g = Yojson.Basic.from_file file_name |> Game.from_json in
   let r = g |> Game.start_room in
   let m = Dungeon.get_monster r in
+  Magic_numbers.update (Dungeon.get_magic_numbers r);
   {
     game = g;
     room = r;
@@ -66,13 +68,14 @@ let init_state file_name =
         monster = m;
         monster_string = Dungeon.get_monster_string m;
         monster_health = Dungeon.get_monster_HP m;
-        player_health = Magic_numbers.health;
+        player_health = !Magic_numbers.get_magic.health;
         typing_limit =
           m |> Dungeon.get_monster_string |> String.length |> ( * ) 10;
         input_string = "";
       };
-    health = Magic_numbers.health;
+    health = !Magic_numbers.get_magic.health;
     level = 1;
+    depth = 0;
     current_exp = 0;
     exp_bound = 10;
     current_weapon = Item.empty_item;
@@ -91,7 +94,8 @@ let reset_fight c =
   c.fight.player_health <- c.health;
   Audio.change_music "./camlished.wav"
 
-let fight_decision bound = Random.int bound = 0
+(* let fight_decision bound = Random.int bound = 0 *)
+let fight_decision bound = false
 
 let player_loc state = state.location
 
@@ -138,18 +142,27 @@ let map_move current key =
   if current.in_fight then Timer.reset_timer ();
   let should_change_next = current.room_exit = current.location in
   let should_change_prev =
-    if Game.start_room current.game = current.room then false
-    else current.location = Dungeon.get_start current.room
+    if current.depth = 0 then false
+    else Dungeon.get_start current.room = current.location
   in
+
   if should_change_next then (
     current.room <- Game.next_dungeon current.game current.room;
     current.game <- Game.add_to_game current.game current.room;
     current.location <- Dungeon.get_start current.room;
-    current.room_exit <- Dungeon.get_exit current.room )
+    current.room_exit <- Dungeon.get_exit current.room;
+    current.depth <- current.depth + 1;
+    let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
+    Magic_numbers.update new_magic_numbers;
+    Spriteanimation.init_animations new_magic_numbers.animations )
   else if should_change_prev then (
     current.room <- Game.prev_dungeon current.game current.room;
     current.location <- Dungeon.get_exit current.room;
-    current.room_exit <- Dungeon.get_exit current.room );
+    current.room_exit <- Dungeon.get_exit current.room;
+    current.depth <- current.depth - 1;
+    let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
+    Magic_numbers.update new_magic_numbers;
+    Spriteanimation.init_animations new_magic_numbers.animations );
   current
 
 let is_typable key =
@@ -188,7 +201,8 @@ let typing_case current key =
             max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         (* Font.render_font (Font.new_font ("Monster used " ^
            Dungeon.monster_move current.fight.monster ^ "!") 0. 0.3
-           Magic_numbers.width Magic_numbers.height); *)
+           (!Magic_numbers.get_magic).width
+           (!Magic_numbers.get_magic).height); *)
         if damage > 0 then
           Render_stack.stack_push Render_stack.AttackRender;
         Audio.play_sound "./oof.wav"
@@ -279,38 +293,38 @@ let controller current key =
 let render_inventory c =
   Render.render_square
     (Render.new_square 1.4 0.1
-       (Magic_numbers.width *. 1.3)
-       (Magic_numbers.height *. 1.3)
+       (!Magic_numbers.get_magic.width *. 1.3)
+       (!Magic_numbers.get_magic.height *. 1.3)
        (Item.get_item_sprite c.current_weapon));
   Font.render_font
     (Font.new_font
        (string_of_int (Item.get_item_modifier c.current_weapon))
        1.56 0.12
-       (Magic_numbers.width *. 0.5)
-       (Magic_numbers.height *. 0.5));
+       (!Magic_numbers.get_magic.width *. 0.5)
+       (!Magic_numbers.get_magic.height *. 0.5));
   Font.render_font ~spacing:0.05
     (Font.new_font
        (Item.get_item_name c.current_weapon)
        0. 0.
-       (Magic_numbers.width *. 0.5)
-       (Magic_numbers.height *. 0.5));
+       (!Magic_numbers.get_magic.width *. 0.5)
+       (!Magic_numbers.get_magic.height *. 0.5));
   Render.render_square
     (Render.new_square 1.7 0.1
-       (Magic_numbers.width *. 1.3)
-       (Magic_numbers.height *. 1.3)
+       (!Magic_numbers.get_magic.width *. 1.3)
+       (!Magic_numbers.get_magic.height *. 1.3)
        (Item.get_item_sprite c.current_armor));
   Font.render_font
     (Font.new_font
        (string_of_int (Item.get_item_modifier c.current_armor))
        1.86 0.12
-       (Magic_numbers.width *. 0.5)
-       (Magic_numbers.height *. 0.5));
+       (!Magic_numbers.get_magic.width *. 0.5)
+       (!Magic_numbers.get_magic.height *. 0.5));
   Font.render_font ~spacing:0.05
     (Font.new_font
        (Item.get_item_name c.current_armor)
        0. 0.05
-       (Magic_numbers.width *. 0.5)
-       (Magic_numbers.height *. 0.5))
+       (!Magic_numbers.get_magic.width *. 0.5)
+       (!Magic_numbers.get_magic.height *. 0.5))
 
 let check_time_limit current =
   if

@@ -1,49 +1,46 @@
-val wall : string
+type t = {
+  wall : string;
+  path : string;
+  entrance : string;
+  exit : string;
+  player : string;
+  monsters : string list;
+  timer : string;
+  darkness : string;
+  empty_item : string;
+  weapon_pickup : string;
+  armor_pickup : string;
+  tier_one_weapon : string;
+  tier_one_armor : string;
+  texture_list : string list;
+  animations : (string * string list) list;
+  w : int;
+  square_height : height:float -> float;
+  h : int;
+  x_length : int;
+  y_length : int;
+  health : int;
+  width : float;
+  height : float;
+  npcs : (string * string) list;
+  tier_one_prefixes : string list;
+  tier_two_prefixes : string list;
+  tier_three_prefixes : string list;
+  tier_one_materials : string list;
+  tier_two_materials : string list;
+  tier_three_materials : string list;
+  tier_one_weapons : string list;
+  tier_two_weapons : string list;
+  tier_three_weapons : string list;
+  tier_one_armors : string list;
+  tier_two_armors : string list;
+  tier_three_armors : string list;
+}
 
-val path : string
+val init : int -> t
 
-val entrance : string
+val update : t -> unit
 
-val exit_tex : string
+val get_magic : t ref
 
-val player : string
-
-val darkness : string
-
-val monster : string
-
-val goblin_1 : string
-
-val monster3 : string
-
-val timer : string
-
-val empty_item_png : string
-
-val texture_list : string list
-
-val w : int
-
-val h : int
-
-val x_length : int
-
-val y_length : int
-
-val health : int
-
-val width : float
-
-val height : float
-
-val weapon_pickup_png : string
-
-val armor_pickup_png : string
-
-val tier_one_weapon : string
-
-val tier_one_armor : string
-
-val square_height : height:float -> float
-
-val animations : (string * string list) list
+val length : int

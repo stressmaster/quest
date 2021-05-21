@@ -1,0 +1,323 @@
+{
+  "magic_themes": [
+    {
+      "w": 500,
+      "h": 500,
+      "x_length": 11,
+      "y_length": 11,
+      "health": 10,
+      "wall": "./wall.png",
+      "path": "./path.png",
+      "entrance": "./entrance.png",
+      "exit": "./exit.png",
+      "player": "./player.png",
+      "darkness": "./darkness.png",
+      "timer": "./timer.png",
+      "empty_item": "./empty_item.png",
+      "weapon_pickup": "./weapon_pickup.png",
+      "armor_pickup": "./armor_pickup.png",
+      "tier_one_weapon": "./tier_one_weapon.png",
+      "tier_one_armor": "./tier_one_armor.png",
+      "npcs": [
+        {
+          "speech": "That golbin stole my slippers",
+          "sprite": "./monster.png"
+        },
+        {
+          "speech": "Baka",
+          "sprite": "./monster3.png"
+        },
+        {
+          "speech": "Where am I?",
+          "sprite": "./goblin_1.png"
+        }
+      ],
+      "monsters": [
+        "./monster.png",
+        "./goblin_1.png",
+        "./monster3.png"
+      ],
+      "fonts": [
+        "./fonts/0.png",
+        "./fonts/1.png",
+        "./fonts/2.png",
+        "./fonts/3.png",
+        "./fonts/4.png",
+        "./fonts/5.png",
+        "./fonts/6.png",
+        "./fonts/7.png",
+        "./fonts/8.png",
+        "./fonts/9.png",
+        "./fonts/a.png",
+        "./fonts/b.png",
+        "./fonts/c.png",
+        "./fonts/d.png",
+        "./fonts/e.png",
+        "./fonts/f.png",
+        "./fonts/g.png",
+        "./fonts/h.png",
+        "./fonts/i.png",
+        "./fonts/j.png",
+        "./fonts/k.png",
+        "./fonts/l.png",
+        "./fonts/m.png",
+        "./fonts/n.png",
+        "./fonts/o.png",
+        "./fonts/p.png",
+        "./fonts/q.png",
+        "./fonts/r.png",
+        "./fonts/s.png",
+        "./fonts/t.png",
+        "./fonts/u.png",
+        "./fonts/v.png",
+        "./fonts/w.png",
+        "./fonts/x.png",
+        "./fonts/y.png",
+        "./fonts/z.png",
+        "./fonts/>.png",
+        "./fonts/space.png",
+        "./fonts/question.png",
+        "./fonts/exclamation.png"
+      ],
+      "animations": [
+        [
+          "player",
+          "./player.png",
+          "./wall.png",
+          "./path.png",
+          "./entrance.png",
+          "./exit.png"
+        ]
+      ],
+      "tier_one_prefixes": [
+        "flimsy",
+        "weak",
+        "shoddy",
+        "impotent",
+        "puny",
+        "feeble",
+        "scrappy",
+        "pathetic",
+        "brittle",
+        "lowly",
+        "lousy"
+      ],
+      "tier_two_prefixes": [
+        "mediocre",
+        "average",
+        "typical",
+        "unassuming",
+        "plain",
+        "unexceptional",
+        "decent",
+        "middling",
+        "ordinary",
+        "standard"
+      ],
+      "tier_three_prefixes": [
+        "epic",
+        "legendary",
+        "high quality",
+        "amazing",
+        "superb",
+        "mediocre",
+        "exceptional",
+        "radiant",
+        "unreal",
+        "phenomenal",
+        "mythical"
+      ],
+      "tier_one_materials": [
+        "paper",
+        "wood",
+        "styrofoam",
+        "cardboard",
+        "tin foil",
+        "flint",
+        "cloth"
+      ],
+      "tier_two_materials": [
+        "iron",
+        "steel",
+        "bronze",
+        "copper",
+        "metal"
+      ],
+      "tier_three_materials": [
+        "tungsten",
+        "diamond",
+        "titanium",
+        "mithril",
+        "depleted uranium",
+        "carbon fiber"
+      ],
+      "tier_one_weapons": [
+        "butter knife",
+        "stick",
+        "fork",
+        "spoon",
+        "pencil",
+        "clothes hanger",
+        "mop",
+        "broom",
+        "broken bottle",
+        "scissors"
+      ],
+      "tier_two_weapons": [
+        "sword",
+        "longsword",
+        "spear",
+        "blade",
+        "dagger",
+        "knife"
+      ],
+      "tier_three_weapons": [
+        "halberd",
+        "scimitar",
+        "claymore",
+        "warhammer",
+        "kunai",
+        "chainsaw",
+        "zweihander",
+        "saw cleaver",
+        "lance of longinus",
+        "katana"
+      ],
+      "tier_one_armors": [
+        "covering",
+        "apron",
+        "smock",
+        "tank top",
+        "rags",
+        "jacket"
+      ],
+      "tier_two_armors": [
+        "vest",
+        "suit",
+        "chestplate",
+        "plate mail",
+        "cuirass",
+        "hauberk"
+      ],
+      "tier_three_armors": [
+        "armor",
+        "power armor",
+        "mecha suit",
+        "oyoroi",
+        "exoskeleton"
+      ]
+    },
+    {
+      "w": 500,
+      "h": 500,
+      "x_length": 11,
+      "y_length": 11,
+      "health": 10,
+      "wall": "./wall.png",
+      "path": "./path.png",
+      "entrance": "./entrance.png",
+      "exit": "./exit.png",
+      "player": "./player.png",
+      "darkness": "./darkness.png",
+      "timer": "./timer.png",
+      "empty_item": "./empty_item.png",
+      "weapon_pickup": "./weapon_pickup.png",
+      "armor_pickup": "./armor_pickup.png",
+      "tier_one_weapon": "./tier_one_weapon.png",
+      "tier_one_armor": "./tier_one_armor.png",
+      "monsters": [
+        "./monster.png",
+        "./goblin_1.png",
+        "./monster3.png"
+      ],
+      "npcs": [],
+      "fonts": [
+        "./fonts/0.png",
+        "./fonts/1.png",
+        "./fonts/2.png",
+        "./fonts/3.png",
+        "./fonts/4.png",
+        "./fonts/5.png",
+        "./fonts/6.png",
+        "./fonts/7.png",
+        "./fonts/8.png",
+        "./fonts/9.png",
+        "./fonts/a.png",
+        "./fonts/b.png",
+        "./fonts/c.png",
+        "./fonts/d.png",
+        "./fonts/e.png",
+        "./fonts/f.png",
+        "./fonts/g.png",
+        "./fonts/h.png",
+        "./fonts/i.png",
+        "./fonts/j.png",
+        "./fonts/k.png",
+        "./fonts/l.png",
+        "./fonts/m.png",
+        "./fonts/n.png",
+        "./fonts/o.png",
+        "./fonts/p.png",
+        "./fonts/q.png",
+        "./fonts/r.png",
+        "./fonts/s.png",
+        "./fonts/t.png",
+        "./fonts/u.png",
+        "./fonts/v.png",
+        "./fonts/w.png",
+        "./fonts/x.png",
+        "./fonts/y.png",
+        "./fonts/z.png",
+        "./fonts/>.png",
+        "./fonts/space.png",
+        "./fonts/question.png",
+        "./fonts/exclamation.png"
+      ],
+      "animations": [
+        [
+          "player",
+          "./path.png",
+          "./path.png",
+          "./player.png",
+          "./path.png"
+        ]
+      ],
+      "tier_one_prefixes": [
+        "friendly"
+      ],
+      "tier_two_prefixes": [
+        "viscious"
+      ],
+      "tier_three_prefixes": [
+        "legendary"
+      ],
+      "tier_one_materials": [
+        "Briar Bush Nature Center"
+      ],
+      "tier_two_materials": [
+        "Wild"
+      ],
+      "tier_three_materials": [
+        "Prehistoric"
+      ],
+      "tier_one_weapons": [
+        "corn snake"
+      ],
+      "tier_two_weapons": [
+        "cobra"
+      ],
+      "tier_three_weapons": [
+        "King da Ca"
+      ],
+      "tier_one_armors": [
+        "bag"
+      ],
+      "tier_two_armors": [
+        "double bag"
+      ],
+      "tier_three_armors": [
+        "triple bag"
+      ]
+    }
+  ]
+}

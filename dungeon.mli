@@ -81,3 +81,5 @@ val get_monster_max_HP : monster -> int
 val render_dungeon : int * int -> t -> bool -> unit
 
 val monster_move : monster -> string
+
+val get_magic_numbers : t -> Magic_numbers.t

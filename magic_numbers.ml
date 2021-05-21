@@ -1,107 +1,152 @@
-let wall = "./wall.png"
+open Yojson.Basic.Util
 
-and path = "./path.png"
+let magic_themes =
+  Yojson.Basic.from_file "magic_numbers_one.json"
+  |> member "magic_themes" |> to_list
 
-and entrance = "./entrance.png"
+let length = List.length magic_themes
 
-and exit_tex = "./exit.png"
+type t = {
+  wall : string;
+  path : string;
+  entrance : string;
+  exit : string;
+  player : string;
+  monsters : string list;
+  timer : string;
+  darkness : string;
+  empty_item : string;
+  weapon_pickup : string;
+  armor_pickup : string;
+  tier_one_weapon : string;
+  tier_one_armor : string;
+  texture_list : string list;
+  animations : (string * string list) list;
+  w : int;
+  square_height : height:float -> float;
+  h : int;
+  x_length : int;
+  y_length : int;
+  health : int;
+  width : float;
+  height : float;
+  npcs : (string * string) list;
+  tier_one_prefixes : string list;
+  tier_two_prefixes : string list;
+  tier_three_prefixes : string list;
+  tier_one_materials : string list;
+  tier_two_materials : string list;
+  tier_three_materials : string list;
+  tier_one_weapons : string list;
+  tier_two_weapons : string list;
+  tier_three_weapons : string list;
+  tier_one_armors : string list;
+  tier_two_armors : string list;
+  tier_three_armors : string list;
+}
 
-and player = "./player.png"
+let json_to_string json field = json |> member field |> to_string
 
-and darkness = "./darkness.png"
+let json_to_int json field = json |> member field |> to_int
 
-and monster = "./monster.png"
+let json_to_string_list json field =
+  List.map to_string (json |> member field |> to_list)
 
-and goblin_1 = "./goblin_1.png"
+let to_string_list json = List.map to_string json
 
-and monster3 = "./monster3.png"
+let json_to_animation lst =
+  let lst = lst |> to_list |> to_string_list in
+  (List.hd lst, List.tl lst)
 
-and timer = "./timer.png"
+let json_to_animations json field =
+  List.map json_to_animation (json |> member field |> to_list)
 
-and empty_item_png = "./empty_item.png"
+let to_npc json_npc =
+  ( json_npc |> member "speech" |> to_string,
+    json_npc |> member "sprite" |> to_string )
 
-and weapon_pickup_png = "./weapon_pickup.png"
+let json_to_npcs json field =
+  List.map to_npc (json |> member field |> to_list)
 
-and armor_pickup_png = "./armor_pickup.png"
+let magic_theme_to_magic_numbers magic_theme =
+  let w = json_to_int magic_theme "w" in
+  let h = json_to_int magic_theme "h" in
+  let x_length = json_to_int magic_theme "x_length" in
+  let y_length = json_to_int magic_theme "y_length" in
+  let wall = json_to_string magic_theme "wall" in
+  let path = json_to_string magic_theme "path" in
+  let entrance = json_to_string magic_theme "entrance" in
+  let exit = json_to_string magic_theme "exit" in
+  let player = json_to_string magic_theme "player" in
+  let darkness = json_to_string magic_theme "darkness" in
+  let timer = json_to_string magic_theme "timer" in
+  let empty_item = json_to_string magic_theme "empty_item" in
+  let weapon_pickup = json_to_string magic_theme "weapon_pickup" in
+  let armor_pickup = json_to_string magic_theme "armor_pickup" in
+  let tier_one_weapon = json_to_string magic_theme "tier_one_weapon" in
+  let tier_one_armor = json_to_string magic_theme "tier_one_armor" in
+  let monsters = json_to_string_list magic_theme "monsters" in
 
-and tier_one_weapon = "./tier_one_weapon.png"
-
-and tier_one_armor = "./tier_one_armor.png"
-
-let texture_list =
-  [
+  {
     wall;
     path;
     entrance;
-    exit_tex;
+    exit;
     player;
     darkness;
-    monster;
-    goblin_1;
-    monster3;
     timer;
-    empty_item_png;
-    weapon_pickup_png;
-    armor_pickup_png;
+    empty_item;
+    weapon_pickup;
+    armor_pickup;
     tier_one_weapon;
     tier_one_armor;
-    "./fonts/0.png";
-    "./fonts/1.png";
-    "./fonts/2.png";
-    "./fonts/3.png";
-    "./fonts/4.png";
-    "./fonts/5.png";
-    "./fonts/6.png";
-    "./fonts/7.png";
-    "./fonts/8.png";
-    "./fonts/9.png";
-    "./fonts/a.png";
-    "./fonts/b.png";
-    "./fonts/c.png";
-    "./fonts/d.png";
-    "./fonts/e.png";
-    "./fonts/f.png";
-    "./fonts/g.png";
-    "./fonts/h.png";
-    "./fonts/i.png";
-    "./fonts/j.png";
-    "./fonts/k.png";
-    "./fonts/l.png";
-    "./fonts/m.png";
-    "./fonts/n.png";
-    "./fonts/o.png";
-    "./fonts/p.png";
-    "./fonts/q.png";
-    "./fonts/r.png";
-    "./fonts/s.png";
-    "./fonts/t.png";
-    "./fonts/u.png";
-    "./fonts/v.png";
-    "./fonts/w.png";
-    "./fonts/x.png";
-    "./fonts/y.png";
-    "./fonts/z.png";
-    "./fonts/>.png";
-    "./fonts/space.png";
-    "./fonts/question.png";
-    "./fonts/exclamation.png";
-  ]
+    monsters;
+    w;
+    h;
+    x_length;
+    y_length;
+    width = float_of_int w /. float_of_int x_length;
+    height = float_of_int h /. float_of_int y_length;
+    texture_list =
+      wall :: path :: entrance :: exit :: player :: darkness :: timer
+      :: empty_item :: weapon_pickup :: armor_pickup :: tier_one_weapon
+      :: tier_one_armor :: monsters
+      @ json_to_string_list magic_theme "fonts";
+    animations = json_to_animations magic_theme "animations";
+    health = json_to_int magic_theme "health";
+    square_height = (fun ~height -> float_of_int h /. height);
+    npcs = json_to_npcs magic_theme "npcs";
+    tier_one_prefixes =
+      json_to_string_list magic_theme "tier_one_prefixes";
+    tier_two_prefixes =
+      json_to_string_list magic_theme "tier_two_prefixes";
+    tier_three_prefixes =
+      json_to_string_list magic_theme "tier_three_prefixes";
+    tier_one_materials =
+      json_to_string_list magic_theme "tier_one_materials";
+    tier_two_materials =
+      json_to_string_list magic_theme "tier_two_materials";
+    tier_three_materials =
+      json_to_string_list magic_theme "tier_three_materials";
+    tier_one_weapons =
+      json_to_string_list magic_theme "tier_one_weapons";
+    tier_two_weapons =
+      json_to_string_list magic_theme "tier_two_weapons";
+    tier_three_weapons =
+      json_to_string_list magic_theme "tier_three_weapons";
+    tier_one_armors = json_to_string_list magic_theme "tier_one_armors";
+    tier_two_armors = json_to_string_list magic_theme "tier_two_armors";
+    tier_three_armors =
+      json_to_string_list magic_theme "tier_three_armors";
+  }
 
-let animations =
-  [ ("player", [ player; wall; path; entrance; exit_tex ]) ]
+let init n =
+  let magic_theme = List.nth magic_themes n in
 
-let w = 500
+  magic_theme_to_magic_numbers magic_theme
 
-and h = 500
+let magic_numbers = ref (init 1)
 
-let x_length = 11
+let update new_magic_numbers = magic_numbers := new_magic_numbers
 
-let y_length = 11
-
-let health = 10
-
-let width = float_of_int w /. float_of_int x_length
-
-let height = float_of_int h /. float_of_int y_length
-
-let square_height ~height = float_of_int h /. height
+let get_magic = magic_numbers

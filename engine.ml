@@ -3,7 +3,7 @@ let init_texture texture_list = Texturemap.init_texture texture_list
 let init_audio () = Audio.play_music ()
 
 let init_animation () =
-  Spriteanimation.init_animations Magic_numbers.animations
+  Spriteanimation.init_animations !Magic_numbers.get_magic.animations
 
 let stack = Stack.create ()
 
@@ -32,7 +32,8 @@ let init_display game w h =
             (State.curr_room !game) false;
           Spiral.render_spiral
             (State.curr_fight !game)
-            Magic_numbers.x_length Magic_numbers.y_length
+            !Magic_numbers.get_magic.x_length
+            !Magic_numbers.get_magic.y_length
       | AttackRender ->
           Fight_menu.render_menu (State.curr_fight !game);
           Fight_menu.render_attack (State.curr_fight !game)
@@ -49,8 +50,9 @@ let init_display game w h =
 
       Gl.flush ()
       (* (Font.render_font (Font.new_font (string_of_int
-         (Timer.current_time ())) 1.5 1.8 Magic_numbers.width
-         Magic_numbers.height)) *))
+         (Timer.current_time ())) 1.5 1.8
+         (!Magic_numbers.get_magic).width
+         (!(!Magic_numbers.get_magic).get_magic).height)) *))
 
 let init_input game =
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y ->

@@ -7,3 +7,5 @@
    engine *)
 
 val init_engine : string list -> int -> int -> int -> int -> unit
+
+val init_animation : unit -> unit
