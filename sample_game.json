@@ -13,7 +13,7 @@
 				{
 					"name": "monster",
 					"sprite": "./monster.png",
-					"hitpoints": 50,
+					"hitpoints": 30,
 					"chance": 5,
 					"attacks": [
 						"prog knife",
@@ -25,7 +25,7 @@
 				{
 					"name": "goblin_1",
 					"sprite": "./goblin_1.png",
-					"hitpoints": 50,
+					"hitpoints": 30,
 					"chance": 5,
 					"attacks": [
 						"frenzied maul",
@@ -39,7 +39,7 @@
 			"next": 0
 		},
 		{
-			"id": 3,
+			"id": 1,
 			"x-dim": 24,
 			"y-dim": 12,
 			"start-x": 1,
@@ -51,7 +51,7 @@
 				{
 					"name": "monster",
 					"sprite": "./monster.png",
-					"hitpoints": 50,
+					"hitpoints": 30,
 					"chance": 5,
 					"attacks": [
 						"mega defense"

@@ -54,7 +54,7 @@ let dungeon_of_room save =
     ( save |> member "xstart" |> to_int,
       save |> member "ystart" |> to_int )
     20
-    (monster_set (id mod 5))
+    (monster_set (id / 5))
     (id + 1) (id - 1)
     (save |> member "time" |> to_int)
 
@@ -68,6 +68,7 @@ let start_room game =
   List.find (fun g -> Dungeon.get_id g = 0) game.dungeons
 
 let next_dungeon game dungeon =
+  (* this is now capped at level 14*)
   let next_id = Dungeon.get_id dungeon + 1 in
   try List.find (fun g -> Dungeon.get_id g = next_id) game.dungeons
   with Not_found ->
@@ -90,7 +91,7 @@ let next_dungeon game dungeon =
     Dungeon.instantiate_dungeon next_id xdim ydim
       (List.nth ourlist (Random.int 9))
       20
-      (monster_set (next_id mod 5))
+      (monster_set (1 + (next_id / 5)))
       (next_id + 1) (next_id - 1)
 
 let prev_dungeon game dungeon =
