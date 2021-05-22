@@ -255,7 +255,7 @@ let add_npcs x y dungeon_cells =
     done
   done
 
-let add_items x y dungeon_cells =
+let add_items x y dungeon_cells id =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
       if
@@ -264,7 +264,7 @@ let add_items x y dungeon_cells =
       then
         let item_type = Random.bool () in
         let item =
-          Item.create_item 1 item_type !Magic_numbers.get_magic
+          Item.create_item id item_type !Magic_numbers.get_magic
         in
         let npc =
           (Hashtbl.find dungeon_cells (counter_x, counter_y)).tile.npc
@@ -283,7 +283,7 @@ let add_items x y dungeon_cells =
     done
   done
 
-let instantiate_dungeon_cells2 x y dungeon_cells lst =
+let instantiate_dungeon_cells2 x y dungeon_cells lst id =
   let rec listsearcher dungeon_cells lst =
     match lst with
     | [] -> ()
@@ -321,7 +321,7 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
   done;
   if Npc.npc_list_length !Magic_numbers.get_magic > 0 then
     add_npcs x y dungeon_cells;
-  add_items x y dungeon_cells
+  add_items x y dungeon_cells id
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon
@@ -343,7 +343,7 @@ let instantiate_dungeon
   (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
   let w = Walker.init_walker 0 x 0 y start in
   let ourlst = Walker.walk 2600 w in
-  instantiate_dungeon_cells2 x y c ourlst;
+  instantiate_dungeon_cells2 x y c ourlst id;
   {
     id;
     cells = c;
