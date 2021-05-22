@@ -12,7 +12,6 @@ type t = {
   entrance : string;
   exit : string;
   player : string;
-  monsters : string list;
   timer : string;
   darkness : string;
   empty_item : string;
@@ -43,6 +42,7 @@ type t = {
   tier_one_armors : string list;
   tier_two_armors : string list;
   tier_three_armors : string list;
+  monsters : (int * string * string * int * string list) list;
 }
 
 let json_to_string json field = json |> member field |> to_string
@@ -68,6 +68,15 @@ let to_npc json_npc =
 let json_to_npcs json field =
   List.map to_npc (json |> member field |> to_list)
 
+let json_to_monster_textures json = json |> member "sprite" |> to_string
+
+let json_to_monster json =
+  ( json |> member "chance" |> to_int,
+    json |> member "name" |> to_string,
+    json |> member "sprite" |> to_string,
+    json |> member "hitpoints" |> to_int,
+    json |> member "attacks" |> to_list |> List.map to_string )
+
 let magic_theme_to_magic_numbers magic_theme =
   let w = json_to_int magic_theme "w" in
   let h = json_to_int magic_theme "h" in
@@ -85,8 +94,14 @@ let magic_theme_to_magic_numbers magic_theme =
   let armor_pickup = json_to_string magic_theme "armor_pickup" in
   let tier_one_weapon = json_to_string magic_theme "tier_one_weapon" in
   let tier_one_armor = json_to_string magic_theme "tier_one_armor" in
-  let monsters = json_to_string_list magic_theme "monsters" in
-
+  let monsters =
+    magic_theme |> member "monsters" |> to_list
+    |> List.map json_to_monster
+  in
+  let monster_textures =
+    magic_theme |> member "monsters" |> to_list
+    |> List.map json_to_monster_textures
+  in
   {
     wall;
     path;
@@ -110,7 +125,7 @@ let magic_theme_to_magic_numbers magic_theme =
     texture_list =
       wall :: path :: entrance :: exit :: player :: darkness :: timer
       :: empty_item :: weapon_pickup :: armor_pickup :: tier_one_weapon
-      :: tier_one_armor :: monsters
+      :: tier_one_armor :: monster_textures
       @ json_to_string_list magic_theme "fonts";
     animations = json_to_animations magic_theme "animations";
     health = json_to_int magic_theme "health";

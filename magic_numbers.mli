@@ -4,7 +4,6 @@ type t = {
   entrance : string;
   exit : string;
   player : string;
-  monsters : string list;
   timer : string;
   darkness : string;
   empty_item : string;
@@ -35,6 +34,7 @@ type t = {
   tier_one_armors : string list;
   tier_two_armors : string list;
   tier_three_armors : string list;
+  monsters : (int * string * string * int * string list) list;
 }
 
 val init : int -> t

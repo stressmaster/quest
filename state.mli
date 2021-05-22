@@ -14,7 +14,7 @@ type fight = {
   mutable spiraled : bool;
   mutable action : action;
   mutable attacking : bool;
-  mutable monster : Dungeon.monster;
+  mutable monster : Monsters.t;
   mutable monster_string : string;
   mutable monster_health : int;
   mutable player_health : int;

@@ -1,65 +1,14 @@
 {
-	"dungeons": [
-		{
-			"id": 0,
-			"x-dim": 12,
-			"y-dim": 24,
-			"start-x": 1,
-			"start-y": 1,
-			"end-x": 10,
-			"end-y": 22,
-			"bound": 10,
-			"monsters": [
-				{
-					"name": "monster",
-					"sprite": "./monster.png",
-					"hitpoints": 30,
-					"chance": 5,
-					"attacks": [
-						"prog knife",
-						"laser strike",
-						"piercing screech",
-						"sudden strike"
-					]
-				},
-				{
-					"name": "goblin_1",
-					"sprite": "./goblin_1.png",
-					"hitpoints": 30,
-					"chance": 5,
-					"attacks": [
-						"frenzied maul",
-						"wild swing",
-						"focus punch",
-						"mach punch"
-					]
-				}
-			],
-			"prev": 0,
-			"next": 0
-		},
-		{
-			"id": 1,
-			"x-dim": 24,
-			"y-dim": 12,
-			"start-x": 1,
-			"start-y": 1,
-			"end-x": 22,
-			"end-y": 10,
-			"bound": 10,
-			"monsters": [
-				{
-					"name": "monster",
-					"sprite": "./monster.png",
-					"hitpoints": 30,
-					"chance": 5,
-					"attacks": [
-						"mega defense"
-					]
-				}
-			],
-			"prev": 0,
-			"next": 0
-		}
-	]
+	"dungeon": {
+		"id": 0,
+		"x-dim": 12,
+		"y-dim": 24,
+		"start-x": 1,
+		"start-y": 1,
+		"end-x": 10,
+		"end-y": 22,
+		"bound": 10,
+		"prev": 0,
+		"next": 0
+	}
 }

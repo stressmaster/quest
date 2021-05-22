@@ -14,7 +14,7 @@ type fight = {
   mutable spiraled : bool;
   mutable action : action;
   mutable attacking : bool;
-  mutable monster : Dungeon.monster;
+  mutable monster : Monsters.t;
   mutable monster_string : string;
   mutable monster_health : int;
   mutable player_health : int;
@@ -70,7 +70,7 @@ let curr_game_over c = c.game_over
 let init_state file_name =
   let g = Yojson.Basic.from_file file_name |> Game.from_json in
   let r = g |> Game.start_room in
-  let m = Dungeon.get_monster r in
+  let m = r |> Dungeon.get_magic_numbers |> Monsters.get_monster in
   Magic_numbers.update (Dungeon.get_magic_numbers r);
   {
     game = g;
@@ -84,11 +84,11 @@ let init_state file_name =
         action = Attack;
         attacking = false;
         monster = m;
-        monster_string = Dungeon.get_monster_string m;
-        monster_health = Dungeon.get_monster_HP m;
+        monster_string = Monsters.get_monster_string m;
+        monster_health = Monsters.get_monster_HP m;
         player_health = !Magic_numbers.get_magic.health;
         typing_limit =
-          m |> Dungeon.get_monster_string |> String.length |> ( * ) 10;
+          m |> Monsters.get_monster_string |> String.length |> ( * ) 10;
         input_string = "";
       };
     health = !Magic_numbers.get_magic.health;
@@ -102,14 +102,16 @@ let init_state file_name =
   }
 
 let reset_fight c =
-  let new_m = Dungeon.get_monster c.room in
+  let new_m =
+    c.room |> Dungeon.get_magic_numbers |> Monsters.get_monster
+  in
   c.in_fight <- false;
   c.fight.spiraled <- false;
   c.fight.action <- Attack;
   c.fight.attacking <- false;
   c.fight.monster <- new_m;
-  c.fight.monster_string <- Dungeon.get_monster_string new_m;
-  c.fight.monster_health <- Dungeon.get_monster_HP new_m;
+  c.fight.monster_string <- Monsters.get_monster_string new_m;
+  c.fight.monster_health <- Monsters.get_monster_HP new_m;
   c.fight.player_health <- c.health;
   Audio.change_music "./camlished.wav"
 
@@ -221,8 +223,8 @@ let fighting_case current key =
   and mon_HP = current.fight.monster_health in
   if key = 13 then (
     current.fight.monster_string <-
-      ( if mon_HP > Dungeon.get_monster_max_HP current.fight.monster / 3
-      then Dungeon.get_monster_string current.fight.monster
+      ( if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3
+      then Monsters.get_monster_string current.fight.monster
       else random_string (Random.int 10) "" );
     let diff = Levenshtein.dist str mon_str in
     ( match current.fight.action with

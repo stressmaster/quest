@@ -33,9 +33,30 @@
         }
       ],
       "monsters": [
-        "./monster.png",
-        "./goblin_1.png",
-        "./monster3.png"
+        {
+          "name": "monster",
+          "sprite": "./monster.png",
+          "hitpoints": 30,
+          "chance": 5,
+          "attacks": [
+            "prog knife",
+            "laser strike",
+            "piercing screech",
+            "sudden strike"
+          ]
+        },
+        {
+          "name": "goblin_1",
+          "sprite": "./goblin_1.png",
+          "hitpoints": 30,
+          "chance": 5,
+          "attacks": [
+            "frenzied maul",
+            "wild swing",
+            "focus punch",
+            "mach punch"
+          ]
+        }
       ],
       "fonts": [
         "./fonts/0.png",
@@ -259,9 +280,30 @@
       "tier_one_weapon": "./tier_one_weapon.png",
       "tier_one_armor": "./tier_one_armor.png",
       "monsters": [
-        "./monster.png",
-        "./goblin_1.png",
-        "./monster3.png"
+        {
+          "name": "monster",
+          "sprite": "./monster.png",
+          "hitpoints": 30,
+          "chance": 5,
+          "attacks": [
+            "prog knife",
+            "laser strike",
+            "piercing screech",
+            "sudden strike"
+          ]
+        },
+        {
+          "name": "goblin_1",
+          "sprite": "./goblin_1.png",
+          "hitpoints": 30,
+          "chance": 5,
+          "attacks": [
+            "frenzied maul",
+            "wild swing",
+            "focus punch",
+            "mach punch"
+          ]
+        }
       ],
       "npcs": [],
       "fonts": [

@@ -2,22 +2,6 @@ open Yojson.Basic.Util
 
 type t = { dungeons : Dungeon.t list (* start_room : Dungeon.t; *) }
 
-type monster = {
-  name : string;
-  sprite : string;
-  hitpoints : int;
-  encounter_chance : int;
-  attack_strings : string list;
-}
-
-let monster_of_json json =
-  Dungeon.instantiate_monster
-    (json |> member "name" |> to_string)
-    (json |> member "sprite" |> to_string)
-    (json |> member "hitpoints" |> to_int)
-    (json |> member "chance" |> to_int)
-    (json |> member "attacks" |> to_list |> List.map to_string)
-
 (* soon obsolete? *)
 
 let dungeon_of_json json =
@@ -28,23 +12,13 @@ let dungeon_of_json json =
     ( json |> member "start-x" |> to_int,
       json |> member "start-y" |> to_int )
     (json |> member "bound" |> to_int)
-    (json |> member "monsters" |> to_list |> List.map monster_of_json)
     (json |> member "next" |> to_int)
     (json |> member "prev" |> to_int)
 
 let from_json json =
-  {
-    dungeons =
-      json |> member "dungeons" |> to_list |> List.map dungeon_of_json;
-  }
+  { dungeons = [ json |> member "dungeon" |> dungeon_of_json ] }
 
 (* soon obsolete? *)
-
-let monster_set i =
-  Yojson.Basic.from_file "monsters.json"
-  |> member ("set" ^ string_of_int i)
-  |> to_list
-  |> List.map monster_of_json
 
 let dungeon_of_room save =
   let id = save |> member "id" |> to_int in
@@ -53,9 +27,7 @@ let dungeon_of_room save =
     (save |> member "y-dim" |> to_int)
     ( save |> member "xstart" |> to_int,
       save |> member "ystart" |> to_int )
-    20
-    (monster_set (id / 5))
-    (id + 1) (id - 1)
+    20 (id + 1) (id - 1)
     (save |> member "time" |> to_int)
 
 let save_json json =
@@ -90,9 +62,7 @@ let next_dungeon game dungeon =
     in
     Dungeon.instantiate_dungeon next_id xdim ydim
       (List.nth ourlist (Random.int 9))
-      20
-      (monster_set (1 + (next_id / 5)))
-      (next_id + 1) (next_id - 1)
+      20 (next_id + 1) (next_id - 1)
 
 let prev_dungeon game dungeon =
   (* let prev_dungeon_id = Dungeon.get_prev dungeon in *)
