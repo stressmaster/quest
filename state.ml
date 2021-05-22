@@ -67,30 +67,29 @@ let curr_fight c = c.fight
 
 let curr_game_over c = c.game_over
 
-let init_state file_name =
-  let g = Yojson.Basic.from_file file_name |> Game.from_json in
-  let r = g |> Game.start_room in
-  let m = r |> Dungeon.get_magic_numbers |> Monsters.get_monster in
-  Magic_numbers.update (Dungeon.get_magic_numbers r);
+let init_fight monster =
   {
-    game = g;
-    room = r;
-    room_exit = r |> Dungeon.get_exit;
-    location = r |> Dungeon.get_start;
+    spiraled = false;
+    action = Attack;
+    attacking = false;
+    monster;
+    monster_string = Monsters.get_monster_string monster;
+    monster_health = Monsters.get_monster_HP monster;
+    player_health = !Magic_numbers.get_magic.health;
+    typing_limit =
+      monster |> Monsters.get_monster_string |> String.length
+      |> ( * ) 10;
+    input_string = "";
+  }
+
+let init_current game room monster =
+  {
+    game;
+    room;
+    room_exit = room |> Dungeon.get_exit;
+    location = room |> Dungeon.get_start;
     in_fight = false;
-    fight =
-      {
-        spiraled = false;
-        action = Attack;
-        attacking = false;
-        monster = m;
-        monster_string = Monsters.get_monster_string m;
-        monster_health = Monsters.get_monster_HP m;
-        player_health = !Magic_numbers.get_magic.health;
-        typing_limit =
-          m |> Monsters.get_monster_string |> String.length |> ( * ) 10;
-        input_string = "";
-      };
+    fight = init_fight monster;
     health = !Magic_numbers.get_magic.health;
     level = 1;
     depth = 0;
@@ -100,6 +99,15 @@ let init_state file_name =
     current_armor = Item.empty_item;
     game_over = Quit;
   }
+
+let init_state file_name =
+  let game = Yojson.Basic.from_file file_name |> Game.from_json in
+  let room = game |> Game.start_room in
+  let monster =
+    room |> Dungeon.get_magic_numbers |> Monsters.get_monster
+  in
+  Magic_numbers.update (Dungeon.get_magic_numbers room);
+  init_current game room monster
 
 let reset_fight c =
   let new_m =
@@ -115,20 +123,21 @@ let reset_fight c =
   c.fight.player_health <- c.health;
   Audio.change_music "./camlished.wav"
 
-let fight_decision bound = Random.int bound = 0
+let encounter bound = Random.int bound = 0
+
+let is_in_fight current =
+  let current_bound = Dungeon.get_bound current.room in
+  (not
+     ( current.location = current.room_exit
+     || current.location = Dungeon.get_start current.room ))
+  && encounter current_bound
 
 let player_loc state = state.location
 
 (* [move current key] assigns a location to [current] based on [key]*)
 let map_move current key =
-  let current_bound = Dungeon.get_bound current.room in
   let x, y = current.location in
-  current.in_fight <-
-    ( if
-      current.location = current.room_exit
-      || current.location = Dungeon.get_start current.room
-    then false
-    else fight_decision current_bound );
+  current.in_fight <- is_in_fight current;
   if current.in_fight then (
     Audio.change_music "./unravel.wav";
     Render_stack.stack_push Render_stack.SpiralRender );
