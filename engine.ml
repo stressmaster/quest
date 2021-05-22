@@ -52,17 +52,15 @@ let what_to_render game = function
   | _ -> ()
 
 let init_display game w h =
-  Glut.displayFunc ~cb:(fun () ->
-      GlClear.color (0.0, 0.0, 0.0);
-      GlClear.clear [ `color ];
-      GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
-      GlMat.mode `projection;
-      what_to_render game (Render_stack.stack_peek ());
-      Gl.flush ()
-      (* (Font.render_font (Font.new_font (string_of_int
-         (Timer.current_time ())) 1.5 1.8
-         (!Magic_numbers.get_magic).width
-         (!(!Magic_numbers.get_magic).get_magic).height)) *))
+  let cb () =
+    GlClear.color (0.0, 0.0, 0.0);
+    GlClear.clear [ `color ];
+    GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
+    GlMat.mode `projection;
+    what_to_render game (Render_stack.stack_peek ());
+    Gl.flush ()
+  in
+  Glut.displayFunc ~cb
 
 let init_input game =
   Glut.keyboardFunc ~cb:(fun ~key ~x ~y ->
