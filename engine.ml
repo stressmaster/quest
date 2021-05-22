@@ -99,13 +99,13 @@ let init_engine texture_list w h x_length y_length =
      Yojson.Basic.Util.member "exists" in *)
   let game = ref (State.init_state "sample_game.json") in
   let start = Sys.time () in
-  let ms = 200. *. (Sys.time () -. start) |> int_of_float in
   init_texture texture_list;
   init_audio ();
   init_window w h;
   init_animation ();
   init_display game w h;
   init_input game;
+  let ms = 100. *. (Sys.time () -. start) |> int_of_float in
   init_timer ms game;
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.mainLoop ()
