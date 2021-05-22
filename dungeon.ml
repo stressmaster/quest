@@ -2,7 +2,7 @@ type tile = {
   material : string;
   is_wall : bool;
   item : Item.t option;
-  npc : Npc.t option;
+  npc : Npc.t option * int * int;
 }
 
 type cell = {
@@ -170,15 +170,15 @@ let render_npc_speech x y dungeon_cells =
   | Some { tile; x; y } -> (
       let { material; is_wall; item; npc } = tile in
       match npc with
-      | Some n ->
+      | Some n, _, _ ->
           let speech = Npc.get_npc_speech n in
           Font.render_font ~spacing:0.05
             (Font.new_font speech 1.1 1.2
                (!Magic_numbers.get_magic.width *. 0.5)
                (!Magic_numbers.get_magic.height *. 0.5))
-      | None -> () )
+      | None, _, _ -> () )
 
-let add_npc_shadow x y dungeon_cells npc_shadow =
+let add_npc_shadow x y dungeon_cells npc_shadow dir_x dir_y =
   match
     try Some (Hashtbl.find dungeon_cells (x, y))
     with Not_found -> None
@@ -187,14 +187,14 @@ let add_npc_shadow x y dungeon_cells npc_shadow =
   | Some { tile; x; y } ->
       let { material; is_wall; item; npc } = tile in
       if not is_wall then
-        let tile = { tile with npc = npc_shadow } in
+        let tile = { tile with npc = (npc_shadow, dir_x, dir_y) } in
         Hashtbl.add dungeon_cells (x, y) { tile; x; y }
 
 let add_npc_shadows x y dungeon_cells npc_shadow =
-  add_npc_shadow (x - 1) y dungeon_cells npc_shadow;
-  add_npc_shadow (x + 1) y dungeon_cells npc_shadow;
-  add_npc_shadow x (y + 1) dungeon_cells npc_shadow;
-  add_npc_shadow x (y - 1) dungeon_cells npc_shadow
+  add_npc_shadow (x - 1) y dungeon_cells npc_shadow 1 0;
+  add_npc_shadow (x + 1) y dungeon_cells npc_shadow (-1) 0;
+  add_npc_shadow x (y + 1) dungeon_cells npc_shadow 0 (-1);
+  add_npc_shadow x (y - 1) dungeon_cells npc_shadow 0 1
 
 let add_npcs x y dungeon_cells =
   for counter_y = 0 to y do
@@ -210,7 +210,7 @@ let add_npcs x y dungeon_cells =
             material = Npc.get_npc_sprite npc;
             is_wall = true;
             item = None;
-            npc = Some npc;
+            npc = (Some npc, 0, 0);
           }
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
@@ -258,7 +258,7 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
             material = !Magic_numbers.get_magic.path;
             is_wall = false;
             item = None;
-            npc = None;
+            npc = (None, 0, 0);
           }
         in
         Hashtbl.add dungeon_cells h { tile; x = fst h; y = snd h };
@@ -276,7 +276,7 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
             material = !Magic_numbers.get_magic.wall;
             is_wall = true;
             item = None;
-            npc = None;
+            npc = (None, 0, 0);
           }
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
@@ -439,6 +439,9 @@ let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
 (* [determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon] is the
    texture of the tile at [(x, y)] based on [(p_x, p_y) dungeon_cells
    dungeon] *)
+
+let determine_npc_texture npc = Spriteanimation.get_sprite npc
+
 let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
   if (x, y) = (p_x, p_y) then Spriteanimation.get_sprite "player"
   else if Hashtbl.find_opt dungeon_cells (x, y) = None then
@@ -483,10 +486,17 @@ let render_dungeon (p_x, p_y) (dungeon : t) condition =
   let x_start, x_end, y_start, y_end =
     get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length
   in
+  let npc_name, x_npc, y_npc =
+    match (Hashtbl.find dungeon_cells (p_x, p_y)).tile.npc with
+    | Some npc, dir_x, dir_y ->
+        (Npc.get_npc_sprite npc, p_x + dir_x, p_y + dir_y)
+    | _ -> ("nameless", -1, -1)
+  in
   for x = x_start to x_end do
     for y = y_start to y_end do
       let new_texture =
-        determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon
+        if (x_npc, y_npc) = (x, y) then determine_npc_texture npc_name
+        else determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon
       in
       Render.render_square
         (Render.new_square

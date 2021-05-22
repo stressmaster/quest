@@ -87,6 +87,39 @@
           "./path.png",
           "./entrance.png",
           "./exit.png"
+        ],
+        [
+          "./monster.png",
+          "./monster.png",
+          "./monster.png",
+          "./monster.png",
+          "./monster.png",
+          "./wall.png",
+          "./wall.png",
+          "./wall.png",
+          "./wall.png"
+        ],
+        [
+          "./goblin_1.png",
+          "./goblin_1.png",
+          "./goblin_1.png",
+          "./goblin_1.png",
+          "./goblin_1.png",
+          "./wall.png",
+          "./wall.png",
+          "./wall.png",
+          "./wall.png"
+        ],
+        [
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./wall.png",
+          "./wall.png",
+          "./wall.png",
+          "./wall.png"
         ]
       ],
       "tier_one_prefixes": [
@@ -278,6 +311,8 @@
           "player",
           "./path.png",
           "./path.png",
+          "./path.png",
+          "./path.png",
           "./player.png",
           "./path.png"
         ]
@@ -292,7 +327,7 @@
         "legendary"
       ],
       "tier_one_materials": [
-        "Briar Bush Nature Center"
+        "Nature Center"
       ],
       "tier_two_materials": [
         "Wild"
