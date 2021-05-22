@@ -19,37 +19,45 @@ let init_window w h =
   Glut.initWindowSize ~w ~h;
   ignore (Glut.createWindow ~title:"CamelQuest")
 
+let dungeon_render_helper game b =
+  Dungeon.render_dungeon
+    (State.player_loc !game)
+    (State.curr_room !game) b
+
+let fight_render_helper game =
+  Fight_menu.render_menu (State.curr_fight !game)
+
+let spiral_render_helper game =
+  Spiral.render_spiral
+    (State.curr_fight !game)
+    !Magic_numbers.get_magic.x_length !Magic_numbers.get_magic.y_length
+
+let what_to_render game = function
+  | Render_stack.SpiralRender ->
+      dungeon_render_helper game false;
+      spiral_render_helper game
+  | Render_stack.AttackRender ->
+      fight_render_helper game;
+      Fight_menu.render_attack (State.curr_fight !game)
+  | Render_stack.ScreenshakeRender ->
+      fight_render_helper game;
+      Fight_menu.render_player_damage ()
+  | Render_stack.FightRender ->
+      Fight_menu.render_menu (State.curr_fight !game)
+  | Render_stack.DungeonRender ->
+      dungeon_render_helper game true;
+      State.render_inventory !game
+  | Render_stack.GameoverRender ->
+      Gameover_menu.render_menu (State.curr_game_over !game)
+  | _ -> ()
+
 let init_display game w h =
   Glut.displayFunc ~cb:(fun () ->
       GlClear.color (0.0, 0.0, 0.0);
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      (match Render_stack.stack_peek () with
-      | SpiralRender ->
-          Dungeon.render_dungeon
-            (State.player_loc !game)
-            (State.curr_room !game) false;
-          Spiral.render_spiral
-            (State.curr_fight !game)
-            !Magic_numbers.get_magic.x_length
-            !Magic_numbers.get_magic.y_length
-      | AttackRender ->
-          Fight_menu.render_menu (State.curr_fight !game);
-          Fight_menu.render_attack (State.curr_fight !game)
-      | ScreenshakeRender ->
-          Fight_menu.render_menu (State.curr_fight !game);
-          Fight_menu.render_player_damage ()
-      | FightRender -> Fight_menu.render_menu (State.curr_fight !game)
-      | DungeonRender ->
-          Dungeon.render_dungeon
-            (State.player_loc !game)
-            (State.curr_room !game) true;
-          State.render_inventory !game
-      | GameoverRender ->
-          Gameover_menu.render_menu (State.curr_game_over !game)
-      | _ -> ());
-
+      what_to_render game (Render_stack.stack_peek ());
       Gl.flush ()
       (* (Font.render_font (Font.new_font (string_of_int
          (Timer.current_time ())) 1.5 1.8
@@ -62,6 +70,30 @@ let init_input game =
   Glut.specialFunc ~cb:(fun ~key ~x ~y ->
       game := State.controller !game key)
 
+let rec bigtimer ~value =
+  Bigtimer.increase_time 1;
+  Glut.postRedisplay ();
+  Glut.timerFunc ~ms:value ~cb:bigtimer ~value
+
+let rec general_timer ~value =
+  Timer.increase_time 1;
+  Glut.postRedisplay ();
+  Glut.timerFunc ~ms:value ~cb:general_timer ~value
+
+let rec animation_timer ~value =
+  Spriteanimation.step_animation ();
+  Glut.timerFunc ~ms:value ~cb:animation_timer ~value
+
+let init_timer ms game =
+  let rec typing_timer ~value =
+    game := State.check_time_limit !game;
+    Glut.timerFunc ~ms:value ~cb:typing_timer ~value
+  in
+  Glut.timerFunc ~ms ~cb:bigtimer ~value:ms;
+  Glut.timerFunc ~ms ~cb:general_timer ~value:ms;
+  Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
+  Glut.timerFunc ~ms ~cb:animation_timer ~value:ms
+
 let init_engine texture_list w h x_length y_length =
   (* check exists. if exists, then State.init_state_from_json
      "save.json"*)
@@ -69,34 +101,13 @@ let init_engine texture_list w h x_length y_length =
      Yojson.Basic.Util.member "exists" in *)
   let game = ref (State.init_state "sample_game.json") in
   let start = Sys.time () in
+  let ms = 200. *. (Sys.time () -. start) |> int_of_float in
   init_texture texture_list;
   init_audio ();
   init_window w h;
   init_animation ();
   init_display game w h;
   init_input game;
-  let rec bigtimer ~value =
-    Bigtimer.increase_time 1;
-    Glut.postRedisplay ();
-    Glut.timerFunc ~ms:value ~cb:bigtimer ~value
-  in
-  let rec timer ~value =
-    Timer.increase_time 1;
-    Glut.postRedisplay ();
-    Glut.timerFunc ~ms:value ~cb:timer ~value
-  in
-  let rec typing_timer ~value =
-    game := State.check_time_limit !game;
-    Glut.timerFunc ~ms:value ~cb:typing_timer ~value
-  in
-  let rec animation_timer ~value =
-    Spriteanimation.step_animation ();
-    Glut.timerFunc ~ms:value ~cb:animation_timer ~value
-  in
-  let ms = 200. *. (Sys.time () -. start) |> int_of_float in
+  init_timer ms game;
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
-  Glut.timerFunc ~ms ~cb:bigtimer ~value:ms;
-  Glut.timerFunc ~ms ~cb:timer ~value:ms;
-  Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
-  Glut.timerFunc ~ms ~cb:animation_timer ~value:ms;
   Glut.mainLoop ()
