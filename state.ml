@@ -122,33 +122,33 @@ let map_move current key =
   let current_bound = Dungeon.get_bound current.room in
   let x, y = current.location in
   current.in_fight <-
-    (if
-     current.location = current.room_exit
-     || current.location = Dungeon.get_start current.room
+    ( if
+      current.location = current.room_exit
+      || current.location = Dungeon.get_start current.room
     then false
-    else fight_decision current_bound);
+    else fight_decision current_bound );
   if current.in_fight then (
     Audio.change_music "./unravel.wav";
-    Render_stack.stack_push Render_stack.SpiralRender);
+    Render_stack.stack_push Render_stack.SpiralRender );
   (* delete light right below when spiral works. it is a work around*)
   begin
     match key with
     | Glut.KEY_RIGHT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x + 1, y) then (x, y)
-          else (x + 1, y))
+          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y) )
     | Glut.KEY_LEFT ->
         current.location <-
-          (if Dungeon.is_wall current.room (x - 1, y) then (x, y)
-          else (x - 1, y))
+          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y) )
     | Glut.KEY_UP ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y + 1) then (x, y)
-          else (x, y + 1))
+          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1) )
     | Glut.KEY_DOWN ->
         current.location <-
-          (if Dungeon.is_wall current.room (x, y - 1) then (x, y)
-          else (x, y - 1))
+          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1) )
     | Glut.KEY_F2 -> (
         let i = Dungeon.get_item current.room (x, y) in
         match i with
@@ -162,7 +162,15 @@ let map_move current key =
               Dungeon.drop_item current.room (x, y)
                 (Some current.current_weapon);
             current.current_weapon <- Weapon w
-        | _ -> ())
+        | _ ->
+            if current.current_weapon <> NoItem then (
+              Dungeon.drop_item current.room (x, y)
+                (Some current.current_weapon);
+              current.current_weapon <- NoItem )
+            else if current.current_armor <> NoItem then (
+              Dungeon.drop_item current.room (x, y)
+                (Some current.current_armor);
+              current.current_armor <- NoItem ) )
     | _ -> ()
   end;
   if current.in_fight then Timer.reset_timer ();
@@ -180,7 +188,7 @@ let map_move current key =
     current.depth <- current.depth + 1;
     let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
     Magic_numbers.update new_magic_numbers;
-    Spriteanimation.init_animations new_magic_numbers.animations)
+    Spriteanimation.init_animations new_magic_numbers.animations )
   else if should_change_prev then (
     current.room <- Game.prev_dungeon current.game current.room;
     current.location <- Dungeon.get_exit current.room;
@@ -188,7 +196,7 @@ let map_move current key =
     current.depth <- current.depth - 1;
     let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
     Magic_numbers.update new_magic_numbers;
-    Spriteanimation.init_animations new_magic_numbers.animations);
+    Spriteanimation.init_animations new_magic_numbers.animations );
   current
 
 let is_typable key =
@@ -213,18 +221,18 @@ let fighting_case current key =
   and mon_HP = current.fight.monster_health in
   if key = 13 then (
     current.fight.monster_string <-
-      (if mon_HP > Dungeon.get_monster_max_HP current.fight.monster / 3
+      ( if mon_HP > Dungeon.get_monster_max_HP current.fight.monster / 3
       then Dungeon.get_monster_string current.fight.monster
-      else random_string (Random.int 10) "");
+      else random_string (Random.int 10) "" );
     let diff = Levenshtein.dist str mon_str in
-    (match current.fight.action with
+    ( match current.fight.action with
     | Attack ->
         let damage = max (String.length mon_str - diff) 0 in
         current.fight.monster_health <- max (mon_HP - damage) 0;
         if current.fight.monster_health > 0 then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
           current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)));
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         (* Font.render_font (Font.new_font ("Monster used " ^
            Dungeon.monster_move current.fight.monster ^ "!") 0. 0.3
            (!Magic_numbers.get_magic).width
@@ -236,7 +244,7 @@ let fighting_case current key =
         if current.fight.monster_health > 0 then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
           current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)));
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         current.fight.player_health <-
           (let healing = max (String.length mon_str - diff) 0 in
            min (current.fight.player_health + healing) current.health)
@@ -247,13 +255,13 @@ let fighting_case current key =
         then (
           Render_stack.stack_push Render_stack.ScreenshakeRender;
           current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)));
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
         if diff <= String.length str / 3 then (
           Render_stack.stack_pop ();
-          reset_fight current));
+          reset_fight current ) );
 
     current.fight.attacking <- false;
-    "")
+    "" )
   else if key = 127 then
     String.sub str 0 (max (String.length str - 1) 0)
   else if is_typable key then str ^ Char.escaped (Char.chr key)
@@ -287,7 +295,7 @@ let typing_move current key =
   | _ -> current
 
 let menu_move current key =
-  (match key with
+  ( match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
@@ -298,8 +306,8 @@ let menu_move current key =
   | Glut.KEY_UP ->
       if not current.fight.attacking then (
         Timer.reset_timer ();
-        current.fight.attacking <- not current.fight.attacking)
-  | _ -> ());
+        current.fight.attacking <- not current.fight.attacking )
+  | _ -> () );
   current
 
 let game_over_move current key =
@@ -333,12 +341,12 @@ let controller current key =
         manage_exp current 50;
         Render_stack.stack_pop ();
         reset_fight current;
-        current)
+        current )
       else if current.fight.player_health = 0 then (
         Render_stack.stack_pop ();
         Render_stack.stack_push GameoverRender;
         reset_fight current;
-        current)
+        current )
       else menu_move current key
   | GameoverRender -> game_over_move current key
   | _ -> current
