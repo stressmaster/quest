@@ -32,18 +32,6 @@ val instantiate_dungeon :
   int ->
   t
 
-val instantiate_dungeon_with_seed :
-  int ->
-  int ->
-  int ->
-  int * int ->
-  int ->
-  monster list ->
-  int ->
-  int ->
-  int ->
-  t
-
 (* [is_wall dungeon (x, y)] returns true iff the cell at coordinate [(x,
    y)] is a wall in [dungeon] *)
 val is_wall : t -> int * int -> bool
