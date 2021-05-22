@@ -25,7 +25,7 @@ let init_display game w h =
       GlClear.clear [ `color ];
       GluMat.ortho2d ~x:(0.0, float_of_int w) ~y:(0.0, float_of_int h);
       GlMat.mode `projection;
-      ( match Render_stack.stack_peek () with
+      (match Render_stack.stack_peek () with
       | SpiralRender ->
           Dungeon.render_dungeon
             (State.player_loc !game)
@@ -48,7 +48,7 @@ let init_display game w h =
           State.render_inventory !game
       | GameoverRender ->
           Gameover_menu.render_menu (State.curr_game_over !game)
-      | _ -> () );
+      | _ -> ());
 
       Gl.flush ()
       (* (Font.render_font (Font.new_font (string_of_int
@@ -63,6 +63,8 @@ let init_input game =
       game := State.controller !game key)
 
 let init_engine texture_list w h x_length y_length =
+  (* check exists. if exists, then State.init_state_from_json
+     "save.json"*)
   let game = ref (State.init_state "sample_game.json") in
   let start = Sys.time () in
   init_texture texture_list;
