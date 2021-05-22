@@ -51,10 +51,20 @@ let next_dungeon game dungeon =
     let xdim = 11 + Random.int 20 in
     let ydim = 11 + Random.int 20 in
     let ourlist =
-      [ (1, 1); (xdim - 2, ydim - 2); (xdim - 2, 1); (2, ydim - 2) ]
+      [
+        (1, 1);
+        (xdim - 2, ydim - 2);
+        (xdim - 2, 1);
+        (2, ydim - 2);
+        (xdim / 2, ydim / 2);
+        (xdim / 2, ydim - 2);
+        (xdim / 2, 1);
+        (1, ydim / 2);
+        (xdim - 2, ydim / 2);
+      ]
     in
     Dungeon.instantiate_dungeon next_id xdim ydim
-      (List.nth ourlist (Random.int 4))
+      (List.nth ourlist (Random.int 9))
       20
       (Dungeon.get_monsters dungeon)
       (next_id + 1) (next_id - 1)
@@ -67,3 +77,40 @@ let prev_dungeon game dungeon =
 let add_to_game game dungeon = { dungeons = dungeon :: game.dungeons }
 
 let game_depth game = List.length game.dungeons
+
+let rec room_maker dungeonlist acc : Yojson.Basic.t list =
+  match dungeonlist with
+  | h :: t ->
+      let xdim = fst (Dungeon.get_dimensions h) in
+      let ydim = snd (Dungeon.get_dimensions h) in
+      let xstart = fst (Dungeon.get_start h) in
+      let ystart = snd (Dungeon.get_start h) in
+      let (time : int) = Dungeon.get_time h in
+      let id = Dungeon.get_id h in
+      let room =
+        `Assoc
+          [
+            ("id", `Int id);
+            ("xdim", `Int xdim);
+            ("ydim", `Int ydim);
+            ("xstart", `Int xstart);
+            ("ystart", `Int ystart);
+            ("time", `Int time);
+          ]
+      in
+      room_maker t (room :: acc)
+  | _ -> acc
+
+let json_maker exists room_number game : Yojson.Basic.t =
+  let rooms = room_maker game.dungeons [] in
+  let ourjson =
+    `Assoc
+      [
+        ("exists", `Bool exists);
+        ("number_rooms", `Int room_number);
+        ("rooms", `List rooms);
+      ]
+  in
+  ourjson
+
+let update_file ourjson = Yojson.Basic.to_file "save.json" ourjson

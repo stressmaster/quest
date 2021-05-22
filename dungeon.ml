@@ -51,6 +51,7 @@ type t = {
   next : int;
   prev : int;
   magic_numbers : Magic_numbers.t;
+  time : int;
 }
 
 let instantiate_monster
@@ -105,6 +106,8 @@ let get_exit dungeon = dungeon.exit
 
 let get_dimensions dungeon = dungeon.dimensions
 
+let get_time dungeon = dungeon.time
+
 let get_cells dungeon = dungeon.cells
 
 let get_tile cell = cell.tile
@@ -153,10 +156,10 @@ let become_npc x y table =
   let visibility =
     if tile_is_path x y table then 0
     else
-      ( become_npc_helper (x + 1) y table
+      (become_npc_helper (x + 1) y table
       + become_npc_helper (x - 1) y table
       + become_npc_helper x (y - 1) table
-      + become_npc_helper x (y + 1) table )
+      + become_npc_helper x (y + 1) table)
       * Random.int 12
   in
   if visibility >= 22 then true else false
@@ -176,7 +179,7 @@ let render_npc_speech x y dungeon_cells =
             (Font.new_font speech 1.1 1.2
                (!Magic_numbers.get_magic.width *. 0.5)
                (!Magic_numbers.get_magic.height *. 0.5))
-      | None, _, _ -> () )
+      | None, _, _ -> ())
 
 let add_npc_shadow x y dungeon_cells npc_shadow dir_x dir_y =
   match
@@ -215,7 +218,7 @@ let add_npcs x y dungeon_cells =
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y };
-        add_npc_shadows counter_x counter_y dungeon_cells (Some npc) )
+        add_npc_shadows counter_x counter_y dungeon_cells (Some npc))
       else ()
     done
   done
@@ -351,6 +354,7 @@ let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon id x y start bound monsters next prev : t =
+  let ourtime = Bigtimer.current_time () in
   Random.init (Bigtimer.current_time ());
   let magic_numbers =
     Magic_numbers.init (Random.int Magic_numbers.length)
@@ -372,6 +376,7 @@ let instantiate_dungeon id x y start bound monsters next prev : t =
     next;
     prev;
     magic_numbers;
+    time = ourtime;
   }
 
 let get_id d = d.id
@@ -454,9 +459,9 @@ let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
 let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
   let starting_y =
     2.
-    *. ( 1.
+    *. (1.
        -. dungeon_y_length *. !Magic_numbers.get_magic.height /. 10.
-          /. 500. )
+          /. 500.)
   in
   Render.render_square
     (Render.new_square 0. starting_y
@@ -466,16 +471,16 @@ let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
 
   Render.render_square
     (Render.new_square
-       ( p_x *. 2.
+       (p_x *. 2.
        /. (dungeon_x_length +. 2.)
        *. (dungeon_x_length *. !Magic_numbers.get_magic.width /. 10.)
-       /. 500. )
-       ( starting_y
+       /. 500.)
+       (starting_y
        +. p_y
           /. (dungeon_y_length +. 2.)
           *. 2.
           *. (dungeon_y_length *. !Magic_numbers.get_magic.height /. 10.)
-          /. 500. )
+          /. 500.)
        10. 10. "./fonts/i.png")
 
 (* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
@@ -500,12 +505,12 @@ let render_dungeon (p_x, p_y) (dungeon : t) condition =
       in
       Render.render_square
         (Render.new_square
-           ( float_of_int (x - x_start)
+           (float_of_int (x - x_start)
            /. float_of_int !Magic_numbers.get_magic.x_length
-           *. 2. )
-           ( float_of_int (y - y_start)
+           *. 2.)
+           (float_of_int (y - y_start)
            /. float_of_int !Magic_numbers.get_magic.y_length
-           *. 2. )
+           *. 2.)
            !Magic_numbers.get_magic.width
            !Magic_numbers.get_magic.height new_texture)
     done

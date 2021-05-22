@@ -19,7 +19,7 @@ default: build
 	OCAMLRUNPARAM=b utop
 
 build:
-	$(OCAMLBUILD) $(OBJECTS) && cp $(IM1) ./_build/default && mkdir -p ./_build/default/fonts && cp $(IM2) ./_build/default/fonts && cp $(WAV) ./_build/default
+	$(OCAMLBUILD) $(OBJECTS)
 
 test:
 	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential

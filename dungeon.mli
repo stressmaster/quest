@@ -74,6 +74,8 @@ val get_prev : t -> int
 
 val get_monster_string : monster -> string
 
+val get_time : t -> int
+
 val get_monster_HP : monster -> int
 
 val get_monster_max_HP : monster -> int
