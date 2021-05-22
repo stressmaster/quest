@@ -264,6 +264,7 @@ let gaming_move current key =
       Render_stack.stack_pop ();
       current
   | Restart when key = 13 -> current
+  (* reset save.json*)
   | _ -> current
 
 let clamp_str str = String.sub str 0 (min (String.length str) 20)

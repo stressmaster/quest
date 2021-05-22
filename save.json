@@ -1,1 +1,46 @@
-{"exists":true,"number_rooms":2,"rooms":[{"id":3,"xdim":24,"ydim":12,"xstart":1,"ystart":1,"time":0},{"id":0,"xdim":12,"ydim":24,"xstart":1,"ystart":1,"time":0}]}
+{
+  "exists": true,
+  "number_rooms": 5,
+  "rooms": [
+    {
+      "id": 3,
+      "xdim": 24,
+      "ydim": 12,
+      "xstart": 1,
+      "ystart": 1,
+      "time": 0
+    },
+    {
+      "id": 0,
+      "xdim": 12,
+      "ydim": 24,
+      "xstart": 1,
+      "ystart": 1,
+      "time": 0
+    },
+    {
+      "id": 1,
+      "xdim": 15,
+      "ydim": 11,
+      "xstart": 13,
+      "ystart": 9,
+      "time": 133
+    },
+    {
+      "id": 2,
+      "xdim": 24,
+      "ydim": 21,
+      "xstart": 22,
+      "ystart": 19,
+      "time": 196
+    },
+    {
+      "id": 3,
+      "xdim": 24,
+      "ydim": 12,
+      "xstart": 1,
+      "ystart": 1,
+      "time": 0
+    }
+  ]
+}
