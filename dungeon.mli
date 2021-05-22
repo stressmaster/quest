@@ -9,10 +9,7 @@ type cell
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 val instantiate_dungeon :
-  int -> int -> int -> int * int -> int -> int -> int -> t
-
-val instantiate_dungeon_with_seed :
-  int -> int -> int -> int * int -> int -> int -> int -> int -> t
+  ?seed:int -> int -> int -> int -> int * int -> int -> int -> int -> t
 
 (* [is_wall dungeon (x, y)] returns true iff the cell at coordinate [(x,
    y)] is a wall in [dungeon] *)

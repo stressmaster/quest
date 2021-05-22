@@ -69,7 +69,9 @@ let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
     Weapon
       {
         sprite = !Magic_numbers.get_magic.tier_one_weapon;
-        name = generate_name tier true dereffed_magic_numbers;
+        name =
+          "Lvl " ^ string_of_int depth ^ " "
+          ^ generate_name tier true dereffed_magic_numbers;
         depth;
         modifier = int_of_float (float_of_int depth *. tier);
       }
@@ -77,7 +79,9 @@ let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
     Armor
       {
         sprite = !Magic_numbers.get_magic.tier_one_armor;
-        name = generate_name tier false dereffed_magic_numbers;
+        name =
+          "Lvl " ^ string_of_int depth ^ " "
+          ^ generate_name tier false dereffed_magic_numbers;
         depth;
         modifier = int_of_float (float_of_int depth *. tier);
       }

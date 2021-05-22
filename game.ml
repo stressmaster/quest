@@ -22,13 +22,14 @@ let from_json json =
 
 let dungeon_of_room save =
   let id = save |> member "id" |> to_int in
-  Dungeon.instantiate_dungeon_with_seed id
+  Dungeon.instantiate_dungeon
+    ~seed:(save |> member "time" |> to_int)
+    id
     (save |> member "x-dim" |> to_int)
     (save |> member "y-dim" |> to_int)
     ( save |> member "xstart" |> to_int,
       save |> member "ystart" |> to_int )
     20 (id + 1) (id - 1)
-    (save |> member "time" |> to_int)
 
 let save_json json =
   {
