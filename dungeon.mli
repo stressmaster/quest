@@ -49,6 +49,8 @@ val is_wall : t -> int * int -> bool
 
 val get_item : t -> int * int -> Item.t option
 
+val drop_item : t -> int * int -> Item.t option -> unit
+
 val get_monster : t -> monster
 
 val get_monsters : t -> monster list

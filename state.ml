@@ -152,8 +152,16 @@ let map_move current key =
     | Glut.KEY_F2 -> (
         let i = Dungeon.get_item current.room (x, y) in
         match i with
-        | Some (Armor a) -> current.current_armor <- Armor a
-        | Some (Weapon w) -> current.current_weapon <- Weapon w
+        | Some (Armor a) ->
+            if current.current_armor <> NoItem then
+              Dungeon.drop_item current.room (x, y)
+                (Some current.current_armor);
+            current.current_armor <- Armor a
+        | Some (Weapon w) ->
+            if current.current_weapon <> NoItem then
+              Dungeon.drop_item current.room (x, y)
+                (Some current.current_weapon);
+            current.current_weapon <- Weapon w
         | _ -> ())
     | _ -> ()
   end;
