@@ -56,7 +56,7 @@ let make_in_fight_test
 
 let make_typing_test name c ch expected_output =
   name >:: fun _ ->
-  assert_equal expected_output (State.typing_case c ch)
+  assert_equal expected_output (State.fighting_case c ch)
 
 let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0 0
 
