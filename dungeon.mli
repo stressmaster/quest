@@ -21,6 +21,7 @@ val instantiate_monster :
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 val instantiate_dungeon :
+  ?seed:int ->
   int ->
   int ->
   int ->

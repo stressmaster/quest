@@ -323,95 +323,9 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst =
     add_npcs x y dungeon_cells;
   add_items x y dungeon_cells
 
-type direction =
-  | Up
-  | Down
-  | Right
-  | Left
-
-let rec list_element lst k =
-  match lst with
-  | [] -> failwith "invalid index"
-  | h :: t -> if k = 0 then h else list_element t (k - 1)
-
-let randdir dir =
-  let ourrand = Random.int 2 in
-  match dir with
-  | Up ->
-      let newlst = [ Right; Left ] in
-      list_element newlst ourrand
-  | Right ->
-      let newlst = [ Up; Down ] in
-      list_element newlst ourrand
-  | Down ->
-      let newlst = [ Right; Left ] in
-      list_element newlst ourrand
-  | Left ->
-      let newlst = [ Up; Down ] in
-      list_element newlst ourrand
-
-let rec carver cur_x cur_y x_bound y_bound dir lst more bigmore =
-  let newlst = (cur_x, cur_y) :: lst in
-  if bigmore = 0 then lst
-  else
-    match dir with
-    | Right ->
-        if cur_x + 1 >= x_bound || more = 0 then
-          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
-            (Random.int x_bound) bigmore
-        else
-          carver (cur_x + 1) cur_y x_bound y_bound Right newlst
-            (more - 1) (bigmore - 1)
-    | Left ->
-        if cur_x - 1 <= 0 || more = 0 then
-          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
-            (Random.int x_bound) bigmore
-        else
-          carver (cur_x - 1) cur_y x_bound y_bound Left newlst
-            (more - 1) (bigmore - 1)
-    | Up ->
-        if cur_y + 1 >= y_bound || more = 0 then
-          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
-            (Random.int y_bound) bigmore
-        else
-          carver cur_x (cur_y + 1) x_bound y_bound Up newlst (more - 1)
-            (bigmore - 1)
-    | Down ->
-        if cur_y - 1 <= 0 || more = 0 then
-          carver cur_x cur_y x_bound y_bound (randdir dir) newlst
-            (Random.int x_bound) bigmore
-        else
-          carver cur_x (cur_y - 1) x_bound y_bound Down newlst
-            (more - 1) (bigmore - 1)
-
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
-let instantiate_dungeon id x y start bound monsters next prev : t =
-  let ourtime = Bigtimer.current_time () in
-  Random.init (Bigtimer.current_time ());
-  let magic_numbers =
-    Magic_numbers.init (Random.int Magic_numbers.length)
-  in
-  Magic_numbers.update magic_numbers;
-  let c = Hashtbl.create (x * y) in
-  (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
-  let w = Walker.init_walker 0 x 0 y start in
-  let ourlst = Walker.walk 2600 w in
-  instantiate_dungeon_cells2 x y c ourlst;
-  {
-    id;
-    cells = c;
-    start;
-    exit = w.furthest_pos;
-    dimensions = (x, y);
-    bound;
-    monsters;
-    next;
-    prev;
-    magic_numbers;
-    time = ourtime;
-  }
-
-let instantiate_dungeon_with_seed
+let instantiate_dungeon
+    ?(seed = Bigtimer.current_time ())
     id
     x
     y
@@ -419,9 +333,8 @@ let instantiate_dungeon_with_seed
     bound
     monsters
     next
-    prev
-    time : t =
-  Random.init time;
+    prev : t =
+  Random.init seed;
   let magic_numbers =
     Magic_numbers.init (Random.int Magic_numbers.length)
   in
@@ -442,7 +355,7 @@ let instantiate_dungeon_with_seed
     next;
     prev;
     magic_numbers;
-    time;
+    time = seed;
   }
 
 let get_id d = d.id

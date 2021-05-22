@@ -48,7 +48,9 @@ let monster_set i =
 
 let dungeon_of_room save =
   let id = save |> member "id" |> to_int in
-  Dungeon.instantiate_dungeon_with_seed id
+  Dungeon.instantiate_dungeon
+    ~seed:(save |> member "time" |> to_int)
+    id
     (save |> member "x-dim" |> to_int)
     (save |> member "y-dim" |> to_int)
     ( save |> member "xstart" |> to_int,
@@ -56,7 +58,6 @@ let dungeon_of_room save =
     20
     (monster_set (id / 5))
     (id + 1) (id - 1)
-    (save |> member "time" |> to_int)
 
 let save_json json =
   {
@@ -75,6 +76,7 @@ let next_dungeon game dungeon =
     let next_id = Dungeon.get_id dungeon + 1 in
     let xdim = 11 + Random.int 20 in
     let ydim = 11 + Random.int 20 in
+    let setnumber = 1 + (next_id / 5) in
     let ourlist =
       [
         (1, 1);
@@ -91,7 +93,7 @@ let next_dungeon game dungeon =
     Dungeon.instantiate_dungeon next_id xdim ydim
       (List.nth ourlist (Random.int 9))
       20
-      (monster_set (1 + (next_id / 5)))
+      (monster_set (if 3 > setnumber then setnumber else 3))
       (next_id + 1) (next_id - 1)
 
 let prev_dungeon game dungeon =
