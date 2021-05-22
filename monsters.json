@@ -1,0 +1,80 @@
+{
+  "set1": [
+    {
+      "name": "monster",
+      "sprite": "./monster.png",
+      "hitpoints": 30,
+      "chance": 5,
+      "attacks": [
+        "prog knife",
+        "laser strike",
+        "piercing screech",
+        "sudden strike"
+      ]
+    },
+    {
+      "name": "goblin_1",
+      "sprite": "./goblin_1.png",
+      "hitpoints": 30,
+      "chance": 5,
+      "attacks": [
+        "frenzied maul",
+        "wild swing",
+        "focus punch",
+        "mach punch"
+      ]
+    }
+  ],
+  "set2": [
+    {
+      "name": "monster",
+      "sprite": "./monster.png",
+      "hitpoints": 40,
+      "chance": 5,
+      "attacks": [
+        "prog knife",
+        "laser strike",
+        "piercing screech",
+        "sudden strike"
+      ]
+    },
+    {
+      "name": "goblin_1",
+      "sprite": "./goblin_1.png",
+      "hitpoints": 40,
+      "chance": 5,
+      "attacks": [
+        "frenzied maul",
+        "wild swing",
+        "focus punch",
+        "mach punch"
+      ]
+    }
+  ],
+  "set3": [
+    {
+      "name": "monster",
+      "sprite": "./monster.png",
+      "hitpoints": 50,
+      "chance": 5,
+      "attacks": [
+        "prog knife",
+        "laser strike",
+        "piercing screech",
+        "sudden strike"
+      ]
+    },
+    {
+      "name": "goblin_1",
+      "sprite": "./goblin_1.png",
+      "hitpoints": 50,
+      "chance": 5,
+      "attacks": [
+        "frenzied maul",
+        "wild swing",
+        "focus punch",
+        "mach punch"
+      ]
+    }
+  ]
+}

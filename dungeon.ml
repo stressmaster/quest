@@ -379,6 +379,40 @@ let instantiate_dungeon id x y start bound monsters next prev : t =
     time = ourtime;
   }
 
+let instantiate_dungeon_with_seed
+    id
+    x
+    y
+    start
+    bound
+    monsters
+    next
+    prev
+    time : t =
+  Random.init time;
+  let magic_numbers =
+    Magic_numbers.init (Random.int Magic_numbers.length)
+  in
+  Magic_numbers.update magic_numbers;
+  let c = Hashtbl.create (x * y) in
+  (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
+  let w = Walker.init_walker 0 x 0 y start in
+  let ourlst = Walker.walk 2600 w in
+  instantiate_dungeon_cells2 x y c ourlst;
+  {
+    id;
+    cells = c;
+    start;
+    exit = w.furthest_pos;
+    dimensions = (x, y);
+    bound;
+    monsters;
+    next;
+    prev;
+    magic_numbers;
+    time;
+  }
+
 let get_id d = d.id
 
 let print_dungeon dungeon =
