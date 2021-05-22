@@ -36,31 +36,8 @@ let get_item dungeon (x, y) =
   Hashtbl.add dungeon.cells (x, y) { cell with tile = path_tile };
   tile.item
 
-let itemless_cell dungeon (x, y) =
-  let s =
-    (not (is_wall dungeon (x, y - 1)))
-    && get_item dungeon (x, y - 1) = None
-  in
-  let w =
-    (not (is_wall dungeon (x - 1, y)))
-    && get_item dungeon (x - 1, y) = None
-  in
-  let n =
-    (not (is_wall dungeon (x, y + 1)))
-    && get_item dungeon (x, y + 1) = None
-  in
-  match s with
-  | true -> (x, y - 1)
-  | false -> (
-      match w with
-      | true -> (x - 1, y)
-      | false -> (
-          match n with true -> (x, y + 1) | false -> (x + 1, y) ) )
-
 let drop_item dungeon (x, y) item =
-  let cell =
-    Hashtbl.find dungeon.cells (itemless_cell dungeon (x, y))
-  in
+  let cell = Hashtbl.find dungeon.cells (x, y) in
   let tile = cell.tile in
   let path_tile =
     { tile with material = !Magic_numbers.get_magic.path; item }
