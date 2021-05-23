@@ -121,11 +121,20 @@ let reset_fight c =
   c.fight.monster_string <- Monsters.get_monster_string new_m;
   c.fight.monster_health <- Monsters.get_monster_HP new_m;
   c.fight.player_health <- c.health;
-  Audio.change_music "./camlished.wav"
+  match Render_stack.stack_peek () with
+  | GameoverRender -> Audio.change_music "./unravel.wav"
+  | _ -> Audio.change_music "./camlished.wav"
 
 (* let fight_decision bound = Random.int bound = 0 *)
 
-let fight_decision bound = false
+let encounter bound = Random.int bound = 0
+
+let is_in_fight current =
+  let current_bound = Dungeon.get_bound current.room in
+  (not
+     ( current.location = current.room_exit
+     || current.location = Dungeon.get_start current.room ))
+  && encounter current_bound
 
 let player_loc state = state.location
 
@@ -199,9 +208,9 @@ let should_change_room current =
 (* [move current key] assigns a location to [current] based on [key]*)
 let move current key =
   let x, y = current.location in
-  current.in_fight <- fight_decision current;
+  current.in_fight <- is_in_fight current;
   if current.in_fight then (
-    Audio.change_music "./unravel.wav";
+    Audio.change_music "./camlished_battle.wav";
     Render_stack.stack_push Render_stack.SpiralRender;
     Timer.reset_timer "general" );
   (* delete light right below when spiral works. it is a work around*)
