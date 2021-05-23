@@ -131,6 +131,7 @@ let add_npcs x y dungeon_cells =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
       if become_npc counter_x counter_y dungeon_cells then (
+        Random.self_init ();
         let npc =
           Npc.get_npc
             (Random.int (Npc.npc_list_length !Magic_numbers.get_magic))

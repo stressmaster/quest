@@ -1,8 +1,10 @@
 open Yojson.Basic.Util
 
-let magic_themes =
-  Yojson.Basic.from_file "magic_numbers_one.json"
-  |> member "magic_themes" |> to_list
+let yojson = Yojson.Basic.from_file "magic_numbers_one.json"
+
+let magic_themes = yojson |> member "magic_themes" |> to_list
+
+let textures = yojson |> member "texture_list"
 
 let length = List.length magic_themes
 
@@ -19,7 +21,6 @@ type t = {
   armor_pickup : string;
   tier_one_weapon : string;
   tier_one_armor : string;
-  texture_list : string list;
   animations : (string * string list) list;
   w : int;
   square_height : height:float -> float;
@@ -43,6 +44,7 @@ type t = {
   tier_two_armors : string list;
   tier_three_armors : string list;
   monsters : (int * string * string * int * string list) list;
+  texture_list : string list;
 }
 
 let json_to_string json field = json |> member field |> to_string
@@ -51,6 +53,8 @@ let json_to_int json field = json |> member field |> to_int
 
 let json_to_string_list json field =
   List.map to_string (json |> member field |> to_list)
+
+let json_to_string_list_lite json = List.map to_string (json |> to_list)
 
 let to_string_list json = List.map to_string json
 
@@ -69,6 +73,8 @@ let json_to_npcs json field =
   List.map to_npc (json |> member field |> to_list)
 
 let json_to_monster_textures json = json |> member "sprite" |> to_string
+
+let json_to_npcs_textures json = json |> member "sprite" |> to_string
 
 let json_to_monster json =
   ( json |> member "chance" |> to_int,
@@ -98,10 +104,7 @@ let magic_theme_to_magic_numbers magic_theme =
     magic_theme |> member "monsters" |> to_list
     |> List.map json_to_monster
   in
-  let monster_textures =
-    magic_theme |> member "monsters" |> to_list
-    |> List.map json_to_monster_textures
-  in
+  let npcs = json_to_npcs magic_theme "npcs" in
   {
     wall;
     path;
@@ -122,15 +125,11 @@ let magic_theme_to_magic_numbers magic_theme =
     y_length;
     width = float_of_int w /. float_of_int x_length;
     height = float_of_int h /. float_of_int y_length;
-    texture_list =
-      wall :: path :: entrance :: exit :: player :: darkness :: timer
-      :: empty_item :: weapon_pickup :: armor_pickup :: tier_one_weapon
-      :: tier_one_armor :: monster_textures
-      @ json_to_string_list magic_theme "fonts";
+    texture_list = json_to_string_list_lite textures;
     animations = json_to_animations magic_theme "animations";
     health = json_to_int magic_theme "health";
     square_height = (fun ~height -> float_of_int h /. height);
-    npcs = json_to_npcs magic_theme "npcs";
+    npcs;
     tier_one_prefixes =
       json_to_string_list magic_theme "tier_one_prefixes";
     tier_two_prefixes =

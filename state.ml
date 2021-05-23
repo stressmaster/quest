@@ -67,29 +67,30 @@ let curr_fight c = c.fight
 
 let curr_game_over c = c.game_over
 
-let init_fight monster =
+let init_state file_name =
+  let g = Yojson.Basic.from_file file_name |> Game.from_json in
+  let r = g |> Game.start_room in
+  let m = r |> Dungeon.get_magic_numbers |> Monsters.get_monster in
+  Magic_numbers.update (Dungeon.get_magic_numbers r);
   {
-    spiraled = false;
-    action = Attack;
-    attacking = false;
-    monster;
-    monster_string = Monsters.get_monster_string monster;
-    monster_health = Monsters.get_monster_HP monster;
-    player_health = !Magic_numbers.get_magic.health;
-    typing_limit =
-      monster |> Monsters.get_monster_string |> String.length
-      |> ( * ) 10;
-    input_string = "";
-  }
-
-let init_current game room monster =
-  {
-    game;
-    room;
-    room_exit = room |> Dungeon.get_exit;
-    location = room |> Dungeon.get_start;
+    game = g;
+    room = r;
+    room_exit = r |> Dungeon.get_exit;
+    location = r |> Dungeon.get_start;
     in_fight = false;
-    fight = init_fight monster;
+    fight =
+      {
+        spiraled = false;
+        action = Attack;
+        attacking = false;
+        monster = m;
+        monster_string = Monsters.get_monster_string m;
+        monster_health = Monsters.get_monster_HP m;
+        player_health = !Magic_numbers.get_magic.health;
+        typing_limit =
+          m |> Monsters.get_monster_string |> String.length |> ( * ) 10;
+        input_string = "";
+      };
     health = !Magic_numbers.get_magic.health;
     level = 1;
     depth = 0;
@@ -99,15 +100,6 @@ let init_current game room monster =
     current_armor = Item.empty_item;
     game_over = Quit;
   }
-
-let init_state file_name =
-  let game = Yojson.Basic.from_file file_name |> Game.from_json in
-  let room = game |> Game.start_room in
-  let monster =
-    room |> Dungeon.get_magic_numbers |> Monsters.get_monster
-  in
-  Magic_numbers.update (Dungeon.get_magic_numbers room);
-  init_current game room monster
 
 let reset_fight c =
   let new_m =
@@ -123,102 +115,92 @@ let reset_fight c =
   c.fight.player_health <- c.health;
   Audio.change_music "./camlished.wav"
 
-let encounter bound = Random.int bound = 0
+(* let fight_decision bound = Random.int bound = 0 *)
 
-let is_in_fight current =
-  let current_bound = Dungeon.get_bound current.room in
-  (not
-     ( current.location = current.room_exit
-     || current.location = Dungeon.get_start current.room ))
-  && encounter current_bound
+let fight_decision bound = false
 
 let player_loc state = state.location
 
 (* [move current key] assigns a location to [current] based on [key]*)
-let change_to_next_room current =
-  current.room <- Game.next_dungeon current.game current.room;
-  current.game <- Game.add_to_game current.game current.room;
-  current.location <- Dungeon.get_start current.room;
-  current.room_exit <- Dungeon.get_exit current.room;
-  current.depth <- current.depth + 1;
-  let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
-  Magic_numbers.update new_magic_numbers;
-  Spriteanimation.init_animations new_magic_numbers.animations
-
-let change_to_previous_room current =
-  current.room <- Game.prev_dungeon current.game current.room;
-  current.location <- Dungeon.get_exit current.room;
-  current.room_exit <- Dungeon.get_exit current.room;
-  current.depth <- current.depth - 1;
-  let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
-  Magic_numbers.update new_magic_numbers;
-  Spriteanimation.init_animations new_magic_numbers.animations
-
-let should_change_room current =
-  if
-    (not (current.depth = 0))
-    && Dungeon.get_start current.room = current.location
-  then change_to_next_room current
-  else if current.room_exit = current.location then
-    change_to_previous_room current
-
-let cramp_wall current loc1 loc2 =
-  current.location <-
-    (if Dungeon.is_wall current.room loc1 then loc2 else loc1)
-
-let map_move current key x y =
-  match key with
-  | Glut.KEY_RIGHT -> cramp_wall current (x + 1, y) (x, y)
-  | Glut.KEY_LEFT -> cramp_wall current (x - 1, y) (x, y)
-  | Glut.KEY_UP -> cramp_wall current (x, y + 1) (x, y)
-  | Glut.KEY_DOWN -> cramp_wall current (x, y - 1) (x, y)
-  | _ -> ()
-
-let manage_armor current x y armor =
-  if current.current_armor <> NoItem then
-    Dungeon.drop_item current.room (x, y) (Some current.current_armor);
-  current.current_armor <- Armor armor
-
-let manage_weapon current x y weapon =
-  if current.current_weapon <> NoItem then
-    Dungeon.drop_item current.room (x, y) (Some current.current_weapon);
-  current.current_weapon <- Weapon weapon
-
-let manage_no_item current x y =
-  if current.current_weapon <> NoItem then (
-    Dungeon.drop_item current.room (x, y) (Some current.current_weapon);
-    current.current_weapon <- NoItem )
-  else if current.current_armor <> NoItem then (
-    Dungeon.drop_item current.room (x, y) (Some current.current_armor);
-    current.current_armor <- NoItem )
-
-let manage_item current x y = function
-  | Some (Item.Armor a) ->
-      manage_armor current x y a;
-      current.current_armor <- Armor a
-  | Some (Item.Weapon w) ->
-      manage_weapon current x y w;
-      current.current_weapon <- Weapon w
-  | _ -> manage_no_item current x y
-
-(* [move current key] assigns a location to [current] based on [key]*)
-let move current key =
+let map_move current key =
+  let current_bound = Dungeon.get_bound current.room in
   let x, y = current.location in
-  current.in_fight <- is_in_fight current;
+  current.in_fight <-
+    ( if
+      current.location = current.room_exit
+      || current.location = Dungeon.get_start current.room
+    then false
+    else fight_decision current_bound );
   if current.in_fight then (
     Audio.change_music "./unravel.wav";
-    Render_stack.stack_push Render_stack.SpiralRender;
-    Timer.reset_timer () );
+    Render_stack.stack_push Render_stack.SpiralRender );
   (* delete light right below when spiral works. it is a work around*)
   begin
     match key with
-    | Glut.KEY_RIGHT | Glut.KEY_LEFT | Glut.KEY_UP | Glut.KEY_DOWN ->
-        map_move current key x y
-    | Glut.KEY_F2 ->
-        manage_item current x y (Dungeon.get_item current.room (x, y))
+    | Glut.KEY_RIGHT ->
+        current.location <-
+          ( if Dungeon.is_wall current.room (x + 1, y) then (x, y)
+          else (x + 1, y) )
+    | Glut.KEY_LEFT ->
+        current.location <-
+          ( if Dungeon.is_wall current.room (x - 1, y) then (x, y)
+          else (x - 1, y) )
+    | Glut.KEY_UP ->
+        current.location <-
+          ( if Dungeon.is_wall current.room (x, y + 1) then (x, y)
+          else (x, y + 1) )
+    | Glut.KEY_DOWN ->
+        current.location <-
+          ( if Dungeon.is_wall current.room (x, y - 1) then (x, y)
+          else (x, y - 1) )
+    | Glut.KEY_F2 -> (
+        let i = Dungeon.get_item current.room (x, y) in
+        match i with
+        | Some (Armor a) ->
+            if current.current_armor <> NoItem then
+              Dungeon.drop_item current.room (x, y)
+                (Some current.current_armor);
+            current.current_armor <- Armor a
+        | Some (Weapon w) ->
+            if current.current_weapon <> NoItem then
+              Dungeon.drop_item current.room (x, y)
+                (Some current.current_weapon);
+            current.current_weapon <- Weapon w
+        | _ ->
+            if current.current_weapon <> NoItem then (
+              Dungeon.drop_item current.room (x, y)
+                (Some current.current_weapon);
+              current.current_weapon <- NoItem )
+            else if current.current_armor <> NoItem then (
+              Dungeon.drop_item current.room (x, y)
+                (Some current.current_armor);
+              current.current_armor <- NoItem ) )
     | _ -> ()
   end;
-  should_change_room current;
+  if current.in_fight then Timer.reset_timer ();
+  let should_change_next = current.room_exit = current.location in
+  let should_change_prev =
+    if current.depth = 0 then false
+    else Dungeon.get_start current.room = current.location
+  in
+
+  if should_change_next then (
+    current.room <- Game.next_dungeon current.game current.room;
+    current.game <- Game.add_to_game current.game current.room;
+    current.location <- Dungeon.get_start current.room;
+    current.room_exit <- Dungeon.get_exit current.room;
+    current.depth <- current.depth + 1;
+    let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
+    Magic_numbers.update new_magic_numbers;
+    Spriteanimation.init_animations new_magic_numbers.animations )
+  else if should_change_prev then (
+    current.room <- Game.prev_dungeon current.game current.room;
+    current.location <- Dungeon.get_exit current.room;
+    current.room_exit <- Dungeon.get_exit current.room;
+    current.depth <- current.depth - 1;
+    let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
+    Magic_numbers.update new_magic_numbers;
+    Spriteanimation.init_animations new_magic_numbers.animations );
   current
 
 let is_typable key =
@@ -230,62 +212,64 @@ let is_typable key =
 let rec random_string length acc =
   if length = 0 then acc
   else
-    let our_rand = Random.int 36 in
+    let ourrand = Random.int 36 in
     let key =
-      if our_rand < 10 then char_of_int (our_rand + 48)
-      else char_of_int (our_rand + 87)
+      if ourrand < 10 then char_of_int (ourrand + 48)
+      else char_of_int (ourrand + 87)
     in
     random_string (length - 1) (Char.escaped key ^ acc)
 
-let manage_damage mon_HP current =
-  if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3 then
-    Monsters.get_monster_string current.fight.monster
-  else random_string (Random.int 10) ""
-
-let take_damage mon_HP current =
-  Render_stack.stack_push Render_stack.ScreenshakeRender;
-  current.fight.player_health <-
-    max 0 (current.fight.player_health - max 1 (mon_HP / 20))
-
-let manage_attack mon_str mon_HP diff current =
-  let damage = max (String.length mon_str - diff) 0 in
-  current.fight.monster_health <- max (mon_HP - damage) 0;
-  if current.fight.monster_health > 0 then take_damage mon_HP current;
-  if damage > 0 then Render_stack.stack_push Render_stack.AttackRender;
-  Audio.play_sound "./oof.wav"
-
-let manage_recover mon_str mon_HP diff current =
-  if current.fight.monster_health > 0 then take_damage mon_HP current;
-  current.fight.player_health <-
-    (let healing = max (String.length mon_str - diff) 0 in
-     min (current.fight.player_health + healing) current.health)
-
-let manage_run str mon_str mon_HP diff current =
-  if diff > String.length str / 3 && current.fight.monster_health > 0
-  then take_damage mon_HP current;
-  if diff <= String.length str / 3 then (
-    Render_stack.stack_pop ();
-    reset_fight current )
-
-let enter_case str mon_str mon_HP current =
-  current.fight.monster_string <- manage_damage mon_HP current;
-  let diff = Levenshtein.dist str mon_str in
-  ( match current.fight.action with
-  | Attack -> manage_attack mon_str mon_HP diff current
-  | Recover -> manage_recover mon_str mon_HP diff current
-  | Run -> manage_run str mon_str mon_HP diff current );
-  current.fight.attacking <- false;
-  ""
-
 let fighting_case current key =
-  let str = current.fight.input_string in
-  match key with
-  | 13 ->
-      enter_case str current.fight.monster_string
-        current.fight.monster_health current
-  | 127 -> String.sub str 0 (max (String.length str - 1) 0)
-  | _ when is_typable key -> str ^ Char.escaped (Char.chr key)
-  | _ -> str
+  let str = current.fight.input_string
+  and mon_str = current.fight.monster_string
+  and mon_HP = current.fight.monster_health in
+  if key = 13 then (
+    current.fight.monster_string <-
+      ( if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3
+      then Monsters.get_monster_string current.fight.monster
+      else random_string (Random.int 10) "" );
+    let diff = Levenshtein.dist str mon_str in
+    ( match current.fight.action with
+    | Attack ->
+        let damage = max (String.length mon_str - diff) 0 in
+        current.fight.monster_health <- max (mon_HP - damage) 0;
+        if current.fight.monster_health > 0 then (
+          Render_stack.stack_push Render_stack.ScreenshakeRender;
+          current.fight.player_health <-
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
+        (* Font.render_font (Font.new_font ("Monster used " ^
+           Dungeon.monster_move current.fight.monster ^ "!") 0. 0.3
+           (!Magic_numbers.get_magic).width
+           (!Magic_numbers.get_magic).height); *)
+        if damage > 0 then
+          Render_stack.stack_push Render_stack.AttackRender;
+        Audio.play_sound "./oof.wav"
+    | Recover ->
+        if current.fight.monster_health > 0 then (
+          Render_stack.stack_push Render_stack.ScreenshakeRender;
+          current.fight.player_health <-
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
+        current.fight.player_health <-
+          (let healing = max (String.length mon_str - diff) 0 in
+           min (current.fight.player_health + healing) current.health)
+    | Run ->
+        if
+          diff > String.length str / 3
+          && current.fight.monster_health > 0
+        then (
+          Render_stack.stack_push Render_stack.ScreenshakeRender;
+          current.fight.player_health <-
+            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
+        if diff <= String.length str / 3 then (
+          Render_stack.stack_pop ();
+          reset_fight current ) );
+
+    current.fight.attacking <- false;
+    "" )
+  else if key = 127 then
+    String.sub str 0 (max (String.length str - 1) 0)
+  else if is_typable key then str ^ Char.escaped (Char.chr key)
+  else str
 
 let gaming_move current key =
   match current.game_over with
@@ -323,9 +307,10 @@ let menu_move current key =
   | Glut.KEY_DOWN ->
       Render_stack.stack_pop ();
       reset_fight current
-  | Glut.KEY_UP when not current.fight.attacking ->
-      Timer.reset_timer ();
-      current.fight.attacking <- not current.fight.attacking
+  | Glut.KEY_UP ->
+      if not current.fight.attacking then (
+        Timer.reset_timer ();
+        current.fight.attacking <- not current.fight.attacking )
   | _ -> () );
   current
 
@@ -341,7 +326,7 @@ let game_over_move current key =
 
 (* [controller current key] updates the [current] based on [key]*)
 
-let level_up current exp =
+let manage_exp current exp =
   current.current_exp <- current.current_exp + exp;
   while current.current_exp > current.exp_bound do
     current.level <- current.level + 1;
@@ -350,83 +335,61 @@ let level_up current exp =
     ()
   done
 
-let manage_exp current =
-  level_up current 50;
-  Render_stack.stack_pop ();
-  reset_fight current;
-  current
-
-let manage_game_over current =
-  Render_stack.stack_pop ();
-  Render_stack.stack_push GameoverRender;
-  reset_fight current;
-  current
-
 let controller current key =
   (* move after end of fight*)
   let top = Render_stack.stack_peek () in
   match top with
-  | DungeonRender -> move current key
-  | FightRender when current.fight.monster_health = 0 ->
-      manage_exp current
-  | FightRender when current.fight.player_health = 0 ->
-      manage_game_over current
-  | FightRender -> menu_move current key
+  | DungeonRender -> map_move current key
+  | FightRender ->
+      if current.fight.monster_health = 0 then (
+        manage_exp current 50;
+        Render_stack.stack_pop ();
+        reset_fight current;
+        current )
+      else if current.fight.player_health = 0 then (
+        Render_stack.stack_pop ();
+        Render_stack.stack_push GameoverRender;
+        reset_fight current;
+        current )
+      else menu_move current key
   | GameoverRender -> game_over_move current key
   | _ -> current
 
-(* (* move after end of fight*) if current.in_fight &&
-   current.fight.monster_health = 0 then ( Render_stack.stack_pop ();
-   reset_fight current; current (* can't move during spiral animation*)
-   ) else if current.in_fight && not current.fight.spiraled then current
-   (* menu move*) else if current.in_fight && not
-   current.fight.attacking then menu_move current key (* move around
-   map*) else if not current.in_fight then move current key else current *)
-
-let render_item_boxes current =
+let render_inventory c =
   Render.render_square
     (Render.new_square 1.4 0.1
        (!Magic_numbers.get_magic.width *. 1.3)
        (!Magic_numbers.get_magic.height *. 1.3)
-       (Item.get_item_sprite current.current_weapon));
+       (Item.get_item_sprite c.current_weapon));
+  Font.render_font
+    (Font.new_font
+       (string_of_int (Item.get_item_modifier c.current_weapon))
+       1.56 0.12
+       (!Magic_numbers.get_magic.width *. 0.5)
+       (!Magic_numbers.get_magic.height *. 0.5));
+  Font.render_font ~spacing:0.05
+    (Font.new_font
+       (Item.get_item_name c.current_weapon)
+       0. 0.
+       (!Magic_numbers.get_magic.width *. 0.5)
+       (!Magic_numbers.get_magic.height *. 0.5));
   Render.render_square
     (Render.new_square 1.7 0.1
        (!Magic_numbers.get_magic.width *. 1.3)
        (!Magic_numbers.get_magic.height *. 1.3)
-       (Item.get_item_sprite current.current_armor))
-
-let render_item_names current =
-  Font.render_font ~spacing:0.05
+       (Item.get_item_sprite c.current_armor));
+  Font.render_font
     (Font.new_font
-       (Item.get_item_name current.current_weapon)
-       0. 0.
+       (string_of_int (Item.get_item_modifier c.current_armor))
+       1.86 0.12
        (!Magic_numbers.get_magic.width *. 0.5)
        (!Magic_numbers.get_magic.height *. 0.5));
   Font.render_font ~spacing:0.05
     (Font.new_font
-       (Item.get_item_name current.current_armor)
+       (Item.get_item_name c.current_armor)
        0. 0.05
        (!Magic_numbers.get_magic.width *. 0.5)
        (!Magic_numbers.get_magic.height *. 0.5))
-
-let render_modifier current =
-  Font.render_font
-    (Font.new_font
-       (string_of_int (Item.get_item_modifier current.current_weapon))
-       1.56 0.12
-       (!Magic_numbers.get_magic.width *. 0.5)
-       (!Magic_numbers.get_magic.height *. 0.5));
-  Font.render_font
-    (Font.new_font
-       (string_of_int (Item.get_item_modifier current.current_armor))
-       1.86 0.12
-       (!Magic_numbers.get_magic.width *. 0.5)
-       (!Magic_numbers.get_magic.height *. 0.5))
-
-let render_inventory current =
-  render_item_boxes current;
-  render_item_names current;
-  render_modifier current
 
 let check_time_limit current =
   if

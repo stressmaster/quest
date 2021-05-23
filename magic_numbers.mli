@@ -11,7 +11,6 @@ type t = {
   armor_pickup : string;
   tier_one_weapon : string;
   tier_one_armor : string;
-  texture_list : string list;
   animations : (string * string list) list;
   w : int;
   square_height : height:float -> float;
@@ -35,6 +34,7 @@ type t = {
   tier_two_armors : string list;
   tier_three_armors : string list;
   monsters : (int * string * string * int * string list) list;
+  texture_list : string list;
 }
 
 val init : int -> t
