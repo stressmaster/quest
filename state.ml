@@ -123,44 +123,11 @@ let reset_fight c =
   c.fight.player_health <- c.health;
   Audio.change_music "./camlished.wav"
 
-let encounter bound = Random.int bound = 0
+(* let fight_decision bound = Random.int bound = 0 *)
 
-let is_in_fight current =
-  let current_bound = Dungeon.get_bound current.room in
-  (not
-     ( current.location = current.room_exit
-     || current.location = Dungeon.get_start current.room ))
-  && encounter current_bound
+let fight_decision bound = false
 
 let player_loc state = state.location
-
-(* [move current key] assigns a location to [current] based on [key]*)
-let change_to_next_room current =
-  current.room <- Game.next_dungeon current.game current.room;
-  current.game <- Game.add_to_game current.game current.room;
-  current.location <- Dungeon.get_start current.room;
-  current.room_exit <- Dungeon.get_exit current.room;
-  current.depth <- current.depth + 1;
-  let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
-  Magic_numbers.update new_magic_numbers;
-  Spriteanimation.init_animations new_magic_numbers.animations
-
-let change_to_previous_room current =
-  current.room <- Game.prev_dungeon current.game current.room;
-  current.location <- Dungeon.get_exit current.room;
-  current.room_exit <- Dungeon.get_exit current.room;
-  current.depth <- current.depth - 1;
-  let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
-  Magic_numbers.update new_magic_numbers;
-  Spriteanimation.init_animations new_magic_numbers.animations
-
-let should_change_room current =
-  if
-    (not (current.depth = 0))
-    && Dungeon.get_start current.room = current.location
-  then change_to_next_room current
-  else if current.room_exit = current.location then
-    change_to_previous_room current
 
 let cramp_wall current loc1 loc2 =
   current.location <-
@@ -202,9 +169,37 @@ let manage_item current x y = function
   | _ -> manage_no_item current x y
 
 (* [move current key] assigns a location to [current] based on [key]*)
+let change_to_next_room current =
+  current.room <- Game.next_dungeon current.game current.room;
+  current.game <- Game.add_to_game current.game current.room;
+  current.location <- Dungeon.get_start current.room;
+  current.room_exit <- Dungeon.get_exit current.room;
+  current.depth <- current.depth + 1;
+  let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
+  Magic_numbers.update new_magic_numbers;
+  Spriteanimation.init_animations new_magic_numbers.animations
+
+let change_to_previous_room current =
+  current.room <- Game.prev_dungeon current.game current.room;
+  current.location <- Dungeon.get_exit current.room;
+  current.room_exit <- Dungeon.get_exit current.room;
+  current.depth <- current.depth - 1;
+  let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
+  Magic_numbers.update new_magic_numbers;
+  Spriteanimation.init_animations new_magic_numbers.animations
+
+let should_change_room current =
+  if
+    (not (current.depth = 0))
+    && Dungeon.get_start current.room = current.location
+  then change_to_previous_room current
+  else if current.room_exit = current.location then
+    change_to_next_room current
+
+(* [move current key] assigns a location to [current] based on [key]*)
 let move current key =
   let x, y = current.location in
-  current.in_fight <- is_in_fight current;
+  current.in_fight <- fight_decision current;
   if current.in_fight then (
     Audio.change_music "./unravel.wav";
     Render_stack.stack_push Render_stack.SpiralRender;
@@ -230,10 +225,10 @@ let is_typable key =
 let rec random_string length acc =
   if length = 0 then acc
   else
-    let our_rand = Random.int 36 in
+    let ourrand = Random.int 36 in
     let key =
-      if our_rand < 10 then char_of_int (our_rand + 48)
-      else char_of_int (our_rand + 87)
+      if ourrand < 10 then char_of_int (ourrand + 48)
+      else char_of_int (ourrand + 87)
     in
     random_string (length - 1) (Char.escaped key ^ acc)
 
@@ -323,9 +318,10 @@ let menu_move current key =
   | Glut.KEY_DOWN ->
       Render_stack.stack_pop ();
       reset_fight current
-  | Glut.KEY_UP when not current.fight.attacking ->
-      Timer.reset_timer "general";
-      current.fight.attacking <- not current.fight.attacking
+  | Glut.KEY_UP ->
+      if not current.fight.attacking then (
+        Timer.reset_timer "general";
+        current.fight.attacking <- not current.fight.attacking )
   | _ -> () );
   current
 
