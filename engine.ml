@@ -5,6 +5,8 @@ let init_audio () = Audio.play_music ()
 let init_animation () =
   Spriteanimation.init_animations !Magic_numbers.get_magic.animations
 
+let init_timers () = Timer.init_timers [ ("general", 1); ("big", 1) ]
+
 let stack = Stack.create ()
 
 let _ = Stack.push Render_stack.DungeonRender stack
@@ -70,11 +72,10 @@ let init_input game =
 
 let rec bigtimer ~value =
   Bigtimer.increase_time 1;
-  Glut.postRedisplay ();
   Glut.timerFunc ~ms:value ~cb:bigtimer ~value
 
 let rec general_timer ~value =
-  Timer.increase_time 1;
+  Timer.step_timer ();
   Glut.postRedisplay ();
   Glut.timerFunc ~ms:value ~cb:general_timer ~value
 
@@ -103,6 +104,7 @@ let init_engine texture_list w h x_length y_length =
   init_audio ();
   init_window w h;
   init_animation ();
+  init_timers ();
   init_display game w h;
   init_input game;
   let ms = 100. *. (Sys.time () -. start) |> int_of_float in

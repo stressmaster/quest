@@ -71,6 +71,6 @@ let render_spiral fight x y =
   let middle_y = (y - 1) / 2 in
   let spiral_table = Hashtbl.create (x * y) in
   instantiate_dungeon_cells x y spiral_table;
-  let endpoint = Timer.current_time () in
+  let endpoint = Timer.current_time "general" in
   turner fight 0 (5 * endpoint) middle_x middle_y Up (x - 1) (y - 1)
     spiral_table

@@ -56,7 +56,7 @@ let rec flash t1 t sq1 sq2 =
 
 let render_square_flashes square1 square2 flashes =
   max_flashes := flashes;
-  let time = Timer.current_time () in
+  let time = Timer.current_time "general" in
   flash 0 time square1 square2
 
 let rec shake t1 t =
@@ -79,5 +79,5 @@ let rec shake t1 t =
 
 let render_screen_shake shakes =
   max_flashes := shakes;
-  let time = Timer.current_time () in
+  let time = Timer.current_time "general" in
   shake 0 time

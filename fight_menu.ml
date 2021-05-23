@@ -23,7 +23,7 @@ let render_menu (fight : State.fight) =
       Render.render_square
         (Render.new_square 0. 1.8
            ( 500.
-           *. (Timer.current_time () |> float_of_int)
+           *. (Timer.current_time "general" |> float_of_int)
            /. (fight.typing_limit |> float_of_int) )
            !Magic_numbers.get_magic.height "./timer.png");
       Font.render_font
