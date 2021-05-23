@@ -41,12 +41,12 @@ let set_texture file =
 
 (* [make_texture_list file_lst lst] is a list of textures made from
    files in [file_lst] *)
-let rec make_texture_list file_lst lst =
-  match file_lst with
-  | [] -> lst
-  | h :: t ->
-      Hashtbl.add lst h (make_texture (load_texture h)#to_rgb24);
-      make_texture_list t lst
+let make_texture_list file_lst lst =
+  List.iter
+    (fun h ->
+      Hashtbl.add lst h (make_texture (load_texture h)#to_rgb24))
+    file_lst;
+  lst
 
 (* [init_texture file_lst] is a list of filtered textures from
    [file_list] *)
