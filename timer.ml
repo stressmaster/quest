@@ -15,7 +15,7 @@ let init_timers (id_increment_list : (id * int) list) =
 
 let current_time id =
   let { increment; ticker } = List.assoc id !timers in
-  ticker
+  !ticker
 
 let reset_timer id =
   let { increment; ticker } = List.assoc id !timers in
