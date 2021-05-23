@@ -391,13 +391,13 @@ let controller current key =
 let render_item_boxes current =
   Render.render_square
     (Render.new_square 1.4 0.1
-       (!Magic_numbers.get_magic.width *. 1.3)
-       (!Magic_numbers.get_magic.height *. 1.3)
+       (Magic_numbers.width *. 1.3)
+       (Magic_numbers.height *. 1.3)
        (Item.get_item_sprite current.current_weapon));
   Render.render_square
     (Render.new_square 1.7 0.1
-       (!Magic_numbers.get_magic.width *. 1.3)
-       (!Magic_numbers.get_magic.height *. 1.3)
+       (Magic_numbers.width *. 1.3)
+       (Magic_numbers.height *. 1.3)
        (Item.get_item_sprite current.current_armor))
 
 let render_item_names current =
@@ -405,28 +405,28 @@ let render_item_names current =
     (Font.new_font
        (Item.get_item_name current.current_weapon)
        0. 0.
-       (!Magic_numbers.get_magic.width *. 0.5)
-       (!Magic_numbers.get_magic.height *. 0.5));
+       (Magic_numbers.width *. 0.5)
+       (Magic_numbers.height *. 0.5));
   Font.render_font ~spacing:0.05
     (Font.new_font
        (Item.get_item_name current.current_armor)
        0. 0.05
-       (!Magic_numbers.get_magic.width *. 0.5)
-       (!Magic_numbers.get_magic.height *. 0.5))
+       (Magic_numbers.width *. 0.5)
+       (Magic_numbers.height *. 0.5))
 
 let render_modifier current =
   Font.render_font
     (Font.new_font
        (string_of_int (Item.get_item_modifier current.current_weapon))
        1.56 0.12
-       (!Magic_numbers.get_magic.width *. 0.5)
-       (!Magic_numbers.get_magic.height *. 0.5));
+       (Magic_numbers.width *. 0.5)
+       (Magic_numbers.height *. 0.5));
   Font.render_font
     (Font.new_font
        (string_of_int (Item.get_item_modifier current.current_armor))
        1.86 0.12
-       (!Magic_numbers.get_magic.width *. 0.5)
-       (!Magic_numbers.get_magic.height *. 0.5))
+       (Magic_numbers.width *. 0.5)
+       (Magic_numbers.height *. 0.5))
 
 let render_inventory current =
   render_item_boxes current;

@@ -108,8 +108,8 @@ let render_npc_speech x y dungeon_cells =
           let speech = Npc.get_npc_speech n in
           Font.render_font ~spacing:0.05
             (Font.new_font speech 1.1 1.2
-               (!Magic_numbers.get_magic.width *. 0.5)
-               (!Magic_numbers.get_magic.height *. 0.5))
+               (Magic_numbers.width *. 0.5)
+               (Magic_numbers.height *. 0.5))
       | None, _, _ -> () )
 
 let add_npc_shadow x y dungeon_cells npc_shadow dir_x dir_y =
@@ -253,45 +253,39 @@ let get_id d = d.id
 
 let determine_color tile =
   match tile.item with
-  | Some (Armor _) -> !Magic_numbers.get_magic.armor_pickup
-  | Some (Weapon _) -> !Magic_numbers.get_magic.weapon_pickup
+  | Some (Armor _) -> !Magic_numbers.get_magic.item_tiers.armor_pickup
+  | Some (Weapon _) -> !Magic_numbers.get_magic.item_tiers.weapon_pickup
   | _ ->
       let material = tile |> tile_material in
       material
 
 let get_x_start p_x dungeon_x_length =
-  if p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2) < 0 then 0
+  if p_x - ((Magic_numbers.x_length - 1) / 2) < 0 then 0
   else if
-    p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2) + 1
-    > dungeon_x_length
-  then dungeon_x_length - !Magic_numbers.get_magic.x_length
-  else p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2)
+    p_x + ((Magic_numbers.x_length - 1) / 2) + 1 > dungeon_x_length
+  then dungeon_x_length - Magic_numbers.x_length
+  else p_x - ((Magic_numbers.x_length - 1) / 2)
 
 let get_x_end p_x dungeon_x_length =
-  if
-    p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2) + 1
-    > dungeon_x_length
+  if p_x + ((Magic_numbers.x_length - 1) / 2) + 1 > dungeon_x_length
   then dungeon_x_length
-  else if p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2) < 0 then
-    !Magic_numbers.get_magic.x_length
-  else p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2)
+  else if p_x - ((Magic_numbers.x_length - 1) / 2) < 0 then
+    Magic_numbers.x_length
+  else p_x + ((Magic_numbers.x_length - 1) / 2)
 
 let get_y_start p_y dungeon_y_length =
-  if p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2) < 0 then 0
+  if p_y - ((Magic_numbers.y_length - 1) / 2) < 0 then 0
   else if
-    p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2) + 1
-    > dungeon_y_length
-  then dungeon_y_length - !Magic_numbers.get_magic.y_length
-  else p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2)
+    p_y + ((Magic_numbers.y_length - 1) / 2) + 1 > dungeon_y_length
+  then dungeon_y_length - Magic_numbers.y_length
+  else p_y - ((Magic_numbers.y_length - 1) / 2)
 
 let get_y_end p_y dungeon_y_length =
-  if
-    p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2) + 1
-    > dungeon_y_length
+  if p_y + ((Magic_numbers.y_length - 1) / 2) + 1 > dungeon_y_length
   then dungeon_y_length
-  else if p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2) < 0 then
-    !Magic_numbers.get_magic.y_length
-  else p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2)
+  else if p_y - ((Magic_numbers.y_length - 1) / 2) < 0 then
+    Magic_numbers.y_length
+  else p_y + ((Magic_numbers.y_length - 1) / 2)
 
 let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
   let x_start = get_x_start p_x dungeon_x_length in
@@ -318,27 +312,25 @@ let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
 let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
   let starting_y =
     2.
-    *. ( 1.
-       -. dungeon_y_length *. !Magic_numbers.get_magic.height /. 10.
-          /. 500. )
+    *. (1. -. (dungeon_y_length *. Magic_numbers.height /. 10. /. 500.))
   in
   Render.render_square
     (Render.new_square 0. starting_y
-       (dungeon_x_length *. !Magic_numbers.get_magic.width /. 10.)
-       (dungeon_y_length *. !Magic_numbers.get_magic.height /. 10.)
+       (dungeon_x_length *. Magic_numbers.width /. 10.)
+       (dungeon_y_length *. Magic_numbers.height /. 10.)
        !Magic_numbers.get_magic.darkness);
 
   Render.render_square
     (Render.new_square
        ( p_x *. 2.
        /. (dungeon_x_length +. 2.)
-       *. (dungeon_x_length *. !Magic_numbers.get_magic.width /. 10.)
+       *. (dungeon_x_length *. Magic_numbers.width /. 10.)
        /. 500. )
        ( starting_y
        +. p_y
           /. (dungeon_y_length +. 2.)
           *. 2.
-          *. (dungeon_y_length *. !Magic_numbers.get_magic.height /. 10.)
+          *. (dungeon_y_length *. Magic_numbers.height /. 10.)
           /. 500. )
        10. 10. "./fonts/i.png")
 
@@ -346,13 +338,12 @@ let render_dungeon_square_helper x x_start y y_start new_texture =
   Render.render_square
     (Render.new_square
        ( float_of_int (x - x_start)
-       /. float_of_int !Magic_numbers.get_magic.x_length
+       /. float_of_int Magic_numbers.x_length
        *. 2. )
        ( float_of_int (y - y_start)
-       /. float_of_int !Magic_numbers.get_magic.y_length
+       /. float_of_int Magic_numbers.y_length
        *. 2. )
-       !Magic_numbers.get_magic.width !Magic_numbers.get_magic.height
-       new_texture)
+       Magic_numbers.width Magic_numbers.height new_texture)
 
 let render_dungeon_helper
     (x_start, x_end)

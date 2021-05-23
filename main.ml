@@ -5,8 +5,7 @@ let main () =
   let r = Gc.get () in
   r.Gc.max_overhead <- 30;
   Gc.set r;
-  Engine.init_engine !Magic_numbers.get_magic.texture_list
-    !Magic_numbers.get_magic.w !Magic_numbers.get_magic.h
-    !Magic_numbers.get_magic.x_length !Magic_numbers.get_magic.y_length
+  Engine.init_engine Magic_numbers.texture_list Magic_numbers.w
+    Magic_numbers.h Magic_numbers.x_length Magic_numbers.y_length
 
 let _ = main ()

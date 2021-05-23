@@ -16,7 +16,7 @@ let get_item_sprite i =
   match i with
   | Weapon w -> w.sprite
   | Armor a -> a.sprite
-  | NoItem -> !Magic_numbers.get_magic.empty_item
+  | NoItem -> !Magic_numbers.get_magic.item_tiers.empty_item
 
 let get_item_name i =
   match i with Weapon w -> w.name | Armor a -> a.name | NoItem -> ""
@@ -33,30 +33,36 @@ let generate_name tier itype (dereffed_magic_numbers : Magic_numbers.t)
     =
   let prefix =
     if tier = 3. then
-      list_rand_elt dereffed_magic_numbers.tier_three_prefixes
+      list_rand_elt
+        dereffed_magic_numbers.item_tiers.tier_three_prefixes
     else if tier = 1. then
-      list_rand_elt dereffed_magic_numbers.tier_two_prefixes
-    else list_rand_elt dereffed_magic_numbers.tier_one_prefixes
+      list_rand_elt dereffed_magic_numbers.item_tiers.tier_two_prefixes
+    else
+      list_rand_elt dereffed_magic_numbers.item_tiers.tier_one_prefixes
   in
   let material =
     if tier = 3. then
-      list_rand_elt dereffed_magic_numbers.tier_three_materials
+      list_rand_elt
+        dereffed_magic_numbers.item_tiers.tier_three_materials
     else if tier = 1. then
-      list_rand_elt dereffed_magic_numbers.tier_two_materials
-    else list_rand_elt dereffed_magic_numbers.tier_one_materials
+      list_rand_elt dereffed_magic_numbers.item_tiers.tier_two_materials
+    else
+      list_rand_elt dereffed_magic_numbers.item_tiers.tier_one_materials
   in
   let base =
     if itype = true then
       if tier = 3. then
-        list_rand_elt dereffed_magic_numbers.tier_three_weapons
+        list_rand_elt
+          dereffed_magic_numbers.item_tiers.tier_three_weapons
       else if tier = 1. then
-        list_rand_elt dereffed_magic_numbers.tier_two_weapons
-      else list_rand_elt dereffed_magic_numbers.tier_one_weapons
+        list_rand_elt dereffed_magic_numbers.item_tiers.tier_two_weapons
+      else
+        list_rand_elt dereffed_magic_numbers.item_tiers.tier_one_weapons
     else if tier = 3. then
-      list_rand_elt dereffed_magic_numbers.tier_three_armors
+      list_rand_elt dereffed_magic_numbers.item_tiers.tier_three_armors
     else if tier = 1. then
-      list_rand_elt dereffed_magic_numbers.tier_two_armors
-    else list_rand_elt dereffed_magic_numbers.tier_one_armors
+      list_rand_elt dereffed_magic_numbers.item_tiers.tier_two_armors
+    else list_rand_elt dereffed_magic_numbers.item_tiers.tier_one_armors
   in
   prefix ^ " " ^ material ^ " " ^ base
 
@@ -68,7 +74,7 @@ let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
   if itype = true then
     Weapon
       {
-        sprite = !Magic_numbers.get_magic.tier_one_weapon;
+        sprite = !Magic_numbers.get_magic.item_tiers.tier_one_weapon;
         name =
           "Lvl " ^ string_of_int depth ^ " "
           ^ generate_name tier true dereffed_magic_numbers;
@@ -78,7 +84,7 @@ let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
   else
     Armor
       {
-        sprite = !Magic_numbers.get_magic.tier_one_armor;
+        sprite = !Magic_numbers.get_magic.item_tiers.tier_one_armor;
         name =
           "Lvl " ^ string_of_int depth ^ " "
           ^ generate_name tier false dereffed_magic_numbers;

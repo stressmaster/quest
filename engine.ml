@@ -32,7 +32,7 @@ let fight_render_helper game =
 let spiral_render_helper game =
   Spiral.render_spiral
     (State.curr_fight !game)
-    !Magic_numbers.get_magic.x_length !Magic_numbers.get_magic.y_length
+    Magic_numbers.x_length Magic_numbers.y_length
 
 let what_to_render game = function
   | Render_stack.SpiralRender ->
