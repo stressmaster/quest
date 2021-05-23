@@ -207,7 +207,8 @@ let move current key =
   current.in_fight <- is_in_fight current;
   if current.in_fight then (
     Audio.change_music "./unravel.wav";
-    Render_stack.stack_push Render_stack.SpiralRender );
+    Render_stack.stack_push Render_stack.SpiralRender;
+    Timer.reset_timer () );
   (* delete light right below when spiral works. it is a work around*)
   begin
     match key with
@@ -217,7 +218,6 @@ let move current key =
         manage_item current x y (Dungeon.get_item current.room (x, y))
     | _ -> ()
   end;
-  if current.in_fight then Timer.reset_timer ();
   should_change_room current;
   current
 
@@ -237,57 +237,55 @@ let rec random_string length acc =
     in
     random_string (length - 1) (Char.escaped key ^ acc)
 
-let fighting_case current key =
-  let str = current.fight.input_string
-  and mon_str = current.fight.monster_string
-  and mon_HP = current.fight.monster_health in
-  if key = 13 then (
-    current.fight.monster_string <-
-      ( if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3
-      then Monsters.get_monster_string current.fight.monster
-      else random_string (Random.int 10) "" );
-    let diff = Levenshtein.dist str mon_str in
-    ( match current.fight.action with
-    | Attack ->
-        let damage = max (String.length mon_str - diff) 0 in
-        current.fight.monster_health <- max (mon_HP - damage) 0;
-        if current.fight.monster_health > 0 then (
-          Render_stack.stack_push Render_stack.ScreenshakeRender;
-          current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
-        (* Font.render_font (Font.new_font ("Monster used " ^
-           Dungeon.monster_move current.fight.monster ^ "!") 0. 0.3
-           (!Magic_numbers.get_magic).width
-           (!Magic_numbers.get_magic).height); *)
-        if damage > 0 then
-          Render_stack.stack_push Render_stack.AttackRender;
-        Audio.play_sound "./oof.wav"
-    | Recover ->
-        if current.fight.monster_health > 0 then (
-          Render_stack.stack_push Render_stack.ScreenshakeRender;
-          current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
-        current.fight.player_health <-
-          (let healing = max (String.length mon_str - diff) 0 in
-           min (current.fight.player_health + healing) current.health)
-    | Run ->
-        if
-          diff > String.length str / 3
-          && current.fight.monster_health > 0
-        then (
-          Render_stack.stack_push Render_stack.ScreenshakeRender;
-          current.fight.player_health <-
-            max 0 (current.fight.player_health - max 1 (mon_HP / 20)) );
-        if diff <= String.length str / 3 then (
-          Render_stack.stack_pop ();
-          reset_fight current ) );
+let manage_damage mon_HP current =
+  if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3 then
+    Monsters.get_monster_string current.fight.monster
+  else random_string (Random.int 10) ""
 
-    current.fight.attacking <- false;
-    "" )
-  else if key = 127 then
-    String.sub str 0 (max (String.length str - 1) 0)
-  else if is_typable key then str ^ Char.escaped (Char.chr key)
-  else str
+let take_damage mon_HP current =
+  Render_stack.stack_push Render_stack.ScreenshakeRender;
+  current.fight.player_health <-
+    max 0 (current.fight.player_health - max 1 (mon_HP / 20))
+
+let manage_attack mon_str mon_HP diff current =
+  let damage = max (String.length mon_str - diff) 0 in
+  current.fight.monster_health <- max (mon_HP - damage) 0;
+  if current.fight.monster_health > 0 then take_damage mon_HP current;
+  if damage > 0 then Render_stack.stack_push Render_stack.AttackRender;
+  Audio.play_sound "./oof.wav"
+
+let manage_recover mon_str mon_HP diff current =
+  if current.fight.monster_health > 0 then take_damage mon_HP current;
+  current.fight.player_health <-
+    (let healing = max (String.length mon_str - diff) 0 in
+     min (current.fight.player_health + healing) current.health)
+
+let manage_run str mon_str mon_HP diff current =
+  if diff > String.length str / 3 && current.fight.monster_health > 0
+  then take_damage mon_HP current;
+  if diff <= String.length str / 3 then (
+    Render_stack.stack_pop ();
+    reset_fight current )
+
+let enter_case str mon_str mon_HP current =
+  current.fight.monster_string <- manage_damage mon_HP current;
+  let diff = Levenshtein.dist str mon_str in
+  ( match current.fight.action with
+  | Attack -> manage_attack mon_str mon_HP diff current
+  | Recover -> manage_recover mon_str mon_HP diff current
+  | Run -> manage_run str mon_str mon_HP diff current );
+  current.fight.attacking <- false;
+  ""
+
+let fighting_case current key =
+  let str = current.fight.input_string in
+  match key with
+  | 13 ->
+      enter_case str current.fight.monster_string
+        current.fight.monster_health current
+  | 127 -> String.sub str 0 (max (String.length str - 1) 0)
+  | _ when is_typable key -> str ^ Char.escaped (Char.chr key)
+  | _ -> str
 
 let gaming_move current key =
   match current.game_over with
@@ -325,10 +323,9 @@ let menu_move current key =
   | Glut.KEY_DOWN ->
       Render_stack.stack_pop ();
       reset_fight current
-  | Glut.KEY_UP ->
-      if not current.fight.attacking then (
-        Timer.reset_timer ();
-        current.fight.attacking <- not current.fight.attacking )
+  | Glut.KEY_UP when not current.fight.attacking ->
+      Timer.reset_timer ();
+      current.fight.attacking <- not current.fight.attacking
   | _ -> () );
   current
 
