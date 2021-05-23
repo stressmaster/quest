@@ -16,8 +16,11 @@ val add_to_game : t -> Dungeon.t -> t
 
 val game_depth : t -> int
 
-val json_maker : bool -> int -> t -> Yojson.Basic.t
+val json_maker :
+  bool -> int -> int -> int -> Item.t -> Item.t -> t -> Yojson.Basic.t
 
 val update_file : Yojson.Basic.t -> unit
 
 val reset_save : Yojson.Basic.t
+
+val item_of_json : Yojson.Basic.t -> Item.t

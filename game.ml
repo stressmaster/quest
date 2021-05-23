@@ -31,6 +31,15 @@ let dungeon_of_room save =
       save |> member "ystart" |> to_int )
     20 (id + 1) (id - 1)
 
+let item_of_json json =
+  let typestring = json |> member "type" |> to_string in
+  let oursprite = json |> member "sprite" |> to_string in
+  let ourname = json |> member "name" |> to_string in
+  let ourdepth = json |> member "depth" |> to_int in
+  let ourmodifier = json |> member "modifier" |> to_int in
+  Item.create_item_hard typestring oursprite ourname ourdepth
+    ourmodifier
+
 let save_json json =
   {
     dungeons =
@@ -99,7 +108,18 @@ let rec room_maker dungeonlist acc : Yojson.Basic.t list =
       room_maker t (room :: acc)
   | _ -> acc
 
-let json_maker exists room_number game : Yojson.Basic.t =
+let json_of_item item =
+  `Assoc
+    [
+      ("type", `String (Item.get_item_type item));
+      ("sprite", `String (Item.get_item_sprite item));
+      ("name", `String (Item.get_item_name item));
+      ("depth", `Int (Item.get_item_depth item));
+      ("modifier", `Int (Item.get_item_modifier item));
+    ]
+
+let json_maker exists room_number curr_exp exp_bound weapon armor game :
+    Yojson.Basic.t =
   let rooms = room_maker game.dungeons [] in
   let ourjson =
     `Assoc
@@ -107,6 +127,10 @@ let json_maker exists room_number game : Yojson.Basic.t =
         ("exists", `Bool exists);
         ("number_rooms", `Int room_number);
         ("rooms", `List rooms);
+        ("current_exp", `Int curr_exp);
+        ("exp_bound", `Int exp_bound);
+        ("current_weapon", json_of_item weapon);
+        ("current_armor", json_of_item armor);
       ]
   in
   ourjson

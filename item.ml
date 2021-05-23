@@ -10,6 +10,17 @@ type t =
   | Armor of item_stats
   | NoItem
 
+let create_item_hard itype sprite name depth modifier =
+  if itype = "weapon" then Weapon { sprite; name; depth; modifier }
+  else if itype = "armor" then Armor { sprite; name; depth; modifier }
+  else NoItem
+
+let get_item_type t =
+  match t with
+  | Weapon w -> "weapon"
+  | Armor a -> "armor"
+  | NoItem -> "none"
+
 let empty_item = NoItem
 
 let get_item_sprite i =
@@ -17,6 +28,9 @@ let get_item_sprite i =
   | Weapon w -> w.sprite
   | Armor a -> a.sprite
   | NoItem -> !Magic_numbers.get_magic.item_tiers.empty_item
+
+let get_item_depth i =
+  match i with Weapon w -> w.depth | Armor a -> a.depth | NoItem -> 0
 
 let get_item_name i =
   match i with Weapon w -> w.name | Armor a -> a.name | NoItem -> ""

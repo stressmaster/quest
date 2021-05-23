@@ -56,6 +56,8 @@ type current = {
   mutable exp_bound : int;
   mutable current_weapon : Item.t;
   mutable current_armor : Item.t;
+  mutable weapon_at_entry : Item.t;
+  mutable armor_at_entry : Item.t;
   mutable game_over : game_over_action;
 }
 
@@ -97,6 +99,8 @@ let init_current game room monster =
     exp_bound = 10;
     current_weapon = Item.empty_item;
     current_armor = Item.empty_item;
+    weapon_at_entry = Item.empty_item;
+    armor_at_entry = Item.empty_item;
     game_over = Quit;
   }
 
@@ -136,10 +140,30 @@ let init_state_from_save file_name =
     health = !Magic_numbers.get_magic.health;
     level = 1;
     depth = Dungeon.get_id r;
-    current_exp = 0;
-    exp_bound = 10;
-    current_weapon = Item.empty_item;
-    current_armor = Item.empty_item;
+    current_exp =
+      Yojson.Basic.from_file file_name
+      |> Yojson.Basic.Util.member "current_exp"
+      |> Yojson.Basic.Util.to_int;
+    exp_bound =
+      Yojson.Basic.from_file file_name
+      |> Yojson.Basic.Util.member "exp_bound"
+      |> Yojson.Basic.Util.to_int;
+    current_weapon =
+      Yojson.Basic.from_file file_name
+      |> Yojson.Basic.Util.member "current_weapon"
+      |> Game.item_of_json;
+    current_armor =
+      Yojson.Basic.from_file file_name
+      |> Yojson.Basic.Util.member "current_armor"
+      |> Game.item_of_json;
+    weapon_at_entry =
+      Yojson.Basic.from_file file_name
+      |> Yojson.Basic.Util.member "current_weapon"
+      |> Game.item_of_json;
+    armor_at_entry =
+      Yojson.Basic.from_file file_name
+      |> Yojson.Basic.Util.member "current_armor"
+      |> Game.item_of_json;
     game_over = Quit;
   }
 
@@ -218,6 +242,8 @@ let change_to_next_room current =
   current.location <- Dungeon.get_start current.room;
   current.room_exit <- Dungeon.get_exit current.room;
   current.depth <- current.depth + 1;
+  current.weapon_at_entry <- current.current_weapon;
+  current.armor_at_entry <- current.current_armor;
   let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
   Magic_numbers.update new_magic_numbers;
   Spriteanimation.init_animations new_magic_numbers.animations
@@ -252,7 +278,7 @@ let move current key =
     match key with
     | Glut.KEY_RIGHT | Glut.KEY_LEFT | Glut.KEY_UP | Glut.KEY_DOWN ->
         map_move current key x y
-    | Glut.KEY_F2 ->
+    | Glut.KEY_INSERT ->
         manage_item current x y (Dungeon.get_item current.room (x, y))
     | _ -> ()
   end;
@@ -331,7 +357,8 @@ let gaming_move current key =
       Game.update_file
         (Game.json_maker true
            (Game.game_depth current.game)
-           current.game);
+           current.current_exp current.exp_bound current.weapon_at_entry
+           current.armor_at_entry current.game);
       ignore (exit 0);
       current
   | Revive when key = 13 ->

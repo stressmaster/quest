@@ -12,7 +12,13 @@ type t =
 
 val empty_item : t
 
+val create_item_hard : string -> string -> string -> int -> int -> t
+
+val get_item_type : t -> string
+
 val get_item_sprite : t -> string
+
+val get_item_depth : t -> int
 
 val get_item_name : t -> string
 
