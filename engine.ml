@@ -70,10 +70,6 @@ let init_input game =
   Glut.specialFunc ~cb:(fun ~key ~x ~y ->
       game := State.controller !game key)
 
-let rec bigtimer ~value =
-  Bigtimer.increase_time 1;
-  Glut.timerFunc ~ms:value ~cb:bigtimer ~value
-
 let rec general_timer ~value =
   Timer.step_timer ();
   Glut.postRedisplay ();
@@ -88,7 +84,6 @@ let init_timer ms game =
     game := State.check_time_limit !game;
     Glut.timerFunc ~ms:value ~cb:typing_timer ~value
   in
-  Glut.timerFunc ~ms ~cb:bigtimer ~value:ms;
   Glut.timerFunc ~ms ~cb:general_timer ~value:ms;
   Glut.timerFunc ~ms ~cb:typing_timer ~value:ms;
   Glut.timerFunc ~ms ~cb:animation_timer ~value:ms

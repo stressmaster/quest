@@ -229,7 +229,7 @@ let instantiate_dungeon_helper
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon
-    ?(seed = Bigtimer.current_time ())
+    ?(seed = Timer.current_time "big")
     id
     x
     y
