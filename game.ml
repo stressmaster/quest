@@ -112,3 +112,5 @@ let json_maker exists room_number game : Yojson.Basic.t =
   ourjson
 
 let update_file ourjson = Yojson.Basic.to_file "save.json" ourjson
+
+let reset_save : Yojson.Basic.t = `Assoc [ ("exists", `Bool false) ]

@@ -337,7 +337,10 @@ let gaming_move current key =
   | Revive when key = 13 ->
       Render_stack.stack_pop ();
       current
-  | Restart when key = 13 -> current
+  | Restart when key = 13 ->
+      Game.update_file Game.reset_save;
+      ignore (exit 0);
+      current
   (* reset save.json*)
   | _ -> current
 

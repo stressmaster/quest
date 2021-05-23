@@ -19,3 +19,5 @@ val game_depth : t -> int
 val json_maker : bool -> int -> t -> Yojson.Basic.t
 
 val update_file : Yojson.Basic.t -> unit
+
+val reset_save : Yojson.Basic.t
