@@ -41,34 +41,30 @@ let rec turner
   if number_done = number_needed || fight.spiraled then ()
   else
     match dir with
+    | Right when not (Hashtbl.find table (cur_x, cur_y - 1)) ->
+        turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
+          Down end_x end_y table
     | Right ->
-        if Hashtbl.find table (cur_x, cur_y - 1) = false then
-          turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
-            Down end_x end_y table
-        else
-          turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
-            Right end_x end_y table
+        turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
+          Right end_x end_y table
+    | Down when not (Hashtbl.find table (cur_x - 1, cur_y)) ->
+        turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
+          Left end_x end_y table
     | Down ->
-        if not (Hashtbl.find table (cur_x - 1, cur_y)) then
-          turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
-            Left end_x end_y table
-        else
-          turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
-            Down end_x end_y table
+        turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
+          Down end_x end_y table
+    | Left when not (Hashtbl.find table (cur_x, cur_y + 1)) ->
+        turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
+          Up end_x end_y table
     | Left ->
-        if not (Hashtbl.find table (cur_x, cur_y + 1)) then
-          turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
-            Up end_x end_y table
-        else
-          turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
-            Left end_x end_y table
+        turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
+          Left end_x end_y table
+    | Up when not (Hashtbl.find table (cur_x + 1, cur_y)) ->
+        turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
+          Right end_x end_y table
     | Up ->
-        if not (Hashtbl.find table (cur_x + 1, cur_y)) then
-          turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
-            Right end_x end_y table
-        else
-          turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
-            Up end_x end_y table
+        turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
+          Up end_x end_y table
 
 let render_spiral fight x y =
   let middle_x = (x - 1) / 2 in
