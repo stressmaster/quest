@@ -7,7 +7,6 @@ type scene =
   | WinRender
   | GameoverRender
   | StartRender
-  | LoadingRender
 
 val stack_push : scene -> unit
 

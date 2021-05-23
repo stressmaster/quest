@@ -10,6 +10,10 @@ type game_over_action =
   | Revive
   | Restart
 
+type start_menu_action =
+  | NewGame
+  | Continue
+
 type fight = {
   mutable spiraled : bool;
   mutable action : action;
@@ -46,6 +50,8 @@ val in_fight : current -> bool
 val curr_fight : current -> fight
 
 val curr_game_over : current -> game_over_action
+
+val curr_start_menu : current -> start_menu_action
 
 val render_inventory : current -> unit
 

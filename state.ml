@@ -10,6 +10,10 @@ type game_over_action =
   | Revive
   | Restart
 
+type start_menu_action =
+  | NewGame
+  | Continue
+
 type fight = {
   mutable spiraled : bool;
   mutable action : action;
@@ -42,6 +46,10 @@ let get_prev_game_over = function
   | Revive -> Quit
   | Restart -> Revive
 
+let get_next_start_menu = function
+  | NewGame -> Continue
+  | Continue -> NewGame
+
 type current = {
   mutable game : Game.t;
   mutable location : int * int;
@@ -57,6 +65,7 @@ type current = {
   mutable current_weapon : Item.t;
   mutable current_armor : Item.t;
   mutable game_over : game_over_action;
+  mutable start_menu : start_menu_action;
 }
 
 let curr_room c = c.room
@@ -66,6 +75,8 @@ let in_fight c = c.in_fight
 let curr_fight c = c.fight
 
 let curr_game_over c = c.game_over
+
+let curr_start_menu c = c.start_menu
 
 let init_fight monster =
   {
@@ -98,6 +109,7 @@ let init_current game room monster =
     current_weapon = Item.empty_item;
     current_armor = Item.empty_item;
     game_over = Quit;
+    start_menu = NewGame;
   }
 
 let init_state file_name =
@@ -165,6 +177,7 @@ let init_state_from_save file_name =
       |> Yojson.Basic.Util.member "current_armor"
       |> Game.item_of_json;
     game_over = Quit;
+    start_menu = NewGame;
   }
 
 let reset_fight c =
@@ -190,8 +203,8 @@ let encounter bound = Random.int bound = 0
 let is_in_fight current =
   let current_bound = Dungeon.get_bound current.room in
   (not
-     (current.location = current.room_exit
-     || current.location = Dungeon.get_start current.room))
+     ( current.location = current.room_exit
+     || current.location = Dungeon.get_start current.room ))
   && encounter current_bound
 
 let player_loc state = state.location
@@ -221,10 +234,10 @@ let manage_weapon current x y weapon =
 let manage_no_item current x y =
   if current.current_weapon <> NoItem then (
     Dungeon.drop_item current.room (x, y) (Some current.current_weapon);
-    current.current_weapon <- NoItem)
+    current.current_weapon <- NoItem )
   else if current.current_armor <> NoItem then (
     Dungeon.drop_item current.room (x, y) (Some current.current_armor);
-    current.current_armor <- NoItem)
+    current.current_armor <- NoItem )
 
 let manage_item current x y = function
   | Some (Item.Armor a) ->
@@ -270,7 +283,7 @@ let move current key =
   if current.in_fight then (
     Audio.change_music "./camlished_battle.wav";
     Render_stack.stack_push Render_stack.SpiralRender;
-    Timer.reset_timer "general");
+    Timer.reset_timer "general" );
   (* delete light right below when spiral works. it is a work around*)
   begin
     match key with
@@ -327,15 +340,15 @@ let manage_run str mon_str mon_HP diff current =
   then take_damage mon_HP current;
   if diff <= String.length str / 3 then (
     Render_stack.stack_pop ();
-    reset_fight current)
+    reset_fight current )
 
 let enter_case str mon_str mon_HP current =
   current.fight.monster_string <- manage_damage mon_HP current;
   let diff = Levenshtein.dist str mon_str in
-  (match current.fight.action with
+  ( match current.fight.action with
   | Attack -> manage_attack mon_str mon_HP diff current
   | Recover -> manage_recover mon_str mon_HP diff current
-  | Run -> manage_run str mon_str mon_HP diff current);
+  | Run -> manage_run str mon_str mon_HP diff current );
   current.fight.attacking <- false;
   ""
 
@@ -348,6 +361,22 @@ let fighting_case current key =
   | 127 -> String.sub str 0 (max (String.length str - 1) 0)
   | _ when is_typable key -> str ^ Char.escaped (Char.chr key)
   | _ -> str
+
+let starting_move current key =
+  let exists =
+    Yojson.Basic.from_file "save.json"
+    |> Yojson.Basic.Util.member "exists"
+    |> Yojson.Basic.Util.to_bool
+  in
+  match current.start_menu with
+  | NewGame when key = 13 ->
+      Render_stack.stack_pop ();
+      Game.update_file Game.reset_save;
+      current
+  | Continue when key = 13 && exists ->
+      Render_stack.stack_pop ();
+      init_state_from_save "save.json"
+  | _ -> current
 
 let gaming_move current key =
   match current.game_over with
@@ -379,10 +408,11 @@ let typing_move current key =
         clamp_str (fighting_case current key);
       current
   | GameoverRender -> gaming_move current key
+  | StartRender -> starting_move current key
   | _ -> current
 
 let menu_move current key =
-  (match key with
+  ( match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
@@ -393,8 +423,8 @@ let menu_move current key =
   | Glut.KEY_UP ->
       if not current.fight.attacking then (
         Timer.reset_timer "general";
-        current.fight.attacking <- not current.fight.attacking)
-  | _ -> ());
+        current.fight.attacking <- not current.fight.attacking )
+  | _ -> () );
   current
 
 let game_over_move current key =
@@ -404,6 +434,13 @@ let game_over_move current key =
       current
   | Glut.KEY_UP ->
       current.game_over <- get_prev_game_over current.game_over;
+      current
+  | _ -> current
+
+let start_menu_move current key =
+  match key with
+  | Glut.KEY_DOWN | Glut.KEY_UP ->
+      current.start_menu <- get_next_start_menu current.start_menu;
       current
   | _ -> current
 
@@ -441,6 +478,7 @@ let controller current key =
       manage_game_over current
   | FightRender -> menu_move current key
   | GameoverRender -> game_over_move current key
+  | StartRender -> start_menu_move current key
   | _ -> current
 
 (* (* move after end of fight*) if current.in_fight &&

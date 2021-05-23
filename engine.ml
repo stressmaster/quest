@@ -7,14 +7,6 @@ let init_animation () =
 
 let init_timers () = Timer.init_timers [ ("general", 1); ("big", 1) ]
 
-let stack = Stack.create ()
-
-let _ = Stack.push Render_stack.DungeonRender stack
-
-let stack_push x = Stack.push x stack
-
-let stack_pop () = Stack.pop stack
-
 let init_window w h =
   ignore (Glut.init Sys.argv);
   Glut.initDisplayMode ~alpha:true ~depth:true ();
@@ -51,6 +43,8 @@ let what_to_render game = function
       State.render_inventory !game
   | Render_stack.GameoverRender ->
       Gameover_menu.render_menu (State.curr_game_over !game)
+  | Render_stack.StartRender ->
+      Start_menu.render_menu (State.curr_start_menu !game)
   | _ -> ()
 
 let init_display game w h =

@@ -7,7 +7,6 @@ type scene =
   | WinRender
   | GameoverRender
   | StartRender
-  | LoadingRender
 
 let stack = Stack.create ()
 
@@ -21,7 +20,6 @@ let string_of_scene a =
   | WinRender -> "WinRender"
   | GameoverRender -> "GameoverRender"
   | StartRender -> "StartRender"
-  | LoadingRender -> "LoadingRender"
 
 let debug_stack r p =
   match (r, p) with
@@ -42,4 +40,6 @@ let stack_pop () =
   print_string (string_of_scene (stack_peek ()) ^ " is now top");
   print_newline ()
 
-let _ = stack_push DungeonRender
+let _ =
+  stack_push DungeonRender;
+  stack_push StartRender

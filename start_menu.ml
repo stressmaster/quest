@@ -1,6 +1,6 @@
 let render_menu action =
-  Font.render_font
-    (Font.new_font "camelquest" 0.5 1.
+  Font.render_font ~spacing:0.2
+    (Font.new_font "camelquest" 0. 1.
        (2. *. Magic_numbers.width)
        (2. *. Magic_numbers.height));
   Font.render_font
