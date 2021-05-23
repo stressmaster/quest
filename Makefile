@@ -7,7 +7,7 @@ PNGS= darkness entrance exit goblin_1 monster path player wall timer empty_item 
 IM1=$(PNGS:=.png)
 FONTS= fonts/*
 IM2=$(FONTS:=.png)
-SOUND= camlished unravel oof
+SOUND= camlished unravel oof camlished_battle
 WAV=$(SOUND:=.wav)
 TEST=test.byte
 MAIN=main.byte
