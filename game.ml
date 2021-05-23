@@ -25,8 +25,8 @@ let dungeon_of_room save =
   Dungeon.instantiate_dungeon
     ~seed:(save |> member "time" |> to_int)
     id
-    (save |> member "x-dim" |> to_int)
-    (save |> member "y-dim" |> to_int)
+    (save |> member "xdim" |> to_int)
+    (save |> member "ydim" |> to_int)
     ( save |> member "xstart" |> to_int,
       save |> member "ystart" |> to_int )
     20 (id + 1) (id - 1)
@@ -39,6 +39,8 @@ let save_json json =
 
 let start_room game =
   List.find (fun g -> Dungeon.get_id g = 0) game.dungeons
+
+let last_room game = List.hd game.dungeons
 
 let next_dungeon game dungeon =
   (* this is now capped at level 14*)

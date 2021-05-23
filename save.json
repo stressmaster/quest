@@ -1,1 +1,1 @@
-{"exists":true,"number_rooms":1,"rooms":[{"id":0,"xdim":12,"ydim":24,"xstart":1,"ystart":1,"time":0}]}
+{"exists":true,"number_rooms":4,"rooms":[{"id":0,"xdim":12,"ydim":24,"xstart":1,"ystart":1,"time":0},{"id":1,"xdim":13,"ydim":21,"xstart":1,"ystart":10,"time":517},{"id":1,"xdim":13,"ydim":21,"xstart":1,"ystart":10,"time":517},{"id":2,"xdim":20,"ydim":23,"xstart":10,"ystart":21,"time":866}]}

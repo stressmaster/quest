@@ -27,6 +27,8 @@ val reset_fight : current -> unit
 (* [init_state] assigns player to starting location in dungeon *)
 val init_state : string -> current
 
+val init_state_from_save : string -> current
+
 (* [player_loc] returns cords of current player location *)
 val player_loc : current -> int * int
 
