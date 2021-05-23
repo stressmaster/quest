@@ -49,6 +49,9 @@ let save_json json =
 let start_room game =
   List.find (fun g -> Dungeon.get_id g = 0) game.dungeons
 
+let nth_room game n =
+  List.find (fun g -> Dungeon.get_id g = n) game.dungeons
+
 let last_room game = List.hd game.dungeons
 
 let next_dungeon game dungeon =
@@ -118,13 +121,25 @@ let json_of_item item =
       ("modifier", `Int (Item.get_item_modifier item));
     ]
 
-let json_maker exists room_number curr_exp exp_bound weapon armor game :
-    Yojson.Basic.t =
+let json_maker
+    exists
+    locx
+    locy
+    current_id
+    room_number
+    curr_exp
+    exp_bound
+    weapon
+    armor
+    game : Yojson.Basic.t =
   let rooms = room_maker game.dungeons [] in
   let ourjson =
     `Assoc
       [
         ("exists", `Bool exists);
+        ("locationx", `Int locx);
+        ("locationy", `Int locy);
+        ("current_id", `Int current_id);
         ("number_rooms", `Int room_number);
         ("rooms", `List rooms);
         ("current_exp", `Int curr_exp);
