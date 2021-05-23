@@ -93,13 +93,13 @@ let init_engine texture_list w h x_length y_length =
      "save.json"*)
   (* let exists = Yojson.Basic.from_file "save.json" |>
      Yojson.Basic.Util.member "exists" in *)
+  init_timers ();
   let game = ref (State.init_state "sample_game.json") in
   let start = Sys.time () in
   init_texture texture_list;
   init_audio ();
   init_window w h;
   init_animation ();
-  init_timers ();
   init_display game w h;
   init_input game;
   let ms = 100. *. (Sys.time () -. start) |> int_of_float in
