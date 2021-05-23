@@ -86,15 +86,7 @@ let init_engine texture_list w h x_length y_length =
   (* check exists. if exists, then State.init_state_from_json
      "save.json"*)
   init_timers ();
-  let exists =
-    Yojson.Basic.from_file "save.json"
-    |> Yojson.Basic.Util.member "exists"
-    |> Yojson.Basic.Util.to_bool
-  in
-  let game =
-    if exists then ref (State.init_state_from_save "save.json")
-    else ref (State.init_state "sample_game.json")
-  in
+  let game = ref (State.init_state "sample_game.json") in
   let start = Sys.time () in
   init_texture texture_list;
   init_audio ();
