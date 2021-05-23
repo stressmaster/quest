@@ -8,7 +8,7 @@ let textures = yojson |> member "texture_list"
 
 let length = List.length magic_themes
 
-type item_tiers = {
+type items = {
   tier_one_weapon : string;
   tier_one_armor : string;
   tier_one_materials : string list;
@@ -40,7 +40,7 @@ type t = {
   health : int;
   npcs : (string * string) list;
   monsters : (int * string * string * int * string list) list;
-  item_tiers : item_tiers;
+  items : items;
 }
 
 let json_to_str_list_lite json = List.map to_string (json |> to_list)
@@ -91,7 +91,7 @@ let width = float_of_int w /. float_of_int x_length
 
 let height = float_of_int h /. float_of_int y_length
 
-let json_to_item_tiers magic_theme : item_tiers =
+let json_to_items magic_theme : items =
   {
     tier_one_prefixes = json_to_str_list magic_theme "tier_one_prefixes";
     tier_two_prefixes = json_to_str_list magic_theme "tier_two_prefixes";
@@ -125,7 +125,7 @@ let magic_theme_to_magic_numbers magic_theme =
   let player = json_to_string magic_theme "player" in
   let darkness = json_to_string magic_theme "darkness" in
   let timer = json_to_string magic_theme "timer" in
-  let item_tiers = json_to_item_tiers magic_theme in
+  let items = json_to_items magic_theme in
   let monsters =
     magic_theme |> member "monsters" |> to_list
     |> List.map json_to_monster
@@ -143,12 +143,11 @@ let magic_theme_to_magic_numbers magic_theme =
     animations = json_to_animations magic_theme "animations";
     health = json_to_int magic_theme "health";
     npcs;
-    item_tiers;
+    items;
   }
 
 let init n =
   let magic_theme = List.nth magic_themes n in
-
   magic_theme_to_magic_numbers magic_theme
 
 let magic_numbers = ref (init 1)

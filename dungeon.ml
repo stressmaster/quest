@@ -253,8 +253,8 @@ let get_id d = d.id
 
 let determine_color tile =
   match tile.item with
-  | Some (Armor _) -> !Magic_numbers.get_magic.item_tiers.armor_pickup
-  | Some (Weapon _) -> !Magic_numbers.get_magic.item_tiers.weapon_pickup
+  | Some (Armor _) -> !Magic_numbers.get_magic.items.armor_pickup
+  | Some (Weapon _) -> !Magic_numbers.get_magic.items.weapon_pickup
   | _ ->
       let material = tile |> tile_material in
       material
@@ -363,8 +363,6 @@ let render_dungeon_helper
     done
   done
 
-(* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
-   based on [(p_x, p_y)]*)
 let render_dungeon (p_x, p_y) (dungeon : t) condition =
   let dungeon_cells = dungeon |> get_cells in
   let dungeon_x_length, dungeon_y_length = dungeon |> get_dimensions in

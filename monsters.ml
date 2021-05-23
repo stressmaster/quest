@@ -22,17 +22,6 @@ let instantiate_monster
     max_hp = hitpoints;
   }
 
-let monster_move (mon : t) =
-  let ourstringlist = mon.attack_strings in
-  let ourlen = List.length ourstringlist in
-  let ourint = Random.int ourlen in
-  let rec listsearcher lst cur num =
-    match lst with
-    | [] -> failwith "invalid index"
-    | h :: t -> if cur == num then h else listsearcher t (cur + 1) num
-  in
-  listsearcher ourstringlist 0 ourint
-
 let get_monster_HP m = m.hitpoints
 
 let get_monster_max_HP m = m.max_hp
