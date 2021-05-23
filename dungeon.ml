@@ -65,27 +65,14 @@ let tile_material tile = tile.material
 
 let get_bound dungeon = dungeon.bound
 
-(* [instantiate_dungeon_cells x y dungeon_cells] associates (x', y')
-   with a tile that has x-cord x' and y-cord y' for 0<=x'<=[x]-1 and
-   0<=y'<=[y]-1 in dungeon_cells *)
-(* let instantiate_dungeon_cells x y dungeon_cells = for counter_y = 0
-   to y do for counter_x = 0 to x do let tile = if counter_y = 0 ||
-   counter_y = y - 1 || counter_x = 0 || counter_x = x - 1 then {
-   material = (!Magic_numbers.get_magic).wall; is_wall = true; item =
-   None; npc = None; } else { material =
-   (!Magic_numbers.get_magic).path; is_wall = false; item = None; npc =
-   None; } in Hashtbl.add dungeon_cells (counter_x, counter_y) { tile; x
-   = counter_x; y = counter_y } done done *)
+let tile_maker material is_wall item npc =
+  { material; is_wall; item; npc }
 
 let noexn_hashtable_find table elt =
-  match try Some (Hashtbl.find table elt) with Not_found -> None with
-  | Some a -> true
-  | None -> false
+  match Hashtbl.find_opt table elt with Some a -> true | None -> false
 
 let become_npc_helper x y table =
-  match
-    try Some (Hashtbl.find table (x, y)) with Not_found -> None
-  with
+  match Hashtbl.find_opt table (x, y) with
   | Some cell ->
       let { tile; x; y } = cell in
       let { material; is_wall; item; npc } = tile in
@@ -93,9 +80,7 @@ let become_npc_helper x y table =
   | None -> 0
 
 let tile_is_path x y table =
-  match
-    try Some (Hashtbl.find table (x, y)) with Not_found -> None
-  with
+  match Hashtbl.find_opt table (x, y) with
   | Some { tile; x; y } ->
       let { material; is_wall; item; npc } = tile in
       not is_wall
@@ -114,10 +99,7 @@ let become_npc x y table =
   if visibility >= 22 then true else false
 
 let render_npc_speech x y dungeon_cells =
-  match
-    try Some (Hashtbl.find dungeon_cells (x, y))
-    with Not_found -> None
-  with
+  match Hashtbl.find_opt dungeon_cells (x, y) with
   | None -> ()
   | Some { tile; x; y } -> (
       let { material; is_wall; item; npc } = tile in
@@ -131,10 +113,7 @@ let render_npc_speech x y dungeon_cells =
       | None, _, _ -> () )
 
 let add_npc_shadow x y dungeon_cells npc_shadow dir_x dir_y =
-  match
-    try Some (Hashtbl.find dungeon_cells (x, y))
-    with Not_found -> None
-  with
+  match Hashtbl.find_opt dungeon_cells (x, y) with
   | None -> ()
   | Some { tile; x; y } ->
       let { material; is_wall; item; npc } = tile in
@@ -158,12 +137,7 @@ let add_npcs x y dungeon_cells =
             !Magic_numbers.get_magic
         in
         let tile =
-          {
-            material = Npc.get_npc_sprite npc;
-            is_wall = true;
-            item = None;
-            npc = (Some npc, 0, 0);
-          }
+          tile_maker (Npc.get_npc_sprite npc) true None (Some npc, 0, 0)
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y };
@@ -172,27 +146,21 @@ let add_npcs x y dungeon_cells =
     done
   done
 
+let should_add_item counter_x counter_y dungeon_cells =
+  tile_is_path counter_x counter_y dungeon_cells && Random.int 20 > 18
+
 let add_items x y dungeon_cells id =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
-      if
-        tile_is_path counter_x counter_y dungeon_cells
-        && Random.int 20 > 18
-      then
-        let item_type = Random.bool () in
+      if should_add_item counter_x counter_y dungeon_cells then
         let item =
-          Item.create_item id item_type !Magic_numbers.get_magic
+          Item.create_item id (Random.bool ()) !Magic_numbers.get_magic
         in
         let npc =
           (Hashtbl.find dungeon_cells (counter_x, counter_y)).tile.npc
         in
         let tile =
-          {
-            material = Item.get_item_sprite item;
-            is_wall = false;
-            item = Some item;
-            npc;
-          }
+          tile_maker (Item.get_item_sprite item) false (Some item) npc
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y }
@@ -200,23 +168,7 @@ let add_items x y dungeon_cells id =
     done
   done
 
-let instantiate_dungeon_cells2 x y dungeon_cells lst id =
-  let rec listsearcher dungeon_cells lst =
-    match lst with
-    | [] -> ()
-    | h :: t ->
-        let tile =
-          {
-            material = !Magic_numbers.get_magic.path;
-            is_wall = false;
-            item = None;
-            npc = (None, 0, 0);
-          }
-        in
-        Hashtbl.add dungeon_cells h { tile; x = fst h; y = snd h };
-        listsearcher dungeon_cells t
-  in
-  listsearcher dungeon_cells lst;
+let instantiate_dungeon_cells_helper x y dungeon_cells =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
       if
@@ -224,21 +176,55 @@ let instantiate_dungeon_cells2 x y dungeon_cells lst id =
         = false
       then
         let tile =
-          {
-            material = !Magic_numbers.get_magic.wall;
-            is_wall = true;
-            item = None;
-            npc = (None, 0, 0);
-          }
+          tile_maker !Magic_numbers.get_magic.wall true None (None, 0, 0)
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y }
       else ()
     done
-  done;
+  done
+
+let instantiate_dungeon_cells x y dungeon_cells lst id =
+  let rec listsearcher dungeon_cells lst =
+    match lst with
+    | [] -> ()
+    | h :: t ->
+        let tile =
+          tile_maker !Magic_numbers.get_magic.path false None
+            (None, 0, 0)
+        in
+        Hashtbl.add dungeon_cells h { tile; x = fst h; y = snd h };
+        listsearcher dungeon_cells t
+  in
+  listsearcher dungeon_cells lst;
+  instantiate_dungeon_cells_helper x y dungeon_cells;
   if Npc.npc_list_length !Magic_numbers.get_magic > 0 then
     add_npcs x y dungeon_cells;
   add_items x y dungeon_cells id
+
+let instantiate_dungeon_helper
+    id
+    cells
+    start
+    exit
+    dimensions
+    bound
+    next
+    prev
+    magic_numbers
+    time =
+  {
+    id;
+    cells;
+    start;
+    exit;
+    dimensions;
+    bound;
+    next;
+    prev;
+    magic_numbers;
+    time;
+  }
 
 (* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon
@@ -256,36 +242,13 @@ let instantiate_dungeon
   in
   Magic_numbers.update magic_numbers;
   let c = Hashtbl.create (x * y) in
-  (* let ourlst = carver 0 0 x y Right [] 5 300 in *)
   let w = Walker.init_walker 0 x 0 y start in
   let ourlst = Walker.walk 2600 w in
-  instantiate_dungeon_cells2 x y c ourlst id;
-  {
-    id;
-    cells = c;
-    start;
-    exit = w.furthest_pos;
-    dimensions = (x, y);
-    bound;
-    next;
-    prev;
-    magic_numbers;
-    time = seed;
-  }
+  instantiate_dungeon_cells x y c ourlst id;
+  instantiate_dungeon_helper id c start w.furthest_pos (x, y) bound next
+    prev magic_numbers seed
 
 let get_id d = d.id
-
-let print_dungeon dungeon =
-  for y = 0 to dungeon.dimensions |> fst do
-    if y > 0 then print_newline () else ();
-    for x = 0 to dungeon.dimensions |> snd do
-      let c = ref "." in
-      if (Hashtbl.find dungeon.cells (x, y)).tile.is_wall then c := "#"
-      else if (x, y) = dungeon.start then c := "<"
-      else if (x, y) = dungeon.exit then c := ">";
-      print_string !c
-    done
-  done
 
 let determine_color tile =
   match tile.item with
@@ -295,44 +258,45 @@ let determine_color tile =
       let material = tile |> tile_material in
       material
 
-(* [get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length] is the
-   bounds for rendering based on [(p_x, p_y) dungeon_x_length
-   dungeon_y_length] *)
+let get_x_start p_x dungeon_x_length =
+  if p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2) < 0 then 0
+  else if
+    p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2) + 1
+    > dungeon_x_length
+  then dungeon_x_length - !Magic_numbers.get_magic.x_length
+  else p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2)
+
+let get_x_end p_x dungeon_x_length =
+  if
+    p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2) + 1
+    > dungeon_x_length
+  then dungeon_x_length
+  else if p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2) < 0 then
+    !Magic_numbers.get_magic.x_length
+  else p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2)
+
+let get_y_start p_y dungeon_y_length =
+  if p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2) < 0 then 0
+  else if
+    p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2) + 1
+    > dungeon_y_length
+  then dungeon_y_length - !Magic_numbers.get_magic.y_length
+  else p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2)
+
+let get_y_end p_y dungeon_y_length =
+  if
+    p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2) + 1
+    > dungeon_y_length
+  then dungeon_y_length
+  else if p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2) < 0 then
+    !Magic_numbers.get_magic.y_length
+  else p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2)
+
 let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
-  let x_start =
-    if p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2) < 0 then 0
-    else if
-      p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2) + 1
-      > dungeon_x_length
-    then dungeon_x_length - !Magic_numbers.get_magic.x_length
-    else p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2)
-  in
-  let x_end =
-    if
-      p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2) + 1
-      > dungeon_x_length
-    then dungeon_x_length
-    else if p_x - ((!Magic_numbers.get_magic.x_length - 1) / 2) < 0 then
-      !Magic_numbers.get_magic.x_length
-    else p_x + ((!Magic_numbers.get_magic.x_length - 1) / 2)
-  in
-  let y_start =
-    if p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2) < 0 then 0
-    else if
-      p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2) + 1
-      > dungeon_y_length
-    then dungeon_y_length - !Magic_numbers.get_magic.y_length
-    else p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2)
-  in
-  let y_end =
-    if
-      p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2) + 1
-      > dungeon_y_length
-    then dungeon_y_length
-    else if p_y - ((!Magic_numbers.get_magic.y_length - 1) / 2) < 0 then
-      !Magic_numbers.get_magic.y_length
-    else p_y + ((!Magic_numbers.get_magic.y_length - 1) / 2)
-  in
+  let x_start = get_x_start p_x dungeon_x_length in
+  let x_end = get_x_end p_x dungeon_x_length in
+  let y_start = get_y_start p_y dungeon_y_length in
+  let y_end = get_y_end p_y dungeon_y_length in
   (x_start, x_end, y_start, y_end)
 
 (* [determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon] is the
@@ -377,6 +341,36 @@ let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
           /. 500. )
        10. 10. "./fonts/i.png")
 
+let render_dungeon_square_helper x x_start y y_start new_texture =
+  Render.render_square
+    (Render.new_square
+       ( float_of_int (x - x_start)
+       /. float_of_int !Magic_numbers.get_magic.x_length
+       *. 2. )
+       ( float_of_int (y - y_start)
+       /. float_of_int !Magic_numbers.get_magic.y_length
+       *. 2. )
+       !Magic_numbers.get_magic.width !Magic_numbers.get_magic.height
+       new_texture)
+
+let render_dungeon_helper
+    (x_start, x_end)
+    (y_start, y_end)
+    (npc_x, npc_y)
+    (p_x, p_y)
+    npc_name
+    dungeon_cells
+    dungeon =
+  for x = x_start to x_end do
+    for y = y_start to y_end do
+      let new_texture =
+        if (npc_x, npc_y) = (x, y) then determine_npc_texture npc_name
+        else determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon
+      in
+      render_dungeon_square_helper x x_start y y_start new_texture
+    done
+  done
+
 (* [render_dungeon (p_x, p_y) (dungeon : Dungeon.t)] renders [dungeon]
    based on [(p_x, p_y)]*)
 let render_dungeon (p_x, p_y) (dungeon : t) condition =
@@ -385,30 +379,14 @@ let render_dungeon (p_x, p_y) (dungeon : t) condition =
   let x_start, x_end, y_start, y_end =
     get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length
   in
-  let npc_name, x_npc, y_npc =
+  let npc_name, npc_x, npc_y =
     match (Hashtbl.find dungeon_cells (p_x, p_y)).tile.npc with
     | Some npc, dir_x, dir_y ->
         (Npc.get_npc_sprite npc, p_x + dir_x, p_y + dir_y)
     | _ -> ("nameless", -1, -1)
   in
-  for x = x_start to x_end do
-    for y = y_start to y_end do
-      let new_texture =
-        if (x_npc, y_npc) = (x, y) then determine_npc_texture npc_name
-        else determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon
-      in
-      Render.render_square
-        (Render.new_square
-           ( float_of_int (x - x_start)
-           /. float_of_int !Magic_numbers.get_magic.x_length
-           *. 2. )
-           ( float_of_int (y - y_start)
-           /. float_of_int !Magic_numbers.get_magic.y_length
-           *. 2. )
-           !Magic_numbers.get_magic.width
-           !Magic_numbers.get_magic.height new_texture)
-    done
-  done;
+  render_dungeon_helper (x_start, x_end) (y_start, y_end) (npc_x, npc_y)
+    (p_x, p_y) npc_name dungeon_cells dungeon;
   render_mini_map
     (float_of_int p_x, float_of_int p_y)
     (float_of_int dungeon_x_length, float_of_int dungeon_y_length);
