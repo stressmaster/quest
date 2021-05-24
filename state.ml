@@ -395,9 +395,11 @@ let gaming_move current key =
       Render_stack.stack_pop ();
       current
   | Restart when key = 13 ->
+      Audio.change_music "./camlished.wav";
+      Timer.reset_timer "big";
+      Render_stack.stack_push DungeonRender;
       Game.update_file Game.reset_save;
-      ignore (exit 0);
-      current
+      init_state "sample_game.json"
   (* reset save.json*)
   | _ -> current
 

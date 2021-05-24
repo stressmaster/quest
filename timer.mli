@@ -18,9 +18,9 @@ val init_timers : (id * int) list -> unit
     (id). *)
 val current_time : id -> int
 
-(* [reset_timer id] resets the timer (id)*)
+(** [reset_timer id] resets the timer (id)*)
 val reset_timer : id -> unit
 
-(* [step_timer ()] steps each one of the timers according to their
-   increment value*)
+(** [step_timer ()] steps each one of the timers according to their
+    increment value*)
 val step_timer : unit -> unit
