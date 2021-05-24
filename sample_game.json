@@ -1,6 +1,6 @@
 {
 	"dungeon": {
-		"id": 0,
+		"id": 1,
 		"x-dim": 12,
 		"y-dim": 24,
 		"start-x": 1,
