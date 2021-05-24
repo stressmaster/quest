@@ -71,7 +71,8 @@
     "./fonts/>.png",
     "./fonts/space.png",
     "./fonts/question.png",
-    "./fonts/exclamation.png"
+    "./fonts/exclamation.png",
+    "./fonts/period.png"
   ],
   "magic_themes": [
     {
