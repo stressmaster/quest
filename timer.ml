@@ -24,7 +24,7 @@ let reset_timer id =
 let step_timer () =
   let step_ticker h =
     let id, { increment; ticker } = h in
-    ticker := !ticker + increment;
+    ticker := (!ticker + increment) mod max_int;
     h
   in
   timers := List.map step_ticker !timers
