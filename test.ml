@@ -1,5 +1,8 @@
 open OUnit2
 open Dungeon
+open Timer
+open Levenshtein
+open State
 
 let int_tuple_printer (x, y) =
   "(" ^ string_of_int x ^ "," ^ string_of_int x ^ ")"
@@ -54,8 +57,17 @@ let make_typing_test name c ch expected_output =
   name >:: fun _ ->
   assert_equal expected_output (State.fighting_case c ch)
 
-let make_timer_test name id expectec_output =
-  name >:: fun _ -> assert_equal expectec_output (Timer.current_time id)
+let make_timer_test name step id expected_output =
+  name >:: fun _ ->
+  assert_equal expected_output
+    ( if step then Timer.step_timer ();
+      Timer.current_time id )
+
+let make_animation_test name step id expected_output =
+  name >:: fun _ ->
+  assert_equal expected_output
+    ( if step then Spriteanimation.step_animation ();
+      Spriteanimation.get_sprite id )
 
 (* let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0
    0 *)
@@ -65,7 +77,7 @@ let make_timer_test name id expectec_output =
 (* let monster_20_hp = Dungeon.instantiate_monster "dog" "dog.pn" 20 59
    [ "a" ] *)
 
-let current_sample_game = State.init_state "sample_game.json"
+(* let current_sample_game = State.init_state "sample_game.json" *)
 
 (* let dungeon_tests = [ make_dungeon__tuple_test "20x50 dungeon
    dimension" dungeon_20x50 get_dimensions (50, 30);
@@ -86,35 +98,59 @@ let levenshtein_tests =
     make_levenshtein_test "two empty strings" "" "" 0;
   ]
 
-let state_tests =
-  [
-    make_player_location_test "beginning" current_sample_game (1, 1);
-    make_in_fight_test "sample game not in fight" current_sample_game
-      false;
-    make_typing_test "correct string output after enter"
-      current_sample_game 13 "";
-    make_typing_test
-      "ensure correct string output with lowercase letter"
-      current_sample_game 99 "c";
-    make_typing_test "ensure correct string output with backspace"
-      current_sample_game 127 "";
-    make_typing_test
-      "ensure correct string output with uppercase letter"
-      current_sample_game 65 "A";
-    make_typing_test "ensure correct string output with space"
-      current_sample_game 32 " ";
-  ]
-
-let () = Timer.init_timers [ ("timer1", 1); ("timer2", 2) ]
+(* let state_tests = [ make_player_location_test "beginning"
+   current_sample_game (1, 1); make_in_fight_test "sample game not in
+   fight" current_sample_game false; make_typing_test "correct string
+   output after enter" current_sample_game 13 ""; make_typing_test
+   "ensure correct string output with lowercase letter"
+   current_sample_game 99 "c"; make_typing_test "ensure correct string
+   output with backspace" current_sample_game 127 ""; make_typing_test
+   "ensure correct string output with uppercase letter"
+   current_sample_game 65 "A"; make_typing_test "ensure correct string
+   output with space" current_sample_game 32 " "; ] *)
 
 let timer_tests =
   [
-    make_timer_test "After initialization timer1 should be 0" "timer1" 0;
-    make_timer_test "After initialization timer2 should be 0" "timer2" 0;
+    make_timer_test "After initialization timer1 should be 0" false
+      "timer1" 0;
+    make_timer_test "After initialization timer2 should be 0" false
+      "timer2" 0;
+    make_timer_test "After initialization timer3 should be 0" false
+      "timer3" 0;
+    make_timer_test "After stteping once timer1 should be 1" true
+      "timer1" 1;
+    make_timer_test "After stepping once timer2 should be 2" false
+      "timer2" 2;
+    make_timer_test "After stepping once timer3 should be max_int" false
+      "timer3" 0;
+  ]
+
+let sprite_tests =
+  [
+    make_animation_test "After initialization anim1 should be sprite1"
+      false "anim1" "sprite1";
+    make_animation_test "After initialization anim2 should be sprite1"
+      false "anim2" "sprite1";
+    make_animation_test "After stepping once anim1 should be sprite1"
+      true "anim1" "sprite2";
+    make_animation_test "After stepping once anim2 should be sprite1"
+      false "anim2" "sprite2";
+    make_animation_test "After stepping twice anim1 should be sprite1"
+      true "anim1" "sprite1";
+    make_animation_test "After stepping twice anim2 should be sprite1"
+      false "anim2" "sprite1";
   ]
 
 let suite =
   "test suite for CamelQuest"
-  >::: List.flatten [ levenshtein_tests; state_tests ]
+  >::: List.flatten [ levenshtein_tests; timer_tests; sprite_tests ]
 
-let _ = run_test_tt_main suite
+let _ =
+  Timer.init_timers
+    [ ("timer1", 1); ("timer2", 2); ("timer3", max_int) ];
+  Spriteanimation.init_animations
+    [
+      ("anim1", [ "sprite1"; "sprite2" ]);
+      ("anim2", [ "sprite1"; "sprite2" ]);
+    ];
+  run_test_tt_main suite
