@@ -25,3 +25,5 @@ val get_monster_max_HP : t -> int
 
 (* [get_monster magic_numbers] is a monster in [magic_numbers] *)
 val get_monster : Magic_numbers.t -> t
+
+val change_monster_hp : t -> int -> t
