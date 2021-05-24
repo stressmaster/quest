@@ -14,6 +14,7 @@ let char_to_file c =
   if c = ' ' then "space"
   else if c = '?' then "question"
   else if c = '!' then "exclamation"
+  else if c = '.' then "period"
   else c |> Char.lowercase_ascii |> Char.escaped
 
 let render_char c x y char_width char_height =
