@@ -54,27 +54,27 @@ let nth_room game n =
 
 let last_room game = List.hd game.dungeons
 
+let coor_maker xdim ydim =
+  [
+    (1, 1);
+    (xdim - 2, ydim - 2);
+    (xdim - 2, 1);
+    (2, ydim - 2);
+    (xdim / 2, ydim / 2);
+    (xdim / 2, ydim - 2);
+    (xdim / 2, 1);
+    (1, ydim / 2);
+    (xdim - 2, ydim / 2);
+  ]
+
 let next_dungeon game dungeon =
-  (* this is now capped at level 14*)
   let next_id = Dungeon.get_id dungeon + 1 in
   try List.find (fun g -> Dungeon.get_id g = next_id) game.dungeons
   with Not_found ->
     let next_id = Dungeon.get_id dungeon + 1 in
-    let xdim = 50 + Random.int 150 in
-    let ydim = 50 + Random.int 150 in
-    let ourlist =
-      [
-        (1, 1);
-        (xdim - 2, ydim - 2);
-        (xdim - 2, 1);
-        (2, ydim - 2);
-        (xdim / 2, ydim / 2);
-        (xdim / 2, ydim - 2);
-        (xdim / 2, 1);
-        (1, ydim / 2);
-        (xdim - 2, ydim / 2);
-      ]
-    in
+    let xdim = 11 + Random.int 20 in
+    let ydim = 11 + Random.int 20 in
+    let ourlist = coor_maker xdim ydim in
     Dungeon.instantiate_dungeon next_id xdim ydim
       (List.nth ourlist (Random.int 9))
       20 (next_id + 1) (next_id - 1)
@@ -94,17 +94,15 @@ let rec room_maker dungeonlist acc : Yojson.Basic.t list =
       let ydim = snd (Dungeon.get_dimensions h) in
       let xstart = fst (Dungeon.get_start h) in
       let ystart = snd (Dungeon.get_start h) in
-      let (time : int) = Dungeon.get_time h in
-      let id = Dungeon.get_id h in
       let room =
         `Assoc
           [
-            ("id", `Int id);
+            ("id", `Int (Dungeon.get_id h));
             ("xdim", `Int xdim);
             ("ydim", `Int ydim);
             ("xstart", `Int xstart);
             ("ystart", `Int ystart);
-            ("time", `Int time);
+            ("time", `Int (Dungeon.get_time h));
           ]
       in
       room_maker t (room :: acc)
@@ -120,28 +118,19 @@ let json_of_item item =
       ("modifier", `Int (Item.get_item_modifier item));
     ]
 
-let json_maker
-    exists
-    locx
-    locy
-    current_id
-    room_number
-    curr_exp
-    exp_bound
-    weapon
-    armor
-    game : Yojson.Basic.t =
+let json_maker e locx locy curid rnum curexp exp_bound weapon armor game
+    : Yojson.Basic.t =
   let rooms = room_maker game.dungeons [] in
   let ourjson =
     `Assoc
       [
-        ("exists", `Bool exists);
+        ("exists", `Bool e);
         ("locationx", `Int locx);
         ("locationy", `Int locy);
-        ("current_id", `Int current_id);
-        ("number_rooms", `Int room_number);
+        ("current_id", `Int curid);
+        ("number_rooms", `Int rnum);
         ("rooms", `List rooms);
-        ("current_exp", `Int curr_exp);
+        ("current_exp", `Int curexp);
         ("exp_bound", `Int exp_bound);
         ("current_weapon", json_of_item weapon);
         ("current_armor", json_of_item armor);

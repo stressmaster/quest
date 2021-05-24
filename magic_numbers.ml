@@ -8,13 +8,7 @@ let textures = yojson |> member "texture_list"
 
 let length = List.length magic_themes
 
-type items = {
-  tier_one_weapon : string;
-  tier_one_armor : string;
-  tier_two_weapon : string;
-  tier_two_armor : string;
-  tier_three_weapon : string;
-  tier_three_armor : string;
+type item_sl = {
   tier_one_materials : string list;
   tier_two_materials : string list;
   tier_three_materials : string list;
@@ -27,6 +21,16 @@ type items = {
   tier_one_prefixes : string list;
   tier_two_prefixes : string list;
   tier_three_prefixes : string list;
+}
+
+type items = {
+  tier_one_weapon : string;
+  tier_one_armor : string;
+  tier_two_weapon : string;
+  tier_two_armor : string;
+  tier_three_weapon : string;
+  tier_three_armor : string;
+  item_sl : item_sl;
   weapon_pickup : string;
   armor_pickup : string;
   empty_item : string;
@@ -99,7 +103,7 @@ let width = float_of_int w /. float_of_int x_length
 
 let height = float_of_int h /. float_of_int y_length
 
-let json_to_items magic_theme : items =
+let json_to_item_sl magic_theme =
   {
     tier_one_prefixes = json_to_sl magic_theme "tier_one_prefixes";
     tier_two_prefixes = json_to_sl magic_theme "tier_two_prefixes";
@@ -113,6 +117,11 @@ let json_to_items magic_theme : items =
     tier_one_armors = json_to_sl magic_theme "tier_one_armors";
     tier_two_armors = json_to_sl magic_theme "tier_two_armors";
     tier_three_armors = json_to_sl magic_theme "tier_three_armors";
+  }
+
+let json_to_items magic_theme : items =
+  {
+    item_sl = json_to_item_sl magic_theme;
     tier_one_weapon = json_to_string magic_theme "tier_one_weapon";
     tier_one_armor = json_to_string magic_theme "tier_one_armor";
     tier_two_weapon = json_to_string magic_theme "tier_two_weapon";

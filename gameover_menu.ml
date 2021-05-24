@@ -1,3 +1,18 @@
+let render_action action =
+  match action with
+  | State.Quit ->
+      Font.render_font
+        (Font.new_font ">" 0.3 0.6 Magic_numbers.width
+           Magic_numbers.height)
+  | State.Revive ->
+      Font.render_font
+        (Font.new_font ">" 0.3 0.4 Magic_numbers.width
+           Magic_numbers.height)
+  | State.Restart ->
+      Font.render_font
+        (Font.new_font ">" 0.3 0.2 Magic_numbers.width
+           Magic_numbers.height)
+
 let render_menu action =
   Font.render_font
     (Font.new_font "you" 0.75 1. Magic_numbers.width
@@ -14,16 +29,4 @@ let render_menu action =
   Font.render_font
     (Font.new_font "restart" 0.4 0.2 Magic_numbers.width
        Magic_numbers.height);
-  match action with
-  | State.Quit ->
-      Font.render_font
-        (Font.new_font ">" 0.3 0.6 Magic_numbers.width
-           Magic_numbers.height)
-  | State.Revive ->
-      Font.render_font
-        (Font.new_font ">" 0.3 0.4 Magic_numbers.width
-           Magic_numbers.height)
-  | State.Restart ->
-      Font.render_font
-        (Font.new_font ">" 0.3 0.2 Magic_numbers.width
-           Magic_numbers.height)
+  render_action action

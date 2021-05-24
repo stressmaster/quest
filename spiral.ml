@@ -11,55 +11,48 @@ let instantiate_dungeon_cells x y dungeon_cells =
     done
   done
 
-let rec turner
-    (fight : State.fight)
-    number_done
-    number_needed
-    cur_x
-    cur_y
-    dir
-    end_x
-    end_y
-    table =
-  (* print_string (string_of_int number_needed); print_newline (); *)
+let rec turner (fight : State.fight) ndone nneeded cx cy dir ex ey tab =
   Render.render_square
     (Render.new_square
-       (float_of_int cur_x /. float_of_int Magic_numbers.x_length *. 2.)
-       (float_of_int cur_y /. float_of_int Magic_numbers.x_length *. 2.)
+       (float_of_int cx /. float_of_int Magic_numbers.x_length *. 2.)
+       (float_of_int cy /. float_of_int Magic_numbers.x_length *. 2.)
        Magic_numbers.width Magic_numbers.height "./darkness.png");
-  Hashtbl.add table (cur_x, cur_y) true;
-  if cur_x = end_x && cur_y = end_y then (
+  Hashtbl.add tab (cx, cy) true;
+  if cx = ex && cy = ey then (
     fight.spiraled <- true;
     Render_stack.stack_pop ();
-    Render_stack.stack_push Render_stack.FightRender )
+    Render_stack.stack_push Render_stack.FightRender)
   else fight.spiraled <- false;
-  if number_done = number_needed || fight.spiraled then ()
+  if ndone = nneeded || fight.spiraled then ()
+  else turner_helper fight dir cx cy ex ey ndone nneeded tab
+
+and turner_helper fight dir cx cy end_x end_y ndone nneeded table =
+  match dir with
+  | Right -> turner_right cx cy table fight ndone nneeded end_x end_y
+  | Down -> turner_down cx cy table fight ndone nneeded end_x end_y
+  | Left -> turner_left cx cy table fight ndone nneeded end_x end_y
+  | Up -> turner_up cx cy table fight ndone nneeded end_x end_y
+
+and turner_right cx cy tab fight ndone nneeded end_x end_y =
+  if Hashtbl.find tab (cx, cy - 1) then
+    turner fight (ndone + 1) nneeded (cx + 1) cy Right end_x end_y tab
+  else turner fight (ndone + 1) nneeded cx (cy - 1) Down end_x end_y tab
+
+and turner_left cx cy tab fight ndone nneeded end_x end_y =
+  if Hashtbl.find tab (cx, cy + 1) then
+    turner fight (ndone + 1) nneeded (cx - 1) cy Left end_x end_y tab
+  else turner fight (ndone + 1) nneeded cx (cy + 1) Up end_x end_y tab
+
+and turner_up cx cy tab fight ndone nneeded end_x end_y =
+  if Hashtbl.find tab (cx + 1, cy) then
+    turner fight (ndone + 1) nneeded cx (cy + 1) Up end_x end_y tab
   else
-    match dir with
-    | Right when not (Hashtbl.find table (cur_x, cur_y - 1)) ->
-        turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
-          Down end_x end_y table
-    | Right ->
-        turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
-          Right end_x end_y table
-    | Down when not (Hashtbl.find table (cur_x - 1, cur_y)) ->
-        turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
-          Left end_x end_y table
-    | Down ->
-        turner fight (number_done + 1) number_needed cur_x (cur_y - 1)
-          Down end_x end_y table
-    | Left when not (Hashtbl.find table (cur_x, cur_y + 1)) ->
-        turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
-          Up end_x end_y table
-    | Left ->
-        turner fight (number_done + 1) number_needed (cur_x - 1) cur_y
-          Left end_x end_y table
-    | Up when not (Hashtbl.find table (cur_x + 1, cur_y)) ->
-        turner fight (number_done + 1) number_needed (cur_x + 1) cur_y
-          Right end_x end_y table
-    | Up ->
-        turner fight (number_done + 1) number_needed cur_x (cur_y + 1)
-          Up end_x end_y table
+    turner fight (ndone + 1) nneeded (cx + 1) cy Right end_x end_y tab
+
+and turner_down cx cy tab fight ndone nneeded end_x end_y =
+  if Hashtbl.find tab (cx - 1, cy) then
+    turner fight (ndone + 1) nneeded cx (cy - 1) Down end_x end_y tab
+  else turner fight (ndone + 1) nneeded (cx - 1) cy Left end_x end_y tab
 
 let render_spiral fight x y =
   let middle_x = (x - 1) / 2 in

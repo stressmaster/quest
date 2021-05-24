@@ -47,15 +47,19 @@ let determine_prefix tier (dereffed_magic_numbers : Magic_numbers.t) =
   if tier = 4. then
     list_rand_elt dereffed_magic_numbers.items.tier_three_prefixes
   else if tier = 1. then
-    list_rand_elt dereffed_magic_numbers.items.tier_two_prefixes
-  else list_rand_elt dereffed_magic_numbers.items.tier_one_prefixes
+    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_two_prefixes
+  else
+    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_one_prefixes
 
 let determine_material tier (dereffed_magic_numbers : Magic_numbers.t) =
   if tier = 4. then
     list_rand_elt dereffed_magic_numbers.items.tier_three_materials
   else if tier = 1. then
-    list_rand_elt dereffed_magic_numbers.items.tier_two_materials
-  else list_rand_elt dereffed_magic_numbers.items.tier_one_materials
+    list_rand_elt
+      dereffed_magic_numbers.items.item_sl.tier_two_materials
+  else
+    list_rand_elt
+      dereffed_magic_numbers.items.item_sl.tier_one_materials
 
 let determine_base itype tier (dereffed_magic_numbers : Magic_numbers.t)
     =
@@ -68,8 +72,9 @@ let determine_base itype tier (dereffed_magic_numbers : Magic_numbers.t)
   else if tier = 4. then
     list_rand_elt dereffed_magic_numbers.items.tier_three_armors
   else if tier = 1. then
-    list_rand_elt dereffed_magic_numbers.items.tier_two_armors
-  else list_rand_elt dereffed_magic_numbers.items.tier_one_armors
+    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_two_armors
+  else
+    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_one_armors
 
 let generate_name tier itype (dereffed_magic_numbers : Magic_numbers.t)
     =

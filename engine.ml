@@ -1,7 +1,3 @@
-let init_render_stack () =
-  Render_stack.stack_push DungeonRender;
-  Render_stack.stack_push StartRender
-
 let init_texture texture_list = Texturemap.init_texture texture_list
 
 let init_audio () = Audio.play_music ()
@@ -89,7 +85,6 @@ let init_timer ms game =
 let init_engine texture_list w h x_length y_length =
   (* check exists. if exists, then State.init_state_from_json
      "save.json"*)
-  init_render_stack ();
   init_timers ();
   let game = ref (State.init_state "sample_game.json") in
   let start = Sys.time () in
