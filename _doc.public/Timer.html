@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Font.html">
+<link rel="next" href="Render_stack.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Render" rel="Chapter" href="Render.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Texturemap" rel="Chapter" href="Texturemap.html">
+<link title="Game" rel="Chapter" href="Game.html">
+<link title="Dungeon" rel="Chapter" href="Dungeon.html">
+<link title="State" rel="Chapter" href="State.html">
+<link title="Levenshtein" rel="Chapter" href="Levenshtein.html">
+<link title="Fight_menu" rel="Chapter" href="Fight_menu.html">
+<link title="Npc" rel="Chapter" href="Npc.html">
+<link title="Spiral" rel="Chapter" href="Spiral.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Render_stack" rel="Chapter" href="Render_stack.html">
+<link title="Walker" rel="Chapter" href="Walker.html">
+<link title="Audio" rel="Chapter" href="Audio.html">
+<link title="Item" rel="Chapter" href="Item.html">
+<link title="Spriteanimation" rel="Chapter" href="Spriteanimation.html"><title>Timer</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Font.html" title="Font">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Render_stack.html" title="Render_stack">Next</a>
+</div>
+<h1>Module <a href="type_Timer.html">Timer</a></h1>
+
+<pre><span id="MODULETimer"><span class="keyword">module</span> Timer</span>: <code class="code">sig</code> <a href="Timer.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>Representation of timer data.</p>
+
+<p>This module contains the mutable data used to keep track of time
+   elapsed within the game.</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEid"><span class="keyword">type</span> <code class="type"></code>id</span> = <code class="type">string</code> </pre>
+<div class="info ">
+<div class="info-desc">
+<p>The strings by which we identify each timer</p>
+</div>
+</div>
+
+
+<pre><span id="TYPEtime"><span class="keyword">type</span> <code class="type"></code>time</span> </pre>
+<div class="info ">
+<div class="info-desc">
+<p>The abstract</p>
+</div>
+</div>
+
+
+<pre><span id="VALinit_timers"><span class="keyword">val</span> init_timers</span> : <code class="type">(<a href="Timer.html#TYPEid">id</a> * int) list -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">init_timers [(id1, i1), (id2, i2), ... (idk, ik)]</code> initializes
+   timers <code class="code">id1 ... idk</code> with increments <code class="code">i1 ... ik</code>. Each timer will
+   then increment by that amount each time in step_timer ().</p>
+</div>
+</div>
+
+<pre><span id="VALcurrent_time"><span class="keyword">val</span> current_time</span> : <code class="type"><a href="Timer.html#TYPEid">id</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">current_time id</code> shows the current amount of time recorded by timer
+    (id).</p>
+</div>
+</div>
+
+<pre><span id="VALreset_timer"><span class="keyword">val</span> reset_timer</span> : <code class="type"><a href="Timer.html#TYPEid">id</a> -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">reset_timer id</code> resets the timer (id)</p>
+</div>
+</div>
+
+<pre><span id="VALstep_timer"><span class="keyword">val</span> step_timer</span> : <code class="type">unit -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">step_timer ()</code> steps each one of the timers according to their
+    increment value</p>
+</div>
+</div>
+</body></html>

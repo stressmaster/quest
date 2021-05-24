@@ -46,8 +46,8 @@ type fight = {
    of fight*)
 val reset_fight : current -> unit
 
-(* [init_state str] creates a new state (including the initial dungeon,
-   player location, etc) based on the JSON represented by str*)
+(** [init_state str] creates a new state (including the initial dungeon,
+    player location, etc) based on the JSON represented by str*)
 val init_state : string -> current
 
 (**[init_state_from_save str] creates a new state (including the list of
@@ -55,11 +55,11 @@ val init_state : string -> current
    represented by str*)
 val init_state_from_save : string -> current
 
-(* [player_loc current] returns coordinates of player location *)
+(** [player_loc current] returns coordinates of player location *)
 val player_loc : current -> int * int
 
-(* [controller current] updates current based on special key input (eg.
-   up key)*)
+(** [controller current] updates current based on special key input (eg.
+    up key)*)
 val controller : current -> Glut.special_key_t -> current
 
 (**[typing_move current key] updates current based on the regular key

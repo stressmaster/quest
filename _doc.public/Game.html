@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Texturemap.html">
+<link rel="next" href="Dungeon.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Render" rel="Chapter" href="Render.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Texturemap" rel="Chapter" href="Texturemap.html">
+<link title="Game" rel="Chapter" href="Game.html">
+<link title="Dungeon" rel="Chapter" href="Dungeon.html">
+<link title="State" rel="Chapter" href="State.html">
+<link title="Levenshtein" rel="Chapter" href="Levenshtein.html">
+<link title="Fight_menu" rel="Chapter" href="Fight_menu.html">
+<link title="Npc" rel="Chapter" href="Npc.html">
+<link title="Spiral" rel="Chapter" href="Spiral.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Render_stack" rel="Chapter" href="Render_stack.html">
+<link title="Walker" rel="Chapter" href="Walker.html">
+<link title="Audio" rel="Chapter" href="Audio.html">
+<link title="Item" rel="Chapter" href="Item.html">
+<link title="Spriteanimation" rel="Chapter" href="Spriteanimation.html"><title>Game</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Texturemap.html" title="Texturemap">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Dungeon.html" title="Dungeon">Next</a>
+</div>
+<h1>Module <a href="type_Game.html">Game</a></h1>
+
+<pre><span id="MODULEGame"><span class="keyword">module</span> Game</span>: <code class="code">sig</code> <a href="Game.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>Representation of the game.</p>
+
+<p>This module represents the data needed to maintain and render the
+    game, including data about the dungeons in the game. Includes
+    methods for converting JSON to a game saving the game to JSON.</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+<div class="info ">
+<div class="info-desc">
+<p>an abstract type representing a game</p>
+</div>
+</div>
+
+
+<pre><span id="VALfrom_json"><span class="keyword">val</span> from_json</span> : <code class="type">Yojson.Basic.t -> <a href="Game.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">from_json json</code> is a game based on <code class="code">json</code></p>
+</div>
+</div>
+
+<pre><span id="VALsave_json"><span class="keyword">val</span> save_json</span> : <code class="type">Yojson.Basic.t -> <a href="Game.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">from_json save_file</code> is a game based on <code class="code">save_file</code></p>
+</div>
+</div>
+
+<pre><span id="VALstart_room"><span class="keyword">val</span> start_room</span> : <code class="type"><a href="Game.html#TYPEt">t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">start_room game</code> is the first dungeon in <code class="code">game</code></p>
+</div>
+</div>
+
+<pre><span id="VALlast_room"><span class="keyword">val</span> last_room</span> : <code class="type"><a href="Game.html#TYPEt">t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">last_room game</code> is the last dungeon in <code class="code">game</code></p>
+</div>
+</div>
+
+<pre><span id="VALnth_room"><span class="keyword">val</span> nth_room</span> : <code class="type"><a href="Game.html#TYPEt">t</a> -> int -> <a href="Dungeon.html#TYPEt">Dungeon.t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">nth_room game</code> is the nth dungeon in <code class="code">game</code></p>
+</div>
+</div>
+
+<pre><span id="VALnext_dungeon"><span class="keyword">val</span> next_dungeon</span> : <code class="type"><a href="Game.html#TYPEt">t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">next_dunge game dungeon</code> is the dungeon following <code class="code">dungeon</code> in
+    <code class="code">game</code></p>
+</div>
+</div>
+
+<pre><span id="VALprev_dungeon"><span class="keyword">val</span> prev_dungeon</span> : <code class="type"><a href="Game.html#TYPEt">t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">prev_dungeon game dungeon</code> is the dungeon preceding <code class="code">dungeon</code> in
+    <code class="code">game</code></p>
+</div>
+</div>
+
+<pre><span id="VALadd_to_game"><span class="keyword">val</span> add_to_game</span> : <code class="type"><a href="Game.html#TYPEt">t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a> -> <a href="Game.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">add_to_game game dungeon</code> is <code class="code">game</code> with <code class="code">dungeon</code> as the last
+    dungon</p>
+</div>
+</div>
+
+<pre><span id="VALgame_depth"><span class="keyword">val</span> game_depth</span> : <code class="type"><a href="Game.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">game_depth game</code> is the number of dungeons in <code class="code">game</code></p>
+</div>
+</div>
+
+<pre><span id="VALjson_maker"><span class="keyword">val</span> json_maker</span> : <code class="type">bool -><br>       int -><br>       int -><br>       int -> int -> int -> int -> <a href="Item.html#TYPEt">Item.t</a> -> <a href="Item.html#TYPEt">Item.t</a> -> <a href="Game.html#TYPEt">t</a> -> Yojson.Basic.t</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">json_maker exists locx locy current_id room_number curr_exp
+   exp_bound weapon armor game </code>
+    is a json save file that records <code class="code">locx</code> <code class="code">locy</code> <code class="code">current_id</code>
+    <code class="code">room_number</code> <code class="code">curr_exp</code> <code class="code">exp_bound</code> <code class="code">weapon</code> <code class="code">armor</code> and <code class="code">game</code>
+    that exists iff <code class="code">exists</code></p>
+</div>
+</div>
+
+<pre><span id="VALupdate_file"><span class="keyword">val</span> update_file</span> : <code class="type">Yojson.Basic.t -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">update_file json</code> updates the current save file with <code class="code">json</code></p>
+</div>
+</div>
+
+<pre><span id="VALreset_save"><span class="keyword">val</span> reset_save</span> : <code class="type">Yojson.Basic.t</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">reset_save</code> is a blank save file</p>
+</div>
+</div>
+
+<pre><span id="VALitem_of_json"><span class="keyword">val</span> item_of_json</span> : <code class="type">Yojson.Basic.t -> <a href="Item.html#TYPEt">Item.t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">item_of_json json</code> is the item recorded in <code class="code">json</code></p>
+</div>
+</div>
+</body></html>
