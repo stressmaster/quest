@@ -1,6 +1,4 @@
-(** Renders.
-
-    This module renders the game. It includes functions for making
+(** This module renders the game. It includes functions for making
     squares and screen effects. *)
 
 (** abstract type representing a square *)
