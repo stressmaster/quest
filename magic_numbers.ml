@@ -47,15 +47,15 @@ type t = {
   items : items;
 }
 
-let json_to_str_list_lite json = List.map to_string (json |> to_list)
+let json_to_sl_lite json = List.map to_string (json |> to_list)
 
-let texture_list = json_to_str_list_lite textures
+let texture_list = json_to_sl_lite textures
 
 let json_to_string json field = json |> member field |> to_string
 
 let json_to_int json field = json |> member field |> to_int
 
-let json_to_str_list json field =
+let json_to_sl json field =
   List.map to_string (json |> member field |> to_list)
 
 let to_string_list json = List.map to_string json
@@ -81,6 +81,10 @@ let json_to_monster json =
     json |> member "hitpoints" |> to_int,
     json |> member "attacks" |> to_list |> List.map to_string )
 
+let json_monsters magic_theme =
+  magic_theme |> member "monsters" |> to_list
+  |> List.map json_to_monster
+
 let h = json_to_int yojson "h"
 
 let w = json_to_int yojson "w"
@@ -97,23 +101,18 @@ let height = float_of_int h /. float_of_int y_length
 
 let json_to_items magic_theme : items =
   {
-    tier_one_prefixes = json_to_str_list magic_theme "tier_one_prefixes";
-    tier_two_prefixes = json_to_str_list magic_theme "tier_two_prefixes";
-    tier_three_prefixes =
-      json_to_str_list magic_theme "tier_three_prefixes";
-    tier_one_materials =
-      json_to_str_list magic_theme "tier_one_materials";
-    tier_two_materials =
-      json_to_str_list magic_theme "tier_two_materials";
-    tier_three_materials =
-      json_to_str_list magic_theme "tier_three_materials";
-    tier_one_weapons = json_to_str_list magic_theme "tier_one_weapons";
-    tier_two_weapons = json_to_str_list magic_theme "tier_two_weapons";
-    tier_three_weapons =
-      json_to_str_list magic_theme "tier_three_weapons";
-    tier_one_armors = json_to_str_list magic_theme "tier_one_armors";
-    tier_two_armors = json_to_str_list magic_theme "tier_two_armors";
-    tier_three_armors = json_to_str_list magic_theme "tier_three_armors";
+    tier_one_prefixes = json_to_sl magic_theme "tier_one_prefixes";
+    tier_two_prefixes = json_to_sl magic_theme "tier_two_prefixes";
+    tier_three_prefixes = json_to_sl magic_theme "tier_three_prefixes";
+    tier_one_materials = json_to_sl magic_theme "tier_one_materials";
+    tier_two_materials = json_to_sl magic_theme "tier_two_materials";
+    tier_three_materials = json_to_sl magic_theme "tier_three_materials";
+    tier_one_weapons = json_to_sl magic_theme "tier_one_weapons";
+    tier_two_weapons = json_to_sl magic_theme "tier_two_weapons";
+    tier_three_weapons = json_to_sl magic_theme "tier_three_weapons";
+    tier_one_armors = json_to_sl magic_theme "tier_one_armors";
+    tier_two_armors = json_to_sl magic_theme "tier_two_armors";
+    tier_three_armors = json_to_sl magic_theme "tier_three_armors";
     tier_one_weapon = json_to_string magic_theme "tier_one_weapon";
     tier_one_armor = json_to_string magic_theme "tier_one_armor";
     tier_two_weapon = json_to_string magic_theme "tier_two_weapon";
@@ -134,10 +133,7 @@ let magic_theme_to_magic_numbers magic_theme =
   let darkness = json_to_string magic_theme "darkness" in
   let timer = json_to_string magic_theme "timer" in
   let items = json_to_items magic_theme in
-  let monsters =
-    magic_theme |> member "monsters" |> to_list
-    |> List.map json_to_monster
-  in
+  let monsters = json_monsters magic_theme in
   let npcs = json_to_npcs magic_theme "npcs" in
   {
     wall;
