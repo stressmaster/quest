@@ -35,11 +35,6 @@ let render_square ~square =
   renderAt ~x:square.square_x ~y:square.square_y ~width:square.width
     ~height:square.height ~texture:square.texture
 
-(* let rec flash t1 t sq1 sq2 f = if t > f then Render_stack.stack_pop
-   () else if t1 = t then () else if t / 2 mod 2 = 0 then (
-   render_square sq1; flash (t1 + 1) t sq1 sq2 f) else ( render_square
-   sq2; flash (t1 + 1) t sq1 sq2 f) *)
-
 let rec flash t1 t sq1 sq2 =
   if current_flashes > max_flashes then (
     current_flashes := 0;

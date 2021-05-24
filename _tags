@@ -1,1 +1,1 @@
-true: package(sdl.sdlmixer), package(sdl), package(yojson), package(lablgl),package(ounit2), package(camlimages.core), package(camlimages.png)
+true: link_cocoa, package(sdl.sdlmixer), package(sdl), package(yojson), package(lablgl),package(ounit2), package(camlimages.core), package(camlimages.png)
