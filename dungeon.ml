@@ -90,10 +90,10 @@ let become_npc x y table =
   let visibility =
     if tile_is_path x y table then 0
     else
-      (become_npc_helper (x + 1) y table
+      ( become_npc_helper (x + 1) y table
       + become_npc_helper (x - 1) y table
       + become_npc_helper x (y - 1) table
-      + become_npc_helper x (y + 1) table)
+      + become_npc_helper x (y + 1) table )
       * Random.int 12
   in
   if visibility >= 22 then true else false
@@ -110,7 +110,7 @@ let render_npc_speech x y dungeon_cells =
             (Font.new_font speech 1.1 1.2
                (Magic_numbers.width *. 0.5)
                (Magic_numbers.height *. 0.5))
-      | None, _, _ -> ())
+      | None, _, _ -> () )
 
 let add_npc_shadow x y dungeon_cells npc_shadow dir_x dir_y =
   match Hashtbl.find_opt dungeon_cells (x, y) with
@@ -142,7 +142,7 @@ let add_npcs x y dungeon_cells =
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y };
-        add_npc_shadows counter_x counter_y dungeon_cells (Some npc))
+        add_npc_shadows counter_x counter_y dungeon_cells (Some npc) )
       else ()
     done
   done
@@ -324,7 +324,6 @@ let render_mini_map (p_x, p_y) (x_length, y_length, factor) =
        (x_length *. Magic_numbers.width /. 10.)
        (y_length *. Magic_numbers.height /. 10.)
        !Magic_numbers.get_magic.darkness);
-<<<<<<< HEAD
   Font.render_font ~spacing:0.05
     (Font.new_font
        ("x" ^ (factor |> string_of_float))
@@ -346,29 +345,16 @@ let map_bound (dungeon_x_length, dungeon_y_length) =
     in
     (dungeon_x_length /. factor, dungeon_y_length /. factor, factor)
   else (dungeon_x_length, dungeon_y_length, 1.)
-=======
-  Render.render_square
-    (Render.new_square
-       (p_x *. 2.
-       /. (dungeon_x_length +. 2.)
-       *. (dungeon_x_length *. Magic_numbers.width /. 5000.))
-       (starting_y
-       +. p_y
-          /. (dungeon_y_length +. 2.)
-          *. 2.
-          *. (dungeon_y_length *. Magic_numbers.height /. 5000.))
-       10. 10. "./fonts/i.png")
->>>>>>> d0a698f7c14ed6afd3f615ce2376abc73684248f
 
 let render_dungeon_square_helper x x_start y y_start new_texture =
   Render.render_square
     (Render.new_square
-       (float_of_int (x - x_start)
+       ( float_of_int (x - x_start)
        /. float_of_int Magic_numbers.x_length
-       *. 2.)
-       (float_of_int (y - y_start)
+       *. 2. )
+       ( float_of_int (y - y_start)
        /. float_of_int Magic_numbers.y_length
-       *. 2.)
+       *. 2. )
        Magic_numbers.width Magic_numbers.height new_texture)
 
 let render_dungeon_helper
@@ -403,16 +389,10 @@ let render_dungeon (p_x, p_y) (dungeon : t) condition =
   in
   render_dungeon_helper (x_start, x_end) (y_start, y_end) (npc_x, npc_y)
     (p_x, p_y) npc_name dungeon_cells dungeon;
-<<<<<<< HEAD
   render_mini_map
     (float_of_int p_x, float_of_int p_y)
     (map_bound
        (float_of_int dungeon_x_length, float_of_int dungeon_y_length));
-=======
-  (* render_mini_map (float_of_int p_x, float_of_int p_y) (float_of_int
-     dungeon_x_length, float_of_int dungeon_y_length); *)
-  (* if Render_stack.stack_peek () != Render_stack.SpiralRender then *)
->>>>>>> d0a698f7c14ed6afd3f615ce2376abc73684248f
   if condition then render_npc_speech p_x p_y dungeon_cells
 
 let get_magic_numbers d = d.magic_numbers
