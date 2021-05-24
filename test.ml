@@ -195,6 +195,7 @@ let suite =
            timer_tests;
            sprite_tests;
            render_stack_tests;
+           magic_number_test;
          ]
 
 let _ =
