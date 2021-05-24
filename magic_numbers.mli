@@ -5,7 +5,7 @@
     Includes methods for obtaining such constants. *)
 
 (* a type representing item attributes that are lists *)
-type item_sl = {
+type plurals = {
   tier_one_materials : string list;
   tier_two_materials : string list;
   tier_three_materials : string list;
@@ -28,7 +28,7 @@ type items = {
   tier_two_armor : string;
   tier_three_weapon : string;
   tier_three_armor : string;
-  item_sl : item_sl;
+  plurals : plurals;
   weapon_pickup : string;
   armor_pickup : string;
   empty_item : string;

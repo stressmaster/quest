@@ -304,26 +304,47 @@ let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
   else if get_exit dungeon = (x, y) then !Magic_numbers.get_magic.exit
   else determine_color (Hashtbl.find dungeon_cells (x, y) |> get_tile)
 
-let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
+let render_self_square (p_x, p_y) x_length y_length starting_y =
+  Render.render_square
+    (Render.new_square
+       ( p_x *. 2. /. (x_length +. 2.)
+       *. (x_length *. Magic_numbers.width /. 5000.) )
+       ( starting_y
+       +. p_y /. (y_length +. 2.) *. 2.
+          *. (y_length *. Magic_numbers.height /. 5000.) )
+       10. 10. "./fonts/i.png")
+
+let render_mini_map (p_x, p_y) (x_length, y_length, factor) =
+  let p_x, p_y = (p_x /. factor, p_y /. factor) in
   let starting_y =
-    2. *. (1. -. (dungeon_y_length *. Magic_numbers.height /. 5000.))
+    2. *. (1. -. (y_length *. Magic_numbers.height /. 5000.))
   in
   Render.render_square
     (Render.new_square 0. starting_y
-       (dungeon_x_length *. Magic_numbers.width /. 10.)
-       (dungeon_y_length *. Magic_numbers.height /. 10.)
+       (x_length *. Magic_numbers.width /. 10.)
+       (y_length *. Magic_numbers.height /. 10.)
        !Magic_numbers.get_magic.darkness);
-  Render.render_square
-    (Render.new_square
-       ( p_x *. 2.
-       /. (dungeon_x_length +. 2.)
-       *. (dungeon_x_length *. Magic_numbers.width /. 5000.) )
-       ( starting_y
-       +. p_y
-          /. (dungeon_y_length +. 2.)
-          *. 2.
-          *. (dungeon_y_length *. Magic_numbers.height /. 5000.) )
-       10. 10. "./fonts/i.png")
+  Font.render_font ~spacing:0.05
+    (Font.new_font
+       ("x" ^ (factor |> string_of_float))
+       0.05 1.95
+       (Magic_numbers.width *. 0.25)
+       (Magic_numbers.height *. 0.25));
+  render_self_square (p_x, p_y) x_length y_length starting_y
+
+let map_bound (dungeon_x_length, dungeon_y_length) =
+  let greater_dimension =
+    if dungeon_x_length > dungeon_y_length then dungeon_x_length
+    else dungeon_y_length
+  in
+  let greater_dimension_x = greater_dimension = dungeon_x_length in
+  if greater_dimension > 20. then
+    let factor =
+      if greater_dimension_x then dungeon_x_length /. 20.
+      else dungeon_x_length /. 20.
+    in
+    (dungeon_x_length /. factor, dungeon_y_length /. factor, factor)
+  else (dungeon_x_length, dungeon_y_length, 1.)
 
 let render_dungeon_square_helper x x_start y y_start new_texture =
   Render.render_square
@@ -370,8 +391,8 @@ let render_dungeon (p_x, p_y) (dungeon : t) condition =
     (p_x, p_y) npc_name dungeon_cells dungeon;
   render_mini_map
     (float_of_int p_x, float_of_int p_y)
-    (float_of_int dungeon_x_length, float_of_int dungeon_y_length);
-  (* if Render_stack.stack_peek () != Render_stack.SpiralRender then *)
+    (map_bound
+       (float_of_int dungeon_x_length, float_of_int dungeon_y_length));
   if condition then render_npc_speech p_x p_y dungeon_cells
 
 let get_magic_numbers d = d.magic_numbers

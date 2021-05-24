@@ -46,41 +46,41 @@ let list_rand_elt lst = List.nth lst (Random.int (List.length lst))
 let determine_prefix tier (dereffed_magic_numbers : Magic_numbers.t) =
   if tier = 2. then
     list_rand_elt
-      dereffed_magic_numbers.items.item_sl.tier_three_prefixes
+      dereffed_magic_numbers.items.plurals.tier_three_prefixes
   else if tier = 1. then
-    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_two_prefixes
+    list_rand_elt dereffed_magic_numbers.items.plurals.tier_two_prefixes
   else
-    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_one_prefixes
+    list_rand_elt dereffed_magic_numbers.items.plurals.tier_one_prefixes
 
 let determine_material tier (dereffed_magic_numbers : Magic_numbers.t) =
   if tier = 2. then
     list_rand_elt
-      dereffed_magic_numbers.items.item_sl.tier_three_materials
+      dereffed_magic_numbers.items.plurals.tier_three_materials
   else if tier = 1. then
     list_rand_elt
-      dereffed_magic_numbers.items.item_sl.tier_two_materials
+      dereffed_magic_numbers.items.plurals.tier_two_materials
   else
     list_rand_elt
-      dereffed_magic_numbers.items.item_sl.tier_one_materials
+      dereffed_magic_numbers.items.plurals.tier_one_materials
 
 let determine_base itype tier (dereffed_magic_numbers : Magic_numbers.t)
     =
   if itype = true then
     if tier = 2. then
       list_rand_elt
-        dereffed_magic_numbers.items.item_sl.tier_three_weapons
+        dereffed_magic_numbers.items.plurals.tier_three_weapons
     else if tier = 1. then
       list_rand_elt
-        dereffed_magic_numbers.items.item_sl.tier_two_weapons
+        dereffed_magic_numbers.items.plurals.tier_two_weapons
     else
       list_rand_elt
-        dereffed_magic_numbers.items.item_sl.tier_one_weapons
+        dereffed_magic_numbers.items.plurals.tier_one_weapons
   else if tier = 2. then
-    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_three_armors
+    list_rand_elt dereffed_magic_numbers.items.plurals.tier_three_armors
   else if tier = 1. then
-    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_two_armors
+    list_rand_elt dereffed_magic_numbers.items.plurals.tier_two_armors
   else
-    list_rand_elt dereffed_magic_numbers.items.item_sl.tier_one_armors
+    list_rand_elt dereffed_magic_numbers.items.plurals.tier_one_armors
 
 let generate_name tier itype (dereffed_magic_numbers : Magic_numbers.t)
     =
