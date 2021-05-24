@@ -522,13 +522,13 @@ let render_item_names current =
        (Magic_numbers.height *. 0.5))
 
 let render_modifier current =
-  Font.render_font
+  Font.render_font ~spacing:0.05
     (Font.new_font
        (string_of_int (Item.get_item_modifier current.current_weapon))
        1.56 0.12
        (Magic_numbers.width *. 0.5)
        (Magic_numbers.height *. 0.5));
-  Font.render_font
+  Font.render_font ~spacing:0.05
     (Font.new_font
        (string_of_int (Item.get_item_modifier current.current_armor))
        1.86 0.12

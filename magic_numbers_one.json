@@ -22,6 +22,15 @@
     "./tier_three_armor.png",
     "./monster.png",
     "./monster3.png",
+    "./monster4.png",
+    "./monster5.png",
+    "./monster6.png",
+    "./monster7.png",
+    "./monster8.png",
+    "./monster9.png",
+    "./monster10.png",
+    "./monster11.png",
+    "./monster12.png",
     "./goblin_1.png",
     "./fonts/0.png",
     "./fonts/1.png",
@@ -177,7 +186,8 @@
         "pathetic",
         "brittle",
         "lowly",
-        "lousy"
+        "lousy",
+        "friendly"
       ],
       "tier_two_prefixes": [
         "mediocre",
@@ -189,7 +199,8 @@
         "decent",
         "middling",
         "ordinary",
-        "standard"
+        "standard",
+        "viscious"
       ],
       "tier_three_prefixes": [
         "epic",
@@ -211,14 +222,16 @@
         "cardboard",
         "tin foil",
         "flint",
-        "cloth"
+        "cloth",
+        "Nature Center"
       ],
       "tier_two_materials": [
         "iron",
         "steel",
         "bronze",
         "copper",
-        "metal"
+        "metal",
+        "Wild"
       ],
       "tier_three_materials": [
         "tungsten",
@@ -226,7 +239,8 @@
         "titanium",
         "mithril",
         "depleted uranium",
-        "carbon fiber"
+        "carbon fiber",
+        "Prehistoric"
       ],
       "tier_one_weapons": [
         "butter knife",
@@ -238,7 +252,8 @@
         "mop",
         "broom",
         "broken bottle",
-        "scissors"
+        "scissors",
+        "corn snake"
       ],
       "tier_two_weapons": [
         "sword",
@@ -246,7 +261,8 @@
         "spear",
         "blade",
         "dagger",
-        "knife"
+        "knife",
+        "cobra"
       ],
       "tier_three_weapons": [
         "halberd",
@@ -258,7 +274,9 @@
         "zweihander",
         "saw cleaver",
         "lance of longinus",
-        "katana"
+        "katana",
+        "King da Ca",
+        "Black Mamba"
       ],
       "tier_one_armors": [
         "covering",
@@ -341,40 +359,130 @@
         ]
       ],
       "tier_one_prefixes": [
+        "flimsy",
+        "weak",
+        "shoddy",
+        "impotent",
+        "puny",
+        "feeble",
+        "scrappy",
+        "pathetic",
+        "brittle",
+        "lowly",
+        "lousy",
         "friendly"
       ],
       "tier_two_prefixes": [
+        "mediocre",
+        "average",
+        "typical",
+        "unassuming",
+        "plain",
+        "unexceptional",
+        "decent",
+        "middling",
+        "ordinary",
+        "standard",
         "viscious"
       ],
       "tier_three_prefixes": [
-        "legendary"
+        "epic",
+        "legendary",
+        "high quality",
+        "amazing",
+        "superb",
+        "mediocre",
+        "exceptional",
+        "radiant",
+        "unreal",
+        "phenomenal",
+        "mythical"
       ],
       "tier_one_materials": [
+        "paper",
+        "wood",
+        "styrofoam",
+        "cardboard",
+        "tin foil",
+        "flint",
+        "cloth",
         "Nature Center"
       ],
       "tier_two_materials": [
+        "iron",
+        "steel",
+        "bronze",
+        "copper",
+        "metal",
         "Wild"
       ],
       "tier_three_materials": [
+        "tungsten",
+        "diamond",
+        "titanium",
+        "mithril",
+        "depleted uranium",
+        "carbon fiber",
         "Prehistoric"
       ],
       "tier_one_weapons": [
+        "butter knife",
+        "stick",
+        "fork",
+        "spoon",
+        "pencil",
+        "clothes hanger",
+        "mop",
+        "broom",
+        "broken bottle",
+        "scissors",
         "corn snake"
       ],
       "tier_two_weapons": [
+        "sword",
+        "longsword",
+        "spear",
+        "blade",
+        "dagger",
+        "knife",
         "cobra"
       ],
       "tier_three_weapons": [
-        "King da Ca"
+        "halberd",
+        "scimitar",
+        "claymore",
+        "warhammer",
+        "kunai",
+        "chainsaw",
+        "zweihander",
+        "saw cleaver",
+        "lance of longinus",
+        "katana",
+        "King da Ca",
+        "Black Mamba"
       ],
       "tier_one_armors": [
-        "bag"
+        "covering",
+        "apron",
+        "smock",
+        "tank top",
+        "rags",
+        "jacket"
       ],
       "tier_two_armors": [
-        "double bag"
+        "vest",
+        "suit",
+        "chestplate",
+        "plate mail",
+        "cuirass",
+        "hauberk"
       ],
       "tier_three_armors": [
-        "triple bag"
+        "armor",
+        "power armor",
+        "mecha suit",
+        "oyoroi",
+        "exoskeleton"
       ]
     }
   ]
