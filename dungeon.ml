@@ -227,7 +227,6 @@ let instantiate_dungeon_helper
     time;
   }
 
-(* [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
 let instantiate_dungeon
     ?(seed = Timer.current_time "big")
     id
@@ -294,10 +293,6 @@ let get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length =
   let y_end = get_y_end p_y dungeon_y_length in
   (x_start, x_end, y_start, y_end)
 
-(* [determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon] is the
-   texture of the tile at [(x, y)] based on [(p_x, p_y) dungeon_cells
-   dungeon] *)
-
 let determine_npc_texture npc = Spriteanimation.get_sprite npc
 
 let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
@@ -311,27 +306,23 @@ let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
 
 let render_mini_map (p_x, p_y) (dungeon_x_length, dungeon_y_length) =
   let starting_y =
-    2.
-    *. (1. -. (dungeon_y_length *. Magic_numbers.height /. 10. /. 500.))
+    2. *. (1. -. (dungeon_y_length *. Magic_numbers.height /. 5000.))
   in
   Render.render_square
     (Render.new_square 0. starting_y
        (dungeon_x_length *. Magic_numbers.width /. 10.)
        (dungeon_y_length *. Magic_numbers.height /. 10.)
        !Magic_numbers.get_magic.darkness);
-
   Render.render_square
     (Render.new_square
        ( p_x *. 2.
        /. (dungeon_x_length +. 2.)
-       *. (dungeon_x_length *. Magic_numbers.width /. 10.)
-       /. 500. )
+       *. (dungeon_x_length *. Magic_numbers.width /. 5000.) )
        ( starting_y
        +. p_y
           /. (dungeon_y_length +. 2.)
           *. 2.
-          *. (dungeon_y_length *. Magic_numbers.height /. 10.)
-          /. 500. )
+          *. (dungeon_y_length *. Magic_numbers.height /. 5000.) )
        10. 10. "./fonts/i.png")
 
 let render_dungeon_square_helper x x_start y y_start new_texture =

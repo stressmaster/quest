@@ -68,7 +68,7 @@ let step w =
        else current);
     w.steps_since_turn <- w.steps_since_turn + 1;
     w.current_pos <- target_pos;
-    true)
+    true )
   else false
 
 (* let rec choose_new_dir d = let rand = Random.int 100 mod 4 in let dir
@@ -91,26 +91,14 @@ let change_direction w =
     match rand with true -> w.dir <- Left | false -> w.dir <- Right
   else match rand with true -> w.dir <- Up | false -> w.dir <- Down
 
-(* print_string "changing dir"; *)
-(* directions := List.filter (fun x -> x <> w.dir) !directions;
-   directions := List.rev !directions; directions := shuffle
-   !directions; let rec helper w = let new_direction = List.hd
-   !directions in let target_pos = tup_add w.current_pos (eval_dir
-   new_direction) in if determine_border w target_pos then new_direction
-   else ( directions := pop_lst_head !directions; helper w) in w.dir <-
-   helper w; directions := [ Up; Down; Left; Right ] *)
-
-(*if Random.float 1. >= 0.25 || w.steps_since_turn > 4 then
-  change_direction w else*)
-
 let walk steps w =
   let walk_helper () =
     if Random.float 1. >= 0.17 || w.steps_since_turn > 4 then (
       w.steps_since_turn <- 0;
-      change_direction w)
+      change_direction w )
     else if w.steps_since_turn > 4 then (
       w.steps_since_turn <- 0;
-      change_direction w)
+      change_direction w )
     else if step w then
       w.step_history <- w.current_pos :: w.step_history
     else change_direction w
