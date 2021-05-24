@@ -4,14 +4,8 @@
     rendering, as well as coherent sets of constants for dungeons.
     Includes methods for obtaining such constants. *)
 
-(* a type representing item-related attributes *)
-type items = {
-  tier_one_weapon : string;
-  tier_one_armor : string;
-  tier_two_weapon : string;
-  tier_two_armor : string;
-  tier_three_weapon : string;
-  tier_three_armor : string;
+(* a type representing item attributes that are lists *)
+type item_sl = {
   tier_one_materials : string list;
   tier_two_materials : string list;
   tier_three_materials : string list;
@@ -24,6 +18,17 @@ type items = {
   tier_one_prefixes : string list;
   tier_two_prefixes : string list;
   tier_three_prefixes : string list;
+}
+
+(* a type representing item-related attributes *)
+type items = {
+  tier_one_weapon : string;
+  tier_one_armor : string;
+  tier_two_weapon : string;
+  tier_two_armor : string;
+  tier_three_weapon : string;
+  tier_three_armor : string;
+  item_sl : item_sl;
   weapon_pickup : string;
   armor_pickup : string;
   empty_item : string;
