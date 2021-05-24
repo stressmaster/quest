@@ -1,3 +1,9 @@
+(** Representation of a monster.
+
+    This module represents the data associated with a monster, including
+    data for rendering and stats. Includes methods for creating monsters
+    and getting monster attributes. *)
+
 (* a type representing a monster *)
 type t = {
   name : string;

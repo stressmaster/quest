@@ -1,3 +1,9 @@
+(** Representation of an item.
+
+    This module represents the data associated with an item, including
+    data about the type and stats of an item. Includes methods for
+    creating items and getting item attributes. *)
+
 (* type representing item stats*)
 type item_stats = {
   sprite : string;

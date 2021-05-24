@@ -1,3 +1,9 @@
+(** Representation of the game.
+
+    This module represents the data needed to maintain and render the
+    game, including data about the dungeons in the game. Includes
+    methods for converting JSON to a game saving the game to JSON. *)
+
 (* an abstract type representing a game*)
 type t
 

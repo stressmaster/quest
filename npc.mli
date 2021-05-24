@@ -1,3 +1,9 @@
+(** Representation of an NPC.
+
+    This module represents the data associated with an NPC, including
+    data for rendering and the stat. Includes methods for creating NPCs
+    and getting NPC attributes. *)
+
 (* abstract type representing an NPC *)
 type t
 

@@ -1,3 +1,8 @@
+(** Rendering of a fight between the player and a monster.
+
+    This module renders a fight between the player and a monster based
+    on the game state *)
+
 (* [render_menu fight] renders [fight] *)
 val render_menu : State.fight -> unit
 

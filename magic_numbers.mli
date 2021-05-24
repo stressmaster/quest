@@ -1,3 +1,9 @@
+(** Representation of magic numbers.
+
+    This module represents constants used throughout the game for
+    rendering, as well as coherent sets of constants for dungeons.
+    Includes methods for obtaining such constants. *)
+
 (* a type representing item-related attributes *)
 type items = {
   tier_one_weapon : string;

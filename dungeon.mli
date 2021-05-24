@@ -1,3 +1,9 @@
+(** Representation of the dungeon.
+
+    This module represents the data needed to maintain and render the
+    dungeon, including a data about each tile. Includes methods for
+    obtaining information about the dungeon. *)
+
 (* an abstract type representing a dungeon*)
 type t
 
