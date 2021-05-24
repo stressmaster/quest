@@ -66,6 +66,7 @@ type current = {
   mutable current_armor : Item.t;
   mutable game_over : game_over_action;
   mutable start_menu : start_menu_action;
+  mutable lives : int;
 }
 
 let curr_room c = c.room
@@ -110,6 +111,7 @@ let init_current game room monster =
     current_armor = Item.empty_item;
     game_over = Quit;
     start_menu = NewGame;
+    lives = 3;
   }
 
 let init_state file_name =
@@ -161,6 +163,7 @@ let init_current_json ourjson game room monster =
       ourjson |> json_mem "current_armor" |> Game.item_of_json;
     game_over = Quit;
     start_menu = NewGame;
+    lives = ourjson |> json_mem "lives" |> json_int;
   }
 
 let init_state_from_save file_name =
@@ -191,6 +194,7 @@ let reset_fight c =
   | _ -> Audio.change_music "./camlished.wav"
 
 let encounter bound = Random.int bound = 0
+
 (* let encounter bound = false *)
 
 let is_in_fight current =
@@ -378,20 +382,25 @@ let starting_move current key =
       init_state_from_save "save.json"
   | _ -> current
 
+let save_game current =
+  Game.update_file
+    (Game.json_maker current.lives true (fst current.location)
+       (snd current.location) current.depth
+       (Game.game_depth current.game)
+       current.current_exp current.exp_bound current.current_weapon
+       current.current_armor current.game);
+  ()
+
 let gaming_move current key =
   match current.game_over with
   | Quit when key = 13 ->
-      Game.update_file
-        (Game.json_maker true (fst current.location)
-           (snd current.location) current.depth
-           (Game.game_depth current.game)
-           current.current_exp current.exp_bound current.current_weapon
-           current.current_armor current.game);
+      save_game current;
       ignore (exit 0);
       current
-  | Revive when key = 13 ->
+  | Revive when key = 13 && current.lives > 1 ->
       Audio.change_music "./camlished.wav";
       Render_stack.stack_pop ();
+      current.lives <- current.lives - 1;
       current
   | Restart when key = 13 ->
       Audio.change_music "./camlished.wav";
@@ -407,6 +416,9 @@ let clamp_str str = String.sub str 0 (min (String.length str) 20)
 let typing_move current key =
   let x, y = current.location in
   match Render_stack.stack_peek () with
+  | DungeonRender when key = 115 ->
+      save_game current;
+      current
   | DungeonRender ->
       manage_item current x y (Dungeon.get_item current.room (x, y));
       current

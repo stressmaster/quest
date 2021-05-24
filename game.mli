@@ -43,6 +43,7 @@ val game_depth : t -> int
     [room_number] [curr_exp] [exp_bound] [weapon] [armor] and [game]
     that exists iff [exists]*)
 val json_maker :
+  int ->
   bool ->
   int ->
   int ->
