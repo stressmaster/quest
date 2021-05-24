@@ -47,7 +47,7 @@ let save_json json =
   }
 
 let start_room game =
-  List.find (fun g -> Dungeon.get_id g = 0) game.dungeons
+  List.find (fun g -> Dungeon.get_id g = 1) game.dungeons
 
 let nth_room game n =
   List.find (fun g -> Dungeon.get_id g = n) game.dungeons
