@@ -16,6 +16,10 @@
     "./armor_pickup.png",
     "./tier_one_weapon.png",
     "./tier_one_armor.png",
+    "./tier_two_weapon.png",
+    "./tier_two_armor.png",
+    "./tier_three_weapon.png",
+    "./tier_three_armor.png",
     "./monster.png",
     "./monster3.png",
     "./goblin_1.png",
@@ -75,6 +79,10 @@
       "armor_pickup": "./armor_pickup.png",
       "tier_one_weapon": "./tier_one_weapon.png",
       "tier_one_armor": "./tier_one_armor.png",
+      "tier_two_weapon": "./tier_two_weapon.png",
+      "tier_two_armor": "./tier_two_armor.png",
+      "tier_three_weapon": "./tier_three_weapon.png",
+      "tier_three_armor": "./tier_three_armor.png",
       "npcs": [
         {
           "speech": "That golbin stole my slippers",
@@ -290,6 +298,10 @@
       "armor_pickup": "./armor_pickup.png",
       "tier_one_weapon": "./tier_one_weapon.png",
       "tier_one_armor": "./tier_one_armor.png",
+      "tier_two_weapon": "./tier_two_weapon.png",
+      "tier_two_armor": "./tier_two_armor.png",
+      "tier_three_weapon": "./tier_three_weapon.png",
+      "tier_three_armor": "./tier_three_armor.png",
       "monsters": [
         {
           "name": "monster",
