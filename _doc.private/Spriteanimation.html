@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Item.html">
+<link rel="next" href="Main.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Render" rel="Chapter" href="Render.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Texturemap" rel="Chapter" href="Texturemap.html">
+<link title="Game" rel="Chapter" href="Game.html">
+<link title="Dungeon" rel="Chapter" href="Dungeon.html">
+<link title="State" rel="Chapter" href="State.html">
+<link title="Levenshtein" rel="Chapter" href="Levenshtein.html">
+<link title="Fight_menu" rel="Chapter" href="Fight_menu.html">
+<link title="Npc" rel="Chapter" href="Npc.html">
+<link title="Spiral" rel="Chapter" href="Spiral.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Render_stack" rel="Chapter" href="Render_stack.html">
+<link title="Walker" rel="Chapter" href="Walker.html">
+<link title="Audio" rel="Chapter" href="Audio.html">
+<link title="Item" rel="Chapter" href="Item.html">
+<link title="Spriteanimation" rel="Chapter" href="Spriteanimation.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Magic_numbers" rel="Chapter" href="Magic_numbers.html">
+<link title="Gameover_menu" rel="Chapter" href="Gameover_menu.html">
+<link title="Monsters" rel="Chapter" href="Monsters.html">
+<link title="Win_menu" rel="Chapter" href="Win_menu.html">
+<link title="Start_menu" rel="Chapter" href="Start_menu.html"><title>Spriteanimation</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Item.html" title="Item">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Main.html" title="Main">Next</a>
+</div>
+<h1>Module <a href="type_Spriteanimation.html">Spriteanimation</a></h1>
+
+<pre><span id="MODULESpriteanimation"><span class="keyword">module</span> Spriteanimation</span>: <code class="code">sig</code> <a href="Spriteanimation.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>Represent animations</p>
+
+<p>This module makes animations. It includes functions for initiating
+    animations and getting the current frame</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><code><span id="TYPEanimation"><span class="keyword">type</span> <code class="type"></code>animation</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTanimation.sprites">sprites</span>&nbsp;: <code class="type">string list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTanimation.ticker">ticker</span>&nbsp;: <code class="type">int Stdlib.ref</code>;</code></td>
+
+</tr></table>
+<code>}</code>
+
+<div class="info ">
+<div class="info-desc">
+<p>abstract type representing an animation</p>
+</div>
+</div>
+
+
+<pre><span id="TYPEid"><span class="keyword">type</span> <code class="type"></code>id</span> = <code class="type">string</code> </pre>
+<div class="info ">
+<div class="info-desc">
+<p>type representing the id of a sprite</p>
+</div>
+</div>
+
+
+<pre><span id="VALanimation_map"><span class="keyword">val</span> animation_map</span> : <code class="type">(<a href="Spriteanimation.html#TYPEid">id</a> * <a href="Spriteanimation.html#TYPEanimation">animation</a>) list Stdlib.ref</code></pre>
+<pre><span id="VALinit_animations"><span class="keyword">val</span> init_animations</span> : <code class="type">(<a href="Spriteanimation.html#TYPEid">id</a> * string list) list -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">init_animations animations</code> initiates <code class="code">animations</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_sprite"><span class="keyword">val</span> get_sprite</span> : <code class="type"><a href="Spriteanimation.html#TYPEid">id</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_sprite id</code> is the current fraame of the sprite with id <code class="code">id</code></p>
+</div>
+</div>
+
+<pre><span id="VALstep_animation"><span class="keyword">val</span> step_animation</span> : <code class="type">unit -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">step_animation ()</code> steps the frames of all animations</p>
+</div>
+</div>
+</body></html>

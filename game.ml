@@ -80,7 +80,6 @@ let next_dungeon game dungeon =
       20 (next_id + 1) (next_id - 1)
 
 let prev_dungeon game dungeon =
-  (* let prev_dungeon_id = Dungeon.get_prev dungeon in *)
   let prev_id = Dungeon.get_id dungeon - 1 in
   List.find (fun g -> Dungeon.get_id g = prev_id) game.dungeons
 

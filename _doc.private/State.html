@@ -1,0 +1,453 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Dungeon.html">
+<link rel="next" href="Levenshtein.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Render" rel="Chapter" href="Render.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Texturemap" rel="Chapter" href="Texturemap.html">
+<link title="Game" rel="Chapter" href="Game.html">
+<link title="Dungeon" rel="Chapter" href="Dungeon.html">
+<link title="State" rel="Chapter" href="State.html">
+<link title="Levenshtein" rel="Chapter" href="Levenshtein.html">
+<link title="Fight_menu" rel="Chapter" href="Fight_menu.html">
+<link title="Npc" rel="Chapter" href="Npc.html">
+<link title="Spiral" rel="Chapter" href="Spiral.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Render_stack" rel="Chapter" href="Render_stack.html">
+<link title="Walker" rel="Chapter" href="Walker.html">
+<link title="Audio" rel="Chapter" href="Audio.html">
+<link title="Item" rel="Chapter" href="Item.html">
+<link title="Spriteanimation" rel="Chapter" href="Spriteanimation.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Magic_numbers" rel="Chapter" href="Magic_numbers.html">
+<link title="Gameover_menu" rel="Chapter" href="Gameover_menu.html">
+<link title="Monsters" rel="Chapter" href="Monsters.html">
+<link title="Win_menu" rel="Chapter" href="Win_menu.html">
+<link title="Start_menu" rel="Chapter" href="Start_menu.html"><title>State</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Dungeon.html" title="Dungeon">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Levenshtein.html" title="Levenshtein">Next</a>
+</div>
+<h1>Module <a href="type_State.html">State</a></h1>
+
+<pre><span id="MODULEState"><span class="keyword">module</span> State</span>: <code class="code">sig</code> <a href="State.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>Representation of dynamic state data</p>
+
+<p>This module contains the state of the game playthrough, including the
+   current dungeon, the list of visited dungeons, and the current fight</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><code><span id="TYPEaction"><span class="keyword">type</span> <code class="type"></code>action</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTaction.Run"><span class="constructor">Run</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTaction.Recover"><span class="constructor">Recover</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTaction.Attack"><span class="constructor">Attack</span></span></code></td>
+
+</tr></table>
+
+<div class="info ">
+<div class="info-desc">
+<p>The abstract type of values representing the action taken during
+   fights</p>
+</div>
+</div>
+
+
+<pre><code><span id="TYPEgame_over_action"><span class="keyword">type</span> <code class="type"></code>game_over_action</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgame_over_action.Quit"><span class="constructor">Quit</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgame_over_action.Revive"><span class="constructor">Revive</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgame_over_action.Restart"><span class="constructor">Restart</span></span></code></td>
+
+</tr></table>
+
+<div class="info ">
+<div class="info-desc">
+<p>The abstract type of values representing the action taken after
+   dying.</p>
+</div>
+</div>
+
+
+<pre><code><span id="TYPEstart_menu_action"><span class="keyword">type</span> <code class="type"></code>start_menu_action</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTstart_menu_action.NewGame"><span class="constructor">NewGame</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTstart_menu_action.Continue"><span class="constructor">Continue</span></span></code></td>
+
+</tr></table>
+
+<div class="info ">
+<div class="info-desc">
+<p>The abstract type of values representing the action taken in the
+   start menu. NewGame will start a new playthrough, while Continue will
+   continue an existing playthrough.</p>
+</div>
+</div>
+
+
+<pre><code><span id="TYPEfight"><span class="keyword">type</span> <code class="type"></code>fight</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.spiraled">spiraled</span>&nbsp;: <code class="type">bool</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.action">action</span>&nbsp;: <code class="type"><a href="State.html#TYPEaction">action</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.attacking">attacking</span>&nbsp;: <code class="type">bool</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.monster">monster</span>&nbsp;: <code class="type"><a href="Monsters.html#TYPEt">Monsters.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.monster_string">monster_string</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.monster_health">monster_health</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.player_health">player_health</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.typing_limit">typing_limit</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTfight.input_string">input_string</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr></table>
+<code>}</code>
+
+<div class="info ">
+<div class="info-desc">
+<p>The data value representing all the necessary information needed to
+   run a fight. This includes the current monster, the player's health,
+   etc.</p>
+</div>
+</div>
+
+
+<pre><span id="VALget_next_action"><span class="keyword">val</span> get_next_action</span> : <code class="type"><a href="State.html#TYPEaction">action</a> -> <a href="State.html#TYPEaction">action</a></code></pre>
+<pre><span id="VALget_prev_action"><span class="keyword">val</span> get_prev_action</span> : <code class="type"><a href="State.html#TYPEaction">action</a> -> <a href="State.html#TYPEaction">action</a></code></pre>
+<pre><span id="VALget_next_game_over"><span class="keyword">val</span> get_next_game_over</span> : <code class="type"><a href="State.html#TYPEgame_over_action">game_over_action</a> -> <a href="State.html#TYPEgame_over_action">game_over_action</a></code></pre>
+<pre><span id="VALget_prev_game_over"><span class="keyword">val</span> get_prev_game_over</span> : <code class="type"><a href="State.html#TYPEgame_over_action">game_over_action</a> -> <a href="State.html#TYPEgame_over_action">game_over_action</a></code></pre>
+<pre><span id="VALget_next_start_menu"><span class="keyword">val</span> get_next_start_menu</span> : <code class="type"><a href="State.html#TYPEstart_menu_action">start_menu_action</a> -> <a href="State.html#TYPEstart_menu_action">start_menu_action</a></code></pre>
+<pre><code><span id="TYPEcurrent"><span class="keyword">type</span> <code class="type"></code>current</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.game">game</span>&nbsp;: <code class="type"><a href="Game.html#TYPEt">Game.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.location">location</span>&nbsp;: <code class="type">int * int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.room">room</span>&nbsp;: <code class="type"><a href="Dungeon.html#TYPEt">Dungeon.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.room_exit">room_exit</span>&nbsp;: <code class="type">int * int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.in_fight">in_fight</span>&nbsp;: <code class="type">bool</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.fight">fight</span>&nbsp;: <code class="type"><a href="State.html#TYPEfight">fight</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.health">health</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.level">level</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.depth">depth</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.current_exp">current_exp</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.exp_bound">exp_bound</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.current_weapon">current_weapon</span>&nbsp;: <code class="type"><a href="Item.html#TYPEt">Item.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.current_armor">current_armor</span>&nbsp;: <code class="type"><a href="Item.html#TYPEt">Item.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.game_over">game_over</span>&nbsp;: <code class="type"><a href="State.html#TYPEgame_over_action">game_over_action</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTcurrent.start_menu">start_menu</span>&nbsp;: <code class="type"><a href="State.html#TYPEstart_menu_action">start_menu_action</a></code>;</code></td>
+
+</tr></table>
+<code>}</code>
+
+<div class="info ">
+<div class="info-desc">
+<p>The abstract type of values representing the state</p>
+</div>
+</div>
+
+
+<pre><span id="VALcurr_room"><span class="keyword">val</span> curr_room</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">curr_room current</code> returns the Dungeon value that represents the
+   room</p>
+</div>
+</div>
+
+<pre><span id="VALin_fight"><span class="keyword">val</span> in_fight</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> bool</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">in_fight current</code> returns whether or not the player is in a fight</p>
+</div>
+</div>
+
+<pre><span id="VALcurr_fight"><span class="keyword">val</span> curr_fight</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> <a href="State.html#TYPEfight">fight</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">curr_fight current</code> returns the fight value that represents the
+   current battle</p>
+</div>
+</div>
+
+<pre><span id="VALcurr_game_over"><span class="keyword">val</span> curr_game_over</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> <a href="State.html#TYPEgame_over_action">game_over_action</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">curr_game_over current</code> returns the action taken in the game-over
+   menu</p>
+</div>
+</div>
+
+<pre><span id="VALcurr_start_menu"><span class="keyword">val</span> curr_start_menu</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> <a href="State.html#TYPEstart_menu_action">start_menu_action</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">curr_start_menu current</code> returns the action taken in the start menu</p>
+</div>
+</div>
+
+<pre><span id="VALinit_fight"><span class="keyword">val</span> init_fight</span> : <code class="type"><a href="Monsters.html#TYPEt">Monsters.t</a> -> <a href="State.html#TYPEfight">fight</a></code></pre>
+<pre><span id="VALinit_current"><span class="keyword">val</span> init_current</span> : <code class="type"><a href="Game.html#TYPEt">Game.t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a> -> <a href="Monsters.html#TYPEt">Monsters.t</a> -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALinit_state"><span class="keyword">val</span> init_state</span> : <code class="type">string -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALjson_mem"><span class="keyword">val</span> json_mem</span> : <code class="type">string -> Yojson.Basic.t -> Yojson.Basic.t</code></pre>
+<pre><span id="VALjson_int"><span class="keyword">val</span> json_int</span> : <code class="type">Yojson.Basic.t -> int</code></pre>
+<pre><span id="VALinit_fight_json"><span class="keyword">val</span> init_fight_json</span> : <code class="type"><a href="Monsters.html#TYPEt">Monsters.t</a> -> <a href="State.html#TYPEfight">fight</a></code></pre>
+<pre><span id="VALinit_current_json"><span class="keyword">val</span> init_current_json</span> : <code class="type">Yojson.Basic.t -> <a href="Game.html#TYPEt">Game.t</a> -> <a href="Dungeon.html#TYPEt">Dungeon.t</a> -> <a href="Monsters.html#TYPEt">Monsters.t</a> -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALinit_state_from_save"><span class="keyword">val</span> init_state_from_save</span> : <code class="type">string -> <a href="State.html#TYPEcurrent">current</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">init_state_from_save str</code> creates a new state (including the list of
+   visited dungeons, player location, etc.) based on the JSON
+   represented by str</p>
+</div>
+</div>
+
+<pre><span id="VALreset_fight"><span class="keyword">val</span> reset_fight</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">reset_fight current</code> resets the fight data to the defaults when out
+   of fight</p>
+</div>
+</div>
+
+<pre><span id="VALencounter"><span class="keyword">val</span> encounter</span> : <code class="type">int -> bool</code></pre>
+<pre><span id="VALis_in_fight"><span class="keyword">val</span> is_in_fight</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> bool</code></pre>
+<pre><span id="VALplayer_loc"><span class="keyword">val</span> player_loc</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int * int</code></pre>
+<pre><span id="VALcramp_wall"><span class="keyword">val</span> cramp_wall</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int * int -> int * int -> unit</code></pre>
+<pre><span id="VALmap_move"><span class="keyword">val</span> map_move</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> Glut.special_key_t -> int -> int -> unit</code></pre>
+<pre><span id="VALmanage_armor"><span class="keyword">val</span> manage_armor</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> int -> <a href="Item.html#TYPEitem_stats">Item.item_stats</a> -> unit</code></pre>
+<pre><span id="VALmanage_weapon"><span class="keyword">val</span> manage_weapon</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> int -> <a href="Item.html#TYPEitem_stats">Item.item_stats</a> -> unit</code></pre>
+<pre><span id="VALmanage_no_item"><span class="keyword">val</span> manage_no_item</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> int -> unit</code></pre>
+<pre><span id="VALmanage_item"><span class="keyword">val</span> manage_item</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> int -> <a href="Item.html#TYPEt">Item.t</a> option -> unit</code></pre>
+<pre><span id="VALchange_to_next_room"><span class="keyword">val</span> change_to_next_room</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALchange_to_previous_room"><span class="keyword">val</span> change_to_previous_room</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALshould_change_room"><span class="keyword">val</span> should_change_room</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALmove"><span class="keyword">val</span> move</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> Glut.special_key_t -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALis_typable"><span class="keyword">val</span> is_typable</span> : <code class="type">int -> bool</code></pre>
+<pre><span id="VALrandom_string"><span class="keyword">val</span> random_string</span> : <code class="type">int -> string -> string</code></pre>
+<pre><span id="VALmanage_damage"><span class="keyword">val</span> manage_damage</span> : <code class="type">int -> <a href="State.html#TYPEcurrent">current</a> -> string</code></pre>
+<pre><span id="VALtake_damage"><span class="keyword">val</span> take_damage</span> : <code class="type">int -> <a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALmanage_attack"><span class="keyword">val</span> manage_attack</span> : <code class="type">string -> int -> int -> <a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALmanage_recover"><span class="keyword">val</span> manage_recover</span> : <code class="type">string -> int -> int -> <a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALmanage_run"><span class="keyword">val</span> manage_run</span> : <code class="type">string -> 'a -> int -> int -> <a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALenter_case"><span class="keyword">val</span> enter_case</span> : <code class="type">string -> string -> int -> <a href="State.html#TYPEcurrent">current</a> -> string</code></pre>
+<pre><span id="VALfighting_case"><span class="keyword">val</span> fighting_case</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">fighting_case current key</code> creates a string during the fight based
+   on key and the data contained in current</p>
+</div>
+</div>
+
+<pre><span id="VALstarting_move"><span class="keyword">val</span> starting_move</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALgaming_move"><span class="keyword">val</span> gaming_move</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALclamp_str"><span class="keyword">val</span> clamp_str</span> : <code class="type">string -> string</code></pre>
+<pre><span id="VALtyping_move"><span class="keyword">val</span> typing_move</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> <a href="State.html#TYPEcurrent">current</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">typing_move current key</code> updates current based on the regular key
+   input (eg. 'a')</p>
+</div>
+</div>
+
+<pre><span id="VALmenu_move"><span class="keyword">val</span> menu_move</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> Glut.special_key_t -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALgame_over_move"><span class="keyword">val</span> game_over_move</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> Glut.special_key_t -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALstart_menu_move"><span class="keyword">val</span> start_menu_move</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> Glut.special_key_t -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALlevel_up"><span class="keyword">val</span> level_up</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> int -> unit</code></pre>
+<pre><span id="VALmanage_exp"><span class="keyword">val</span> manage_exp</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALmanage_game_over"><span class="keyword">val</span> manage_game_over</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALcontroller"><span class="keyword">val</span> controller</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> Glut.special_key_t -> <a href="State.html#TYPEcurrent">current</a></code></pre>
+<pre><span id="VALrender_item_boxes"><span class="keyword">val</span> render_item_boxes</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALrender_item_names"><span class="keyword">val</span> render_item_names</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALrender_modifier"><span class="keyword">val</span> render_modifier</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> unit</code></pre>
+<pre><span id="VALrender_inventory"><span class="keyword">val</span> render_inventory</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">render_inventory current</code> renders the inventory in the bottom right
+   corner of the screen</p>
+</div>
+</div>
+
+<pre><span id="VALcheck_time_limit"><span class="keyword">val</span> check_time_limit</span> : <code class="type"><a href="State.html#TYPEcurrent">current</a> -> <a href="State.html#TYPEcurrent">current</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">check_time_limit current</code> updates current, ending the player's
+   attack if they have taken too long</p>
+</div>
+</div>
+</body></html>

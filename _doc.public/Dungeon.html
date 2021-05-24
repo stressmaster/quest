@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Game.html">
+<link rel="next" href="State.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Render" rel="Chapter" href="Render.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Texturemap" rel="Chapter" href="Texturemap.html">
+<link title="Game" rel="Chapter" href="Game.html">
+<link title="Dungeon" rel="Chapter" href="Dungeon.html">
+<link title="State" rel="Chapter" href="State.html">
+<link title="Levenshtein" rel="Chapter" href="Levenshtein.html">
+<link title="Fight_menu" rel="Chapter" href="Fight_menu.html">
+<link title="Npc" rel="Chapter" href="Npc.html">
+<link title="Spiral" rel="Chapter" href="Spiral.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Render_stack" rel="Chapter" href="Render_stack.html">
+<link title="Walker" rel="Chapter" href="Walker.html">
+<link title="Audio" rel="Chapter" href="Audio.html">
+<link title="Item" rel="Chapter" href="Item.html">
+<link title="Spriteanimation" rel="Chapter" href="Spriteanimation.html"><title>Dungeon</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Game.html" title="Game">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="State.html" title="State">Next</a>
+</div>
+<h1>Module <a href="type_Dungeon.html">Dungeon</a></h1>
+
+<pre><span id="MODULEDungeon"><span class="keyword">module</span> Dungeon</span>: <code class="code">sig</code> <a href="Dungeon.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>Representation of the dungeon.</p>
+
+<p>This module represents the data needed to maintain and render the
+    dungeon, including a data about each tile. Includes methods for
+    obtaining information about the dungeon.</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+<div class="info ">
+<div class="info-desc">
+<p>an abstract type representing a dungeon</p>
+</div>
+</div>
+
+
+<pre><span id="TYPEtile"><span class="keyword">type</span> <code class="type"></code>tile</span> </pre>
+<div class="info ">
+<div class="info-desc">
+<p>an abstract type representing a tile</p>
+</div>
+</div>
+
+
+<pre><span id="TYPEcell"><span class="keyword">type</span> <code class="type"></code>cell</span> </pre>
+<div class="info ">
+<div class="info-desc">
+<p>an abstract type representing a dungeon cell</p>
+</div>
+</div>
+
+
+<pre><span id="VALinstantiate_dungeon"><span class="keyword">val</span> instantiate_dungeon</span> : <code class="type">?seed:int -> int -> int -> int -> int * int -> int -> int -> int -> <a href="Dungeon.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">instantiate_dungeon x y</code> is a dungeon with <code class="code">x</code> columns <code class="code">y</code> rows</p>
+</div>
+</div>
+
+<pre><span id="VALis_wall"><span class="keyword">val</span> is_wall</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int * int -> bool</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">is_wall dungeon (x, y)</code> is true iff the cell at coordinate <code class="code">(x, y)</code>
+    is a wall in <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_item"><span class="keyword">val</span> get_item</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int * int -> <a href="Item.html#TYPEt">Item.t</a> option</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_item dungeon (x,y)</code> returns the Item.t option associated with
+   tile (x,y), and then removes the item from that tile</p>
+</div>
+</div>
+
+<pre><span id="VALdrop_item"><span class="keyword">val</span> drop_item</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int * int -> <a href="Item.html#TYPEt">Item.t</a> option -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">drop_item dungeon (x,y) item</code> places (item) on the tile (x,y)</p>
+</div>
+</div>
+
+<pre><span id="VALtile_material"><span class="keyword">val</span> tile_material</span> : <code class="type"><a href="Dungeon.html#TYPEtile">tile</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">is_wall dungeon (x, y)</code> is the material of the tile at <code class="code">(x,y)</code> in
+    <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_start"><span class="keyword">val</span> get_start</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int * int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_start dungeon</code> is the coordinates of the starting tile in
+    <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_exit"><span class="keyword">val</span> get_exit</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int * int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_exit dungeon</code> is the coordinates of the exit tile in <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_dimensions"><span class="keyword">val</span> get_dimensions</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int * int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_dimensions dungeon</code> is the pair of ints representing the
+    dimensions of <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_cells"><span class="keyword">val</span> get_cells</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> (int * int, <a href="Dungeon.html#TYPEcell">cell</a>) Stdlib.Hashtbl.t</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_cells dungeon</code> is the hash table representing the cells in
+    <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_tile"><span class="keyword">val</span> get_tile</span> : <code class="type"><a href="Dungeon.html#TYPEcell">cell</a> -> <a href="Dungeon.html#TYPEtile">tile</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_cells cell</code> is the tile associated with <code class="code">cell</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_bound"><span class="keyword">val</span> get_bound</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_bound dungeon</code> is the bound of <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_id"><span class="keyword">val</span> get_id</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_id dungeon</code> is the id of <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_next"><span class="keyword">val</span> get_next</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_next dungeon</code> is the id of the dungeon that follows <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_prev"><span class="keyword">val</span> get_prev</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_prev dungeon</code> is the id of the dungeon that precedes <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_time"><span class="keyword">val</span> get_time</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_time dungeon</code> is the time seed associated with <code class="code">dungeon</code></p>
+</div>
+</div>
+
+<pre><span id="VALrender_dungeon"><span class="keyword">val</span> render_dungeon</span> : <code class="type">int * int -> <a href="Dungeon.html#TYPEt">t</a> -> bool -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">render_dungeon (x,y) dungeon condition</code> renders <code class="code">dungeon</code> with
+    dungeon coordinates <code class="code">(x,y)</code> at the center of the window and with
+    NPCs if <code class="code">condition</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_magic_numbers"><span class="keyword">val</span> get_magic_numbers</span> : <code class="type"><a href="Dungeon.html#TYPEt">t</a> -> Magic_numbers.t</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_magic_numbers dungeon</code> is the magic_numbers associated with
+    <code class="code">dungeon</code></p>
+</div>
+</div>
+</body></html>

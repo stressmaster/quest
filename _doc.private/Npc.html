@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Fight_menu.html">
+<link rel="next" href="Spiral.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Render" rel="Chapter" href="Render.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Texturemap" rel="Chapter" href="Texturemap.html">
+<link title="Game" rel="Chapter" href="Game.html">
+<link title="Dungeon" rel="Chapter" href="Dungeon.html">
+<link title="State" rel="Chapter" href="State.html">
+<link title="Levenshtein" rel="Chapter" href="Levenshtein.html">
+<link title="Fight_menu" rel="Chapter" href="Fight_menu.html">
+<link title="Npc" rel="Chapter" href="Npc.html">
+<link title="Spiral" rel="Chapter" href="Spiral.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Render_stack" rel="Chapter" href="Render_stack.html">
+<link title="Walker" rel="Chapter" href="Walker.html">
+<link title="Audio" rel="Chapter" href="Audio.html">
+<link title="Item" rel="Chapter" href="Item.html">
+<link title="Spriteanimation" rel="Chapter" href="Spriteanimation.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Magic_numbers" rel="Chapter" href="Magic_numbers.html">
+<link title="Gameover_menu" rel="Chapter" href="Gameover_menu.html">
+<link title="Monsters" rel="Chapter" href="Monsters.html">
+<link title="Win_menu" rel="Chapter" href="Win_menu.html">
+<link title="Start_menu" rel="Chapter" href="Start_menu.html"><title>Npc</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Fight_menu.html" title="Fight_menu">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Spiral.html" title="Spiral">Next</a>
+</div>
+<h1>Module <a href="type_Npc.html">Npc</a></h1>
+
+<pre><span id="MODULENpc"><span class="keyword">module</span> Npc</span>: <code class="code">sig</code> <a href="Npc.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>Representation of an NPC.</p>
+
+<p>This module represents the data associated with an NPC, including
+    data for rendering and the stat. Includes methods for creating NPCs
+    and getting NPC attributes.</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.speech">speech</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.sprite">sprite</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr></table>
+<code>}</code>
+
+<div class="info ">
+<div class="info-desc">
+<p>abstract type representing an NPC</p>
+</div>
+</div>
+
+
+<pre><span id="VALget_npc_speech"><span class="keyword">val</span> get_npc_speech</span> : <code class="type"><a href="Npc.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_npc_speech npc</code> is the speech associated with <code class="code">npc</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_npc_sprite"><span class="keyword">val</span> get_npc_sprite</span> : <code class="type"><a href="Npc.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_npc_sprite npc</code> is the sprite associated with <code class="code">npc</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_npc"><span class="keyword">val</span> get_npc</span> : <code class="type">int -> <a href="Magic_numbers.html#TYPEt">Magic_numbers.t</a> -> <a href="Npc.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_npc nth magic_numbers</code> is the <code class="code">nth</code> npc of <code class="code">magic_numbers</code></p>
+</div>
+</div>
+
+<pre><span id="VALnpc_list_length"><span class="keyword">val</span> npc_list_length</span> : <code class="type"><a href="Magic_numbers.html#TYPEt">Magic_numbers.t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">npc_list_length magic_numbers</code> is the number of npcs of
+    <code class="code">magic_numbers</code></p>
+</div>
+</div>
+</body></html>

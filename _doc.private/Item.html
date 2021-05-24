@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Audio.html">
+<link rel="next" href="Spriteanimation.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Render" rel="Chapter" href="Render.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Texturemap" rel="Chapter" href="Texturemap.html">
+<link title="Game" rel="Chapter" href="Game.html">
+<link title="Dungeon" rel="Chapter" href="Dungeon.html">
+<link title="State" rel="Chapter" href="State.html">
+<link title="Levenshtein" rel="Chapter" href="Levenshtein.html">
+<link title="Fight_menu" rel="Chapter" href="Fight_menu.html">
+<link title="Npc" rel="Chapter" href="Npc.html">
+<link title="Spiral" rel="Chapter" href="Spiral.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Render_stack" rel="Chapter" href="Render_stack.html">
+<link title="Walker" rel="Chapter" href="Walker.html">
+<link title="Audio" rel="Chapter" href="Audio.html">
+<link title="Item" rel="Chapter" href="Item.html">
+<link title="Spriteanimation" rel="Chapter" href="Spriteanimation.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Magic_numbers" rel="Chapter" href="Magic_numbers.html">
+<link title="Gameover_menu" rel="Chapter" href="Gameover_menu.html">
+<link title="Monsters" rel="Chapter" href="Monsters.html">
+<link title="Win_menu" rel="Chapter" href="Win_menu.html">
+<link title="Start_menu" rel="Chapter" href="Start_menu.html"><title>Item</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Audio.html" title="Audio">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Spriteanimation.html" title="Spriteanimation">Next</a>
+</div>
+<h1>Module <a href="type_Item.html">Item</a></h1>
+
+<pre><span id="MODULEItem"><span class="keyword">module</span> Item</span>: <code class="code">sig</code> <a href="Item.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>Representation of an item.</p>
+
+<p>This module represents the data associated with an item, including
+    data about the type and stats of an item. Includes methods for
+    creating items and getting item attributes.</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><code><span id="TYPEitem_stats"><span class="keyword">type</span> <code class="type"></code>item_stats</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTitem_stats.sprite">sprite</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTitem_stats.name">name</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTitem_stats.depth">depth</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTitem_stats.modifier">modifier</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr></table>
+<code>}</code>
+
+<div class="info ">
+<div class="info-desc">
+<p>type representing item stats</p>
+</div>
+</div>
+
+
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.Weapon"><span class="constructor">Weapon</span></span> <span class="keyword">of</span> <code class="type"><a href="Item.html#TYPEitem_stats">item_stats</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.Armor"><span class="constructor">Armor</span></span> <span class="keyword">of</span> <code class="type"><a href="Item.html#TYPEitem_stats">item_stats</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.NoItem"><span class="constructor">NoItem</span></span></code></td>
+
+</tr></table>
+
+<div class="info ">
+<div class="info-desc">
+<p>abstract type representing an item</p>
+</div>
+</div>
+
+
+<pre><span id="VALcreate_item_hard"><span class="keyword">val</span> create_item_hard</span> : <code class="type">string -> string -> string -> int -> int -> <a href="Item.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">create_item_hard itype sprite name depth modifier</code> is an <code class="code">item</code> of
+    <code class="code">itype</code> with sprite <code class="code">sprite</code> name <code class="code">name</code> depth <code class="code">depth</code> and modifier
+    <code class="code">modifier</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_item_type"><span class="keyword">val</span> get_item_type</span> : <code class="type"><a href="Item.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_item_type item</code> is the type of <code class="code">item</code></p>
+</div>
+</div>
+
+<pre><span id="VALempty_item"><span class="keyword">val</span> empty_item</span> : <code class="type"><a href="Item.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">empty_item</code> is the item empty</p>
+</div>
+</div>
+
+<pre><span id="VALget_item_sprite"><span class="keyword">val</span> get_item_sprite</span> : <code class="type"><a href="Item.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_item_sprite item</code> is the sprite of <code class="code">item</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_item_depth"><span class="keyword">val</span> get_item_depth</span> : <code class="type"><a href="Item.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_item_depth item</code> is the depth of <code class="code">item</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_item_name"><span class="keyword">val</span> get_item_name</span> : <code class="type"><a href="Item.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_item_name item</code> is the name of <code class="code">item</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_item_modifier"><span class="keyword">val</span> get_item_modifier</span> : <code class="type"><a href="Item.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_item_modifier item</code> is the modifier of <code class="code">item</code></p>
+</div>
+</div>
+
+<pre><span id="VALlist_rand_elt"><span class="keyword">val</span> list_rand_elt</span> : <code class="type">'a list -> 'a</code></pre>
+<pre><span id="VALdetermine_prefix"><span class="keyword">val</span> determine_prefix</span> : <code class="type">float -> <a href="Magic_numbers.html#TYPEt">Magic_numbers.t</a> -> string</code></pre>
+<pre><span id="VALdetermine_material"><span class="keyword">val</span> determine_material</span> : <code class="type">float -> <a href="Magic_numbers.html#TYPEt">Magic_numbers.t</a> -> string</code></pre>
+<pre><span id="VALdetermine_base"><span class="keyword">val</span> determine_base</span> : <code class="type">bool -> float -> <a href="Magic_numbers.html#TYPEt">Magic_numbers.t</a> -> string</code></pre>
+<pre><span id="VALgenerate_name"><span class="keyword">val</span> generate_name</span> : <code class="type">float -> bool -> <a href="Magic_numbers.html#TYPEt">Magic_numbers.t</a> -> string</code></pre>
+<pre><span id="VALsprite_of_tier"><span class="keyword">val</span> sprite_of_tier</span> : <code class="type">float -> bool -> string</code></pre>
+<pre><span id="VALcreate_weapon"><span class="keyword">val</span> create_weapon</span> : <code class="type">int -> float -> <a href="Magic_numbers.html#TYPEt">Magic_numbers.t</a> -> <a href="Item.html#TYPEt">t</a></code></pre>
+<pre><span id="VALcreate_item"><span class="keyword">val</span> create_item</span> : <code class="type">int -> bool -> <a href="Magic_numbers.html#TYPEt">Magic_numbers.t</a> -> <a href="Item.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_item_modifier depth itype magic_numbers</code> is an item of depth
+    <code class="code">depth</code> type <code class="code">itype</code> and other attributes based on <code class="code">magic_numbers</code></p>
+</div>
+</div>
+</body></html>
