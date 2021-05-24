@@ -1,3 +1,5 @@
+(**This module contains the stack of scenes to render.*)
+
 (* the type representing a scene *)
 type scene =
   | DungeonRender

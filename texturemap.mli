@@ -1,3 +1,5 @@
+(**This module contains the data necessary to manage mutable textures*)
+
 (* [init_texture] initializes texture *)
 val init_texture : string list -> unit
 

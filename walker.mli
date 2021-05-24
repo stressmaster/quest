@@ -1,3 +1,5 @@
+(**This module contains the algorithm for creating a random dungeon.*)
+
 (** a type representing a direction *)
 type direction =
   | Up
