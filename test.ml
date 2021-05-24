@@ -3,6 +3,8 @@ open Dungeon
 open Timer
 open Levenshtein
 open State
+open Magic_numbers
+open Render_stack
 
 let int_tuple_printer (x, y) =
   "(" ^ string_of_int x ^ "," ^ string_of_int x ^ ")"
@@ -69,6 +71,15 @@ let make_animation_test name step id expected_output =
     ( if step then Spriteanimation.step_animation ();
       Spriteanimation.get_sprite id )
 
+let make_monster_int_test name func monster expected_output =
+  name >:: fun _ -> assert_equal expected_output (func monster)
+
+let make_monster_str_test name func monster expected_output =
+  name >:: fun _ -> assert_equal expected_output (func monster)
+
+let make_render_stack_test name top expected_output =
+  name >:: fun _ -> assert_equal expected_output top
+
 (* let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0
    0 *)
 
@@ -131,19 +142,44 @@ let sprite_tests =
       false "anim1" "sprite1";
     make_animation_test "After initialization anim2 should be sprite1"
       false "anim2" "sprite1";
-    make_animation_test "After stepping once anim1 should be sprite1"
+    make_animation_test "After stepping once anim1 should be sprite2"
       true "anim1" "sprite2";
-    make_animation_test "After stepping once anim2 should be sprite1"
+    make_animation_test "After stepping once anim2 should be sprite2"
       false "anim2" "sprite2";
     make_animation_test "After stepping twice anim1 should be sprite1"
       true "anim1" "sprite1";
-    make_animation_test "After stepping twice anim2 should be sprite1"
+    make_animation_test "After stepping twice anim2 should be sprite3"
+      false "anim2" "sprite3";
+    make_animation_test "After stepping thrice anim1 should be sprite2"
+      true "anim1" "sprite2";
+    make_animation_test "After stepping thrice anim2 should be sprite1"
       false "anim2" "sprite1";
+  ]
+
+let monster_tests = []
+
+let render_stack_tests =
+  [
+    make_render_stack_test
+      "the top after initialization should be StartRender"
+      (Render_stack.stack_peek ())
+      StartRender;
+    make_render_stack_test
+      "the top after one pop should be DungeonRender"
+      ( Render_stack.stack_pop ();
+        Render_stack.stack_peek () )
+      DungeonRender;
   ]
 
 let suite =
   "test suite for CamelQuest"
-  >::: List.flatten [ levenshtein_tests; timer_tests; sprite_tests ]
+  >::: List.flatten
+         [
+           levenshtein_tests;
+           timer_tests;
+           sprite_tests;
+           render_stack_tests;
+         ]
 
 let _ =
   Timer.init_timers
@@ -151,6 +187,6 @@ let _ =
   Spriteanimation.init_animations
     [
       ("anim1", [ "sprite1"; "sprite2" ]);
-      ("anim2", [ "sprite1"; "sprite2" ]);
+      ("anim2", [ "sprite1"; "sprite2"; "sprite3" ]);
     ];
   run_test_tt_main suite
