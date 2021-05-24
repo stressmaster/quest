@@ -121,64 +121,58 @@ let init_state file_name =
   Magic_numbers.update (Dungeon.get_magic_numbers room);
   init_current game room monster
 
-let init_state_from_save file_name =
-  let ourjson = Yojson.Basic.from_file file_name in
-  let g = ourjson |> Game.save_json in
-  let current_room_id =
-    ourjson
-    |> Yojson.Basic.Util.member "current_id"
-    |> Yojson.Basic.Util.to_int
-  in
-  let r = Game.nth_room g current_room_id in
-  let m = r |> Dungeon.get_magic_numbers |> Monsters.get_monster in
-  Magic_numbers.update (Dungeon.get_magic_numbers r);
+let json_mem = Yojson.Basic.Util.member
+
+let json_int = Yojson.Basic.Util.to_int
+
+let init_fight_json monster =
   {
-    game = g;
-    room = r;
-    room_exit = r |> Dungeon.get_exit;
+    spiraled = false;
+    action = Attack;
+    attacking = false;
+    monster;
+    monster_string = Monsters.get_monster_string monster;
+    monster_health = Monsters.get_monster_HP monster;
+    player_health = !Magic_numbers.get_magic.health;
+    typing_limit =
+      monster |> Monsters.get_monster_string |> String.length
+      |> ( * ) 10;
+    input_string = "";
+  }
+
+let init_current_json ourjson game room monster =
+  {
+    game;
+    room;
+    room_exit = room |> Dungeon.get_exit;
     location =
-      ( ourjson
-        |> Yojson.Basic.Util.member "locationx"
-        |> Yojson.Basic.Util.to_int,
-        ourjson
-        |> Yojson.Basic.Util.member "locationy"
-        |> Yojson.Basic.Util.to_int );
+      ( ourjson |> json_mem "locationx" |> json_int,
+        ourjson |> json_mem "locationy" |> json_int );
     in_fight = false;
-    fight =
-      {
-        spiraled = false;
-        action = Attack;
-        attacking = false;
-        monster = m;
-        monster_string = Monsters.get_monster_string m;
-        monster_health = Monsters.get_monster_HP m;
-        player_health = !Magic_numbers.get_magic.health;
-        typing_limit =
-          m |> Monsters.get_monster_string |> String.length |> ( * ) 10;
-        input_string = "";
-      };
+    fight = init_fight_json monster;
     health = !Magic_numbers.get_magic.health;
     level = 1;
-    depth = Dungeon.get_id r;
-    current_exp =
-      ourjson
-      |> Yojson.Basic.Util.member "current_exp"
-      |> Yojson.Basic.Util.to_int;
-    exp_bound =
-      ourjson
-      |> Yojson.Basic.Util.member "exp_bound"
-      |> Yojson.Basic.Util.to_int;
+    depth = Dungeon.get_id room;
+    current_exp = ourjson |> json_mem "current_exp" |> json_int;
+    exp_bound = ourjson |> json_mem "exp_bound" |> json_int;
     current_weapon =
-      ourjson
-      |> Yojson.Basic.Util.member "current_weapon"
-      |> Game.item_of_json;
+      ourjson |> json_mem "current_weapon" |> Game.item_of_json;
     current_armor =
-      ourjson
-      |> Yojson.Basic.Util.member "current_armor"
-      |> Game.item_of_json;
+      ourjson |> json_mem "current_armor" |> Game.item_of_json;
     game_over = Quit;
     start_menu = NewGame;
   }
+
+let init_state_from_save file_name =
+  let ourjson = Yojson.Basic.from_file file_name in
+  let game = ourjson |> Game.save_json in
+  let current_room_id = ourjson |> json_mem "current_id" |> json_int in
+  let room = Game.nth_room game current_room_id in
+  let monster =
+    room |> Dungeon.get_magic_numbers |> Monsters.get_monster
+  in
+  Magic_numbers.update (Dungeon.get_magic_numbers room);
+  init_current_json ourjson game room monster
 
 let reset_fight c =
   let new_m =
@@ -203,8 +197,8 @@ let encounter bound = Random.int bound = 0
 let is_in_fight current =
   let current_bound = Dungeon.get_bound current.room in
   (not
-     (current.location = current.room_exit
-     || current.location = Dungeon.get_start current.room))
+     ( current.location = current.room_exit
+     || current.location = Dungeon.get_start current.room ))
   && encounter current_bound
 
 let player_loc state = state.location
@@ -234,10 +228,10 @@ let manage_weapon current x y weapon =
 let manage_no_item current x y =
   if current.current_weapon <> NoItem then (
     Dungeon.drop_item current.room (x, y) (Some current.current_weapon);
-    current.current_weapon <- NoItem)
+    current.current_weapon <- NoItem )
   else if current.current_armor <> NoItem then (
     Dungeon.drop_item current.room (x, y) (Some current.current_armor);
-    current.current_armor <- NoItem)
+    current.current_armor <- NoItem )
 
 let manage_item current x y = function
   | Some (Item.Armor a) ->
@@ -283,7 +277,7 @@ let move current key =
   if current.in_fight then (
     Audio.change_music "./camlished_battle.wav";
     Render_stack.stack_push Render_stack.SpiralRender;
-    Timer.reset_timer "general");
+    Timer.reset_timer "general" );
   (* delete light right below when spiral works. it is a work around*)
   begin
     match key with
@@ -340,15 +334,15 @@ let manage_run str mon_str mon_HP diff current =
   then take_damage mon_HP current;
   if diff <= String.length str / 3 then (
     Render_stack.stack_pop ();
-    reset_fight current)
+    reset_fight current )
 
 let enter_case str mon_str mon_HP current =
   current.fight.monster_string <- manage_damage mon_HP current;
   let diff = Levenshtein.dist str mon_str in
-  (match current.fight.action with
+  ( match current.fight.action with
   | Attack -> manage_attack mon_str mon_HP diff current
   | Recover -> manage_recover mon_str mon_HP diff current
-  | Run -> manage_run str mon_str mon_HP diff current);
+  | Run -> manage_run str mon_str mon_HP diff current );
   current.fight.attacking <- false;
   ""
 
@@ -413,7 +407,7 @@ let typing_move current key =
   | _ -> current
 
 let menu_move current key =
-  (match key with
+  ( match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
@@ -424,8 +418,8 @@ let menu_move current key =
   | Glut.KEY_UP ->
       if not current.fight.attacking then (
         Timer.reset_timer "general";
-        current.fight.attacking <- not current.fight.attacking)
-  | _ -> ());
+        current.fight.attacking <- not current.fight.attacking )
+  | _ -> () );
   current
 
 let game_over_move current key =
