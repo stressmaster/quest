@@ -11,6 +11,10 @@ let length = List.length magic_themes
 type items = {
   tier_one_weapon : string;
   tier_one_armor : string;
+  tier_two_weapon : string;
+  tier_two_armor : string;
+  tier_three_weapon : string;
+  tier_three_armor : string;
   tier_one_materials : string list;
   tier_two_materials : string list;
   tier_three_materials : string list;
@@ -112,6 +116,10 @@ let json_to_items magic_theme : items =
     tier_three_armors = json_to_str_list magic_theme "tier_three_armors";
     tier_one_weapon = json_to_string magic_theme "tier_one_weapon";
     tier_one_armor = json_to_string magic_theme "tier_one_armor";
+    tier_two_weapon = json_to_string magic_theme "tier_two_weapon";
+    tier_two_armor = json_to_string magic_theme "tier_two_armor";
+    tier_three_weapon = json_to_string magic_theme "tier_three_weapon";
+    tier_three_armor = json_to_string magic_theme "tier_three_armor";
     weapon_pickup = json_to_string magic_theme "weapon_pickup";
     armor_pickup = json_to_string magic_theme "armor_pickup";
     empty_item = json_to_string magic_theme "empty_item";

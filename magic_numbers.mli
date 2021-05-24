@@ -2,6 +2,10 @@
 type items = {
   tier_one_weapon : string;
   tier_one_armor : string;
+  tier_two_weapon : string;
+  tier_two_armor : string;
+  tier_three_weapon : string;
+  tier_three_armor : string;
   tier_one_materials : string list;
   tier_two_materials : string list;
   tier_three_materials : string list;

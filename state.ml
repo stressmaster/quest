@@ -289,7 +289,7 @@ let move current key =
     match key with
     | Glut.KEY_RIGHT | Glut.KEY_LEFT | Glut.KEY_UP | Glut.KEY_DOWN ->
         map_move current key x y
-    | Glut.KEY_INSERT ->
+    | Glut.KEY_F2 ->
         manage_item current x y (Dungeon.get_item current.room (x, y))
     | _ -> ()
   end;

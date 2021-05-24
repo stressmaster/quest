@@ -74,6 +74,16 @@ let generate_name tier itype (dereffed_magic_numbers : Magic_numbers.t)
   in
   prefix ^ " " ^ material ^ " " ^ base
 
+let sprite_of_tier t itype =
+  match (t, itype) with
+  | 3., true -> !Magic_numbers.get_magic.items.tier_three_weapon
+  | 3., false -> !Magic_numbers.get_magic.items.tier_three_armor
+  | 1., true -> !Magic_numbers.get_magic.items.tier_two_weapon
+  | 1., false -> !Magic_numbers.get_magic.items.tier_two_armor
+  | 0.5, true -> !Magic_numbers.get_magic.items.tier_one_weapon
+  | 0.5, false -> !Magic_numbers.get_magic.items.tier_one_armor
+  | _ -> !Magic_numbers.get_magic.items.tier_one_armor
+
 let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
   let tier =
     let rand = Random.float 1. in
@@ -82,7 +92,7 @@ let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
   if itype = true then
     Weapon
       {
-        sprite = !Magic_numbers.get_magic.items.tier_one_weapon;
+        sprite = sprite_of_tier tier true;
         name =
           "Lvl " ^ string_of_int depth ^ " "
           ^ generate_name tier true dereffed_magic_numbers;
@@ -92,7 +102,7 @@ let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
   else
     Armor
       {
-        sprite = !Magic_numbers.get_magic.items.tier_one_armor;
+        sprite = sprite_of_tier tier false;
         name =
           "Lvl " ^ string_of_int depth ^ " "
           ^ generate_name tier false dereffed_magic_numbers;
