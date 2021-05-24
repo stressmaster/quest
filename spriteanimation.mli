@@ -12,7 +12,7 @@ type id = string
 (** [init_animations animations] initiates [animations] *)
 val init_animations : (id * string list) list -> unit
 
-(** [get_sprite id] is the current fraame of the sprite with id [id] *)
+(** [get_sprite id] is the current frame of the sprite with id [id] *)
 val get_sprite : id -> string
 
 (** [step_animation ()] steps the frames of all animations *)
