@@ -7,9 +7,9 @@ open Magic_numbers
 open Render_stack
 
 let int_tuple_printer (x, y) =
-  "(" ^ string_of_int x ^ "," ^ string_of_int x ^ ")"
+  "(" ^ string_of_int x ^ "," ^ string_of_int y ^ ")"
 
-let make_dungeon__tuple_test
+let make_dungeon_tuple_test
     (name : string)
     (dungeon : Dungeon.t)
     (f : Dungeon.t -> int * int)
@@ -17,13 +17,30 @@ let make_dungeon__tuple_test
   name >:: fun _ ->
   assert_equal expected_output (f dungeon) ~printer:int_tuple_printer
 
-let make_dungeon__int_test
+let make_dungeon_int_test
     (name : string)
     (dungeon : Dungeon.t)
     (f : Dungeon.t -> int)
     (expected_output : int) : test =
   name >:: fun _ ->
   assert_equal expected_output (f dungeon) ~printer:string_of_int
+
+let make_tile_material_test name dungeon location expected_output =
+  name >:: fun _ ->
+  let cells = get_cells dungeon in
+  assert_equal expected_output
+    (Hashtbl.find cells location |> get_tile |> tile_material)
+    ~printer:(fun a -> a)
+
+let make_dungeon_bool_test
+    (name : string)
+    (dungeon : Dungeon.t)
+    (location : int * int)
+    (f : Dungeon.t -> int * int -> bool)
+    (expected_output : bool) : test =
+  name >:: fun _ ->
+  assert_equal expected_output (f dungeon location)
+    ~printer:string_of_bool
 
 (* let make_monster_hp_test (name : string) (mon : Monster.t)
    (expected_output : int) : test = name >:: fun _ -> assert_equal
@@ -81,25 +98,39 @@ let make_render_stack_test name push scene pop expected_output =
 let make_magic_number_constant_test name constant expected_output =
   name >:: fun _ -> assert_equal constant expected_output
 
-(* let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0
-   0 *)
+let dungeon_20x50 =
+  Dungeon.instantiate_dungeon ~seed:123 1 20 50 (1, 1) 5 0 0
 
-(*let dungeon_2x2 = Dungeon.instantiate_dungeon 1 2 2 (1, 1) 5 [] 5 10*)
-
-(* let monster_20_hp = Dungeon.instantiate_monster "dog" "dog.pn" 20 59
-   [ "a" ] *)
+let dungeon_2x5 =
+  Dungeon.instantiate_dungeon ~seed:241 1 2 5 (1, 1) 5 5 10
 
 (* let current_sample_game = State.init_state "sample_game.json" *)
 
-(* let dungeon_tests = [ make_dungeon__tuple_test "20x50 dungeon
-   dimension" dungeon_20x50 get_dimensions (50, 30);
-   make_dungeon__tuple_test "2x5 dungeon dimension" dungeon_2x2
-   get_dimensions (2, 2); make_dungeon__int_test "2x5 dungeon bound"
-   dungeon_2x2 get_bound 5; make_dungeon__int_test "2x5 dungeon id"
-   dungeon_2x2 get_id 1; make_dungeon__int_test "2x5 dungeon previous"
-   dungeon_2x2 get_prev 10; make_dungeon__int_test "2x5 dungeon next"
-   dungeon_2x2 get_next 5; make_monster_hp_test "20 hp monster "
-   monster_20_hp 20; ] *)
+let dungeon_tests =
+  [
+    make_dungeon_tuple_test "20x50 dungeon dimension 20 by 50"
+      dungeon_20x50 get_dimensions (20, 50);
+    make_dungeon_tuple_test "2x5 dungeon dimension is 2 by 5"
+      dungeon_2x5 get_dimensions (2, 5);
+    make_dungeon_tuple_test "start location is (1,1)" dungeon_2x5
+      get_start (1, 1);
+    make_dungeon_int_test "2x5 dungeon bound is 5" dungeon_2x5 get_bound
+      5;
+    make_dungeon_int_test "2x5 dungeon id is 1" dungeon_2x5 get_id 1;
+    make_dungeon_int_test "2x5 dungeon previous is 10" dungeon_2x5
+      get_prev 10;
+    make_dungeon_int_test "2x5 dungeon next is 5" dungeon_2x5 get_next 5;
+    make_dungeon_bool_test "(0,0) is always a wall" dungeon_2x5 (0, 0)
+      is_wall true;
+    make_tile_material_test "material of wall is ./wall.png" dungeon_2x5
+      (0, 0) "./wall.png";
+    make_tile_material_test "material of path is ./path" dungeon_20x50
+      (1, 1) "./path.png";
+    make_dungeon_int_test "20x50 dungeon seed is 123" dungeon_20x50
+      get_time 123;
+    make_dungeon_int_test "2x5 dungeon seed is 241" dungeon_2x5 get_time
+      241;
+  ]
 
 let levenshtein_tests =
   [
@@ -196,6 +227,7 @@ let suite =
            sprite_tests;
            render_stack_tests;
            magic_number_test;
+           dungeon_tests;
          ]
 
 let _ =
