@@ -86,10 +86,10 @@ let change_direction w =
 
 let walk steps w =
   let walk_helper () =
-    if Random.float 1. >= 0.17 || w.steps_since_turn > 4 then (
+    if Random.float 1. >= 0.4 || w.steps_since_turn > 8 then (
       w.steps_since_turn <- 0;
       change_direction w)
-    else if w.steps_since_turn > 4 then (
+    else if w.steps_since_turn > 8 then (
       w.steps_since_turn <- 0;
       change_direction w)
     else if step w then

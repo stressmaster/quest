@@ -60,8 +60,8 @@ let next_dungeon game dungeon =
   try List.find (fun g -> Dungeon.get_id g = next_id) game.dungeons
   with Not_found ->
     let next_id = Dungeon.get_id dungeon + 1 in
-    let xdim = 11 + Random.int 20 in
-    let ydim = 11 + Random.int 20 in
+    let xdim = 50 + Random.int 150 in
+    let ydim = 50 + Random.int 150 in
     let ourlist =
       [
         (1, 1);
@@ -80,7 +80,6 @@ let next_dungeon game dungeon =
       20 (next_id + 1) (next_id - 1)
 
 let prev_dungeon game dungeon =
-  (* let prev_dungeon_id = Dungeon.get_prev dungeon in *)
   let prev_id = Dungeon.get_id dungeon - 1 in
   List.find (fun g -> Dungeon.get_id g = prev_id) game.dungeons
 

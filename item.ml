@@ -44,14 +44,14 @@ let get_item_modifier i =
 let list_rand_elt lst = List.nth lst (Random.int (List.length lst))
 
 let determine_prefix tier (dereffed_magic_numbers : Magic_numbers.t) =
-  if tier = 2. then
+  if tier = 4. then
     list_rand_elt dereffed_magic_numbers.items.tier_three_prefixes
   else if tier = 1. then
     list_rand_elt dereffed_magic_numbers.items.tier_two_prefixes
   else list_rand_elt dereffed_magic_numbers.items.tier_one_prefixes
 
 let determine_material tier (dereffed_magic_numbers : Magic_numbers.t) =
-  if tier = 2. then
+  if tier = 4. then
     list_rand_elt dereffed_magic_numbers.items.tier_three_materials
   else if tier = 1. then
     list_rand_elt dereffed_magic_numbers.items.tier_two_materials
@@ -60,12 +60,12 @@ let determine_material tier (dereffed_magic_numbers : Magic_numbers.t) =
 let determine_base itype tier (dereffed_magic_numbers : Magic_numbers.t)
     =
   if itype = true then
-    if tier = 2. then
+    if tier = 4. then
       list_rand_elt dereffed_magic_numbers.items.tier_three_weapons
     else if tier = 1. then
       list_rand_elt dereffed_magic_numbers.items.tier_two_weapons
     else list_rand_elt dereffed_magic_numbers.items.tier_one_weapons
-  else if tier = 2. then
+  else if tier = 4. then
     list_rand_elt dereffed_magic_numbers.items.tier_three_armors
   else if tier = 1. then
     list_rand_elt dereffed_magic_numbers.items.tier_two_armors
@@ -83,8 +83,8 @@ let generate_name tier itype (dereffed_magic_numbers : Magic_numbers.t)
 
 let sprite_of_tier t itype =
   match (t, itype) with
-  | 2., true -> !Magic_numbers.get_magic.items.tier_three_weapon
-  | 2., false -> !Magic_numbers.get_magic.items.tier_three_armor
+  | 4., true -> !Magic_numbers.get_magic.items.tier_three_weapon
+  | 4., false -> !Magic_numbers.get_magic.items.tier_three_armor
   | 1., true -> !Magic_numbers.get_magic.items.tier_two_weapon
   | 1., false -> !Magic_numbers.get_magic.items.tier_two_armor
   | 0.5, true -> !Magic_numbers.get_magic.items.tier_one_weapon
@@ -106,7 +106,7 @@ let create_weapon depth tier dereffed_magic_numbers =
 let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
   let tier =
     let rand = Random.float 1. in
-    if rand > 0.9 then 2. else if rand > 0.5 then 1. else 0.5
+    if rand > 0.9 then 4. else if rand > 0.5 then 1. else 0.5
   in
   if itype = true then create_weapon depth tier dereffed_magic_numbers
   else
