@@ -17,8 +17,6 @@ type walker = {
   mutable steps_since_turn : int;
 }
 
-let directions = ref [ Up; Down; Left; Right ]
-
 let init_walker xmin xmax ymin ymax start =
   {
     furthest_pos = start;
@@ -68,13 +66,8 @@ let step w =
        else current);
     w.steps_since_turn <- w.steps_since_turn + 1;
     w.current_pos <- target_pos;
-    true )
+    true)
   else false
-
-(* let rec choose_new_dir d = let rand = Random.int 100 mod 4 in let dir
-   = List.nth !directions rand in if d = dir then ( directions :=
-   List.filter (fun x -> x <> d) !directions; choose_new_dir (List.nth
-   !directions (Random.int (List.length !directions)))) else dir *)
 
 let debug_dir d =
   match d with
@@ -95,10 +88,10 @@ let walk steps w =
   let walk_helper () =
     if Random.float 1. >= 0.17 || w.steps_since_turn > 4 then (
       w.steps_since_turn <- 0;
-      change_direction w )
+      change_direction w)
     else if w.steps_since_turn > 4 then (
       w.steps_since_turn <- 0;
-      change_direction w )
+      change_direction w)
     else if step w then
       w.step_history <- w.current_pos :: w.step_history
     else change_direction w
