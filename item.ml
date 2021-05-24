@@ -111,7 +111,9 @@ let create_weapon depth tier dereffed_magic_numbers =
         ^ generate_name tier true dereffed_magic_numbers;
       depth;
       modifier =
-        int_of_float (float_of_int depth +. (tier *. float_of_int depth));
+        int_of_float
+          (float_of_int (Random.int depth)
+          +. (tier *. float_of_int depth));
     }
 
 let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
@@ -130,5 +132,6 @@ let create_item depth itype (dereffed_magic_numbers : Magic_numbers.t) =
         depth;
         modifier =
           int_of_float
-            (float_of_int depth +. (tier *. float_of_int depth));
+            (float_of_int (Random.int depth)
+            +. (tier *. float_of_int depth));
       }
