@@ -233,7 +233,8 @@ let manage_no_item current x y =
     Dungeon.drop_item current.room (x, y) (Some current.current_armor);
     current.current_armor <- NoItem )
 
-let manage_item current x y = function
+let manage_item current x y item =
+  match item with
   | Some (Item.Armor a) ->
       manage_armor current x y a;
       current.current_armor <- Armor a
@@ -283,8 +284,6 @@ let move current key =
     match key with
     | Glut.KEY_RIGHT | Glut.KEY_LEFT | Glut.KEY_UP | Glut.KEY_DOWN ->
         map_move current key x y
-    | Glut.KEY_F2 ->
-        manage_item current x y (Dungeon.get_item current.room (x, y))
     | _ -> ()
   end;
   should_change_room current;
@@ -397,7 +396,11 @@ let gaming_move current key =
 let clamp_str str = String.sub str 0 (min (String.length str) 20)
 
 let typing_move current key =
+  let x, y = current.location in
   match Render_stack.stack_peek () with
+  | DungeonRender ->
+      manage_item current x y (Dungeon.get_item current.room (x, y));
+      current
   | FightRender when current.fight.attacking ->
       current.fight.input_string <-
         clamp_str (fighting_case current key);
