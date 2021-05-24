@@ -71,14 +71,15 @@ let make_animation_test name step id expected_output =
     ( if step then Spriteanimation.step_animation ();
       Spriteanimation.get_sprite id )
 
-let make_monster_int_test name func monster expected_output =
-  name >:: fun _ -> assert_equal expected_output (func monster)
+let make_render_stack_test name push scene pop expected_output =
+  name >:: fun _ ->
+  assert_equal expected_output
+    ( if push then Render_stack.stack_push scene
+      else if pop then Render_stack.stack_pop ();
+      Render_stack.stack_peek () )
 
-let make_monster_str_test name func monster expected_output =
-  name >:: fun _ -> assert_equal expected_output (func monster)
-
-let make_render_stack_test name top expected_output =
-  name >:: fun _ -> assert_equal expected_output top
+let make_magic_number_constant_test name constant expected_output =
+  name >:: fun _ -> assert_equal constant expected_output
 
 (* let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0
    0 *)
@@ -156,19 +157,34 @@ let sprite_tests =
       false "anim2" "sprite1";
   ]
 
-let monster_tests = []
-
 let render_stack_tests =
   [
     make_render_stack_test
-      "the top after initialization should be StartRender"
-      (Render_stack.stack_peek ())
-      StartRender;
+      "the top after initialization should be StartRender" false
+      GameoverRender false Render_stack.StartRender;
     make_render_stack_test
-      "the top after one pop should be DungeonRender"
-      ( Render_stack.stack_pop ();
-        Render_stack.stack_peek () )
-      DungeonRender;
+      "the top after one pop should be DungeonRender" false
+      GameoverRender true Render_stack.DungeonRender;
+    make_render_stack_test
+      "the top after one push of GameoverRender should be \
+       GameoverRender"
+      true GameoverRender true Render_stack.GameoverRender;
+  ]
+
+let magic_number_test =
+  [
+    make_magic_number_constant_test "w should be 500" Magic_numbers.w
+      500;
+    make_magic_number_constant_test "h should be 500" Magic_numbers.h
+      500;
+    make_magic_number_constant_test "x_length should be 500"
+      Magic_numbers.x_length 11;
+    make_magic_number_constant_test "y_length should be 500"
+      Magic_numbers.y_length 11;
+    make_magic_number_constant_test "width should be 500. /. 11."
+      Magic_numbers.width (500. /. 11.);
+    make_magic_number_constant_test "height should be 500. /. 11."
+      Magic_numbers.width (500. /. 11.);
   ]
 
 let suite =

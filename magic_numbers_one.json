@@ -71,7 +71,8 @@
     "./fonts/>.png",
     "./fonts/space.png",
     "./fonts/question.png",
-    "./fonts/exclamation.png"
+    "./fonts/exclamation.png",
+    "./fonts/period.png"
   ],
   "magic_themes": [
     {
@@ -129,6 +130,116 @@
             "wild swing",
             "focus punch",
             "mach punch"
+          ]
+        },
+        {
+          "name": "python",
+          "sprite": "./monster4.png",
+          "hitpoints": 20,
+          "chance": 3,
+          "attacks": [
+            "duck typing",
+            "rubber ducky",
+            "guido van rossum",
+            "strong typing"
+          ]
+        },
+        {
+          "name": "peppa",
+          "sprite": "./monster5.png",
+          "hitpoints": 50,
+          "chance": 1,
+          "attacks": [
+            "oink oink",
+            "420 blaze it",
+            "mlg 360 noscope",
+            "dank"
+          ]
+        },
+        {
+          "name": "melvin",
+          "sprite": "./monster6.png",
+          "hitpoints": 30,
+          "chance": 5,
+          "attacks": [
+            "gme to the moon",
+            "buy the dip",
+            "diamond hands",
+            "ape strong together"
+          ]
+        },
+        {
+          "name": "corona",
+          "sprite": "./monster7.png",
+          "hitpoints": 35,
+          "chance": 4,
+          "attacks": [
+            "wuhan",
+            "wear mask",
+            "wash hands",
+            "stay home"
+          ]
+        },
+        {
+          "name": "gries",
+          "sprite": "./monster8.png",
+          "hitpoints": 60,
+          "chance": 3,
+          "attacks": [
+            "javahypetext",
+            "4 loopy questions",
+            "does it start right",
+            "does it stop right",
+            "does it make progress",
+            "does it maintain invariant"
+          ]
+        },
+        {
+          "name": "slime",
+          "sprite": "./monster9.png",
+          "hitpoints": 20,
+          "chance": 7,
+          "attacks": [
+            "hit",
+            "attack",
+            "slimed",
+            "slimy"
+          ]
+        },
+        {
+          "name": "ithacamagic",
+          "sprite": "./monster10.png",
+          "hitpoints": 80,
+          "chance": 1,
+          "attacks": [
+            "run forest run",
+            "best magic in ithaca",
+            "the ithaca commons",
+            "magic man"
+          ]
+        },
+        {
+          "name": "sa",
+          "sprite": "./monster11.png",
+          "hitpoints": 10,
+          "chance": 4,
+          "attacks": [
+            "bureaucracy",
+            "bad",
+            "reddit",
+            "defund cu pd"
+          ]
+        },
+        {
+          "name": "dartmouth",
+          "sprite": "./monster11.png",
+          "hitpoints": 50,
+          "chance": 2,
+          "attacks": [
+            "keggy the keg",
+            "worst ivy",
+            "animal house",
+            "hanover"
           ]
         }
       ],
@@ -343,6 +454,116 @@
             "wild swing",
             "focus punch",
             "mach punch"
+          ]
+        },
+        {
+          "name": "python",
+          "sprite": "./monster4.png",
+          "hitpoints": 20,
+          "chance": 3,
+          "attacks": [
+            "duck typing",
+            "rubber ducky",
+            "guido van rossum",
+            "strong typing"
+          ]
+        },
+        {
+          "name": "peppa",
+          "sprite": "./monster5.png",
+          "hitpoints": 50,
+          "chance": 1,
+          "attacks": [
+            "oink oink",
+            "420 blaze it",
+            "mlg 360 noscope",
+            "dank"
+          ]
+        },
+        {
+          "name": "melvin",
+          "sprite": "./monster6.png",
+          "hitpoints": 30,
+          "chance": 5,
+          "attacks": [
+            "gme to the moon",
+            "buy the dip",
+            "diamond hands",
+            "ape strong together"
+          ]
+        },
+        {
+          "name": "corona",
+          "sprite": "./monster7.png",
+          "hitpoints": 35,
+          "chance": 4,
+          "attacks": [
+            "wuhan",
+            "wear mask",
+            "wash hands",
+            "stay home"
+          ]
+        },
+        {
+          "name": "gries",
+          "sprite": "./monster8.png",
+          "hitpoints": 60,
+          "chance": 3,
+          "attacks": [
+            "javahypetext",
+            "4 loopy questions",
+            "does it start right",
+            "does it stop right",
+            "does it make progress",
+            "does it maintain invariant"
+          ]
+        },
+        {
+          "name": "slime",
+          "sprite": "./monster9.png",
+          "hitpoints": 20,
+          "chance": 7,
+          "attacks": [
+            "hit",
+            "attack",
+            "slimed",
+            "slimy"
+          ]
+        },
+        {
+          "name": "ithacamagic",
+          "sprite": "./monster10.png",
+          "hitpoints": 80,
+          "chance": 1,
+          "attacks": [
+            "run forest run",
+            "best magic in ithaca",
+            "the ithaca commons",
+            "magic man"
+          ]
+        },
+        {
+          "name": "sa",
+          "sprite": "./monster11.png",
+          "hitpoints": 10,
+          "chance": 4,
+          "attacks": [
+            "bureaucracy",
+            "bad",
+            "reddit",
+            "defund cu pd"
+          ]
+        },
+        {
+          "name": "dartmouth",
+          "sprite": "./monster11.png",
+          "hitpoints": 50,
+          "chance": 2,
+          "attacks": [
+            "keggy the keg",
+            "worst ivy",
+            "animal house",
+            "hanover"
           ]
         }
       ],
