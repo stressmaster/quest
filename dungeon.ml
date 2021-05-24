@@ -304,7 +304,7 @@ let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
   else if get_exit dungeon = (x, y) then !Magic_numbers.get_magic.exit
   else determine_color (Hashtbl.find dungeon_cells (x, y) |> get_tile)
 
-let render_self_square (p_x, p_y) x_length y_length starting_y =
+let render_self_square (p_x, p_y) factor x_length y_length starting_y =
   Render.render_square
     (Render.new_square
        ( p_x *. 2. /. (x_length +. 2.)
@@ -312,7 +312,7 @@ let render_self_square (p_x, p_y) x_length y_length starting_y =
        ( starting_y
        +. p_y /. (y_length +. 2.) *. 2.
           *. (y_length *. Magic_numbers.height /. 5000.) )
-       10. 10. "./fonts/i.png")
+       (10. /. factor) (10. /. factor) "./fonts/i.png")
 
 let render_mini_map (p_x, p_y) (x_length, y_length, factor) =
   let p_x, p_y = (p_x /. factor, p_y /. factor) in
@@ -324,13 +324,7 @@ let render_mini_map (p_x, p_y) (x_length, y_length, factor) =
        (x_length *. Magic_numbers.width /. 10.)
        (y_length *. Magic_numbers.height /. 10.)
        !Magic_numbers.get_magic.darkness);
-  Font.render_font ~spacing:0.05
-    (Font.new_font
-       ("x" ^ (factor |> string_of_float))
-       0.05 1.95
-       (Magic_numbers.width *. 0.25)
-       (Magic_numbers.height *. 0.25));
-  render_self_square (p_x, p_y) x_length y_length starting_y
+  render_self_square (p_x, p_y) factor x_length y_length starting_y
 
 let map_bound (dungeon_x_length, dungeon_y_length) =
   let greater_dimension =
