@@ -95,3 +95,6 @@ val render_inventory : current -> unit
 (**[check_time_limit current] updates current, ending the player's
    attack if they have taken too long*)
 val check_time_limit : current -> current
+
+(**[curr_lives current]* returns the current number of lives*)
+val curr_lives : current -> int
