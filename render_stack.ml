@@ -40,6 +40,6 @@ let stack_pop () =
   print_string (string_of_scene (stack_peek ()) ^ " is now top");
   print_newline ()
 
-let _ =
+let init_render_stack () =
   stack_push DungeonRender;
   stack_push StartRender

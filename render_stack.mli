@@ -17,3 +17,5 @@ val stack_pop : unit -> unit
 
 (* [stack_peek ()] returns the top most scene from the stack *)
 val stack_peek : unit -> scene
+
+val init_render_stack : unit -> unit

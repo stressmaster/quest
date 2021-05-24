@@ -20,13 +20,9 @@ let make_dungeon__int_test
   name >:: fun _ ->
   assert_equal expected_output (f dungeon) ~printer:string_of_int
 
-let make_monster_hp_test
-    (name : string)
-    (mon : Dungeon.monster)
-    (expected_output : int) : test =
-  name >:: fun _ ->
-  assert_equal expected_output (get_monster_HP mon)
-    ~printer:string_of_int
+(* let make_monster_hp_test (name : string) (mon : Monster.t)
+   (expected_output : int) : test = name >:: fun _ -> assert_equal
+   expected_output (get_monster_HP mon) ~printer:string_of_int *)
 
 let make_levenshtein_test
     (name : string)
@@ -58,28 +54,28 @@ let make_typing_test name c ch expected_output =
   name >:: fun _ ->
   assert_equal expected_output (State.fighting_case c ch)
 
-let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0 0
+let make_timer_test name id expectec_output =
+  name >:: fun _ -> assert_equal expectec_output (Timer.current_time id)
 
-let dungeon_2x2 = Dungeon.instantiate_dungeon 1 2 2 (1, 1) 5 [] 5 10
+(* let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0
+   0 *)
 
-let monster_20_hp =
-  Dungeon.instantiate_monster "dog" "dog.pn" 20 59 [ "a" ]
+(*let dungeon_2x2 = Dungeon.instantiate_dungeon 1 2 2 (1, 1) 5 [] 5 10*)
+
+(* let monster_20_hp = Dungeon.instantiate_monster "dog" "dog.pn" 20 59
+   [ "a" ] *)
 
 let current_sample_game = State.init_state "sample_game.json"
 
-let dungeon_tests =
-  [
-    make_dungeon__tuple_test "20x50 dungeon dimension" dungeon_20x50
-      get_dimensions (50, 30);
-    make_dungeon__tuple_test "2x5 dungeon dimension" dungeon_2x2
-      get_dimensions (2, 2);
-    make_dungeon__int_test "2x5 dungeon bound" dungeon_2x2 get_bound 5;
-    make_dungeon__int_test "2x5 dungeon id" dungeon_2x2 get_id 1;
-    make_dungeon__int_test "2x5 dungeon previous" dungeon_2x2 get_prev
-      10;
-    make_dungeon__int_test "2x5 dungeon next" dungeon_2x2 get_next 5;
-    make_monster_hp_test "20 hp monster " monster_20_hp 20;
-  ]
+(* let dungeon_tests = [ make_dungeon__tuple_test "20x50 dungeon
+   dimension" dungeon_20x50 get_dimensions (50, 30);
+   make_dungeon__tuple_test "2x5 dungeon dimension" dungeon_2x2
+   get_dimensions (2, 2); make_dungeon__int_test "2x5 dungeon bound"
+   dungeon_2x2 get_bound 5; make_dungeon__int_test "2x5 dungeon id"
+   dungeon_2x2 get_id 1; make_dungeon__int_test "2x5 dungeon previous"
+   dungeon_2x2 get_prev 10; make_dungeon__int_test "2x5 dungeon next"
+   dungeon_2x2 get_next 5; make_monster_hp_test "20 hp monster "
+   monster_20_hp 20; ] *)
 
 let levenshtein_tests =
   [
@@ -109,8 +105,16 @@ let state_tests =
       current_sample_game 32 " ";
   ]
 
+let () = Timer.init_timers [ ("timer1", 1); ("timer2", 2) ]
+
+let timer_tests =
+  [
+    make_timer_test "After initialization timer1 should be 0" "timer1" 0;
+    make_timer_test "After initialization timer2 should be 0" "timer2" 0;
+  ]
+
 let suite =
   "test suite for CamelQuest"
-  >::: List.flatten [ dungeon_tests; levenshtein_tests; state_tests ]
+  >::: List.flatten [ levenshtein_tests; state_tests ]
 
 let _ = run_test_tt_main suite
