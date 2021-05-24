@@ -30,8 +30,8 @@ val next_dungeon : t -> Dungeon.t -> Dungeon.t
     [game] *)
 val prev_dungeon : t -> Dungeon.t -> Dungeon.t
 
-(*** [add_to_game game dungeon] is [game] with [dungeon] as the last
-  dungon *)
+(** [add_to_game game dungeon] is [game] with [dungeon] as the last
+    dungon *)
 val add_to_game : t -> Dungeon.t -> t
 
 (** [game_depth game] is the number of dungeons in [game] *)
