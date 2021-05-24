@@ -190,8 +190,8 @@ let reset_fight c =
   | GameoverRender -> Audio.change_music "./unravel.wav"
   | _ -> Audio.change_music "./camlished.wav"
 
-(* let encounter bound = Random.int bound = 0 *)
-let encounter bound = false
+let encounter bound = Random.int bound = 0
+(* let encounter bound = false *)
 
 let is_in_fight current =
   let current_bound = Dungeon.get_bound current.room in
