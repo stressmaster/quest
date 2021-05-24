@@ -118,8 +118,18 @@ let json_of_item item =
       ("modifier", `Int (Item.get_item_modifier item));
     ]
 
-let json_maker e locx locy curid rnum curexp exp_bound weapon armor game
-    : Yojson.Basic.t =
+let json_maker
+    lives
+    e
+    locx
+    locy
+    curid
+    rnum
+    curexp
+    exp_bound
+    weapon
+    armor
+    game : Yojson.Basic.t =
   let rooms = room_maker game.dungeons [] in
   let ourjson =
     `Assoc
@@ -129,6 +139,7 @@ let json_maker e locx locy curid rnum curexp exp_bound weapon armor game
         ("locationy", `Int locy);
         ("current_id", `Int curid);
         ("number_rooms", `Int rnum);
+        ("lives", `Int lives);
         ("rooms", `List rooms);
         ("current_exp", `Int curexp);
         ("exp_bound", `Int exp_bound);
