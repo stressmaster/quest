@@ -203,8 +203,8 @@ let encounter bound = Random.int bound = 0
 let is_in_fight current =
   let current_bound = Dungeon.get_bound current.room in
   (not
-     ( current.location = current.room_exit
-     || current.location = Dungeon.get_start current.room ))
+     (current.location = current.room_exit
+     || current.location = Dungeon.get_start current.room))
   && encounter current_bound
 
 let player_loc state = state.location
@@ -234,10 +234,10 @@ let manage_weapon current x y weapon =
 let manage_no_item current x y =
   if current.current_weapon <> NoItem then (
     Dungeon.drop_item current.room (x, y) (Some current.current_weapon);
-    current.current_weapon <- NoItem )
+    current.current_weapon <- NoItem)
   else if current.current_armor <> NoItem then (
     Dungeon.drop_item current.room (x, y) (Some current.current_armor);
-    current.current_armor <- NoItem )
+    current.current_armor <- NoItem)
 
 let manage_item current x y = function
   | Some (Item.Armor a) ->
@@ -283,7 +283,7 @@ let move current key =
   if current.in_fight then (
     Audio.change_music "./camlished_battle.wav";
     Render_stack.stack_push Render_stack.SpiralRender;
-    Timer.reset_timer "general" );
+    Timer.reset_timer "general");
   (* delete light right below when spiral works. it is a work around*)
   begin
     match key with
@@ -340,15 +340,15 @@ let manage_run str mon_str mon_HP diff current =
   then take_damage mon_HP current;
   if diff <= String.length str / 3 then (
     Render_stack.stack_pop ();
-    reset_fight current )
+    reset_fight current)
 
 let enter_case str mon_str mon_HP current =
   current.fight.monster_string <- manage_damage mon_HP current;
   let diff = Levenshtein.dist str mon_str in
-  ( match current.fight.action with
+  (match current.fight.action with
   | Attack -> manage_attack mon_str mon_HP diff current
   | Recover -> manage_recover mon_str mon_HP diff current
-  | Run -> manage_run str mon_str mon_HP diff current );
+  | Run -> manage_run str mon_str mon_HP diff current);
   current.fight.attacking <- false;
   ""
 
@@ -390,6 +390,7 @@ let gaming_move current key =
       ignore (exit 0);
       current
   | Revive when key = 13 ->
+      Audio.change_music "./camlished.wav";
       Render_stack.stack_pop ();
       current
   | Restart when key = 13 ->
@@ -412,7 +413,7 @@ let typing_move current key =
   | _ -> current
 
 let menu_move current key =
-  ( match key with
+  (match key with
   | Glut.KEY_RIGHT ->
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
@@ -423,8 +424,8 @@ let menu_move current key =
   | Glut.KEY_UP ->
       if not current.fight.attacking then (
         Timer.reset_timer "general";
-        current.fight.attacking <- not current.fight.attacking )
-  | _ -> () );
+        current.fight.attacking <- not current.fight.attacking)
+  | _ -> ());
   current
 
 let game_over_move current key =
