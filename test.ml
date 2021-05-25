@@ -2,10 +2,10 @@ open OUnit2
 open Dungeon
 open Timer
 open Levenshtein
-open State
 open Magic_numbers
 open Render_stack
 open Monsters
+open Item
 
 let int_tuple_printer (x, y) =
   "(" ^ string_of_int x ^ "," ^ string_of_int y ^ ")"
@@ -108,6 +108,9 @@ let make_monster_str_test name monster func expected_output =
   assert_equal expected_output
     (List.mem (func monster) monster.attack_strings)
 
+let make_item_test name item func expected_output =
+  name >:: fun _ -> assert_equal expected_output (func item)
+
 let dungeon_20x50 =
   Dungeon.instantiate_dungeon ~seed:123 1 20 50 (1, 1) 5 0 0
 
@@ -148,17 +151,6 @@ let levenshtein_tests =
     make_levenshtein_test "empty" "" "many characters" 15;
     make_levenshtein_test "two empty strings" "" "" 0;
   ]
-
-(* let state_tests = [ make_player_location_test "beginning"
-   current_sample_game (1, 1); make_in_fight_test "sample game not in
-   fight" current_sample_game false; make_typing_test "correct string
-   output after enter" current_sample_game 13 ""; make_typing_test
-   "ensure correct string output with lowercase letter"
-   current_sample_game 99 "c"; make_typing_test "ensure correct string
-   output with backspace" current_sample_game 127 ""; make_typing_test
-   "ensure correct string output with uppercase letter"
-   current_sample_game 65 "A"; make_typing_test "ensure correct string
-   output with space" current_sample_game 32 " "; ] *)
 
 let timer_tests =
   [
@@ -250,6 +242,32 @@ let monster_tests =
       Monsters.get_monster_string true;
   ]
 
+let item_stats =
+  { sprite = "fuck.png"; name = "fucker"; depth = 1; modifier = 1 }
+
+let weapon = Weapon item_stats
+
+let armor = Armor item_stats
+
+let nothing = NoItem
+
+let item_tests =
+  [
+    make_item_test "type of weapon is weapon" weapon Item.get_item_type
+      "weapon";
+    make_item_test "type of armor is armor" armor Item.get_item_type
+      "armor";
+    make_item_test "type of nothing is noitem" nothing
+      Item.get_item_type "none";
+    make_item_test "sprite of weapon is fucking.png" weapon
+      Item.get_item_sprite "fuck.png";
+    make_item_test "name of weapon is fuck" weapon Item.get_item_name
+      "fucker";
+    make_item_test "depth of weapon is 1" weapon Item.get_item_depth 1;
+    make_item_test "modifier of weapon is 1" weapon
+      Item.get_item_modifier 1;
+  ]
+
 let suite =
   "test suite for CamelQuest"
   >::: List.flatten
@@ -261,6 +279,7 @@ let suite =
            magic_number_tests;
            dungeon_tests;
            monster_tests;
+           item_tests;
          ]
 
 let _ =
