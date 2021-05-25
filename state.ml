@@ -323,7 +323,9 @@ let rec random_string length acc =
 let manage_damage mon_HP current =
   if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3 then
     Monsters.get_monster_string current.fight.monster
-  else random_string (1 + Random.int 15) ""
+  else
+    let gibberish_length = min 15 current.depth in
+    random_string (1 + Random.int gibberish_length) ""
 
 let take_damage mon_HP current =
   Render_stack.stack_push Render_stack.ScreenshakeRender;
