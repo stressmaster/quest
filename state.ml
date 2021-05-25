@@ -250,7 +250,7 @@ let manage_item current x y item =
   | _ -> manage_no_item current x y
 
 let reach_end current =
-  if current.level >= 20 && current.level >= 10 then (
+  if current.level >= 15 && current.depth >= 10 then (
     Render_stack.stack_push WinRender;
     Audio.change_music "./clarksonvoice.wav")
 

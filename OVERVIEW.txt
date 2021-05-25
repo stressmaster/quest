@@ -5,17 +5,31 @@ Dungeon movement:
 Use the arrow keys to move around the dungeon. Stepping back onto the
 stairs from which you came will take you to the previous room, while
 stepping onto the other set of stairs will take you to the next room.
+Pressing the enter key while on top of an item will replace your current
+item with the item below you. Pressing the "s" key will save your current
+progress, which you can access with the "continue" option on the start
+menu.
 
 Fighting:
 There are three options in the fight menu: "Fight", "Heal", and "Run".
 Use the left and right arrow keys to navigate these options, and then
 press the up arrow key to select it. 
-
 Each of these options will enter you into a typing minigame, where
 you will deal more damage, heal more, or have a better change of
 escaping based on how close your typing is to the given phrase. Use the
 enter key to enter your phrase, and the delete key (not backspace) to
 delete a character.
-
 The monster will attack you after each turn. The fight ends when either
 you or the monster runs out of HP.
+
+Win Condition:
+Defeating monsters will grant you exp, and eventually allow you to
+level up. Upon reaching level 15 and clearing at least 10 floors,
+you will win the game. The game will signify this with an animation.
+You start with 3 lives, and lose one every time you lose to a monster.
+Upon losing all 3 lives, you will have to restart the game.
+
+Lose Menu: Upon losing a fight, you will have 3 options: Quit (which saves
+and then kicks you out of the game), Revive (which lets you respawn at
+the cost of one life), and Restart (which deletes your progress and
+resets you to the beginning of the game).
