@@ -419,15 +419,15 @@ let save_game current =
   ()
 
 let gaming_move current key =
+  current.lives <- current.lives - 1;
   match current.game_over with
-  | Quit when key = 13 ->
+  | Quit when key = 13 && current.lives > 0 ->
       save_game current;
       ignore (exit 0);
       current
-  | Revive when key = 13 && current.lives > 1 ->
+  | Revive when key = 13 && current.lives > 0 ->
       Audio.change_music "./camlished.wav";
       Render_stack.stack_pop ();
-      current.lives <- current.lives - 1;
       current
   | Restart when key = 13 ->
       Audio.change_music "./camlished.wav";
@@ -435,6 +435,10 @@ let gaming_move current key =
       Render_stack.stack_push DungeonRender;
       Game.update_file Game.reset_save;
       init_state "sample_game.json"
+  | _ when current.lives = 0 ->
+      Game.update_file Game.reset_save;
+      ignore (exit 0);
+      current
   | _ -> current
 
 let clamp_str str = String.sub str 0 (min (String.length str) 20)
