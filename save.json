@@ -1,1 +1,36 @@
-{"exists":true,"locationx":3,"locationy":18,"current_id":3,"number_rooms":3,"lives":3,"level":4,"health":36,"rooms":[{"id":1,"xdim":12,"ydim":24,"xstart":1,"ystart":1,"time":0},{"id":2,"xdim":52,"ydim":187,"xstart":50,"ystart":93,"time":134},{"id":3,"xdim":60,"ydim":95,"xstart":1,"ystart":1,"time":4062}],"current_exp":2,"exp_bound":20,"current_weapon":{"type":"weapon","sprite":"./tier_three_weapon.png","name":"Lvl 2 high quality carbon fiber katana","depth":2,"modifier":8},"current_armor":{"type":"armor","sprite":"./tier_three_armor.png","name":"Lvl 2 radiant diamond exoskeleton","depth":2,"modifier":8}}
+{
+  "exists": true,
+  "locationx": 5,
+  "locationy": 1,
+  "current_id": 1,
+  "number_rooms": 1,
+  "lives": 3,
+  "level": 1,
+  "health": 10,
+  "rooms": [
+    {
+      "id": 1,
+      "xdim": 12,
+      "ydim": 24,
+      "xstart": 1,
+      "ystart": 1,
+      "time": 0
+    }
+  ],
+  "current_exp": 0,
+  "exp_bound": 5,
+  "current_weapon": {
+    "type": "none",
+    "sprite": "./empty_item.png",
+    "name": "",
+    "depth": 0,
+    "modifier": 0
+  },
+  "current_armor": {
+    "type": "none",
+    "sprite": "./empty_item.png",
+    "name": "",
+    "depth": 0,
+    "modifier": 0
+  }
+}

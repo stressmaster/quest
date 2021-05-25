@@ -179,7 +179,7 @@
           "hitpoints": 60,
           "chance": 5,
           "attacks": [
-            "javahypetext",
+            "javahypertext",
             "4 loopy questions",
             "start right",
             "stop right",
@@ -505,7 +505,7 @@
           "hitpoints": 60,
           "chance": 5,
           "attacks": [
-            "javahypetext",
+            "javahypertext",
             "4 loopy questions",
             "start right",
             "stop right",
@@ -788,7 +788,7 @@
           "hitpoints": 60,
           "chance": 5,
           "attacks": [
-            "javahypetext",
+            "javahypertext",
             "4 loopy questions",
             "does it start right",
             "does it stop right",
