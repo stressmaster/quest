@@ -27,7 +27,8 @@ let load_texture file = OImages.load file [] |> OImages.rgba32
 let set_texture file =
   GlPix.store (`unpack_alignment 1);
   GlTex.image2d
-    (try Hashtbl.find !textures file with Not_found -> failwith file);
+    ( try Hashtbl.find !textures file
+      with Not_found -> Hashtbl.find !textures "darkness.png" );
   List.iter
     (GlTex.parameter ~target:`texture_2d)
     [
