@@ -4,6 +4,22 @@
   "x_length": 11,
   "y_length": 11,
   "texture_list": [
+    "./flames.png",
+    "./monster3_2.png",
+    "./wolf.png",
+    "./wolf_2.png",
+    "./ash_path.png",
+    "./fire_wall.png",
+    "./camel_1.png",
+    "./camel_2.png",
+    "./camel_3.png",
+    "./water_path.png",
+    "./penguin_1.png",
+    "./penguin_2.png",
+    "./elsa.png",
+    "./ice_wall.png",
+    "./npc1.png",
+    "./npc2.png",
     "./wall.png",
     "./path.png",
     "./entrance.png",
@@ -81,7 +97,7 @@
       "path": "./path.png",
       "entrance": "./entrance.png",
       "exit": "./exit.png",
-      "player": "./player.png",
+      "player": "./camel_1.png",
       "darkness": "./darkness.png",
       "timer": "./timer.png",
       "empty_item": "./empty_item.png",
@@ -95,8 +111,8 @@
       "tier_three_armor": "./tier_three_armor.png",
       "npcs": [
         {
-          "speech": "That golbin stole my slippers",
-          "sprite": "./monster.png"
+          "speech": "Good luck",
+          "sprite": "./npc1.png"
         },
         {
           "speech": "Baka",
@@ -109,7 +125,7 @@
       ],
       "monsters": [
         {
-          "name": "monster",
+          "name": "ramiel",
           "sprite": "./monster.png",
           "hitpoints": 30,
           "chance": 5,
@@ -121,22 +137,10 @@
           ]
         },
         {
-          "name": "goblin_1",
-          "sprite": "./goblin_1.png",
-          "hitpoints": 30,
-          "chance": 5,
-          "attacks": [
-            "frenzied maul",
-            "wild swing",
-            "focus punch",
-            "mach punch"
-          ]
-        },
-        {
           "name": "python",
           "sprite": "./monster4.png",
           "hitpoints": 20,
-          "chance": 3,
+          "chance": 5,
           "attacks": [
             "duck typing",
             "rubber ducky",
@@ -148,7 +152,7 @@
           "name": "peppa",
           "sprite": "./monster5.png",
           "hitpoints": 50,
-          "chance": 1,
+          "chance": 5,
           "attacks": [
             "oink oink",
             "420 blaze it",
@@ -169,22 +173,10 @@
           ]
         },
         {
-          "name": "corona",
-          "sprite": "./monster7.png",
-          "hitpoints": 35,
-          "chance": 4,
-          "attacks": [
-            "wuhan",
-            "wear mask",
-            "wash hands",
-            "stay home"
-          ]
-        },
-        {
           "name": "gries",
           "sprite": "./monster8.png",
           "hitpoints": 60,
-          "chance": 3,
+          "chance": 5,
           "attacks": [
             "javahypetext",
             "4 loopy questions",
@@ -198,7 +190,7 @@
           "name": "slime",
           "sprite": "./monster9.png",
           "hitpoints": 20,
-          "chance": 7,
+          "chance": 5,
           "attacks": [
             "hit",
             "attack",
@@ -210,7 +202,7 @@
           "name": "ithacamagic",
           "sprite": "./monster10.png",
           "hitpoints": 80,
-          "chance": 1,
+          "chance": 5,
           "attacks": [
             "run forest run",
             "best magic in ithaca",
@@ -222,7 +214,7 @@
           "name": "sa",
           "sprite": "./monster11.png",
           "hitpoints": 10,
-          "chance": 4,
+          "chance": 5,
           "attacks": [
             "bureaucracy",
             "bad",
@@ -232,9 +224,9 @@
         },
         {
           "name": "dartmouth",
-          "sprite": "./monster11.png",
+          "sprite": "./monster12.png",
           "hitpoints": 50,
-          "chance": 2,
+          "chance": 5,
           "attacks": [
             "keggy the keg",
             "worst ivy",
@@ -246,33 +238,28 @@
       "animations": [
         [
           "player",
-          "./player.png",
-          "./wall.png",
-          "./path.png",
-          "./entrance.png",
-          "./exit.png"
+          "./camel_1.png",
+          "./camel_1.png",
+          "./camel_3.png",
+          "./camel_3.png",
+          "./camel_2.png",
+          "./camel_2.png"
         ],
         [
-          "./monster.png",
-          "./monster.png",
-          "./monster.png",
-          "./monster.png",
-          "./monster.png",
-          "./wall.png",
-          "./wall.png",
-          "./wall.png",
-          "./wall.png"
+          "./npc1.png",
+          "./npc1.png",
+          "./npc1.png",
+          "./npc1.png",
+          "./npc1.png",
+          "./npc2.png",
+          "./npc2.png",
+          "./npc2.png",
+          "./npc2.png"
         ],
         [
           "./goblin_1.png",
           "./goblin_1.png",
-          "./goblin_1.png",
-          "./goblin_1.png",
-          "./goblin_1.png",
-          "./wall.png",
-          "./wall.png",
-          "./wall.png",
-          "./wall.png"
+          "./goblin_1.png"
         ],
         [
           "./monster3.png",
@@ -280,10 +267,11 @@
           "./monster3.png",
           "./monster3.png",
           "./monster3.png",
-          "./wall.png",
-          "./wall.png",
-          "./wall.png",
-          "./wall.png"
+          "./monster3_2.png",
+          "./monster3_2.png",
+          "./monster3_2.png",
+          "./monster3_2.png",
+          "./monster3_2.png"
         ]
       ],
       "tier_one_prefixes": [
@@ -415,11 +403,11 @@
     },
     {
       "health": 10,
-      "wall": "./wall.png",
-      "path": "./path.png",
+      "wall": "./ice_wall.png",
+      "path": "./water_path.png",
       "entrance": "./entrance.png",
       "exit": "./exit.png",
-      "player": "./player.png",
+      "player": "./penguin_1.png",
       "darkness": "./darkness.png",
       "timer": "./timer.png",
       "empty_item": "./empty_item.png",
@@ -438,10 +426,8 @@
           "hitpoints": 30,
           "chance": 5,
           "attacks": [
-            "prog knife",
-            "laser strike",
-            "piercing screech",
-            "sudden strike"
+            "cold knife",
+            "cold strike"
           ]
         },
         {
@@ -450,17 +436,37 @@
           "hitpoints": 30,
           "chance": 5,
           "attacks": [
-            "frenzied maul",
-            "wild swing",
-            "focus punch",
-            "mach punch"
+            "ice pick swing"
+          ]
+        },
+        {
+          "name": "corona",
+          "sprite": "./monster7.png",
+          "hitpoints": 35,
+          "chance": 20,
+          "attacks": [
+            "i like cold",
+            "wear mask",
+            "wash hands",
+            "stay home"
+          ]
+        },
+        {
+          "name": "elsa",
+          "sprite": "./elsa.png",
+          "hitpoints": 30,
+          "chance": 20,
+          "attacks": [
+            "blast of ice",
+            "icy storm",
+            "Let it go"
           ]
         },
         {
           "name": "python",
           "sprite": "./monster4.png",
           "hitpoints": 20,
-          "chance": 3,
+          "chance": 5,
           "attacks": [
             "duck typing",
             "rubber ducky",
@@ -472,7 +478,7 @@
           "name": "peppa",
           "sprite": "./monster5.png",
           "hitpoints": 50,
-          "chance": 1,
+          "chance": 5,
           "attacks": [
             "oink oink",
             "420 blaze it",
@@ -493,22 +499,10 @@
           ]
         },
         {
-          "name": "corona",
-          "sprite": "./monster7.png",
-          "hitpoints": 35,
-          "chance": 4,
-          "attacks": [
-            "wuhan",
-            "wear mask",
-            "wash hands",
-            "stay home"
-          ]
-        },
-        {
           "name": "gries",
           "sprite": "./monster8.png",
           "hitpoints": 60,
-          "chance": 3,
+          "chance": 5,
           "attacks": [
             "javahypetext",
             "4 loopy questions",
@@ -519,34 +513,10 @@
           ]
         },
         {
-          "name": "slime",
-          "sprite": "./monster9.png",
-          "hitpoints": 20,
-          "chance": 7,
-          "attacks": [
-            "hit",
-            "attack",
-            "slimed",
-            "slimy"
-          ]
-        },
-        {
-          "name": "ithacamagic",
-          "sprite": "./monster10.png",
-          "hitpoints": 80,
-          "chance": 1,
-          "attacks": [
-            "run forest run",
-            "best magic in ithaca",
-            "the ithaca commons",
-            "magic man"
-          ]
-        },
-        {
           "name": "sa",
           "sprite": "./monster11.png",
           "hitpoints": 10,
-          "chance": 4,
+          "chance": 5,
           "attacks": [
             "bureaucracy",
             "bad",
@@ -556,9 +526,9 @@
         },
         {
           "name": "dartmouth",
-          "sprite": "./monster11.png",
+          "sprite": "./monster12.png",
           "hitpoints": 50,
-          "chance": 2,
+          "chance": 5,
           "attacks": [
             "keggy the keg",
             "worst ivy",
@@ -567,57 +537,346 @@
           ]
         }
       ],
-      "npcs": [],
+      "npcs": [
+        {
+          "speech": "I am so cold",
+          "sprite": "./npc1.png"
+        },
+        {
+          "speech": "Bakakaka",
+          "sprite": "./monster3.png"
+        },
+        {
+          "speech": "Nice day in Ithaca",
+          "sprite": "./monster10.png"
+        }
+      ],
       "animations": [
         [
           "player",
-          "./path.png",
-          "./path.png",
-          "./path.png",
-          "./path.png",
-          "./player.png",
-          "./path.png"
+          "./penguin_1.png",
+          "./penguin_1.png",
+          "./penguin_1.png",
+          "./penguin_2.png",
+          "./penguin_2.png",
+          "./penguin_2.png"
+        ],
+        [
+          "./npc1.png",
+          "./npc1.png",
+          "./npc1.png",
+          "./npc1.png",
+          "./npc2.png",
+          "./npc2.png",
+          "./npc1.png"
+        ],
+        [
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3_2.png",
+          "./monster3_2.png",
+          "./monster3_2.png",
+          "./monster3_2.png"
+        ],
+        [
+          "./monster10.png",
+          "./monster10.png",
+          "./monster10.png",
+          "./monster10.png",
+          "./monster10.png",
+          "./monster10.png",
+          "./monster10.png"
         ]
       ],
       "tier_one_prefixes": [
-        "flimsy",
-        "weak",
-        "shoddy",
-        "impotent",
-        "puny",
-        "feeble",
-        "scrappy",
-        "pathetic",
         "brittle",
-        "lowly",
-        "lousy",
-        "friendly"
+        "cold",
+        "chilled"
       ],
       "tier_two_prefixes": [
-        "mediocre",
-        "average",
-        "typical",
-        "unassuming",
-        "plain",
-        "unexceptional",
-        "decent",
-        "middling",
-        "ordinary",
-        "standard",
-        "viscious"
+        "icy",
+        "frozen",
+        "wintry"
       ],
       "tier_three_prefixes": [
-        "epic",
-        "legendary",
-        "high quality",
-        "amazing",
-        "superb",
-        "mediocre",
-        "exceptional",
-        "radiant",
-        "unreal",
-        "phenomenal",
-        "mythical"
+        "arctic",
+        "neptunian",
+        "1000 year"
+      ],
+      "tier_one_materials": [
+        "paper",
+        "wood",
+        "styrofoam",
+        "cardboard",
+        "tin foil",
+        "flint",
+        "cloth",
+        "Nature Center"
+      ],
+      "tier_two_materials": [
+        "iron",
+        "steel",
+        "bronze",
+        "copper",
+        "metal",
+        "Wild"
+      ],
+      "tier_three_materials": [
+        "tungsten",
+        "diamond",
+        "titanium",
+        "mithril",
+        "depleted uranium",
+        "carbon fiber",
+        "Prehistoric"
+      ],
+      "tier_one_weapons": [
+        "butter knife",
+        "stick",
+        "fork",
+        "spoon",
+        "pencil",
+        "clothes hanger",
+        "mop",
+        "broom",
+        "broken bottle",
+        "scissors",
+        "corn snake"
+      ],
+      "tier_two_weapons": [
+        "sword",
+        "longsword",
+        "spear",
+        "blade",
+        "dagger",
+        "knife",
+        "cobra"
+      ],
+      "tier_three_weapons": [
+        "halberd",
+        "scimitar",
+        "claymore",
+        "warhammer",
+        "kunai",
+        "chainsaw",
+        "zweihander",
+        "saw cleaver",
+        "lance of longinus",
+        "katana",
+        "King da Ca",
+        "Black Mamba"
+      ],
+      "tier_one_armors": [
+        "covering",
+        "apron",
+        "smock",
+        "tank top",
+        "rags",
+        "jacket"
+      ],
+      "tier_two_armors": [
+        "vest",
+        "suit",
+        "chestplate",
+        "plate mail",
+        "cuirass",
+        "hauberk"
+      ],
+      "tier_three_armors": [
+        "armor",
+        "power armor",
+        "mecha suit",
+        "oyoroi",
+        "exoskeleton"
+      ]
+    },
+    {
+      "health": 10,
+      "wall": "./fire_wall.png",
+      "path": "./ash_path.png",
+      "entrance": "./entrance.png",
+      "exit": "./exit.png",
+      "player": "./penguin_1.png",
+      "darkness": "./darkness.png",
+      "timer": "./timer.png",
+      "empty_item": "./empty_item.png",
+      "weapon_pickup": "./weapon_pickup.png",
+      "armor_pickup": "./armor_pickup.png",
+      "tier_one_weapon": "./tier_one_weapon.png",
+      "tier_one_armor": "./tier_one_armor.png",
+      "tier_two_weapon": "./tier_two_weapon.png",
+      "tier_two_armor": "./tier_two_armor.png",
+      "tier_three_weapon": "./tier_three_weapon.png",
+      "tier_three_armor": "./tier_three_armor.png",
+      "monsters": [
+        {
+          "name": "goblin",
+          "sprite": "./goblin_1.png",
+          "hitpoints": 30,
+          "chance": 5,
+          "attacks": [
+            "fire pick swing",
+            "fire shot"
+          ]
+        },
+        {
+          "name": "slime",
+          "sprite": "./monster9.png",
+          "hitpoints": 35,
+          "chance": 20,
+          "attacks": [
+            "fire slime",
+            "fire snot",
+            "fire fire fire"
+          ]
+        },
+        {
+          "name": "fire",
+          "sprite": "./flames.png",
+          "hitpoints": 30,
+          "chance": 20,
+          "attacks": [
+            "burning hot fire",
+            "fire so hot",
+            "hellfire",
+            "hell storm"
+          ]
+        },
+        {
+          "name": "python",
+          "sprite": "./monster4.png",
+          "hitpoints": 20,
+          "chance": 5,
+          "attacks": [
+            "duck typing",
+            "rubber ducky",
+            "guido van rossum",
+            "strong typing"
+          ]
+        },
+        {
+          "name": "peppa",
+          "sprite": "./monster5.png",
+          "hitpoints": 50,
+          "chance": 5,
+          "attacks": [
+            "oink oink",
+            "420 blaze it",
+            "mlg 360 noscope",
+            "dank"
+          ]
+        },
+        {
+          "name": "melvin",
+          "sprite": "./monster6.png",
+          "hitpoints": 30,
+          "chance": 5,
+          "attacks": [
+            "gme to the moon",
+            "buy the dip",
+            "diamond hands",
+            "ape strong together"
+          ]
+        },
+        {
+          "name": "gries",
+          "sprite": "./monster8.png",
+          "hitpoints": 60,
+          "chance": 5,
+          "attacks": [
+            "javahypetext",
+            "4 loopy questions",
+            "does it start right",
+            "does it stop right",
+            "does it make progress",
+            "does it maintain invariant"
+          ]
+        },
+        {
+          "name": "ithacamagic",
+          "sprite": "./monster10.png",
+          "hitpoints": 80,
+          "chance": 5,
+          "attacks": [
+            "run forest run",
+            "best magic in ithaca",
+            "the ithaca commons",
+            "magic man"
+          ]
+        }
+      ],
+      "npcs": [
+        {
+          "speech": "I am so hot",
+          "sprite": "./npc1.png"
+        },
+        {
+          "speech": "Ashes to ashes",
+          "sprite": "./monster3.png"
+        },
+        {
+          "speech": "My home",
+          "sprite": "./monster.png"
+        }
+      ],
+      "animations": [
+        [
+          "player",
+          "./wolf.png",
+          "./wolf.png",
+          "./wolf.png",
+          "./wolf.png",
+          "./wolf_2.png",
+          "./wolf_2.png",
+          "./wolf_2.png"
+        ],
+        [
+          "./npc1.png",
+          "./npc1.png",
+          "./npc1.png",
+          "./npc1.png",
+          "./npc2.png",
+          "./npc2.png",
+          "./npc1.png"
+        ],
+        [
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3.png",
+          "./monster3_2.png",
+          "./monster3_2.png",
+          "./monster3_2.png",
+          "./monster3_2.png"
+        ],
+        [
+          "./monster.png",
+          "./monster.png",
+          "./monster.png",
+          "./monster.png",
+          "./monster.png",
+          "./monster.png",
+          "./monster.png"
+        ]
+      ],
+      "tier_one_prefixes": [
+        "luke ward",
+        "room temp"
+      ],
+      "tier_two_prefixes": [
+        "hot",
+        "scorching",
+        "100 degree"
+      ],
+      "tier_three_prefixes": [
+        "hellish",
+        "flaming",
+        "volcanic"
       ],
       "tier_one_materials": [
         "paper",
