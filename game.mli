@@ -4,7 +4,7 @@
     game, including data about the dungeons in the game. Includes
     methods for converting JSON to a game saving the game to JSON. *)
 
-(** an abstract type representing a game*)
+(** an abstract type representing a game *)
 type t
 
 (** [from_json json] is a game based on [json] *)
@@ -19,7 +19,7 @@ val start_room : t -> Dungeon.t
 (** [last_room game] is the last dungeon in [game] *)
 val last_room : t -> Dungeon.t
 
-(** [nth_room game] is the nth dungeon in [game] *)
+(** [nth_room game nth] is the [nth] dungeon in [game] *)
 val nth_room : t -> int -> Dungeon.t
 
 (** [next_dunge game dungeon] is the dungeon following [dungeon] in
@@ -38,10 +38,9 @@ val add_to_game : t -> Dungeon.t -> t
 val game_depth : t -> int
 
 (** [json_maker exists locx locy current_id room_number curr_exp
-   exp_bound weapon armor game ]
-    is a json save file that records [locx] [locy] [current_id]
-    [room_number] [curr_exp] [exp_bound] [weapon] [armor] and [game]
-    that exists iff [exists]*)
+    exp_bound weapon armor game] is a json save file that records [locx]
+    [locy] [current_id] [room_number] [curr_exp] [exp_bound] [weapon]
+    [armor] and [game] and that exists iff [exists]*)
 val json_maker :
   int ->
   int ->

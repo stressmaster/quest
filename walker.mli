@@ -1,4 +1,4 @@
-(**This module contains the algorithm for creating a random dungeon.*)
+(** This module contains the algorithm for creating a random dungeon.*)
 
 (** a type representing a direction *)
 type direction =
@@ -23,7 +23,7 @@ type walker = {
 
 (** [init_walker xmin xmax ymin ymax start] is a walker that walks
     within the rectangluar bounds as specified by [xmin], [xmax],
-    [ymin], [ymax] and starts walking from the coordinate [start]*)
+    [ymin], [ymax] and starts walking from the coordinate [start] *)
 val init_walker : int -> int -> int -> int -> int * int -> walker
 
 (** [walk steps w] is a list of coordinates that walker [w] visited on

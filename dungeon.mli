@@ -7,10 +7,10 @@
 (** an abstract type representing a dungeon*)
 type t
 
-(** an abstract type representing a tile*)
+(** an abstract type representing a tile *)
 type tile
 
-(** an abstract type representing a dungeon cell*)
+(** an abstract type representing a dungeon cell *)
 type cell
 
 (** [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
@@ -21,22 +21,22 @@ val instantiate_dungeon :
     is a wall in [dungeon] *)
 val is_wall : t -> int * int -> bool
 
-(**[get_item dungeon (x,y)] returns the Item.t option associated with
-   tile (x,y), and then removes the item from that tile*)
+(** [get_item dungeon (x,y)] returns the Item.t option associated with
+    the tile at [(x,y)] in [dungeon], and then removes the item from
+    that tile *)
 val get_item : t -> int * int -> Item.t option
 
-(**[drop_item dungeon (x,y) item] places (item) on the tile (x,y)*)
+(**[drop_item dungeon (x,y) item] places [item] on the tile at [(x,y)] *)
 val drop_item : t -> int * int -> Item.t option -> unit
 
-(** [is_wall dungeon (x, y)] is the material of the tile at [(x,y)] in
-    [dungeon] *)
+(** [tile_material tile] is the material of [tile] *)
 val tile_material : tile -> string
 
 (** [get_start dungeon] is the coordinates of the starting tile in
-    [dungeon]*)
+    [dungeon] *)
 val get_start : t -> int * int
 
-(** [get_exit dungeon] is the coordinates of the exit tile in [dungeon]*)
+(** [get_exit dungeon] is the coordinates of the exit tile in [dungeon] *)
 val get_exit : t -> int * int
 
 (** [get_dimensions dungeon] is the pair of ints representing the
