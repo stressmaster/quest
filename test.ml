@@ -1,3 +1,25 @@
+(* We have tested most of functions that do not require features, such
+   as graphics, audio, and state. Dungeon, Timer, Levenshtein, the
+   contstants portion of Magic_numbers, Render_stack, Monsters, and Item
+   were tested. Of the functions that were tested in the modules listed
+   above, all were simple functions like steppiing timer, Levenshtein
+   edit distance, and magic constants produced by Magic_number, unlike
+   functions in State, which require complex state manipulations. The
+   other modules such as ._menu modules, Texturemap, Spiral, Walker,
+   Audio, Render, NPC, and State were tested by play testing, as most of
+   them can not be unit tested due to their nature; for example
+   teturemap must be check with our eyes, since otherwise we wouldn't
+   know if it works properly, and audio must be checked with out ears,
+   because otherwise we wouldn't know if it works properly. The test
+   suite has tested the correctness of the simple functions assuming
+   preconditions are met, which takes care of testing anything that
+   doesn't involve complex state manipulation, loading data, or anything
+   graphics/audio related. However, the complex modules like State,
+   Game, and Dungeon do rely on these simple functions, so testing them
+   will reach towards correctness of the whole system. We only black-box
+   tested; we tested based on function specification alone without
+   looking at implementation. *)
+
 open OUnit2
 open Dungeon
 open Timer
