@@ -4,6 +4,7 @@
   "x_length": 11,
   "y_length": 11,
   "texture_list": [
+    "./clarkson.png",
     "./flames.png",
     "./monster3_2.png",
     "./wolf.png",

@@ -48,7 +48,7 @@ let what_to_render game = function
         (State.curr_lives !game)
   | Render_stack.StartRender ->
       Start_menu.render_menu (State.curr_start_menu !game)
-  | _ -> ()
+  | Render_stack.WinRender -> Win_menu.render_menu ()
 
 let init_display game w h =
   let cb () =

@@ -2,4 +2,4 @@
 
 (**[render_menu start finish] renders the menu based on (start) and
    (finish)*)
-val render_menu : int -> int -> unit
+val render_menu : unit -> unit
