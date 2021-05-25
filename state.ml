@@ -464,9 +464,6 @@ let menu_move current key =
       current.fight.action <- get_next_action current.fight.action
   | Glut.KEY_LEFT ->
       current.fight.action <- get_prev_action current.fight.action
-  | Glut.KEY_DOWN ->
-      Render_stack.stack_pop ();
-      reset_fight current
   | Glut.KEY_UP ->
       if not current.fight.attacking then (
         Timer.reset_timer "general";
