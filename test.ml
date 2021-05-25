@@ -2,14 +2,15 @@ open OUnit2
 open Dungeon
 open Timer
 open Levenshtein
-open State
 open Magic_numbers
 open Render_stack
+open Monsters
+open Item
 
 let int_tuple_printer (x, y) =
-  "(" ^ string_of_int x ^ "," ^ string_of_int x ^ ")"
+  "(" ^ string_of_int x ^ "," ^ string_of_int y ^ ")"
 
-let make_dungeon__tuple_test
+let make_dungeon_tuple_test
     (name : string)
     (dungeon : Dungeon.t)
     (f : Dungeon.t -> int * int)
@@ -17,13 +18,30 @@ let make_dungeon__tuple_test
   name >:: fun _ ->
   assert_equal expected_output (f dungeon) ~printer:int_tuple_printer
 
-let make_dungeon__int_test
+let make_dungeon_int_test
     (name : string)
     (dungeon : Dungeon.t)
     (f : Dungeon.t -> int)
     (expected_output : int) : test =
   name >:: fun _ ->
   assert_equal expected_output (f dungeon) ~printer:string_of_int
+
+let make_tile_material_test name dungeon location expected_output =
+  name >:: fun _ ->
+  let cells = get_cells dungeon in
+  assert_equal expected_output
+    (Hashtbl.find cells location |> get_tile |> tile_material)
+    ~printer:(fun a -> a)
+
+let make_dungeon_bool_test
+    (name : string)
+    (dungeon : Dungeon.t)
+    (location : int * int)
+    (f : Dungeon.t -> int * int -> bool)
+    (expected_output : bool) : test =
+  name >:: fun _ ->
+  assert_equal expected_output (f dungeon location)
+    ~printer:string_of_bool
 
 (* let make_monster_hp_test (name : string) (mon : Monster.t)
    (expected_output : int) : test = name >:: fun _ -> assert_equal
@@ -81,25 +99,49 @@ let make_render_stack_test name push scene pop expected_output =
 let make_magic_number_constant_test name constant expected_output =
   name >:: fun _ -> assert_equal constant expected_output
 
-(* let dungeon_20x50 = Dungeon.instantiate_dungeon 1 50 30 (1, 1) 5 [] 0
-   0 *)
+let make_monster_int_test name monster func expected_output =
+  name >:: fun _ ->
+  assert_equal expected_output (func monster) ~printer:string_of_int
 
-(*let dungeon_2x2 = Dungeon.instantiate_dungeon 1 2 2 (1, 1) 5 [] 5 10*)
+let make_monster_str_test name monster func expected_output =
+  name >:: fun _ ->
+  assert_equal expected_output
+    (List.mem (func monster) monster.attack_strings)
 
-(* let monster_20_hp = Dungeon.instantiate_monster "dog" "dog.pn" 20 59
-   [ "a" ] *)
+let make_item_test name item func expected_output =
+  name >:: fun _ -> assert_equal expected_output (func item)
+
+let dungeon_20x50 =
+  Dungeon.instantiate_dungeon ~seed:123 1 20 50 (1, 1) 5 0 0
+
+let dungeon_2x5 =
+  Dungeon.instantiate_dungeon ~seed:241 1 2 5 (1, 1) 5 5 10
 
 (* let current_sample_game = State.init_state "sample_game.json" *)
 
-(* let dungeon_tests = [ make_dungeon__tuple_test "20x50 dungeon
-   dimension" dungeon_20x50 get_dimensions (50, 30);
-   make_dungeon__tuple_test "2x5 dungeon dimension" dungeon_2x2
-   get_dimensions (2, 2); make_dungeon__int_test "2x5 dungeon bound"
-   dungeon_2x2 get_bound 5; make_dungeon__int_test "2x5 dungeon id"
-   dungeon_2x2 get_id 1; make_dungeon__int_test "2x5 dungeon previous"
-   dungeon_2x2 get_prev 10; make_dungeon__int_test "2x5 dungeon next"
-   dungeon_2x2 get_next 5; make_monster_hp_test "20 hp monster "
-   monster_20_hp 20; ] *)
+let dungeon_tests =
+  [
+    make_dungeon_tuple_test "20x50 dungeon dimension 20 by 50"
+      dungeon_20x50 get_dimensions (20, 50);
+    make_dungeon_tuple_test "2x5 dungeon dimension is 2 by 5"
+      dungeon_2x5 get_dimensions (2, 5);
+    make_dungeon_tuple_test "start location is (1,1)" dungeon_2x5
+      get_start (1, 1);
+    make_dungeon_int_test "2x5 dungeon bound is 5" dungeon_2x5 get_bound
+      5;
+    make_dungeon_int_test "2x5 dungeon id is 1" dungeon_2x5 get_id 1;
+    make_dungeon_int_test "2x5 dungeon previous is 10" dungeon_2x5
+      get_prev 10;
+    make_dungeon_int_test "2x5 dungeon next is 5" dungeon_2x5 get_next 5;
+    make_dungeon_bool_test "(0,0) is always a wall" dungeon_2x5 (0, 0)
+      is_wall true;
+    make_tile_material_test "material of wall is ./wall.png" dungeon_2x5
+      (0, 0) "./wall.png";
+    make_dungeon_int_test "20x50 dungeon seed is 123" dungeon_20x50
+      get_time 123;
+    make_dungeon_int_test "2x5 dungeon seed is 241" dungeon_2x5 get_time
+      241;
+  ]
 
 let levenshtein_tests =
   [
@@ -109,17 +151,6 @@ let levenshtein_tests =
     make_levenshtein_test "empty" "" "many characters" 15;
     make_levenshtein_test "two empty strings" "" "" 0;
   ]
-
-(* let state_tests = [ make_player_location_test "beginning"
-   current_sample_game (1, 1); make_in_fight_test "sample game not in
-   fight" current_sample_game false; make_typing_test "correct string
-   output after enter" current_sample_game 13 ""; make_typing_test
-   "ensure correct string output with lowercase letter"
-   current_sample_game 99 "c"; make_typing_test "ensure correct string
-   output with backspace" current_sample_game 127 ""; make_typing_test
-   "ensure correct string output with uppercase letter"
-   current_sample_game 65 "A"; make_typing_test "ensure correct string
-   output with space" current_sample_game 32 " "; ] *)
 
 let timer_tests =
   [
@@ -171,7 +202,7 @@ let render_stack_tests =
       true GameoverRender true Render_stack.GameoverRender;
   ]
 
-let magic_number_test =
+let magic_number_tests =
   [
     make_magic_number_constant_test "w should be 500" Magic_numbers.w
       500;
@@ -187,6 +218,56 @@ let magic_number_test =
       Magic_numbers.width (500. /. 11.);
   ]
 
+let monster =
+  {
+    name = "fuck";
+    sprite = "fuck.png";
+    hitpoints = 10;
+    encounter_chance = 10;
+    attack_strings = [ "fuck"; "you" ];
+    max_hp = 10;
+  }
+
+let monster_tests =
+  [
+    make_monster_int_test "monster max hp is 10" monster
+      Monsters.get_monster_max_HP 10;
+    make_monster_int_test "monster hp at start is 10" monster
+      Monsters.get_monster_max_HP 10;
+    make_monster_int_test "monster max hp is 10"
+      (Monsters.change_monster_hp monster (-1))
+      Monsters.get_monster_max_HP 9;
+    make_monster_str_test
+      "the output of get_monster_string is in monster strings" monster
+      Monsters.get_monster_string true;
+  ]
+
+let item_stats =
+  { sprite = "fuck.png"; name = "fucker"; depth = 1; modifier = 1 }
+
+let weapon = Weapon item_stats
+
+let armor = Armor item_stats
+
+let nothing = NoItem
+
+let item_tests =
+  [
+    make_item_test "type of weapon is weapon" weapon Item.get_item_type
+      "weapon";
+    make_item_test "type of armor is armor" armor Item.get_item_type
+      "armor";
+    make_item_test "type of nothing is noitem" nothing
+      Item.get_item_type "none";
+    make_item_test "sprite of weapon is fucking.png" weapon
+      Item.get_item_sprite "fuck.png";
+    make_item_test "name of weapon is fuck" weapon Item.get_item_name
+      "fucker";
+    make_item_test "depth of weapon is 1" weapon Item.get_item_depth 1;
+    make_item_test "modifier of weapon is 1" weapon
+      Item.get_item_modifier 1;
+  ]
+
 let suite =
   "test suite for CamelQuest"
   >::: List.flatten
@@ -195,11 +276,15 @@ let suite =
            timer_tests;
            sprite_tests;
            render_stack_tests;
+           magic_number_tests;
+           dungeon_tests;
+           monster_tests;
+           item_tests;
          ]
 
 let _ =
   Timer.init_timers
-    [ ("timer1", 1); ("timer2", 2); ("timer3", max_int) ];
+    [ ("timer1", 1); ("timer2", 2); ("timer3", max_int); ("big", 1) ];
   Spriteanimation.init_animations
     [
       ("anim1", [ "sprite1"; "sprite2" ]);

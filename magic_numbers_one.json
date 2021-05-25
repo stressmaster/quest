@@ -180,10 +180,10 @@
           "attacks": [
             "javahypetext",
             "4 loopy questions",
-            "does it start right",
-            "does it stop right",
-            "does it make progress",
-            "does it maintain invariant"
+            "start right",
+            "stop right",
+            "make progress",
+            "maintain invariant"
           ]
         },
         {
@@ -506,10 +506,10 @@
           "attacks": [
             "javahypetext",
             "4 loopy questions",
-            "does it start right",
-            "does it stop right",
-            "does it make progress",
-            "does it maintain invariant"
+            "start right",
+            "stop right",
+            "make progress",
+            "maintain invariant"
           ]
         },
         {

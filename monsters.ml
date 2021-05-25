@@ -55,3 +55,23 @@ let get_monster (magic_numbers : Magic_numbers.t) =
 let get_monster_string m =
   let no = Random.int (List.length m.attack_strings) in
   List.nth m.attack_strings no
+
+let change_monster_hp m plus =
+  let {
+    encounter_chance;
+    name;
+    sprite;
+    hitpoints;
+    attack_strings;
+    max_hp;
+  } =
+    m
+  in
+  {
+    encounter_chance;
+    name;
+    sprite;
+    hitpoints;
+    attack_strings;
+    max_hp = max_hp + plus;
+  }

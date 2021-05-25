@@ -66,6 +66,7 @@ type current = {
   mutable current_armor : Item.t;
   mutable game_over : game_over_action;
   mutable start_menu : start_menu_action;
+  mutable lives : int;
 }
 
 let curr_room c = c.room
@@ -77,6 +78,8 @@ let curr_fight c = c.fight
 let curr_game_over c = c.game_over
 
 let curr_start_menu c = c.start_menu
+
+let curr_lives c = c.lives
 
 let init_fight monster =
   {
@@ -103,13 +106,14 @@ let init_current game room monster =
     fight = init_fight monster;
     health = !Magic_numbers.get_magic.health;
     level = 1;
-    depth = 0;
+    depth = 1;
     current_exp = 0;
-    exp_bound = 10;
+    exp_bound = 5;
     current_weapon = Item.empty_item;
     current_armor = Item.empty_item;
     game_over = Quit;
     start_menu = NewGame;
+    lives = 3;
   }
 
 let init_state file_name =
@@ -161,6 +165,7 @@ let init_current_json ourjson game room monster =
       ourjson |> json_mem "current_armor" |> Game.item_of_json;
     game_over = Quit;
     start_menu = NewGame;
+    lives = ourjson |> json_mem "lives" |> json_int;
   }
 
 let init_state_from_save file_name =
@@ -277,6 +282,13 @@ let move current key =
   let x, y = current.location in
   current.in_fight <- is_in_fight current;
   if current.in_fight then (
+    current.fight.monster <-
+      Monsters.change_monster_hp current.fight.monster
+        ( current.fight.monster.max_hp
+        + int_of_float (1.5 *. float_of_int current.depth) );
+    current.fight.monster_health <-
+      current.fight.monster_health
+      + int_of_float (1.5 *. float_of_int current.depth);
     Audio.change_music "./camlished_battle.wav";
     Render_stack.stack_push Render_stack.SpiralRender;
     Timer.reset_timer "general" );
@@ -309,21 +321,26 @@ let rec random_string length acc =
 let manage_damage mon_HP current =
   if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3 then
     Monsters.get_monster_string current.fight.monster
-  else random_string (Random.int 10) ""
+  else
+    let gibberish_length = min 15 current.depth in
+    random_string (1 + Random.int gibberish_length) ""
 
 let take_damage mon_HP current =
   Render_stack.stack_push Render_stack.ScreenshakeRender;
   current.fight.player_health <-
-    max 0 (current.fight.player_health - max 1 (mon_HP / 20))
+    max 0 (current.fight.player_health - max 1 (mon_HP / 15))
 
 let manage_attack mon_str mon_HP diff current =
-  let damage =
-    max
-      ( String.length mon_str - diff
-      + Item.get_item_modifier current.current_weapon )
-      0
+  let damage = max (String.length mon_str - diff) 0 in
+  let proportion_damage = damage / String.length mon_str in
+  let dealt =
+    if damage = 0 then 0
+    else
+      5
+      + proportion_damage
+        * Item.get_item_modifier current.current_weapon
   in
-  current.fight.monster_health <- max (mon_HP - damage) 0;
+  current.fight.monster_health <- max (mon_HP - dealt) 0;
   if current.fight.monster_health > 0 then take_damage mon_HP current;
   if damage > 0 then Render_stack.stack_push Render_stack.AttackRender;
   Audio.play_sound "./oof.wav"
@@ -332,7 +349,13 @@ let manage_recover mon_str mon_HP diff current =
   if current.fight.monster_health > 0 then take_damage mon_HP current;
   current.fight.player_health <-
     (let healing = max (String.length mon_str - diff) 0 in
-     min (current.fight.player_health + healing) current.health)
+     let proportion_healing = healing / String.length mon_str in
+     if proportion_healing = 0 then current.fight.player_health
+     else
+       min
+         ( 6 + current.fight.player_health
+         + (proportion_healing * current.fight.player_health / 2) )
+         current.health)
 
 let manage_run str mon_str mon_HP diff current =
   if diff > String.length str / 3 && current.fight.monster_health > 0
@@ -377,20 +400,25 @@ let starting_move current key =
       init_state_from_save "save.json"
   | _ -> current
 
+let save_game current =
+  Game.update_file
+    (Game.json_maker current.level current.health current.lives true
+       (fst current.location) (snd current.location) current.depth
+       (Game.game_depth current.game)
+       current.current_exp current.exp_bound current.current_weapon
+       current.current_armor current.game);
+  ()
+
 let gaming_move current key =
   match current.game_over with
   | Quit when key = 13 ->
-      Game.update_file
-        (Game.json_maker true (fst current.location)
-           (snd current.location) current.depth
-           (Game.game_depth current.game)
-           current.current_exp current.exp_bound current.current_weapon
-           current.current_armor current.game);
+      save_game current;
       ignore (exit 0);
       current
-  | Revive when key = 13 ->
+  | Revive when key = 13 && current.lives > 1 ->
       Audio.change_music "./camlished.wav";
       Render_stack.stack_pop ();
+      current.lives <- current.lives - 1;
       current
   | Restart when key = 13 ->
       Audio.change_music "./camlished.wav";
@@ -406,6 +434,9 @@ let clamp_str str = String.sub str 0 (min (String.length str) 20)
 let typing_move current key =
   let x, y = current.location in
   match Render_stack.stack_peek () with
+  | DungeonRender when key = 115 ->
+      save_game current;
+      current
   | DungeonRender ->
       manage_item current x y (Dungeon.get_item current.room (x, y));
       current
@@ -457,12 +488,13 @@ let level_up current exp =
   while current.current_exp > current.exp_bound do
     current.level <- current.level + 1;
     current.current_exp <- current.current_exp - current.exp_bound;
-    current.exp_bound <- current.level * current.exp_bound;
+    current.exp_bound <- current.level * 5;
+    current.health <- current.health + (2 * current.level);
     ()
   done
 
 let manage_exp current =
-  level_up current 50;
+  level_up current (Dungeon.get_id current.room);
   Render_stack.stack_pop ();
   reset_fight current;
   current

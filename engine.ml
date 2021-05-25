@@ -42,7 +42,9 @@ let what_to_render game = function
       dungeon_render_helper game true;
       State.render_inventory !game
   | Render_stack.GameoverRender ->
-      Gameover_menu.render_menu (State.curr_game_over !game)
+      Gameover_menu.render_menu
+        (State.curr_game_over !game)
+        (State.curr_lives !game)
   | Render_stack.StartRender ->
       Start_menu.render_menu (State.curr_start_menu !game)
   | _ -> ()

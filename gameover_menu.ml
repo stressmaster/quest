@@ -13,7 +13,11 @@ let render_action action =
         (Font.new_font ">" 0.3 0.2 Magic_numbers.width
            Magic_numbers.height)
 
-let render_menu action =
+let render_menu action lives =
+  Font.render_font
+    (Font.new_font
+       ("you have " ^ string_of_int lives ^ " life left")
+       0. 1.5 Magic_numbers.width Magic_numbers.height);
   Font.render_font
     (Font.new_font "you" 0.75 1. Magic_numbers.width
        Magic_numbers.height);
