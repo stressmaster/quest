@@ -148,7 +148,7 @@ let add_npcs x y dungeon_cells =
   done
 
 let should_add_item counter_x counter_y dungeon_cells =
-  tile_is_path counter_x counter_y dungeon_cells && Random.int 20 > 18
+  tile_is_path counter_x counter_y dungeon_cells && Random.int 40 = 0
 
 let add_items x y dungeon_cells id =
   for counter_y = 0 to y do
@@ -243,7 +243,7 @@ let instantiate_dungeon
   Magic_numbers.update magic_numbers;
   let c = Hashtbl.create (x * y) in
   let w = Walker.init_walker 0 x 0 y start in
-  let ourlst = Walker.walk 9600 w in
+  let ourlst = Walker.walk 6500 w in
   instantiate_dungeon_cells x y c ourlst id;
   instantiate_dungeon_helper id c start w.furthest_pos (x, y) bound next
     prev magic_numbers seed

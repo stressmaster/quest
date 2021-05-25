@@ -128,7 +128,7 @@
         {
           "name": "ramiel",
           "sprite": "./monster.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 5,
           "attacks": [
             "prog knife",
@@ -140,7 +140,7 @@
         {
           "name": "python",
           "sprite": "./monster4.png",
-          "hitpoints": 20,
+          "hitpoints": 10,
           "chance": 5,
           "attacks": [
             "duck typing",
@@ -152,7 +152,7 @@
         {
           "name": "peppa",
           "sprite": "./monster5.png",
-          "hitpoints": 50,
+          "hitpoints": 40,
           "chance": 5,
           "attacks": [
             "oink oink",
@@ -164,7 +164,7 @@
         {
           "name": "melvin",
           "sprite": "./monster6.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 5,
           "attacks": [
             "gme to the moon",
@@ -176,7 +176,7 @@
         {
           "name": "gries",
           "sprite": "./monster8.png",
-          "hitpoints": 60,
+          "hitpoints": 50,
           "chance": 5,
           "attacks": [
             "javahypertext",
@@ -190,7 +190,7 @@
         {
           "name": "slime",
           "sprite": "./monster9.png",
-          "hitpoints": 20,
+          "hitpoints": 10,
           "chance": 5,
           "attacks": [
             "hit",
@@ -202,7 +202,7 @@
         {
           "name": "ithacamagic",
           "sprite": "./monster10.png",
-          "hitpoints": 80,
+          "hitpoints": 70,
           "chance": 5,
           "attacks": [
             "run forest run",
@@ -226,7 +226,7 @@
         {
           "name": "dartmouth",
           "sprite": "./monster12.png",
-          "hitpoints": 50,
+          "hitpoints": 40,
           "chance": 5,
           "attacks": [
             "keggy the keg",
@@ -424,7 +424,7 @@
         {
           "name": "monster",
           "sprite": "./monster.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 5,
           "attacks": [
             "cold knife",
@@ -434,7 +434,7 @@
         {
           "name": "goblin_1",
           "sprite": "./goblin_1.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 5,
           "attacks": [
             "ice pick swing"
@@ -443,7 +443,7 @@
         {
           "name": "corona",
           "sprite": "./monster7.png",
-          "hitpoints": 35,
+          "hitpoints": 25,
           "chance": 20,
           "attacks": [
             "i like cold",
@@ -455,7 +455,7 @@
         {
           "name": "elsa",
           "sprite": "./elsa.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 20,
           "attacks": [
             "blast of ice",
@@ -466,7 +466,7 @@
         {
           "name": "python",
           "sprite": "./monster4.png",
-          "hitpoints": 20,
+          "hitpoints": 10,
           "chance": 5,
           "attacks": [
             "duck typing",
@@ -478,7 +478,7 @@
         {
           "name": "peppa",
           "sprite": "./monster5.png",
-          "hitpoints": 50,
+          "hitpoints": 40,
           "chance": 5,
           "attacks": [
             "oink oink",
@@ -490,7 +490,7 @@
         {
           "name": "melvin",
           "sprite": "./monster6.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 5,
           "attacks": [
             "gme to the moon",
@@ -502,7 +502,7 @@
         {
           "name": "gries",
           "sprite": "./monster8.png",
-          "hitpoints": 60,
+          "hitpoints": 50,
           "chance": 5,
           "attacks": [
             "javahypertext",
@@ -528,7 +528,7 @@
         {
           "name": "dartmouth",
           "sprite": "./monster12.png",
-          "hitpoints": 50,
+          "hitpoints": 40,
           "chance": 5,
           "attacks": [
             "keggy the keg",
@@ -716,7 +716,7 @@
         {
           "name": "goblin",
           "sprite": "./goblin_1.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 5,
           "attacks": [
             "fire pick swing",
@@ -726,7 +726,7 @@
         {
           "name": "slime",
           "sprite": "./monster9.png",
-          "hitpoints": 35,
+          "hitpoints": 25,
           "chance": 20,
           "attacks": [
             "fire slime",
@@ -737,7 +737,7 @@
         {
           "name": "fire",
           "sprite": "./flames.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 20,
           "attacks": [
             "burning hot fire",
@@ -749,7 +749,7 @@
         {
           "name": "python",
           "sprite": "./monster4.png",
-          "hitpoints": 20,
+          "hitpoints": 10,
           "chance": 5,
           "attacks": [
             "duck typing",
@@ -761,7 +761,7 @@
         {
           "name": "peppa",
           "sprite": "./monster5.png",
-          "hitpoints": 50,
+          "hitpoints": 40,
           "chance": 5,
           "attacks": [
             "oink oink",
@@ -773,7 +773,7 @@
         {
           "name": "melvin",
           "sprite": "./monster6.png",
-          "hitpoints": 30,
+          "hitpoints": 20,
           "chance": 5,
           "attacks": [
             "gme to the moon",
@@ -785,7 +785,7 @@
         {
           "name": "gries",
           "sprite": "./monster8.png",
-          "hitpoints": 60,
+          "hitpoints": 50,
           "chance": 5,
           "attacks": [
             "javahypertext",
@@ -799,7 +799,7 @@
         {
           "name": "ithacamagic",
           "sprite": "./monster10.png",
-          "hitpoints": 80,
+          "hitpoints": 70,
           "chance": 5,
           "attacks": [
             "run forest run",

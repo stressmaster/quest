@@ -72,8 +72,8 @@ let next_dungeon game dungeon =
   try List.find (fun g -> Dungeon.get_id g = next_id) game.dungeons
   with Not_found ->
     let next_id = Dungeon.get_id dungeon + 1 in
-    let xdim = 50 + Random.int 150 in
-    let ydim = 50 + Random.int 150 in
+    let xdim = 50 + Random.int 80 in
+    let ydim = 50 + Random.int 80 in
     let ourlist = coor_maker xdim ydim in
     Dungeon.instantiate_dungeon next_id xdim ydim
       (List.nth ourlist (Random.int 9))

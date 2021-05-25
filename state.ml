@@ -334,7 +334,7 @@ let manage_damage mon_HP current =
 let take_damage mon_HP current =
   Render_stack.stack_push Render_stack.ScreenshakeRender;
   current.fight.player_health <-
-    max 0 (current.fight.player_health - max 1 (mon_HP / 15))
+    max 0 (current.fight.player_health - max 1 (mon_HP / 5))
 
 let manage_attack mon_str mon_HP diff current =
   let damage = max (String.length mon_str - diff) 0 in
@@ -494,7 +494,7 @@ let level_up current exp =
   while current.current_exp > current.exp_bound do
     current.level <- current.level + 1;
     current.current_exp <- current.current_exp - current.exp_bound;
-    current.exp_bound <- current.level * 5;
+    current.exp_bound <- current.level * 4;
     current.health <- current.health + (2 * current.level);
     ()
   done
