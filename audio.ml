@@ -6,7 +6,7 @@ let _ =
   Sdlmixer.open_audio ();
   at_exit Sdlmixer.close_audio
 
-let music = ref (Sdlmixer.load_music "./camlished.wav")
+let music = ref (Sdlmixer.load_music "./cruel.wav")
 
 let set_music file = music := Sdlmixer.load_music file
 
