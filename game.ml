@@ -119,6 +119,8 @@ let json_of_item item =
     ]
 
 let json_maker
+    level
+    health
     lives
     e
     locx
@@ -140,6 +142,8 @@ let json_maker
         ("current_id", `Int curid);
         ("number_rooms", `Int rnum);
         ("lives", `Int lives);
+        ("level", `Int level);
+        ("health", `Int health);
         ("rooms", `List rooms);
         ("current_exp", `Int curexp);
         ("exp_bound", `Int exp_bound);

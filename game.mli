@@ -44,6 +44,8 @@ val game_depth : t -> int
     that exists iff [exists]*)
 val json_maker :
   int ->
+  int ->
+  int ->
   bool ->
   int ->
   int ->

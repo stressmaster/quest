@@ -321,7 +321,7 @@ let rec random_string length acc =
 let manage_damage mon_HP current =
   if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3 then
     Monsters.get_monster_string current.fight.monster
-  else random_string (Random.int 10) ""
+  else random_string (1 + Random.int 15) ""
 
 let take_damage mon_HP current =
   Render_stack.stack_push Render_stack.ScreenshakeRender;
@@ -391,8 +391,8 @@ let starting_move current key =
 
 let save_game current =
   Game.update_file
-    (Game.json_maker current.lives true (fst current.location)
-       (snd current.location) current.depth
+    (Game.json_maker current.level current.health current.lives true
+       (fst current.location) (snd current.location) current.depth
        (Game.game_depth current.game)
        current.current_exp current.exp_bound current.current_weapon
        current.current_armor current.game);
