@@ -396,13 +396,14 @@ let starting_move current key =
     |> Yojson.Basic.Util.member "exists"
     |> Yojson.Basic.Util.to_bool
   in
-  Audio.change_music "./camlished.wav";
   match current.start_menu with
   | NewGame when key = 13 ->
+      Audio.change_music "./camlished.wav";
       Render_stack.stack_pop ();
       Game.update_file Game.reset_save;
       current
   | Continue when key = 13 && exists ->
+      Audio.change_music "./camlished.wav";
       Render_stack.stack_pop ();
       init_state_from_save "save.json"
   | _ -> current
