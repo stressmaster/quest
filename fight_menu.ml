@@ -58,17 +58,18 @@ let render_menu_options (fight : State.fight) =
        ("hp " ^ string_of_int fight.player_health)
        0.1 0.6 Magic_numbers.width Magic_numbers.height)
 
+let render_fight (fight : State.fight) =
+  render_not_fighting_square fight;
+  render_menu_options fight;
+  if fight.attacking then render_timer_and_attack fight
+  else render_not_attacking_fonts fight
+
 let render_menu (fight : State.fight) =
   if fight.player_health <= 0 then
     Font.render_font
       (Font.new_font "you lose" 0.6 1. Magic_numbers.width
          Magic_numbers.height)
-  else if not (fight.monster_health = 0) then (
-    render_not_fighting_square fight;
-    if fight.attacking then (
-      render_timer_and_attack fight;
-      render_menu_options fight )
-    else render_not_attacking_fonts fight )
+  else if not (fight.monster_health = 0) then render_fight fight
   else
     Font.render_font
       (Font.new_font "you win" 0.6499 1. Magic_numbers.width

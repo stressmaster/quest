@@ -443,7 +443,7 @@ let typing_move current key =
   | DungeonRender when key = 115 ->
       save_game current;
       current
-  | DungeonRender ->
+  | DungeonRender when key = 13 ->
       manage_item current x y (Dungeon.get_item current.room (x, y));
       current
   | FightRender when current.fight.attacking ->
