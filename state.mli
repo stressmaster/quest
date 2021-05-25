@@ -92,6 +92,10 @@ val curr_start_menu : current -> start_menu_action
    corner of the screen*)
 val render_inventory : current -> unit
 
+(**[render_inventory current] renders the current level and experience
+   points in the top right corner of the screen*)
+val render_exp : current -> unit
+
 (**[check_time_limit current] updates current, ending the player's
    attack if they have taken too long*)
 val check_time_limit : current -> current

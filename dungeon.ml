@@ -90,11 +90,11 @@ let become_npc x y table =
   let visibility =
     if tile_is_path x y table then 0
     else
-      ( become_npc_helper (x + 1) y table
+      (become_npc_helper (x + 1) y table
       + become_npc_helper (x - 1) y table
       + become_npc_helper x (y - 1) table
-      + become_npc_helper x (y + 1) table )
-      * Random.int 12
+      + become_npc_helper x (y + 1) table)
+      * Random.int 4
   in
   if visibility >= 22 then true else false
 
@@ -110,7 +110,7 @@ let render_npc_speech x y dungeon_cells =
             (Font.new_font speech 1.1 1.2
                (Magic_numbers.width *. 0.5)
                (Magic_numbers.height *. 0.5))
-      | None, _, _ -> () )
+      | None, _, _ -> ())
 
 let add_npc_shadow x y dungeon_cells npc_shadow dir_x dir_y =
   match Hashtbl.find_opt dungeon_cells (x, y) with
@@ -142,7 +142,7 @@ let add_npcs x y dungeon_cells =
         in
         Hashtbl.add dungeon_cells (counter_x, counter_y)
           { tile; x = counter_x; y = counter_y };
-        add_npc_shadows counter_x counter_y dungeon_cells (Some npc) )
+        add_npc_shadows counter_x counter_y dungeon_cells (Some npc))
       else ()
     done
   done
@@ -307,11 +307,11 @@ let determine_texture (x, y) (p_x, p_y) dungeon_cells dungeon =
 let render_self_square (p_x, p_y) factor x_length y_length starting_y =
   Render.render_square
     (Render.new_square
-       ( p_x *. 2. /. (x_length +. 2.)
-       *. (x_length *. Magic_numbers.width /. 5000.) )
-       ( starting_y
+       (p_x *. 2. /. (x_length +. 2.)
+       *. (x_length *. Magic_numbers.width /. 5000.))
+       (starting_y
        +. p_y /. (y_length +. 2.) *. 2.
-          *. (y_length *. Magic_numbers.height /. 5000.) )
+          *. (y_length *. Magic_numbers.height /. 5000.))
        (10. /. factor) (10. /. factor) "./fonts/i.png")
 
 let render_mini_map (p_x, p_y) (x_length, y_length, factor) =
@@ -343,12 +343,12 @@ let map_bound (dungeon_x_length, dungeon_y_length) =
 let render_dungeon_square_helper x x_start y y_start new_texture =
   Render.render_square
     (Render.new_square
-       ( float_of_int (x - x_start)
+       (float_of_int (x - x_start)
        /. float_of_int Magic_numbers.x_length
-       *. 2. )
-       ( float_of_int (y - y_start)
+       *. 2.)
+       (float_of_int (y - y_start)
        /. float_of_int Magic_numbers.y_length
-       *. 2. )
+       *. 2.)
        Magic_numbers.width Magic_numbers.height new_texture)
 
 let render_dungeon_helper

@@ -40,7 +40,8 @@ let what_to_render game = function
       Fight_menu.render_menu (State.curr_fight !game)
   | Render_stack.DungeonRender ->
       dungeon_render_helper game true;
-      State.render_inventory !game
+      State.render_inventory !game;
+      State.render_exp !game
   | Render_stack.GameoverRender ->
       Gameover_menu.render_menu
         (State.curr_game_over !game)
