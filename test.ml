@@ -261,7 +261,7 @@ let item_tests =
       Item.get_item_type "none";
     make_item_test "sprite of weapon is fucking.png" weapon
       Item.get_item_sprite "fuck.png";
-    make_item_test "name of weapon is fuck" weapon Item.get_item_name
+    make_item_test "name of weapon is fucker" weapon Item.get_item_name
       "fucker";
     make_item_test "depth of weapon is 1" weapon Item.get_item_depth 1;
     make_item_test "modifier of weapon is 1" weapon
