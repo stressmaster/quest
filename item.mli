@@ -18,7 +18,7 @@ type t =
   | Armor of item_stats
   | NoItem
 
-(** [empty_item] is the item empty *)
+(** [empty_item] is the empty item*)
 val empty_item : t
 
 (** [create_item_hard itype sprite name depth modifier] is an [item] of

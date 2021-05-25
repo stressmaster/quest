@@ -14,7 +14,7 @@ val play_music : unit -> unit
 (** [halt_music ()] halts the current music instance *)
 val halt_music : unit -> unit
 
-(** [change_music ()] changes the music to [music] *)
+(** [change_music music] changes the music to [music] *)
 val change_music : string -> unit
 
 (** [play_sound sound] plays [sound] *)

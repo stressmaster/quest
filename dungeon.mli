@@ -13,7 +13,9 @@ type tile
 (** an abstract type representing a dungeon cell *)
 type cell
 
-(** [instantiate_dungeon x y] is a dungeon with [x] columns [y] rows *)
+(** [instantiate_dungeon ?seed id x y start bound next prev] is a
+    dungeon with [x] columns [y] rows, id [id], start position at
+    [start], monster encounter rate [bound], and optionally with [?seed]*)
 val instantiate_dungeon :
   ?seed:int -> int -> int -> int -> int * int -> int -> int -> int -> t
 
@@ -47,7 +49,7 @@ val get_dimensions : t -> int * int
     [dungeon]*)
 val get_cells : t -> (int * int, cell) Hashtbl.t
 
-(** [get_cells cell] is the tile associated with [cell] *)
+(** [get_tile cell] is the tile associated with [cell] *)
 val get_tile : cell -> tile
 
 (** [get_bound dungeon] is the bound of [dungeon]*)

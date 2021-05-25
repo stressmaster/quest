@@ -1,5 +1,4 @@
 (** This module renders the menu that appears upon winning the game*)
 
-(** [render_menu start finish] renders the menu based on (start) and
-    (finish)*)
+(** [render_menu ()] renders the start menu*)
 val render_menu : unit -> unit

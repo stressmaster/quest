@@ -101,5 +101,5 @@ val render_exp : current -> unit
     attack if they have taken too long*)
 val check_time_limit : current -> current
 
-(** [curr_lives current]* returns the current number of lives*)
+(** [curr_lives current] returns the current number of lives*)
 val curr_lives : current -> int

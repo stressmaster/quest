@@ -1,1 +1,1 @@
-{"exists":false}
+{"exists":true,"locationx":40,"locationy":10,"current_id":2,"number_rooms":2,"lives":3,"level":1,"health":10,"rooms":[{"id":1,"xdim":12,"ydim":24,"xstart":1,"ystart":1,"time":0},{"id":2,"xdim":74,"ydim":90,"xstart":37,"ystart":1,"time":122}],"current_exp":0,"exp_bound":5,"current_weapon":{"type":"none","sprite":"./empty_item.png","name":"","depth":0,"modifier":0},"current_armor":{"type":"none","sprite":"./empty_item.png","name":"","depth":0,"modifier":0}}

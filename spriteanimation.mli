@@ -9,7 +9,7 @@ type animation
 (** type representing the id of a sprite *)
 type id = string
 
-(** [init_animations animations] initiates [animations] *)
+(** [init_animations animations] initializes [animations] *)
 val init_animations : (id * string list) list -> unit
 
 (** [get_sprite id] is the current frame of the sprite with id [id] *)

@@ -11,7 +11,7 @@ val new_square : float -> float -> float -> float -> string -> square
 (** [render_square square] rendeers [square] *)
 val render_square : square:square -> unit
 
-(** [render_square_flases square1 square2 flashes] alternately renders
+(** [render_square_flashes square1 square2 flashes] alternately renders
     [square1] and [square2] for [flashes] flashes *)
 val render_square_flashes : square -> square -> int -> unit
 

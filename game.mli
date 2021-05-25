@@ -22,7 +22,7 @@ val last_room : t -> Dungeon.t
 (** [nth_room game nth] is the [nth] dungeon in [game] *)
 val nth_room : t -> int -> Dungeon.t
 
-(** [next_dunge game dungeon] is the dungeon following [dungeon] in
+(** [next_dungeon game dungeon] is the dungeon following [dungeon] in
     [game] *)
 val next_dungeon : t -> Dungeon.t -> Dungeon.t
 
@@ -37,10 +37,11 @@ val add_to_game : t -> Dungeon.t -> t
 (** [game_depth game] is the number of dungeons in [game] *)
 val game_depth : t -> int
 
-(** [json_maker exists locx locy current_id room_number curr_exp
-    exp_bound weapon armor game] is a json save file that records [locx]
-    [locy] [current_id] [room_number] [curr_exp] [exp_bound] [weapon]
-    [armor] and [game] and that exists iff [exists]*)
+(** [json_maker level hea liv e locx locy curid rnum cure e_b wn ar
+    game] is a json save file that records current location [locx]
+    [locy], current_id [curid], room number [rnum], current exp [cure],
+    number of lives [liv], exp bound [e_b], weapon [wn], armor [ar], and
+    [game], and boolean [e] of whether a saved game exists.*)
 val json_maker :
   int ->
   int ->
