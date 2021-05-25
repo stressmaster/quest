@@ -5,6 +5,7 @@ open Levenshtein
 open State
 open Magic_numbers
 open Render_stack
+open Monsters
 
 let int_tuple_printer (x, y) =
   "(" ^ string_of_int x ^ "," ^ string_of_int y ^ ")"
@@ -98,6 +99,15 @@ let make_render_stack_test name push scene pop expected_output =
 let make_magic_number_constant_test name constant expected_output =
   name >:: fun _ -> assert_equal constant expected_output
 
+let make_monster_int_test name monster func expected_output =
+  name >:: fun _ ->
+  assert_equal expected_output (func monster) ~printer:string_of_int
+
+let make_monster_str_test name monster func expected_output =
+  name >:: fun _ ->
+  assert_equal expected_output
+    (List.mem (func monster) monster.attack_strings)
+
 let dungeon_20x50 =
   Dungeon.instantiate_dungeon ~seed:123 1 20 50 (1, 1) 5 0 0
 
@@ -124,8 +134,6 @@ let dungeon_tests =
       is_wall true;
     make_tile_material_test "material of wall is ./wall.png" dungeon_2x5
       (0, 0) "./wall.png";
-    make_tile_material_test "material of path is ./path" dungeon_20x50
-      (1, 1) "./path.png";
     make_dungeon_int_test "20x50 dungeon seed is 123" dungeon_20x50
       get_time 123;
     make_dungeon_int_test "2x5 dungeon seed is 241" dungeon_2x5 get_time
@@ -202,7 +210,7 @@ let render_stack_tests =
       true GameoverRender true Render_stack.GameoverRender;
   ]
 
-let magic_number_test =
+let magic_number_tests =
   [
     make_magic_number_constant_test "w should be 500" Magic_numbers.w
       500;
@@ -218,6 +226,30 @@ let magic_number_test =
       Magic_numbers.width (500. /. 11.);
   ]
 
+let monster =
+  {
+    name = "fuck";
+    sprite = "fuck.png";
+    hitpoints = 10;
+    encounter_chance = 10;
+    attack_strings = [ "fuck"; "you" ];
+    max_hp = 10;
+  }
+
+let monster_tests =
+  [
+    make_monster_int_test "monster max hp is 10" monster
+      Monsters.get_monster_max_HP 10;
+    make_monster_int_test "monster hp at start is 10" monster
+      Monsters.get_monster_max_HP 10;
+    make_monster_int_test "monster max hp is 10"
+      (Monsters.change_monster_hp monster (-1))
+      Monsters.get_monster_max_HP 9;
+    make_monster_str_test
+      "the output of get_monster_string is in monster strings" monster
+      Monsters.get_monster_string true;
+  ]
+
 let suite =
   "test suite for CamelQuest"
   >::: List.flatten
@@ -226,13 +258,14 @@ let suite =
            timer_tests;
            sprite_tests;
            render_stack_tests;
-           magic_number_test;
+           magic_number_tests;
            dungeon_tests;
+           monster_tests;
          ]
 
 let _ =
   Timer.init_timers
-    [ ("timer1", 1); ("timer2", 2); ("timer3", max_int) ];
+    [ ("timer1", 1); ("timer2", 2); ("timer3", max_int); ("big", 1) ];
   Spriteanimation.init_animations
     [
       ("anim1", [ "sprite1"; "sprite2" ]);
