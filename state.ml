@@ -105,8 +105,8 @@ let init_current game room monster =
     in_fight = false;
     fight = init_fight monster;
     health = !Magic_numbers.get_magic.health;
-    level = 1;
-    depth = 1;
+    level = 20;
+    depth = 10;
     current_exp = 0;
     exp_bound = 5;
     current_weapon = Item.empty_item;
@@ -263,7 +263,8 @@ let change_to_next_room current =
   current.depth <- current.depth + 1;
   let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
   Magic_numbers.update new_magic_numbers;
-  Spriteanimation.init_animations new_magic_numbers.animations
+  Spriteanimation.init_animations new_magic_numbers.animations;
+  reach_end current
 
 let change_to_previous_room current =
   current.room <- Game.prev_dungeon current.game current.room;
@@ -272,8 +273,7 @@ let change_to_previous_room current =
   current.depth <- current.depth - 1;
   let new_magic_numbers = current.room |> Dungeon.get_magic_numbers in
   Magic_numbers.update new_magic_numbers;
-  Spriteanimation.init_animations new_magic_numbers.animations;
-  reach_end current
+  Spriteanimation.init_animations new_magic_numbers.animations
 
 let should_change_room current =
   if
