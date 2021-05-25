@@ -390,6 +390,10 @@ let fighting_case current key =
   | _ when is_typable key -> str ^ Char.escaped (Char.chr key)
   | _ -> str
 
+let pop_and_change_music () =
+  Audio.change_music "./camlished.wav";
+  Render_stack.stack_pop ()
+
 let starting_move current key =
   let exists =
     Yojson.Basic.from_file "save.json"
@@ -398,13 +402,11 @@ let starting_move current key =
   in
   match current.start_menu with
   | NewGame when key = 13 ->
-      Audio.change_music "./camlished.wav";
-      Render_stack.stack_pop ();
+      pop_and_change_music ();
       Game.update_file Game.reset_save;
       current
   | Continue when key = 13 && exists ->
-      Audio.change_music "./camlished.wav";
-      Render_stack.stack_pop ();
+      pop_and_change_music ();
       init_state_from_save "save.json"
   | _ -> current
 
