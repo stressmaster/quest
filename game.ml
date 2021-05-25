@@ -77,7 +77,7 @@ let next_dungeon game dungeon =
     let ourlist = coor_maker xdim ydim in
     Dungeon.instantiate_dungeon next_id xdim ydim
       (List.nth ourlist (Random.int 9))
-      20 (next_id + 1) (next_id - 1)
+      35 (next_id + 1) (next_id - 1)
 
 let prev_dungeon game dungeon =
   let prev_id = Dungeon.get_id dungeon - 1 in

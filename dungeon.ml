@@ -94,7 +94,7 @@ let become_npc x y table =
       + become_npc_helper (x - 1) y table
       + become_npc_helper x (y - 1) table
       + become_npc_helper x (y + 1) table)
-      * Random.int 4
+      * Random.int 7
   in
   if visibility >= 22 then true else false
 
