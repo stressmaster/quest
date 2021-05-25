@@ -1,3 +1,12 @@
+open OUnit2
+open Dungeon
+open Timer
+open Levenshtein
+open Magic_numbers
+open Render_stack
+open Monsters
+open Item
+
 (* We have tested most of functions that do not require features, such
    as graphics, audio, and state. Dungeon, Timer, Levenshtein, the
    contstants portion of Magic_numbers, Render_stack, Monsters, and Item
@@ -19,15 +28,6 @@
    will reach towards correctness of the whole system. We only black-box
    tested; we tested based on function specification alone without
    looking at implementation. *)
-
-open OUnit2
-open Dungeon
-open Timer
-open Levenshtein
-open Magic_numbers
-open Render_stack
-open Monsters
-open Item
 
 let int_tuple_printer (x, y) =
   "(" ^ string_of_int x ^ "," ^ string_of_int y ^ ")"
@@ -64,10 +64,6 @@ let make_dungeon_bool_test
   name >:: fun _ ->
   assert_equal expected_output (f dungeon location)
     ~printer:string_of_bool
-
-(* let make_monster_hp_test (name : string) (mon : Monster.t)
-   (expected_output : int) : test = name >:: fun _ -> assert_equal
-   expected_output (get_monster_HP mon) ~printer:string_of_int *)
 
 let make_levenshtein_test
     (name : string)
@@ -149,6 +145,8 @@ let dungeon_tests =
       dungeon_2x5 get_dimensions (2, 5);
     make_dungeon_tuple_test "start location is (1,1)" dungeon_2x5
       get_start (1, 1);
+    make_dungeon_tuple_test "start location is still (1,1)"
+      dungeon_20x50 get_start (1, 1);
     make_dungeon_int_test "2x5 dungeon bound is 5" dungeon_2x5 get_bound
       5;
     make_dungeon_int_test "2x5 dungeon id is 1" dungeon_2x5 get_id 1;
@@ -157,8 +155,6 @@ let dungeon_tests =
     make_dungeon_int_test "2x5 dungeon next is 5" dungeon_2x5 get_next 5;
     make_dungeon_bool_test "(0,0) is always a wall" dungeon_2x5 (0, 0)
       is_wall true;
-    make_tile_material_test "material of wall is ./wall.png" dungeon_2x5
-      (0, 0) "./wall.png";
     make_dungeon_int_test "20x50 dungeon seed is 123" dungeon_20x50
       get_time 123;
     make_dungeon_int_test "2x5 dungeon seed is 241" dungeon_2x5 get_time
