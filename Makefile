@@ -3,7 +3,7 @@ MLIMODULES=render authors texturemap game dungeon state levenshtein fight_menu n
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MLIMODULES:=.mli)
-PNGS= darkness entrance exit goblin_1 monster path player wall timer empty_item armor_pickup weapon_pickup tier_one_armor tier_one_weapon tier_two_armor tier_two_weapon tier_three_armor tier_three_weapon 
+PNGS= darkness entrance exit goblin_1 monster path player wall timer empty_item armor_pickup weapon_pickup tier_one_armor tier_one_weapon tier_two_armor tier_two_weapon tier_three_armor tier_three_weapon monster4 monster3 ash_path camel_1 npc1 np2 monster5 monster6 monster7 monster8 monster9 monster10 monster11 monster12 camel_2 camel_3 elsa fire_wall flames ice_wall monster3_2 penguin_1 penguin_2 water_path wolf_2 wolf clarkson
 IM1=$(PNGS:=.png)
 FONTS= fonts/*
 IM2=$(FONTS:=.png)
