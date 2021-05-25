@@ -1,1 +1,44 @@
-{"exists":false}
+{
+  "exists": true,
+  "locationx": 20,
+  "locationy": 17,
+  "current_id": 2,
+  "number_rooms": 2,
+  "lives": 3,
+  "level": 2,
+  "health": 15,
+  "rooms": [
+    {
+      "id": 1,
+      "xdim": 12,
+      "ydim": 24,
+      "xstart": 1,
+      "ystart": 1,
+      "time": 0
+    },
+    {
+      "id": 2,
+      "xdim": 154,
+      "ydim": 111,
+      "xstart": 1,
+      "ystart": 1,
+      "time": 3431
+    }
+  ],
+  "current_exp": 3,
+  "exp_bound": 10,
+  "current_weapon": {
+    "type": "weapon",
+    "sprite": "./tier_one_weapon.png",
+    "name": "Lvl 2 pathetic styrofoam broken bottle",
+    "depth": 2,
+    "modifier": 1
+  },
+  "current_armor": {
+    "type": "armor",
+    "sprite": "./tier_two_armor.png",
+    "name": "Lvl 1 viscious Wild cuirass",
+    "depth": 1,
+    "modifier": 1
+  }
+}

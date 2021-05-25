@@ -106,9 +106,9 @@ let init_current game room monster =
     fight = init_fight monster;
     health = !Magic_numbers.get_magic.health;
     level = 1;
-    depth = 0;
+    depth = 1;
     current_exp = 0;
-    exp_bound = 10;
+    exp_bound = 5;
     current_weapon = Item.empty_item;
     current_armor = Item.empty_item;
     game_over = Quit;
@@ -286,9 +286,11 @@ let move current key =
   if current.in_fight then (
     current.fight.monster <-
       Monsters.change_monster_hp current.fight.monster
-        (current.depth * 10);
+        (current.fight.monster.max_hp
+        + int_of_float (1.5 *. float_of_int current.depth));
     current.fight.monster_health <-
-      current.fight.monster_health + (current.depth * 10);
+      current.fight.monster_health
+      + int_of_float (1.5 *. float_of_int current.depth);
     Audio.change_music "./camlished_battle.wav";
     Render_stack.stack_push Render_stack.SpiralRender;
     Timer.reset_timer "general");
@@ -326,7 +328,7 @@ let manage_damage mon_HP current =
 let take_damage mon_HP current =
   Render_stack.stack_push Render_stack.ScreenshakeRender;
   current.fight.player_health <-
-    max 0 (current.fight.player_health - max 1 (mon_HP / 20))
+    max 0 (current.fight.player_health - max 1 (mon_HP / 15))
 
 let manage_attack mon_str mon_HP diff current =
   let damage =
@@ -335,7 +337,15 @@ let manage_attack mon_str mon_HP diff current =
       + Item.get_item_modifier current.current_weapon)
       0
   in
-  current.fight.monster_health <- max (mon_HP - damage) 0;
+  let proportion_damage = damage / String.length mon_str in
+  let dealt =
+    if damage = 0 then 0
+    else
+      5
+      + proportion_damage
+        * Item.get_item_modifier current.current_weapon
+  in
+  current.fight.monster_health <- max (mon_HP - dealt) 0;
   if current.fight.monster_health > 0 then take_damage mon_HP current;
   if damage > 0 then Render_stack.stack_push Render_stack.AttackRender;
   Audio.play_sound "./oof.wav"
@@ -344,7 +354,11 @@ let manage_recover mon_str mon_HP diff current =
   if current.fight.monster_health > 0 then take_damage mon_HP current;
   current.fight.player_health <-
     (let healing = max (String.length mon_str - diff) 0 in
-     min (current.fight.player_health + healing) current.health)
+     let proportion_healing = healing / String.length mon_str in
+     min
+       (current.fight.player_health
+       + (proportion_healing * current.fight.player_health / 5))
+       current.health)
 
 let manage_run str mon_str mon_HP diff current =
   if diff > String.length str / 3 && current.fight.monster_health > 0
@@ -477,12 +491,13 @@ let level_up current exp =
   while current.current_exp > current.exp_bound do
     current.level <- current.level + 1;
     current.current_exp <- current.current_exp - current.exp_bound;
-    current.exp_bound <- current.level * current.exp_bound;
+    current.exp_bound <- current.level * 5;
+    current.health <- current.health + (2 * current.level);
     ()
   done
 
 let manage_exp current =
-  level_up current 50;
+  level_up current (Dungeon.get_id current.room);
   Render_stack.stack_pop ();
   reset_fight current;
   current
