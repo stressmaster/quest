@@ -390,5 +390,3 @@ let render_dungeon (p_x, p_y) (dungeon : t) condition =
   if condition then render_npc_speech p_x p_y dungeon_cells
 
 let get_magic_numbers d = d.magic_numbers
-
-(* Render_stack.stack_push Render_stack.DungeonRender *)

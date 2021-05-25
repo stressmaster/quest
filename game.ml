@@ -118,40 +118,25 @@ let json_of_item item =
       ("modifier", `Int (Item.get_item_modifier item));
     ]
 
-let json_maker
-    level
-    health
-    lives
-    e
-    locx
-    locy
-    curid
-    rnum
-    curexp
-    exp_bound
-    weapon
-    armor
-    game : Yojson.Basic.t =
+let json_maker level hea liv e locx locy curid rnum cure e_b wn ar game
+    : Yojson.Basic.t =
   let rooms = room_maker game.dungeons [] in
-  let ourjson =
-    `Assoc
-      [
-        ("exists", `Bool e);
-        ("locationx", `Int locx);
-        ("locationy", `Int locy);
-        ("current_id", `Int curid);
-        ("number_rooms", `Int rnum);
-        ("lives", `Int lives);
-        ("level", `Int level);
-        ("health", `Int health);
-        ("rooms", `List rooms);
-        ("current_exp", `Int curexp);
-        ("exp_bound", `Int exp_bound);
-        ("current_weapon", json_of_item weapon);
-        ("current_armor", json_of_item armor);
-      ]
-  in
-  ourjson
+  `Assoc
+    [
+      ("exists", `Bool e);
+      ("locationx", `Int locx);
+      ("locationy", `Int locy);
+      ("current_id", `Int curid);
+      ("number_rooms", `Int rnum);
+      ("lives", `Int liv);
+      ("level", `Int level);
+      ("health", `Int hea);
+      ("rooms", `List rooms);
+      ("current_exp", `Int cure);
+      ("exp_bound", `Int e_b);
+      ("current_weapon", json_of_item wn);
+      ("current_armor", json_of_item ar);
+    ]
 
 let update_file ourjson = Yojson.Basic.to_file "save.json" ourjson
 
