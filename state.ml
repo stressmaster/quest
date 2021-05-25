@@ -328,7 +328,7 @@ let manage_damage mon_HP current =
   if mon_HP > Monsters.get_monster_max_HP current.fight.monster / 3 then
     Monsters.get_monster_string current.fight.monster
   else
-    let gibberish_length = min 15 current.depth in
+    let gibberish_length = min 15 (current.depth + 4) in
     random_string (1 + Random.int gibberish_length) ""
 
 let take_damage mon_HP current =
