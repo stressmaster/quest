@@ -331,12 +331,7 @@ let take_damage mon_HP current =
     max 0 (current.fight.player_health - max 1 (mon_HP / 15))
 
 let manage_attack mon_str mon_HP diff current =
-  let damage =
-    max
-      (String.length mon_str - diff
-      + Item.get_item_modifier current.current_weapon)
-      0
-  in
+  let damage = max (String.length mon_str - diff) 0 in
   let proportion_damage = damage / String.length mon_str in
   let dealt =
     if damage = 0 then 0
@@ -355,10 +350,12 @@ let manage_recover mon_str mon_HP diff current =
   current.fight.player_health <-
     (let healing = max (String.length mon_str - diff) 0 in
      let proportion_healing = healing / String.length mon_str in
-     min
-       (current.fight.player_health
-       + (proportion_healing * current.fight.player_health / 5))
-       current.health)
+     if proportion_healing = 0 then current.fight.player_health
+     else
+       min
+         (6 + current.fight.player_health
+         + (proportion_healing * current.fight.player_health / 2))
+         current.health)
 
 let manage_run str mon_str mon_HP diff current =
   if diff > String.length str / 3 && current.fight.monster_health > 0
