@@ -168,3 +168,9 @@ let magic_numbers = ref (init 1)
 let update new_magic_numbers = magic_numbers := new_magic_numbers
 
 let get_magic = magic_numbers
+
+let print_npc t =
+  let npclist = t.npcs in
+  match npclist with
+  | (x, y) :: t -> print_string ("(" ^ x ^ "," ^ y ^ ")")
+  | _ -> ()

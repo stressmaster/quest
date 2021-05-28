@@ -86,6 +86,11 @@ let tile_is_path x y table =
       not is_wall
   | None -> false
 
+let print_coordinates x y =
+  let strx = string_of_int x in
+  let stry = string_of_int y in
+  print_string ("coordinates: (" ^ strx ^ ", " ^ stry ^ ")")
+
 let become_npc x y table =
   let visibility =
     if tile_is_path x y table then 0
@@ -96,7 +101,8 @@ let become_npc x y table =
       + become_npc_helper x (y + 1) table)
       * Random.int 7
   in
-  if visibility >= 22 then true else false
+  if visibility >= 22 then (*print_coordinates x y;*)
+    true else false
 
 let render_npc_speech x y dungeon_cells =
   match Hashtbl.find_opt dungeon_cells (x, y) with
@@ -131,7 +137,7 @@ let add_npcs x y dungeon_cells =
   for counter_y = 0 to y do
     for counter_x = 0 to x do
       if become_npc counter_x counter_y dungeon_cells then (
-        Random.self_init ();
+        (*Random.self_init ();*)
         let npc =
           Npc.get_npc
             (Random.int (Npc.npc_list_length !Magic_numbers.get_magic))
@@ -238,9 +244,11 @@ let instantiate_dungeon
     prev : t =
   Random.init seed;
   let magic_numbers =
-    Magic_numbers.init (Random.int Magic_numbers.length)
+    let ourrand = Random.int Magic_numbers.length in
+    Magic_numbers.init ourrand
   in
   Magic_numbers.update magic_numbers;
+  (*Magic_numbers.print_npc magic_numbers;*)
   let c = Hashtbl.create (x * y) in
   let w = Walker.init_walker 0 x 0 y start in
   let ourlst = Walker.walk 6500 w in

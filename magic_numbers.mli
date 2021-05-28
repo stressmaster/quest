@@ -89,3 +89,5 @@ val width : float
 
 (** [height] is the default pixel height of a square *)
 val height : float
+
+val print_npc : t -> unit

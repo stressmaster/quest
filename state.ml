@@ -154,7 +154,7 @@ let init_current_json ourjson game room monster =
         ourjson |> json_mem "locationy" |> json_int );
     in_fight = false;
     fight = init_fight_json monster;
-    health = !Magic_numbers.get_magic.health;
+    health = ourjson |> json_mem "health" |> json_int;
     level = ourjson |> json_mem "level" |> json_int;
     depth = ourjson |> json_mem "number_rooms" |> json_int;
     current_exp = ourjson |> json_mem "current_exp" |> json_int;
@@ -176,7 +176,9 @@ let init_state_from_save file_name =
   let monster =
     room |> Dungeon.get_magic_numbers |> Monsters.get_monster
   in
-  Magic_numbers.update (Dungeon.get_magic_numbers room);
+  let new_magic_numbers = room |> Dungeon.get_magic_numbers in
+  Magic_numbers.update new_magic_numbers;
+  Spriteanimation.init_animations new_magic_numbers.animations;
   init_current_json ourjson game room monster
 
 let reset_fight c =
@@ -250,7 +252,7 @@ let manage_item current x y item =
   | _ -> manage_no_item current x y
 
 let reach_end current =
-  if current.level >= 15 && current.depth >= 10 then (
+  if current.level >= 5 && current.depth >= 3 then (
     Render_stack.stack_push WinRender;
     Audio.change_music "./clarksonvoice.wav")
 
