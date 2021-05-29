@@ -377,24 +377,35 @@ let render_dungeon_helper
     done
   done
 
+let cells_to_string cells =
+  Hashtbl.iter
+    (fun (x1, x2) y ->
+      print_string
+        (" (" ^ string_of_int x1 ^ ", " ^ string_of_int x2 ^ "): ")
+      (*; print_string (tile_material (get_tile y))*))
+    cells
+
 let render_dungeon (p_x, p_y) (dungeon : t) condition =
   let dungeon_cells = dungeon |> get_cells in
   let dungeon_x_length, dungeon_y_length = dungeon |> get_dimensions in
   let x_start, x_end, y_start, y_end =
     get_bounds (p_x, p_y) dungeon_x_length dungeon_y_length
   in
-  let npc_name, npc_x, npc_y =
-    match (Hashtbl.find dungeon_cells (p_x, p_y)).tile.npc with
-    | Some npc, dir_x, dir_y ->
-        (Npc.get_npc_sprite npc, p_x + dir_x, p_y + dir_y)
-    | _ -> ("nameless", -1, -1)
-  in
-  render_dungeon_helper (x_start, x_end) (y_start, y_end) (npc_x, npc_y)
-    (p_x, p_y) npc_name dungeon_cells dungeon;
-  render_mini_map
-    (float_of_int p_x, float_of_int p_y)
-    (map_bound
-       (float_of_int dungeon_x_length, float_of_int dungeon_y_length));
+  (let npc_name, npc_x, npc_y =
+     let ourcell = Hashtbl.find dungeon_cells (p_x, p_y) in
+     let ourtile = ourcell.tile in
+     match ourtile.npc with
+     | Some npc, dir_x, dir_y ->
+         (Npc.get_npc_sprite npc, p_x + dir_x, p_y + dir_y)
+     | _ -> ("nameless", -1, -1)
+   in
+   render_dungeon_helper (x_start, x_end) (y_start, y_end)
+     (npc_x, npc_y) (p_x, p_y) npc_name dungeon_cells dungeon;
+   render_mini_map
+     (float_of_int p_x, float_of_int p_y)
+     (map_bound
+        (float_of_int dungeon_x_length, float_of_int dungeon_y_length)));
+
   if condition then render_npc_speech p_x p_y dungeon_cells
 
 let get_magic_numbers d = d.magic_numbers

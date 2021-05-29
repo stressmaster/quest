@@ -67,11 +67,21 @@ let coor_maker xdim ydim =
     (xdim - 2, ydim / 2);
   ]
 
+let rec id_list_maker gamelist acc =
+  match gamelist with
+  | h :: t -> id_list_maker t (Dungeon.get_id h :: acc)
+  | _ -> List.rev acc
+
+let dungeon_exists game dungeon =
+  let next_id = Dungeon.get_id dungeon + 1 in
+  List.mem next_id (id_list_maker game.dungeons [])
+
 let next_dungeon game dungeon =
   let next_id = Dungeon.get_id dungeon + 1 in
   try List.find (fun g -> Dungeon.get_id g = next_id) game.dungeons
   with Not_found ->
     let next_id = Dungeon.get_id dungeon + 1 in
+    print_int next_id;
     let xdim = 50 + Random.int 80 in
     let ydim = 50 + Random.int 80 in
     let ourlist = coor_maker xdim ydim in

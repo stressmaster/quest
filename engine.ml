@@ -97,7 +97,7 @@ let init_engine texture_list w h x_length y_length =
   init_animation ();
   init_display game w h;
   init_input game;
-  let ms = 50. *. (Sys.time () -. start) |> int_of_float in
+  let ms = 35. *. (Sys.time () -. start) |> int_of_float in
   init_timer ms game;
   (*Glut.idleFunc ~cb:(Some Glut.postRedisplay);*)
   Glut.mainLoop ()

@@ -38,9 +38,10 @@ val add_to_game : t -> Dungeon.t -> t
 val game_depth : t -> int
 
 (** [json_maker level hea liv e locx locy curid rnum cure e_b wn ar
-    game] is a json save file that records current location [locx]
-    [locy], current_id [curid], room number [rnum], current exp [cure],
-    number of lives [liv], exp bound [e_b], weapon [wn], armor [ar], and
+    game]
+    is a json save file that records current location [locx] [locy],
+    current_id [curid], room number [rnum], current exp [cure], number
+    of lives [liv], exp bound [e_b], weapon [wn], armor [ar], and
     [game], and boolean [e] of whether a saved game exists.*)
 val json_maker :
   int ->
@@ -66,3 +67,5 @@ val reset_save : Yojson.Basic.t
 
 (** [item_of_json json] is the item recorded in [json] *)
 val item_of_json : Yojson.Basic.t -> Item.t
+
+val dungeon_exists : t -> Dungeon.t -> bool

@@ -173,8 +173,11 @@ let init_state_from_save file_name =
   let game = ourjson |> Game.save_json in
   let current_room_id = ourjson |> json_mem "current_id" |> json_int in
   let room = Game.nth_room game current_room_id in
+  let newmagic = room |> Dungeon.get_magic_numbers in
   let monster =
-    room |> Dungeon.get_magic_numbers |> Monsters.get_monster
+    Monsters.get_monster newmagic
+    (*let monster = room |> Dungeon.get_magic_numbers |>
+      Monsters.get_monster*)
   in
   let new_magic_numbers = room |> Dungeon.get_magic_numbers in
   Magic_numbers.update new_magic_numbers;
@@ -258,8 +261,11 @@ let reach_end current =
 
 (* [move current key] assigns a location to [current] based on [key]*)
 let change_to_next_room current =
+  let exists = Game.dungeon_exists current.game current.room in
   current.room <- Game.next_dungeon current.game current.room;
-  current.game <- Game.add_to_game current.game current.room;
+  current.game <-
+    (if exists then current.game
+    else Game.add_to_game current.game current.room);
   current.location <- Dungeon.get_start current.room;
   current.room_exit <- Dungeon.get_exit current.room;
   current.depth <- current.depth + 1;
@@ -279,7 +285,7 @@ let change_to_previous_room current =
 
 let should_change_room current =
   if
-    (not (current.depth = 0))
+    (not (current.depth = 1))
     && Dungeon.get_start current.room = current.location
   then change_to_previous_room current
   else if current.room_exit = current.location then
@@ -422,6 +428,7 @@ let save_game current =
 
 let gaming_move current key =
   current.lives <- current.lives - 1;
+  if current.lives = 0 then Game.update_file Game.reset_save else ();
   match current.game_over with
   | Quit when key = 13 && current.lives > 0 ->
       save_game current;
@@ -438,7 +445,6 @@ let gaming_move current key =
       Game.update_file Game.reset_save;
       init_state "sample_game.json"
   | _ when current.lives = 0 ->
-      Game.update_file Game.reset_save;
       ignore (exit 0);
       current
   | _ -> current
