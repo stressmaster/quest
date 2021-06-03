@@ -700,7 +700,7 @@
       "path": "./ash_path.png",
       "entrance": "./entrance.png",
       "exit": "./exit.png",
-      "player": "./penguin_1.png",
+      "player": "./wolf.png",
       "darkness": "./darkness.png",
       "timer": "./timer.png",
       "empty_item": "./empty_item.png",

@@ -122,7 +122,9 @@ let init_state file_name =
   let monster =
     room |> Dungeon.get_magic_numbers |> Monsters.get_monster
   in
-  Magic_numbers.update (Dungeon.get_magic_numbers room);
+  let new_magic_numbers = room |> Dungeon.get_magic_numbers in
+  Magic_numbers.update new_magic_numbers;
+  Spriteanimation.init_animations new_magic_numbers.animations;
   init_current game room monster
 
 let json_mem = Yojson.Basic.Util.member
